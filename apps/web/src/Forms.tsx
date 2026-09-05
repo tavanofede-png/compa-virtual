@@ -13,10 +13,14 @@ import {
   methods,
   methodById,
   catalog,
-  palettes,
+  avatarPresets,
+  avatarAppearance,
+  skinTones,
+  hairStyles,
+  hairColors,
+  clothingStyles,
+  clothingColors,
   personalities,
-  eyeNames,
-  mouthNames,
   today,
   dateLabel,
   clock,
@@ -516,7 +520,7 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
     return (
       <>
         <div className="customizer-preview">
-          <Creature companion={compa} size={170} />
+          <Creature companion={compa} size={210} />
           <h3>{compa.name}</h3>
         </div>
         <Field label="Nombre">
@@ -526,63 +530,139 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
             maxLength={30}
           />
         </Field>
-        <Field label="Tu criatura">
-          <div className="creature-options">
-            {[0, 1, 2].map((base) => (
+        <Field label="Un punto de partida">
+          <div className="avatar-presets">
+            {avatarPresets.map((preset) => (
               <button
-                key={base}
-                aria-label={["Brote", "Bolita", "Orejas"][base]}
-                className={compa.base === base ? "selected" : ""}
-                onClick={() => setCompa({ ...compa, base })}
+                key={preset.name}
+                aria-label={"Elegir a " + preset.name}
+                onClick={() => setCompa({ ...compa, ...preset })}
               >
-                <Creature companion={{ ...compa, base }} size={85} />
+                <Creature companion={{ ...compa, ...preset }} size={76} />
+                <span>{preset.name}</span>
               </button>
             ))}
           </div>
         </Field>
-        <Field label="Paleta">
+        <Field label="Tono de piel">
           <div className="palette-options">
-            {palettes.map((p, i) => (
+            {skinTones.map((p, i) => (
               <button
-                key={p}
-                aria-label={p}
-                title={p}
-                aria-pressed={compa.palette === i}
-                className={compa.palette === i ? "selected" : ""}
-                style={{ background: `hsl(${90 + i * 36} 28% 65%)` }}
-                onClick={() => setCompa({ ...compa, palette: i })}
+                key={p.name}
+                aria-label={p.name}
+                title={p.name}
+                aria-pressed={avatarAppearance(compa).skin_tone === i}
+                className={
+                  avatarAppearance(compa).skin_tone === i ? "selected" : ""
+                }
+                style={{
+                  background: p.color,
+                  color: i > 3 ? "white" : "#302a29",
+                }}
+                onClick={() => setCompa({ ...compa, skin_tone: i })}
               >
-                {compa.palette === i && <Check size={16} />}
+                {avatarAppearance(compa).skin_tone === i && <Check size={16} />}
               </button>
             ))}
           </div>
         </Field>
         <div className="form-grid">
-          <Field label="Ojos">
+          <Field label="Presentación">
             <select
-              value={compa.eyes}
-              onChange={(e) => setCompa({ ...compa, eyes: +e.target.value })}
+              value={avatarAppearance(compa).avatar_style}
+              onChange={(e) =>
+                setCompa({
+                  ...compa,
+                  avatar_style: e.target.value as Companion["avatar_style"],
+                })
+              }
             >
-              {eyeNames.map((x, i) => (
-                <option key={x} value={i}>
-                  {x}
-                </option>
-              ))}
+              <option value="boy">Chico</option>
+              <option value="girl">Chica</option>
+              <option value="neutral">Neutra</option>
             </select>
           </Field>
-          <Field label="Boca">
+          <Field label="Peinado">
             <select
-              value={compa.mouth}
-              onChange={(e) => setCompa({ ...compa, mouth: +e.target.value })}
+              value={avatarAppearance(compa).hair_style}
+              onChange={(e) =>
+                setCompa({
+                  ...compa,
+                  hair_style: e.target.value as Companion["hair_style"],
+                })
+              }
             >
-              {mouthNames.map((x, i) => (
-                <option key={x} value={i}>
-                  {x}
+              {hairStyles.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {x.name}
                 </option>
               ))}
             </select>
           </Field>
         </div>
+        <Field label="Color de cabello">
+          <div className="palette-options">
+            {hairColors.map((color, i) => (
+              <button
+                key={color.name}
+                title={color.name}
+                aria-label={color.name}
+                aria-pressed={avatarAppearance(compa).hair_color === i}
+                className={
+                  avatarAppearance(compa).hair_color === i ? "selected" : ""
+                }
+                style={{ background: color.color, color: "white" }}
+                onClick={() => setCompa({ ...compa, hair_color: i })}
+              >
+                {avatarAppearance(compa).hair_color === i && (
+                  <Check size={16} />
+                )}
+              </button>
+            ))}
+          </div>
+        </Field>
+        <Field label="Ropa de todos los días">
+          <select
+            value={avatarAppearance(compa).clothing_style}
+            onChange={(e) =>
+              setCompa({
+                ...compa,
+                clothing_style: e.target.value as Companion["clothing_style"],
+                outfit: "none",
+              })
+            }
+          >
+            {clothingStyles.map((style) => (
+              <option key={style.id} value={style.id}>
+                {style.name}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <Field label="Color de la ropa">
+          <div className="palette-options">
+            {clothingColors.map((color, i) => (
+              <button
+                key={color.name}
+                title={color.name}
+                aria-label={color.name}
+                aria-pressed={avatarAppearance(compa).clothing_color === i}
+                className={
+                  avatarAppearance(compa).clothing_color === i ? "selected" : ""
+                }
+                style={{
+                  background: color.color,
+                  color: i === 6 ? "#303747" : "white",
+                }}
+                onClick={() => setCompa({ ...compa, clothing_color: i })}
+              >
+                {avatarAppearance(compa).clothing_color === i && (
+                  <Check size={16} />
+                )}
+              </button>
+            ))}
+          </div>
+        </Field>
         <div className="form-grid">
           <Field label="Personalidad">
             <select

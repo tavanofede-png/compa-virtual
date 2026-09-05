@@ -63,6 +63,14 @@ export const blockSchema = z
     "El fin debe ser posterior al inicio.",
   );
 export const companionSchema = z.object({
+  avatar_style: z.enum(["boy", "girl", "neutral"]).optional(),
+  skin_tone: z.number().int().min(0).max(7).optional(),
+  hair_style: z
+    .enum(["short", "curls", "afro", "bob", "long", "braids"])
+    .optional(),
+  hair_color: z.number().int().min(0).max(5).optional(),
+  clothing_style: z.enum(["hoodie", "tee", "jacket", "overshirt"]).optional(),
+  clothing_color: z.number().int().min(0).max(7).optional(),
   name: z.string().trim().min(1).max(30),
   base: z.number().int().min(0).max(2),
   palette: z.number().int().min(0).max(7),

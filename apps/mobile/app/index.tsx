@@ -1,11 +1,10 @@
-import { Creature, Equipment } from "../src/Creature";
+import { Creature, Equipment, NativeRoom } from "../src/Creature";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   View,
   Text,
   ScrollView,
   Pressable,
-  Image,
   Modal,
   Alert,
   Platform,
@@ -36,13 +35,18 @@ import {
   minuteOf,
   addDays,
   catalog,
-  palettes,
+  avatarAppearance,
+  avatarPresets,
+  skinTones,
+  hairStyles,
+  hairColors,
+  clothingStyles,
+  clothingColors,
   personalities,
-  eyeNames,
-  mouthNames,
   type AcademicItem,
   type Quiz,
   type PlanSlot,
+  type Companion,
 } from "@compa/domain";
 import { cache, secureStorage } from "../src/storage";
 import { registerPush } from "../src/push";
@@ -50,7 +54,6 @@ import { Button, Field, Choices, Card, styles as st, colors } from "../src/ui";
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL,
   key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 const backend = url && key ? createBackend(url, key, secureStorage) : null;
-const room = require("../../../packages/assets/study-room.png");
 const tabs = [
   ["room", "Mi cuarto"],
   ["today", "Hoy"],
@@ -208,7 +211,11 @@ export default function App() {
     }
   };
   const change = (key: string, value: string) =>
-    setValues((v) => ({ ...v, [key]: value }));
+    setValues((v) => ({
+      ...v,
+      [key]: value,
+      ...(key === "clothing_style" ? { outfit: "none" } : {}),
+    }));
   const command = async (type: string, payload: unknown, close = true) => {
     if (!repo) return;
     setEnv(await repo.command({ type, payload }, env.version));
@@ -345,25 +352,11 @@ export default function App() {
           <Text style={[st.h1, { fontSize: 43, lineHeight: 48 }]}>
             Tu mundo.{"\n"}Tu manera de aprender.
           </Text>
-          <View
-            style={{
-              height: 270,
-              overflow: "hidden",
-              borderRadius: 14,
-              backgroundColor: colors.panel,
-            }}
-          >
-            <Image
-              source={room}
-              style={{ width: "100%", height: "100%" }}
-              resizeMode="cover"
-            />
-            <View
-              style={{ position: "absolute", alignSelf: "center", bottom: 20 }}
-            >
-              <Creature companion={s.companion} />
-            </View>
-          </View>
+          <NativeRoom
+            companion={s.companion}
+            onTalk={() => setRepo(createDemo(cache))}
+            height={330}
+          />
           <Text style={st.p}>
             Organizá tu semana, practicá y celebrá cada paso.
           </Text>
@@ -812,9 +805,26 @@ export default function App() {
       );
     }
     if (modal === "companion") {
-      const compa = {
+      const appearance = avatarAppearance(s.companion);
+      const compa: Companion = {
         ...s.companion,
+        ...appearance,
         ...values,
+        avatar_style: v(
+          "avatar_style",
+          appearance.avatar_style,
+        ) as Companion["avatar_style"],
+        skin_tone: +v("skin_tone", String(appearance.skin_tone)),
+        hair_style: v(
+          "hair_style",
+          appearance.hair_style,
+        ) as Companion["hair_style"],
+        hair_color: +v("hair_color", String(appearance.hair_color)),
+        clothing_style: v(
+          "clothing_style",
+          appearance.clothing_style,
+        ) as Companion["clothing_style"],
+        clothing_color: +v("clothing_color", String(appearance.clothing_color)),
         base: +v("base", String(s.companion.base)),
         palette: +v("palette", String(s.companion.palette)),
         eyes: +v("eyes", String(s.companion.eyes)),
@@ -829,36 +839,88 @@ export default function App() {
               borderRadius: 10,
             }}
           >
-            <Creature companion={compa} />
+            <Creature companion={compa} size={185} />
           </View>
           {input("name", "Nombre", s.companion.name)}
+          <Text style={st.label}>Un punto de partida</Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+            {avatarPresets.map((preset) => (
+              <Pressable
+                key={preset.name}
+                accessibilityRole="button"
+                accessibilityLabel={"Elegir a " + preset.name}
+                onPress={() =>
+                  setValues(
+                    Object.fromEntries(
+                      Object.entries(preset).map(([key, value]) => [
+                        key,
+                        String(value),
+                      ]),
+                    ),
+                  )
+                }
+                style={{
+                  paddingHorizontal: 18,
+                  paddingVertical: 12,
+                  borderRadius: 10,
+                  backgroundColor: "#e4e7f0",
+                }}
+              >
+                <Text style={{ color: "#4b5974" }}>{preset.name}</Text>
+              </Pressable>
+            ))}
+          </View>
           {choices(
-            "base",
-            "Criatura",
+            "avatar_style",
+            "Presentación",
             [
-              { value: "0", label: "Brote" },
-              { value: "1", label: "Bolita" },
-              { value: "2", label: "Orejas" },
+              { value: "boy", label: "Chico" },
+              { value: "girl", label: "Chica" },
+              { value: "neutral", label: "Neutra" },
             ],
-            String(s.companion.base),
+            appearance.avatar_style,
           )}
           {choices(
-            "palette",
-            "Paleta",
-            palettes.map((p, i) => ({ value: String(i), label: p })),
-            String(s.companion.palette),
+            "skin_tone",
+            "Tono de piel",
+            skinTones.map((tone, i) => ({
+              value: String(i),
+              label: tone.name,
+            })),
+            String(appearance.skin_tone),
           )}
           {choices(
-            "eyes",
-            "Ojos",
-            eyeNames.map((x, i) => ({ value: String(i), label: x })),
-            String(s.companion.eyes),
+            "hair_style",
+            "Peinado",
+            hairStyles.map((style) => ({ value: style.id, label: style.name })),
+            appearance.hair_style,
           )}
           {choices(
-            "mouth",
-            "Boca",
-            mouthNames.map((x, i) => ({ value: String(i), label: x })),
-            String(s.companion.mouth),
+            "hair_color",
+            "Color de cabello",
+            hairColors.map((color, i) => ({
+              value: String(i),
+              label: color.name,
+            })),
+            String(appearance.hair_color),
+          )}
+          {choices(
+            "clothing_style",
+            "Ropa de todos los días",
+            clothingStyles.map((style) => ({
+              value: style.id,
+              label: style.name,
+            })),
+            appearance.clothing_style,
+          )}
+          {choices(
+            "clothing_color",
+            "Color de la ropa",
+            clothingColors.map((color, i) => ({
+              value: String(i),
+              label: color.name,
+            })),
+            String(appearance.clothing_color),
           )}
           {choices(
             "personality",
@@ -1335,64 +1397,7 @@ export default function App() {
             <Text style={[st.p, { marginVertical: 12 }]}>
               Hagamos algo bueno con este ratito.
             </Text>
-            <View
-              style={{
-                height: 330,
-                borderRadius: 12,
-                overflow: "hidden",
-                borderWidth: 5,
-                borderColor: "#e9e6dc",
-              }}
-            >
-              <Image
-                source={room}
-                style={{ width: "100%", height: "100%" }}
-                resizeMode="cover"
-              />
-              <Pressable
-                accessibilityLabel={"Conversar con " + s.companion.name}
-                onPress={() => open("chat")}
-                style={{
-                  position: "absolute",
-                  bottom: 20,
-                  alignSelf: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Creature companion={s.companion} />
-                <Text style={[st.tag, { marginTop: -15, alignSelf: "center" }]}>
-                  {s.companion.name} ↗
-                </Text>
-              </Pressable>
-              {s.companion.decoration !== "none" && (
-                <View
-                  pointerEvents="none"
-                  style={{ position: "absolute", right: 18, bottom: 78 }}
-                >
-                  <Equipment id={s.companion.decoration} width={65} />
-                </View>
-              )}
-              {s.companion.room_theme === "night" && (
-                <View
-                  pointerEvents="none"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    backgroundColor: "rgba(25,30,65,0.3)",
-                  }}
-                />
-              )}
-              {s.companion.room_theme === "day" && (
-                <View
-                  pointerEvents="none"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    backgroundColor: "rgba(255,247,216,0.13)",
-                  }}
-                />
-              )}
-            </View>
+            <NativeRoom companion={s.companion} onTalk={() => open("chat")} />
             <Button secondary onPress={() => open("companion", s.companion)}>
               Personalizar mi compa
             </Button>

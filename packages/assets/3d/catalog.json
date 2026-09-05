@@ -1,0 +1,80 @@
+{
+  "format": "glTF 2.0 / GLB",
+  "units": "meters",
+  "upAxis": "Y",
+  "generator": "Compa Virtual procedural models",
+  "files": [
+    {
+      "file": "habitacion-adolescente.glb",
+      "bytes": 16403916
+    },
+    {
+      "file": "compa-leo.glb",
+      "bytes": 2951484
+    },
+    {
+      "file": "compa-alma.glb",
+      "bytes": 6215604
+    },
+    {
+      "file": "compa-nico.glb",
+      "bytes": 5348128
+    },
+    {
+      "file": "compa-zoe.glb",
+      "bytes": 3186992
+    },
+    {
+      "file": "compa-dani.glb",
+      "bytes": 3926396
+    },
+    {
+      "file": "compa-sol.glb",
+      "bytes": 4360672
+    },
+    {
+      "file": "objeto-cap.glb",
+      "bytes": 114260
+    },
+    {
+      "file": "objeto-backpack.glb",
+      "bytes": 123448
+    },
+    {
+      "file": "objeto-scarf.glb",
+      "bytes": 145396
+    },
+    {
+      "file": "objeto-glasses.glb",
+      "bytes": 84412
+    },
+    {
+      "file": "objeto-headphones.glb",
+      "bytes": 173044
+    },
+    {
+      "file": "objeto-bow.glb",
+      "bytes": 103960
+    },
+    {
+      "file": "objeto-star-shirt.glb",
+      "bytes": 122708
+    },
+    {
+      "file": "objeto-overalls.glb",
+      "bytes": 147668
+    },
+    {
+      "file": "objeto-plant.glb",
+      "bytes": 304892
+    },
+    {
+      "file": "objeto-lamp.glb",
+      "bytes": 59344
+    },
+    {
+      "file": "objeto-globe.glb",
+      "bytes": 215292
+    }
+  ]
+}

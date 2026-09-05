@@ -4,7 +4,7 @@ Compa Virtual acompaña a adolescentes de secundaria argentina para organizar ob
 
 ## Recorrido
 
-Registro con confirmación de correo → perfil → criatura → materias y disponibilidad → tarea o examen → propuesta de plan → aceptación explícita → sesión con método → práctica e intento → feedback → progreso → check-in y ajuste.
+Registro con confirmación de correo → perfil → compañero adolescente → materias y disponibilidad → tarea o examen → propuesta de plan → aceptación explícita → sesión con método → práctica e intento → feedback → progreso → check-in y ajuste.
 
 La habitación es la entrada. Hoy muestra bloques del plan aceptado. Agenda reúne fechas y compromisos. Estudiar contiene materiales, quizzes, tarjetas, simulacros y la biblioteca de 17 métodos. La memoria académica es independiente del historial de chat.
 
@@ -22,7 +22,7 @@ La habitación es la entrada. Hoy muestra bloques del plan aceptado. Agenda reú
 
 ## Autonomía y accesibilidad
 
-Cuatro niveles editables expresan cuánta ayuda organizativa quiere el alumno. El usuario siempre acepta los cambios. El texto académico usa tipografía convencional; pixel art se limita a la escena y las criaturas. La web respeta reducción de movimiento y los formularios tienen etiquetas. No se emplean abandono emocional, ranking social ni permanencia como objetivos.
+Cuatro niveles editables expresan cuánta ayuda organizativa quiere el alumno. El usuario siempre acepta los cambios. El texto académico usa tipografía legible; los compañeros y su habitación usan 3D estilizado y detallado, con cámara diagonal y controles accesibles. La web respeta reducción de movimiento y los formularios tienen etiquetas. No se emplean abandono emocional, ranking social ni permanencia como objetivos.
 
 ## Medición
 

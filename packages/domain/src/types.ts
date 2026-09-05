@@ -23,6 +23,12 @@ export interface Profile {
   free_day_limit?: number;
 }
 export interface Companion {
+  avatar_style?: "boy" | "girl" | "neutral";
+  skin_tone?: number;
+  hair_style?: "short" | "curls" | "afro" | "bob" | "long" | "braids";
+  hair_color?: number;
+  clothing_style?: "hoodie" | "tee" | "jacket" | "overshirt";
+  clothing_color?: number;
   id: string;
   name: string;
   base: number;
@@ -241,6 +247,20 @@ export const palettes = [
   "Durazno",
 ];
 export const catalog = [
+  {
+    id: "cap",
+    name: "Gorra de explorador",
+    category: "accessory",
+    price: 35,
+    symbol: "🧢",
+  },
+  {
+    id: "backpack",
+    name: "Mochila de aventuras",
+    category: "accessory",
+    price: 45,
+    symbol: "🎒",
+  },
   {
     id: "scarf",
     name: "Bufanda aventurera",

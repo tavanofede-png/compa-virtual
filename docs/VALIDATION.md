@@ -6,10 +6,10 @@
 - Export estático de Next.js.
 - Export de Metro/Hermes para Android e iOS. Son bundles, no binarios firmados.
 - Tests de planificador, gamificación, documentos y PostgreSQL con pgvector/RLS.
-- Prueba de navegador sobre la demo: ingreso, escena, propuesta de plan, aceptación, sesión declarada, recompensa, quiz con intento incorrecto y corrección.
-- Capas de sprites verificadas visualmente en web.
+- Prueba de navegador de la demo anterior: ingreso, propuesta de plan, aceptación, sesión declarada, recompensa, quiz con intento incorrecto y corrección. No certifica la nueva escena 3D.
+- Geometría de adolescentes y habitación: seis peinados, volumen real, presupuesto de mallas/triángulos, conservación de datos y 18 archivos GLB válidos. La revisión actual no incluyó pruebas visuales automatizadas de navegador ni evaluación en teléfonos físicos.
 
-Resultado local: **29 pruebas aprobadas en 5 archivos**, TypeScript y lint sin errores, export estático de Next.js correcto y funciones del backend empaquetadas. `pnpm audit --prod --audit-level low`: sin vulnerabilidades conocidas al momento de la revisión. Las pruebas automáticas usan datos ficticios y, para el contrato de OpenAI, respuestas de prueba explícitas.
+Resultado local: **34 pruebas aprobadas en 6 archivos**, TypeScript y lint sin errores. Se comprueban además el export estático de Next.js y los bundles de Expo, que no equivalen a binarios firmados. Las funciones del backend se regeneran para validar y conservar las nuevas apariencias. `pnpm audit --prod --audit-level low`: sin vulnerabilidades conocidas al momento de la revisión. Las pruebas automáticas usan datos ficticios y, para el contrato de OpenAI, respuestas de prueba explícitas.
 
 Las pruebas incluyen pérdida de respuesta y reinicio del cliente, versiones en conflicto, monedas idempotentes, reintentos de cola sin duplicación, recuperación espaciada de tarjetas, lectura real de PDF/DOCX de prueba, referencias y aislamiento de búsqueda vectorial. El transporte pgmq se representa mediante un fixture instrumentado: comprobar una única solicitud de envío no certifica la entrega real.
 

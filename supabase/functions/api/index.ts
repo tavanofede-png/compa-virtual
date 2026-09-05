@@ -19947,6 +19947,20 @@ function date4(params) {
 // ../domain/src/types.ts
 var catalog = [
   {
+    id: "cap",
+    name: "Gorra de explorador",
+    category: "accessory",
+    price: 35,
+    symbol: "\u{1F9E2}"
+  },
+  {
+    id: "backpack",
+    name: "Mochila de aventuras",
+    category: "accessory",
+    price: 45,
+    symbol: "\u{1F392}"
+  },
+  {
     id: "scarf",
     name: "Bufanda aventurera",
     category: "accessory",
@@ -24282,6 +24296,12 @@ var blockSchema = external_exports.object({
   "El fin debe ser posterior al inicio."
 );
 var companionSchema = external_exports.object({
+  avatar_style: external_exports.enum(["boy", "girl", "neutral"]).optional(),
+  skin_tone: external_exports.number().int().min(0).max(7).optional(),
+  hair_style: external_exports.enum(["short", "curls", "afro", "bob", "long", "braids"]).optional(),
+  hair_color: external_exports.number().int().min(0).max(5).optional(),
+  clothing_style: external_exports.enum(["hoodie", "tee", "jacket", "overshirt"]).optional(),
+  clothing_color: external_exports.number().int().min(0).max(7).optional(),
   name: external_exports.string().trim().min(1).max(30),
   base: external_exports.number().int().min(0).max(2),
   palette: external_exports.number().int().min(0).max(7),
@@ -24558,6 +24578,10 @@ function transition(previous, command, now) {
       for (const key of ["accessory", "outfit", "decoration"])
         if (next[key] !== "none" && !s2.inventory.includes(next[key]))
           throw Error("Primero desbloque\xE1 ese objeto.");
+        else if (next[key] !== "none" && !catalog.some(
+          (item) => item.id === next[key] && item.category === key
+        ))
+          throw Error("Ese objeto no corresponde a esta parte de tu compa.");
       s2.companion = { ...s2.companion, ...next };
       break;
     }

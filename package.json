@@ -17,7 +17,8 @@
     "test:watch": "vitest",
     "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build",
     "format": "prettier --write packages apps/web/src apps/web/app apps/mobile/app apps/mobile/src apps/worker/src tests docs README.md",
-    "seed:generate": "tsx scripts/seed.ts"
+    "seed:generate": "tsx scripts/seed.ts",
+    "assets:3d": "tsx scripts/export-world.ts"
   },
   "devDependencies": {
     "typescript": "5.9.3",

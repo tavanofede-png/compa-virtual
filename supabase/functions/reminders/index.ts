@@ -24024,6 +24024,12 @@ var blockSchema = external_exports.object({
   "El fin debe ser posterior al inicio."
 );
 var companionSchema = external_exports.object({
+  avatar_style: external_exports.enum(["boy", "girl", "neutral"]).optional(),
+  skin_tone: external_exports.number().int().min(0).max(7).optional(),
+  hair_style: external_exports.enum(["short", "curls", "afro", "bob", "long", "braids"]).optional(),
+  hair_color: external_exports.number().int().min(0).max(5).optional(),
+  clothing_style: external_exports.enum(["hoodie", "tee", "jacket", "overshirt"]).optional(),
+  clothing_color: external_exports.number().int().min(0).max(7).optional(),
   name: external_exports.string().trim().min(1).max(30),
   base: external_exports.number().int().min(0).max(2),
   palette: external_exports.number().int().min(0).max(7),

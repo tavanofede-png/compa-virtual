@@ -42,6 +42,13 @@ export function transition(
       for (const key of ["accessory", "outfit", "decoration"] as const)
         if (next[key] !== "none" && !s.inventory.includes(next[key]))
           throw Error("Primero desbloqueá ese objeto.");
+        else if (
+          next[key] !== "none" &&
+          !catalog.some(
+            (item) => item.id === next[key] && item.category === key,
+          )
+        )
+          throw Error("Ese objeto no corresponde a esta parte de tu compa.");
       s.companion = { ...s.companion, ...next };
       break;
     }

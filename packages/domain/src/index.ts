@@ -8,3 +8,4 @@ export * from "./demo";
 export * from "./sprites";
 export * from "./reminders";
 export * from "./extensions";
+export * from "./avatars";

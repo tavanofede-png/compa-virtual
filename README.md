@@ -2,6 +2,8 @@
 
 Compañero de estudio para secundaria argentina. Monorepo con web Next.js, apps nativas Expo, backend Supabase y worker de documentos.
 
+La escena actual usa **compañeros adolescentes y una habitación 3D interactiva**. Ver [catálogo, modelos y controles](docs/WORLD_3D.md). Sustituye la dirección inicial de criaturas en pixel art.
+
 **Estado de entrega:** implementación de desarrollo con demostración local y adaptadores reales. No es todavía una beta autorizada para alumnos. Las credenciales, los despliegues del backend/worker, las compilaciones firmadas y la validación en teléfonos se completan sobre esta base. Ver [VALIDATION.md](docs/VALIDATION.md).
 
 ## Abrir el proyecto
@@ -17,17 +19,18 @@ La web abre en el puerto 3000. **Explorar con datos ficticios** habilita un reco
 
 ## Estructura
 
-| Carpeta         | Responsabilidad                                                           |
-| --------------- | ------------------------------------------------------------------------- |
-| apps/web        | Web estática, navegación con parámetros, formularios y caché de consulta  |
-| apps/mobile     | React Native / Expo Router, SecureStore, SQLite y notificaciones          |
-| apps/worker     | PDF, DOCX, TXT, imágenes, OCR, fragmentos y embeddings                    |
-| packages/domain | Tipos, validaciones, planificador, pedagogía, gamificación y sprites      |
-| packages/client | Repositorio Supabase, control de versión, subida privada y demo explícita |
-| packages/server | API autenticada, adaptador OpenAI y recordatorios                         |
-| packages/assets | Atlas originales y metadatos compartidos                                  |
-| supabase        | Migraciones, semillas, funciones empaquetadas y programador               |
-| tests           | Reglas de dominio, PostgreSQL/RLS, documentos y contrato del proveedor    |
+| Carpeta          | Responsabilidad                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| apps/web         | Web estática, navegación con parámetros, formularios y caché de consulta             |
+| apps/mobile      | React Native / Expo Router, SecureStore, SQLite y notificaciones                     |
+| apps/worker      | PDF, DOCX, TXT, imágenes, OCR, fragmentos y embeddings                               |
+| packages/domain  | Tipos, validaciones, planificador, pedagogía, gamificación y catálogo de apariencias |
+| packages/world3d | Geometría, materiales y escenas compartidas de adolescentes y habitación             |
+| packages/client  | Repositorio Supabase, control de versión, subida privada y demo explícita            |
+| packages/server  | API autenticada, adaptador OpenAI y recordatorios                                    |
+| packages/assets  | Atlas originales y metadatos compartidos                                             |
+| supabase         | Migraciones, semillas, funciones empaquetadas y programador                          |
+| tests            | Reglas de dominio, PostgreSQL/RLS, documentos y contrato del proveedor               |
 
 ## Conectar servicios
 
