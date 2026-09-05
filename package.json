@@ -10,7 +10,7 @@
     "dev": "pnpm --filter @compa/web dev",
     "mobile": "pnpm --filter @compa/mobile start",
     "worker": "pnpm --filter @compa/worker dev",
-    "build": "pnpm --filter @compa/web build",
+    "build": "pnpm --filter @compa/web build && node scripts/stage-web.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "oxlint packages apps/web/app apps/web/src apps/mobile/app apps/worker/src tests",
     "test": "vitest run",
