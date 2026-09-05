@@ -1,0 +1,211 @@
+{
+  "image": "equipment-atlas-v2.png",
+  "width": 1254,
+  "height": 1254,
+  "columns": 3,
+  "rows": 3,
+  "cellWidth": 418,
+  "cellHeight": 418,
+  "alpha": "verified true transparency",
+  "items": [
+    {
+      "id": "scarf",
+      "row": 0,
+      "column": 0,
+      "cell": {
+        "x": 0,
+        "y": 0,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 177,
+        "y": 180,
+        "width": 146,
+        "height": 149
+      },
+      "sourceAnchorNormalized": [0.5, 0.26],
+      "targetAnchor": "neck",
+      "relativeWidthToCreatureVisibleBounds": 0.62
+    },
+    {
+      "id": "glasses",
+      "row": 0,
+      "column": 1,
+      "cell": {
+        "x": 418,
+        "y": 0,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 532,
+        "y": 213,
+        "width": 187,
+        "height": 82
+      },
+      "sourceAnchorNormalized": [0.5, 0.48],
+      "targetAnchor": "eyes",
+      "relativeWidthToCreatureVisibleBounds": 0.62
+    },
+    {
+      "id": "headphones",
+      "row": 0,
+      "column": 2,
+      "cell": {
+        "x": 836,
+        "y": 0,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 917,
+        "y": 186,
+        "width": 142,
+        "height": 139
+      },
+      "sourceAnchorNormalized": [0.5, 0.55],
+      "targetAnchor": "head",
+      "relativeWidthToCreatureVisibleBounds": 0.82
+    },
+    {
+      "id": "bow",
+      "row": 1,
+      "column": 0,
+      "cell": {
+        "x": 0,
+        "y": 418,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 163,
+        "y": 566,
+        "width": 154,
+        "height": 87
+      },
+      "sourceAnchorNormalized": [0.5, 0.5],
+      "targetAnchor": "neck",
+      "relativeWidthToCreatureVisibleBounds": 0.35
+    },
+    {
+      "id": "shirt",
+      "row": 1,
+      "column": 1,
+      "cell": {
+        "x": 418,
+        "y": 418,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 525,
+        "y": 527,
+        "width": 189,
+        "height": 167
+      },
+      "sourceAnchorNormalized": [0.5, 0.1],
+      "targetAnchor": "neck",
+      "relativeWidthToCreatureVisibleBounds": 0.86
+    },
+    {
+      "id": "overalls",
+      "row": 1,
+      "column": 2,
+      "cell": {
+        "x": 836,
+        "y": 418,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 917,
+        "y": 523,
+        "width": 156,
+        "height": 183
+      },
+      "sourceAnchorNormalized": [0.5, 0.08],
+      "targetAnchor": "neck",
+      "relativeWidthToCreatureVisibleBounds": 0.79
+    },
+    {
+      "id": "plant",
+      "row": 2,
+      "column": 0,
+      "cell": {
+        "x": 0,
+        "y": 836,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 156,
+        "y": 893,
+        "width": 150,
+        "height": 177
+      },
+      "sourceAnchorNormalized": [0.5, 1],
+      "targetAnchor": "floor",
+      "relativeWidthToCreatureVisibleBounds": null
+    },
+    {
+      "id": "lamp",
+      "row": 2,
+      "column": 1,
+      "cell": {
+        "x": 418,
+        "y": 836,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 562,
+        "y": 902,
+        "width": 115,
+        "height": 175
+      },
+      "sourceAnchorNormalized": [0.5, 1],
+      "targetAnchor": "floor",
+      "relativeWidthToCreatureVisibleBounds": null
+    },
+    {
+      "id": "globe",
+      "row": 2,
+      "column": 2,
+      "cell": {
+        "x": 836,
+        "y": 836,
+        "width": 418,
+        "height": 418
+      },
+      "tightCrop": {
+        "x": 929,
+        "y": 898,
+        "width": 129,
+        "height": 179
+      },
+      "sourceAnchorNormalized": [0.5, 1],
+      "targetAnchor": "floor",
+      "relativeWidthToCreatureVisibleBounds": null
+    }
+  ],
+  "creatureAnchorNotes": "Starter anchors in the original 724x724 creature cells; tune with visual preview. Draw the tight-cropped item at desired width; place its sourceAnchorNormalized at creature target anchor. Apparel is intentionally below mouth. Suggested anchors are approximate, not verified in app.",
+  "creatureAnchors": {
+    "moss": {
+      "eyes": [310, 407],
+      "head": [320, 345],
+      "neck": [320, 471]
+    },
+    "amber": {
+      "eyes": [323, 394],
+      "head": [330, 321],
+      "neck": [330, 463]
+    },
+    "lilac": {
+      "eyes": [260, 388],
+      "head": [278, 317],
+      "neck": [266, 455]
+    }
+  },
+  "faces": "Not supplied: existing eyes/mouth are baked into base sprites; interchangeable face layers require a matching faceless-base edit."
+}

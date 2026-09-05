@@ -1,0 +1,70 @@
+# Compa Virtual
+
+Compañero de estudio para secundaria argentina. Monorepo con web Next.js, apps nativas Expo, backend Supabase y worker de documentos.
+
+**Estado de entrega:** implementación de desarrollo con demostración local y adaptadores reales. No es todavía una beta autorizada para alumnos. Las credenciales, los despliegues del backend/worker, las compilaciones firmadas y la validación en teléfonos se completan sobre esta base. Ver [VALIDATION.md](docs/VALIDATION.md).
+
+## Abrir el proyecto
+
+Requiere Node.js 24 y pnpm 10.33.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+La web abre en el puerto 3000. **Explorar con datos ficticios** habilita un recorrido local persistente, con agenda, planificador, sesiones, un quiz de ejemplo, monedas, memoria y personalización. La demo no llama a IA, no crea cuentas reales y no sube archivos. Sus datos no se sincronizan con una cuenta.
+
+## Estructura
+
+| Carpeta         | Responsabilidad                                                           |
+| --------------- | ------------------------------------------------------------------------- |
+| apps/web        | Web estática, navegación con parámetros, formularios y caché de consulta  |
+| apps/mobile     | React Native / Expo Router, SecureStore, SQLite y notificaciones          |
+| apps/worker     | PDF, DOCX, TXT, imágenes, OCR, fragmentos y embeddings                    |
+| packages/domain | Tipos, validaciones, planificador, pedagogía, gamificación y sprites      |
+| packages/client | Repositorio Supabase, control de versión, subida privada y demo explícita |
+| packages/server | API autenticada, adaptador OpenAI y recordatorios                         |
+| packages/assets | Atlas originales y metadatos compartidos                                  |
+| supabase        | Migraciones, semillas, funciones empaquetadas y programador               |
+| tests           | Reglas de dominio, PostgreSQL/RLS, documentos y contrato del proveedor    |
+
+## Conectar servicios
+
+1. Crear un proyecto Supabase dedicado; no reutilizar un proyecto ajeno.
+2. Aplicar las migraciones con Supabase CLI y ejecutar `supabase/seed.sql`.
+3. Copiar los ejemplos de entorno a archivos locales ignorados por Git. La clave pública de Supabase puede ir en web/móvil. **La service role y OpenAI solo van en el servidor/worker.**
+4. Ejecutar `pnpm --filter @compa/server bundle` y desplegar las funciones `api` y `reminders`. `verify_jwt=false` evita depender del verificador legado: la API verifica cada JWT mediante `auth.getUser`; los recordatorios exigen `CRON_SECRET`.
+5. Configurar los secretos de las funciones y el worker. Ajustar las URLs de redirección de Auth para web y `compavirtual://`. Configurar correo transaccional antes del registro público.
+6. Desplegar `render.yaml`. El worker procesa un documento por vez. Verificar el tamaño real de instancia en Render antes de aceptar el despliegue.
+7. Crear los secretos de Vault indicados en `supabase/schedule.sql` y ejecutar ese archivo una vez. La retención requiere el programador activo.
+8. Configurar variables públicas y compilar de nuevo: Next exporta valores al momento del build.
+
+## Apps nativas
+
+```sh
+pnpm mobile
+# Dentro de apps/mobile, después de vincular la cuenta Expo:
+eas build --profile development --platform all
+eas build --profile beta --platform all
+eas submit --profile beta --platform all
+```
+
+Los comandos EAS requieren el proyecto, las cuentas de desarrollador, identificadores definitivos y credenciales APNs/FCM. TestFlight y Google Play requieren pruebas y revisión reales. Un export de Metro/Hermes comprueba el bundle, no genera un IPA/APK firmado ni sustituye la prueba física.
+
+## Validar
+
+```sh
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm build
+pnpm --filter @compa/server bundle
+pnpm seed:generate
+```
+
+En Windows, Expo puede ejecutarse directamente con `node node_modules/expo/bin/cli` desde `apps/mobile`. Para exportar sin telemetría, usar `EXPO_NO_TELEMETRY=1`. Los tests PostgreSQL usan PGlite con pgvector real; representan los esquemas periféricos de Supabase y el transporte pgmq mediante fixtures. No certifican Auth, Storage HTTP ni entrega de colas en producción.
+
+## Documentación
+
+[Producto](docs/PRODUCT.md) · [Arquitectura](docs/ARCHITECTURE.md) · [Datos](docs/DATABASE.md) · [IA](docs/AI_ARCHITECTURE.md) · [Métodos](docs/STUDY_METHODS.md) · [Classroom](docs/CLASSROOM_INTEGRATION.md) · [Seguridad](docs/SECURITY.md) · [Privacidad](docs/PRIVACY-DRAFT.md) · [Decisiones](docs/PRODUCT_DECISIONS.md) · [Roadmap](docs/ROADMAP.md) · [Prompts](docs/PROMPTS.md) · [Validación](docs/VALIDATION.md).

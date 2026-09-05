@@ -1,0 +1,25 @@
+{
+  "name": "@compa/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --env-file-if-exists=.env src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@compa/domain": "workspace:*",
+    "@compa/server": "workspace:*",
+    "@supabase/supabase-js": "2.115.0",
+    "pdfjs-dist": "6.3.289",
+    "mammoth": "1.12.2",
+    "sharp": "0.35.4",
+    "@napi-rs/canvas": "1.0.8",
+    "yauzl": "3.4.0",
+    "tsx": "4.21.0"
+  },
+  "devDependencies": {
+    "@types/yauzl": "2.10.3"
+  }
+}

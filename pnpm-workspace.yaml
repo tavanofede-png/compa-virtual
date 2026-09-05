@@ -1,0 +1,15 @@
+packages:
+  - apps/*
+  - packages/*
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - '@tailwindcss/oxide'
+  - '@swc/core'
+  - supabase
+overrides:
+  esbuild: 0.28.1
+  'expo-router>query-string': 9.5.1
+  'xcode>uuid': 11.1.1
+patchedDependencies:
+  query-string@9.5.1: patches/query-string@9.5.1.patch

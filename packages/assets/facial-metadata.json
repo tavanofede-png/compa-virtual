@@ -1,0 +1,67 @@
+{
+  "baseAtlas": "faceless-bases-final.png",
+  "baseAtlasWidth": 2172,
+  "baseAtlasHeight": 724,
+  "baseColumns": 3,
+  "baseRows": 1,
+  "baseCellSize": 724,
+  "baseAlphaVerified": true,
+  "facialAtlas": "facial-features-atlas.png",
+  "facialAtlasWidth": 2172,
+  "facialAtlasHeight": 724,
+  "facialColumns": 6,
+  "facialRows": 2,
+  "facialCellSize": 362,
+  "facialAlphaVerified": true,
+  "cropMetadataFile": "facial-crop-bounds.json",
+  "sourceAnchorNormalized": [0.5, 0.5],
+  "rendering": "For eyes and mouth: tight-crop using facial-crop-bounds.json, preserve aspect ratio, center at target local coordinates below. These are visually estimated fit anchors awaiting app preview; no faces are baked into final bases.",
+  "creatures": {
+    "moss": {
+      "column": 0,
+      "visibleBounds": [113, 31, 529, 649],
+      "eyes": [315, 420],
+      "mouth": [315, 480],
+      "eyesWidth": 168,
+      "mouthWidth": 45,
+      "neck": [325, 535],
+      "head": [326, 348],
+      "bodyWidth": 435,
+      "foot": [360, 679]
+    },
+    "amber": {
+      "column": 1,
+      "visibleBounds": [80, 170, 512, 507],
+      "eyes": [294, 385],
+      "mouth": [294, 452],
+      "eyesWidth": 166,
+      "mouthWidth": 44,
+      "neck": [305, 513],
+      "head": [306, 300],
+      "bodyWidth": 480,
+      "foot": [337, 676]
+    },
+    "lilac": {
+      "column": 2,
+      "visibleBounds": [52, 42, 625, 647],
+      "eyes": [203, 373],
+      "mouth": [203, 431],
+      "eyesWidth": 148,
+      "mouthWidth": 42,
+      "neck": [224, 483],
+      "head": [213, 309],
+      "bodyWidth": 340,
+      "foot": [266, 688]
+    }
+  },
+  "eyeNames": [
+    "Abiertos",
+    "Contentos",
+    "Felices",
+    "Curiosos",
+    "Soñolientos",
+    "Tranquilos"
+  ],
+  "mouthNames": ["Sonrisa", "Risa", "Pícara", "Sorpresa", "Calma", "Alegría"],
+  "notes": "These are new matching original creatures with slightly different silhouettes from companions-atlas.png. Replace base sprites as a set. faceless-bases-draft.png is rejected opaque checkerboard and must not ship."
+}

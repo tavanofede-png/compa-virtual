@@ -1,0 +1,7 @@
+node_modules
+**/dist*
+**/.next
+**/out
+**/components/ui
+supabase/functions
+pnpm-lock.yaml

@@ -1,0 +1,9 @@
+**/node_modules
+**/.next
+**/dist-*
+**/out
+**/.expo
+**/.env
+**/.env.*
+**/*.tsbuildinfo
+.git

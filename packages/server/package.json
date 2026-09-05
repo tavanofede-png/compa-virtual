@@ -1,0 +1,19 @@
+{
+  "name": "@compa/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "bundle": "tsx scripts/bundle.ts"
+  },
+  "dependencies": {
+    "@compa/domain": "workspace:*",
+    "@supabase/supabase-js": "2.115.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1"
+  }
+}

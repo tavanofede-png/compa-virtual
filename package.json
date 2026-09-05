@@ -1,0 +1,34 @@
+{
+  "name": "compa-virtual",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @compa/web dev",
+    "mobile": "pnpm --filter @compa/mobile start",
+    "worker": "pnpm --filter @compa/worker dev",
+    "build": "pnpm --filter @compa/web build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "oxlint packages apps/web/app apps/web/src apps/mobile/app apps/worker/src tests",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm typecheck && pnpm lint && pnpm test && pnpm build",
+    "format": "prettier --write packages apps/web/src apps/web/app apps/mobile/app apps/mobile/src apps/worker/src tests docs README.md",
+    "seed:generate": "tsx scripts/seed.ts"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.0.0",
+    "tsx": "4.21.0",
+    "@types/node": "22.19.19",
+    "@electric-sql/pglite": "0.5.8",
+    "oxlint": "1.76.0",
+    "@electric-sql/pglite-pgvector": "0.0.9",
+    "zod": "4.5.4",
+    "prettier": "3.9.6"
+  },
+  "type": "module"
+}
