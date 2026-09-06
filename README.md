@@ -4,7 +4,7 @@ Compañero de estudio para secundaria argentina. Monorepo con web Next.js, apps 
 
 La escena actual usa **compañeros adolescentes y una habitación 3D interactiva**. Ver [catálogo, modelos y controles](docs/WORLD_3D.md). Sustituye la dirección inicial de criaturas en pixel art.
 
-**Estado de entrega:** implementación de desarrollo con demostración local y adaptadores reales. No es todavía una beta autorizada para alumnos. Las credenciales, los despliegues del backend/worker, las compilaciones firmadas y la validación en teléfonos se completan sobre esta base. Ver [VALIDATION.md](docs/VALIDATION.md).
+**Estado de entrega:** Supabase dedicado conectado a web y móvil, con esquema, RLS, datos iniciales, Storage privado y las funciones `api` y `reminders` desplegadas. Todavía faltan la credencial de IA, el worker de materiales, el programador de recordatorios, la compilación firmada y la validación en teléfonos antes de autorizar la beta para alumnos. Ver [VALIDATION.md](docs/VALIDATION.md).
 
 ## Abrir el proyecto
 
@@ -45,7 +45,7 @@ La web abre en el puerto 3000. **Explorar con datos ficticios** habilita un reco
 
 ## Apps nativas
 
-Para crear un **APK Android de prueba**, abrir `crear-apk-android.cmd` en Windows o ejecutar `node scripts/build-android.mjs`. El asistente vincula Expo y compila el perfil `preview` con datos ficticios. Ver [instalación y alcance de la prueba](docs/ANDROID_APK.md).
+Para crear un **APK Android de prueba**, abrir `crear-apk-android.cmd` en Windows o ejecutar `node scripts/build-android.mjs`. El asistente vincula Expo y compila el perfil `preview` conectado al proyecto de Supabase. Ver [instalación y alcance de la prueba](docs/ANDROID_APK.md).
 
 ```sh
 pnpm mobile

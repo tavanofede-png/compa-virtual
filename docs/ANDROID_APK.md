@@ -1,6 +1,6 @@
 # APK de prueba para Android
 
-El perfil `preview` genera un APK firmado de distribucion interna, con el JavaScript incluido. No necesita Expo Go ni un servidor de desarrollo. Usa datos ficticios locales incluso si existen variables de Supabase en el entorno remoto. El perfil `beta` conserva su configuracion para la integracion real posterior.
+El perfil `preview` genera un APK firmado de distribucion interna, con el JavaScript incluido. No necesita Expo Go ni un servidor de desarrollo. Queda conectado al proyecto dedicado de Supabase; el modo de datos ficticios sigue disponible desde la pantalla inicial para pruebas aisladas.
 
 ## Generar en esta computadora
 
@@ -15,11 +15,11 @@ No hace falta una cuenta de Google Play para esta prueba. La cuenta de Expo y el
 
 ## Instalar y probar
 
-Abrir el enlace final de EAS desde Android, descargar el `.apk` y permitir la instalacion desde ese navegador cuando Android lo solicite. Abrir Compa Virtual y elegir **Explorar con datos ficticios**.
+Abrir el enlace final de EAS desde Android, descargar el `.apk` y permitir la instalacion desde ese navegador cuando Android lo solicite. Abrir Compa Virtual, registrar una cuenta de prueba y verificar el correo antes de iniciar sesion. También se puede elegir **Explorar con datos ficticios** para comparar el recorrido sin sincronización.
 
 Comprobar habitacion y companero 3D, crear una obligacion, aceptar un plan, completar una sesion, cerrar/abrir la app y verificar la persistencia. Probar tambien sin conexion. Registrar modelo de telefono, version de Android y cualquier cierre o error grafico.
 
-Este APK utiliza los personajes actuales del proyecto. El modelo Harper de Meshy todavia no esta incorporado. La prueba no incluye IA conectada, registro real, procesamiento de archivos ni notificaciones push reales.
+Este APK utiliza los personajes actuales del proyecto. El modelo Harper de Meshy todavia no esta incorporado. El registro, la sincronización, las obligaciones, los planes y el progreso usan Supabase. La IA, el procesamiento de archivos y la entrega programada de notificaciones se habilitarán cuando estén configurados sus secretos y servicios pendientes.
 
 ## Estado verificado
 
