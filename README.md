@@ -45,6 +45,8 @@ La web abre en el puerto 3000. **Explorar con datos ficticios** habilita un reco
 
 ## Apps nativas
 
+Para crear un **APK Android de prueba**, abrir `crear-apk-android.cmd` en Windows o ejecutar `node scripts/build-android.mjs`. El asistente vincula Expo y compila el perfil `preview` con datos ficticios. Ver [instalación y alcance de la prueba](docs/ANDROID_APK.md).
+
 ```sh
 pnpm mobile
 # Dentro de apps/mobile, después de vincular la cuenta Expo:

@@ -326,6 +326,7 @@ grant all on all tables in schema public to service_role;
 grant usage,select on all sequences in schema public to service_role;
 
 create table private.ai_leases(user_id uuid primary key references auth.users(id) on delete cascade,expires_at timestamptz not null);
+alter table private.ai_leases enable row level security;
 create or replace function public.acquire_ai_lease(p_user uuid) returns boolean language plpgsql security definer set search_path='' as $$
 begin
  insert into private.ai_leases values(p_user,now()+interval '3 minutes')

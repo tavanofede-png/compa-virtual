@@ -1,12 +1,24 @@
-import type {ExpoConfig} from 'expo/config';
-const config:ExpoConfig={
- name:'Compa Virtual',slug:'compa-virtual',scheme:'compavirtual',version:'0.1.0',
- orientation:'portrait',userInterfaceStyle:'light',
- ios:{supportsTablet:true,bundleIdentifier:process.env.IOS_BUNDLE_IDENTIFIER??'com.compavirtual.estudio',infoPlist:{ITSAppUsesNonExemptEncryption:false}},
- android:{package:process.env.ANDROID_PACKAGE??'com.compavirtual.estudio',permissions:['POST_NOTIFICATIONS']},
- web:{bundler:'metro',output:'static'},
- plugins:['expo-router','expo-secure-store','expo-sqlite',['expo-notifications',{defaultChannel:'study-reminders'}]],
- extra:{eas:{projectId:process.env.EXPO_PUBLIC_EAS_PROJECT_ID??null}},
- experiments:{typedRoutes:true}
-};export default config;
+import type { ConfigContext, ExpoConfig } from "expo/config";
 
+// Keep project identity in app.json so EAS can persist its project ID.
+export default ({ config }: ConfigContext): ExpoConfig => {
+  const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID?.trim();
+  return {
+    ...config,
+    name: config.name ?? "Compa Virtual",
+    slug: config.slug ?? "compa-virtual",
+    ios: {
+      ...config.ios,
+      bundleIdentifier:
+        process.env.IOS_BUNDLE_IDENTIFIER || config.ios?.bundleIdentifier,
+    },
+    android: {
+      ...config.android,
+      package: process.env.ANDROID_PACKAGE || config.android?.package,
+    },
+    extra: {
+      ...config.extra,
+      ...(projectId ? { eas: { ...config.extra?.eas, projectId } } : {}),
+    },
+  };
+};

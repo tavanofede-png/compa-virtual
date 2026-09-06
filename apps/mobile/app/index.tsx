@@ -53,7 +53,10 @@ import { registerPush } from "../src/push";
 import { Button, Field, Choices, Card, styles as st, colors } from "../src/ui";
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL,
   key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
-const backend = url && key ? createBackend(url, key, secureStorage) : null;
+const backend =
+  process.env.EXPO_PUBLIC_DEMO_MODE !== "1" && url && key
+    ? createBackend(url, key, secureStorage)
+    : null;
 const tabs = [
   ["room", "Mi cuarto"],
   ["today", "Hoy"],
