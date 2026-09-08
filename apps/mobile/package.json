@@ -8,7 +8,9 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
-    "export": "node node_modules/expo/bin/cli export --platform all --max-workers 2"
+    "export": "pnpm export:android && pnpm export:ios",
+    "export:android": "node node_modules/expo/bin/cli export --platform android --output-dir dist-android --max-workers 2",
+    "export:ios": "node node_modules/expo/bin/cli export --platform ios --output-dir dist-ios --max-workers 2"
   },
   "dependencies": {
     "@compa/world3d": "workspace:*",

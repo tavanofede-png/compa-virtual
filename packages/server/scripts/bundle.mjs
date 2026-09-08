@@ -1,17 +1,16 @@
 import { build } from "esbuild";
 import { mkdir, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
-const root = resolve("../..");
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const scriptDirectory = dirname(fileURLToPath(import.meta.url));
+const root = resolve(scriptDirectory, "../../..");
+
 for (const name of ["api", "reminders"]) {
   const directory = resolve(root, "supabase/functions", name);
   await mkdir(directory, { recursive: true });
   await build({
-    stdin: {
-      contents: `import {create${name === "api" ? "Handler" : "ReminderHandler"}} from './src/${name === "api" ? "handler" : "reminders"}'; Deno.serve(create${name === "api" ? "Handler" : "ReminderHandler"}(Deno.env.toObject()));`,
-      resolveDir: process.cwd(),
-      sourcefile: "entry.ts",
-      loader: "ts",
-    },
+    entryPoints: [resolve(scriptDirectory, `${name}.entry.mjs`)],
     outfile: resolve(directory, "index.ts"),
     bundle: true,
     platform: "browser",

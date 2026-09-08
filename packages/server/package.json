@@ -6,7 +6,7 @@
   "exports": "./src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "bundle": "tsx scripts/bundle.ts"
+    "bundle": "node scripts/bundle.mjs"
   },
   "dependencies": {
     "@compa/domain": "workspace:*",

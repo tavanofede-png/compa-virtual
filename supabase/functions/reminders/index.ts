@@ -24492,5 +24492,5 @@ function createReminderHandler(env) {
   };
 }
 
-// entry.ts
+// scripts/reminders.entry.mjs
 Deno.serve(createReminderHandler(Deno.env.toObject()));

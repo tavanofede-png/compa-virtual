@@ -25533,5 +25533,5 @@ function createHandler(env) {
   };
 }
 
-// entry.ts
+// scripts/api.entry.mjs
 Deno.serve(createHandler(Deno.env.toObject()));
