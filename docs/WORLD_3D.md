@@ -35,7 +35,9 @@ Los GLB conservan geometría, colores y propiedades PBR compatibles. La microtex
 
 ### Fuente de producción en Blender
 
-Harper es el primer compañero reconstruido como activo de producción en Blender. El proyecto editable está en `packages/assets/3d/source/harper-master-v1.blend`, y su GLB optimizado y animado está en `packages/assets/3d/compa-harper-premium.glb`. Incluye 17 huesos, la animación `Idle`, piezas modulares y un informe reproducible de validación. El flujo completo está documentado en `docs/BLENDER_ASSET_PIPELINE.md`.
+Nova, Jay, Milo, Zoe, Sky, Harper, River y Aria están reconstruidos como activos de producción en Blender. Cada personaje tiene un proyecto `.blend` editable, un GLB optimizado y animado, una vista previa y un informe reproducible. Comparten el rig `compa-humanoid-v2`, 17 huesos, una animación `Idle` y ocho slots de personalización. El manifiesto está en `packages/assets/3d/companion-collection.json` y el flujo completo en `docs/BLENDER_ASSET_PIPELINE.md`.
+
+Las alturas oscilan entre 1,64 y 1,78 m. El cuarto mide 3,08 m de alto y usa un ancla métrica común, comprobada con Harper dentro de la escena. Esto evita que los compañeros cambien de tamaño al equipar ropa y permite reutilizar prendas entre todos.
 
 `Cozy moderno` es el primer cuarto maestro de Blender. Su fuente editable se encuentra en `packages/assets/3d/source/cozy-modern-master-v1.blend` y la entrega para la app en `packages/assets/3d/habitacion-cozy-premium.glb`. La escena mantiene una zona central libre y metadatos con el ancla del compañero y el objetivo de cámara.
 

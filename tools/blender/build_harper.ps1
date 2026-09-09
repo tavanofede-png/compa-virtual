@@ -16,15 +16,15 @@ if (-not $blenderPath) {
 
 Push-Location $projectRoot
 try {
-  & $blenderPath --background --python "tools\blender\build_harper.py"
+  & $blenderPath --background --python "tools\blender\build_companion_collection.py" -- harper
   if ($LASTEXITCODE -ne 0) {
     throw "Blender terminó con código $LASTEXITCODE"
   }
   $required = @(
-    "packages\assets\3d\source\harper-master-v1.blend",
+    "packages\assets\3d\source\harper-master-v2.blend",
     "packages\assets\3d\compa-harper-premium.glb",
     "packages\assets\3d\previews\compa-harper-premium.png",
-    "packages\assets\3d\source\harper-master-v1.report.json"
+    "packages\assets\3d\source\harper-master-v2.report.json"
   )
   foreach ($file in $required) {
     if (-not (Test-Path -LiteralPath $file)) {
@@ -34,4 +34,3 @@ try {
 } finally {
   Pop-Location
 }
-
