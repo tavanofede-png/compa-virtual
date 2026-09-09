@@ -41,3 +41,15 @@ El proceso actualiza:
 - `packages/assets/3d/source/harper-master-v1.report.json`.
 
 La paleta, proporciones y geometría se definen en `tools/blender/build_harper.py`. El archivo `.blend` también puede abrirse y editarse manualmente; el script sigue siendo la fuente reproducible del primer maestro.
+
+## Primer cuarto: Cozy moderno
+
+`cozy-modern-master-v1.blend` es la primera habitación creada con este flujo. Incluye arquitectura de corte isométrico, ventana con abertura real, cama y textiles ondulados, escritorio, silla, monitor, biblioteca, iluminación, plantas, guitarra, skate, mochila y objetos personales. El área central mantiene un ancla libre para el compañero y las interacciones de estudio.
+
+La fuente separa `ARCHITECTURE`, `BED`, `DESK`, `STORAGE`, `DECOR` y `LIGHTING`. La exportación agrupa geometría por material y entrega un GLB estático de 31 mallas y 40.816 triángulos.
+
+Para regenerarlo en Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/blender/build_cozy_room.ps1
+```

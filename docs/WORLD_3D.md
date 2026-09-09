@@ -37,6 +37,8 @@ Los GLB conservan geometría, colores y propiedades PBR compatibles. La microtex
 
 Harper es el primer compañero reconstruido como activo de producción en Blender. El proyecto editable está en `packages/assets/3d/source/harper-master-v1.blend`, y su GLB optimizado y animado está en `packages/assets/3d/compa-harper-premium.glb`. Incluye 17 huesos, la animación `Idle`, piezas modulares y un informe reproducible de validación. El flujo completo está documentado en `docs/BLENDER_ASSET_PIPELINE.md`.
 
+`Cozy moderno` es el primer cuarto maestro de Blender. Su fuente editable se encuentra en `packages/assets/3d/source/cozy-modern-master-v1.blend` y la entrega para la app en `packages/assets/3d/habitacion-cozy-premium.glb`. La escena mantiene una zona central libre y metadatos con el ancla del compañero y el objetivo de cámara.
+
 Los objetos estáticos se agrupan por material para reducir llamadas de dibujo. La web limita resolución de renderizado, pausa cuando la escena no se ve y reutiliza un único renderer para miniaturas. Un fallo de WebGL muestra un estado recuperable sin bloquear las pantallas de estudio.
 
 ## Validación

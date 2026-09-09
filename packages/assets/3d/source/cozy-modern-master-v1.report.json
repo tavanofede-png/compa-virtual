@@ -1,0 +1,29 @@
+{
+  "room": "Cozy moderno",
+  "style": "premium stylized voxel",
+  "source": "packages\\assets\\3d\\source\\cozy-modern-master-v1.blend",
+  "export": "packages\\assets\\3d\\habitacion-cozy-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\habitacion-cozy-premium.png",
+  "sourceCollections": [
+    "ARCHITECTURE",
+    "BED",
+    "DESK",
+    "STORAGE",
+    "DECOR",
+    "LIGHTING"
+  ],
+  "optimizedMeshObjects": 31,
+  "glbBytes": 2850236,
+  "blendBytes": 290935,
+  "renderEngine": "BLENDER_EEVEE",
+  "blenderVersion": "5.2.1 LTS",
+  "validGlb2": true,
+  "exportedMeshes": 31,
+  "exportedNodes": 31,
+  "exportedMaterials": 31,
+  "exportedVertices": 80352,
+  "exportedTriangles": 40816,
+  "skins": 0,
+  "animationClips": [],
+  "externalImages": 0
+}

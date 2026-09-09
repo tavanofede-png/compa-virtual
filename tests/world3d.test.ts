@@ -142,3 +142,36 @@ it("ships the Blender-authored Harper master within the mobile budget", async ()
     ),
   ).toHaveLength(0);
 });
+
+it("ships the Blender-authored Cozy room within the mobile budget", async () => {
+  const path = new URL(
+      "../packages/assets/3d/habitacion-cozy-premium.glb",
+      import.meta.url,
+    ),
+    buffer = await readFile(path);
+  expect(buffer.toString("ascii", 0, 4)).toBe("glTF");
+  expect(buffer.readUInt32LE(4)).toBe(2);
+  expect(buffer.readUInt32LE(8)).toBe(buffer.length);
+  const jsonLength = buffer.readUInt32LE(12),
+    gltf = JSON.parse(buffer.toString("utf8", 20, 20 + jsonLength));
+  let triangles = 0;
+  for (const mesh of gltf.meshes) {
+    for (const primitive of mesh.primitives) {
+      const indexCount =
+        primitive.indices === undefined
+          ? gltf.accessors[primitive.attributes.POSITION].count
+          : gltf.accessors[primitive.indices].count;
+      triangles += indexCount / 3;
+    }
+  }
+  expect(gltf.meshes.length).toBeLessThanOrEqual(40);
+  expect(triangles).toBeLessThanOrEqual(50_000);
+  expect(buffer.length).toBeLessThanOrEqual(4_000_000);
+  expect(gltf.skins ?? []).toHaveLength(0);
+  expect(gltf.animations ?? []).toHaveLength(0);
+  expect(
+    (gltf.images ?? []).filter(
+      (image: { uri?: string }) => image.uri && !image.uri.startsWith("data:"),
+    ),
+  ).toHaveLength(0);
+});
