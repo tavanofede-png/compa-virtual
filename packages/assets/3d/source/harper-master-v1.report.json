@@ -1,0 +1,30 @@
+{
+  "character": "Harper",
+  "style": "premium stylized voxel",
+  "source": "packages\\assets\\3d\\source\\harper-master-v1.blend",
+  "export": "packages\\assets\\3d\\compa-harper-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-harper-premium.png",
+  "objects": 49,
+  "meshObjects": 48,
+  "rawVerticesBeforeModifiers": 8216,
+  "rawTrianglesBeforeModifiers": 15900,
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1160196,
+  "blendBytes": 196145,
+  "renderEngine": "BLENDER_EEVEE",
+  "blenderVersion": "5.2.1 LTS",
+  "validGlb2": true,
+  "exportedMeshes": 48,
+  "exportedNodes": 66,
+  "exportedMaterials": 28,
+  "exportedVertices": 32056,
+  "exportedTriangles": 15900,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

@@ -33,6 +33,10 @@ La ropa está modelada, pero no tiene simulación de tela. Los GLB no incluyen u
 
 Los GLB conservan geometría, colores y propiedades PBR compatibles. La microtextura de los shaders y el posprocesado son efectos de ejecución de la app y no se hornean en mapas de textura dentro de los GLB.
 
+### Fuente de producción en Blender
+
+Harper es el primer compañero reconstruido como activo de producción en Blender. El proyecto editable está en `packages/assets/3d/source/harper-master-v1.blend`, y su GLB optimizado y animado está en `packages/assets/3d/compa-harper-premium.glb`. Incluye 17 huesos, la animación `Idle`, piezas modulares y un informe reproducible de validación. El flujo completo está documentado en `docs/BLENDER_ASSET_PIPELINE.md`.
+
 Los objetos estáticos se agrupan por material para reducir llamadas de dibujo. La web limita resolución de renderizado, pausa cuando la escena no se ve y reutiliza un único renderer para miniaturas. Un fallo de WebGL muestra un estado recuperable sin bloquear las pantallas de estudio.
 
 ## Validación

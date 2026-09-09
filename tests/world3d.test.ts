@@ -107,3 +107,38 @@ it("exports original editable glTF 2.0 binary assets with a valid scene", async 
     expect(json.meshes.length).toBeGreaterThan(0);
   }
 });
+
+it("ships the Blender-authored Harper master within the mobile budget", async () => {
+  const path = new URL(
+      "../packages/assets/3d/compa-harper-premium.glb",
+      import.meta.url,
+    ),
+    buffer = await readFile(path);
+  expect(buffer.toString("ascii", 0, 4)).toBe("glTF");
+  expect(buffer.readUInt32LE(4)).toBe(2);
+  expect(buffer.readUInt32LE(8)).toBe(buffer.length);
+  const jsonLength = buffer.readUInt32LE(12),
+    gltf = JSON.parse(buffer.toString("utf8", 20, 20 + jsonLength));
+  let triangles = 0;
+  for (const mesh of gltf.meshes) {
+    for (const primitive of mesh.primitives) {
+      const indexCount =
+        primitive.indices === undefined
+          ? gltf.accessors[primitive.attributes.POSITION].count
+          : gltf.accessors[primitive.indices].count;
+      triangles += indexCount / 3;
+    }
+  }
+  expect(gltf.meshes.length).toBeLessThanOrEqual(50);
+  expect(triangles).toBeLessThanOrEqual(20_000);
+  expect(buffer.length).toBeLessThanOrEqual(1_500_000);
+  expect(gltf.skins).toHaveLength(1);
+  expect(
+    gltf.animations.map((animation: { name: string }) => animation.name),
+  ).toContain("Idle");
+  expect(
+    (gltf.images ?? []).filter(
+      (image: { uri?: string }) => image.uri && !image.uri.startsWith("data:"),
+    ),
+  ).toHaveLength(0);
+});
