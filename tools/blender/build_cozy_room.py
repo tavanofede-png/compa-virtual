@@ -232,22 +232,25 @@ def build_scene() -> dict[str, object]:
     decor = collections["DECOR"]
 
     # Cutaway shell with a real window opening and visible wall thickness.
-    add_box("Architecture_FloorSlab", (0, 0, 0.02), (6.35, 5.35, 0.20), mats["floor_dark"], arch, bevel=0.04)
-    for index in range(20):
+    add_box("Architecture_FloorSlab", (0.60, 0, 0.02), (7.55, 5.35, 0.20), mats["floor_dark"], arch, bevel=0.04)
+    for index in range(24):
         x = -3.0 + index * 0.315
         floor_mat = mats[("floor", "floor_light", "floor", "floor_dark")[index % 4]]
         add_box(f"Architecture_FloorPlank_{index:02}", (x, 0, 0.145), (0.30, 5.12, 0.055), floor_mat, arch, bevel=0.008, segments=1)
-    for index in range(9):
-        y = -2.32 + index * 0.58
-        add_box(f"Detail_FloorJoint_{index}", (0, y, 0.177), (6.05, 0.016, 0.008), mats["floor_dark"], arch, bevel=0.002, segments=1)
+        for joint in range(3):
+            y = -1.75 + joint * 1.75 + (0.86 if index % 2 else 0.0)
+            if y < 2.45:
+                add_box(f"Detail_FloorJoint_{index}_{joint}", (x, y, 0.177), (0.29, 0.016, 0.008), mats["floor_dark"], arch, bevel=0.002, segments=1)
+        grain_y = -0.72 + (index % 4) * 0.43
+        add_box(f"Detail_FloorGrain_{index}", (x - 0.055, grain_y, 0.179), (0.012, 0.74, 0.006), mats["floor_dark"], arch, bevel=0.002, segments=1)
 
     # Back wall segments frame a 1.65 x 1.35 m window.
     add_box("Architecture_BackWall_Left", (-2.67, 2.62, 1.58), (0.95, 0.20, 3.08), mats["wall"], arch, bevel=0.035)
-    add_box("Architecture_BackWall_Right", (0.55, 2.62, 1.58), (4.45, 0.20, 3.08), mats["wall"], arch, bevel=0.035)
+    add_box("Architecture_BackWall_Right", (1.28, 2.62, 1.58), (5.95, 0.20, 3.08), mats["wall"], arch, bevel=0.035)
     add_box("Architecture_BackWall_BelowWindow", (-1.72, 2.62, 0.55), (0.95, 0.20, 1.02), mats["wall"], arch, bevel=0.02)
     add_box("Architecture_BackWall_AboveWindow", (-1.72, 2.62, 2.72), (0.95, 0.20, 0.80), mats["wall"], arch, bevel=0.02)
     add_box("Architecture_LeftWall", (-3.07, 0, 1.58), (0.20, 5.25, 3.08), mats["wall_shadow"], arch, bevel=0.035)
-    add_box("Architecture_BackBaseboard", (0, 2.48, 0.29), (6.05, 0.10, 0.22), mats["trim"], arch, bevel=0.025)
+    add_box("Architecture_BackBaseboard", (0.60, 2.48, 0.29), (7.25, 0.10, 0.22), mats["trim"], arch, bevel=0.025)
     add_box("Architecture_LeftBaseboard", (-2.93, 0, 0.29), (0.10, 5.05, 0.22), mats["trim"], arch, bevel=0.025)
 
     # Window, sill, mullions and curtains.
@@ -258,6 +261,10 @@ def build_scene() -> dict[str, object]:
     add_box("Architecture_WindowFrame_Right", (-1.20, 2.50, 1.88), (0.09, 0.12, 1.40), mats["white"], arch, bevel=0.018)
     add_box("Architecture_WindowMullion", (-1.72, 2.47, 1.88), (0.055, 0.13, 1.27), mats["white"], arch, bevel=0.012)
     add_box("Architecture_WindowSill", (-1.72, 2.39, 1.17), (1.20, 0.34, 0.09), mats["trim"], arch, bevel=0.022)
+    add_cylinder("Detail_WindowSun", (-1.95, 2.545, 2.18), 0.13, 0.018, mats["gold"], arch, rotation=(math.pi / 2, 0, 0), vertices=20)
+    add_box("Detail_WindowHill_Back", (-1.47, 2.548, 1.57), (0.49, 0.018, 0.36), mats["sage_light"], arch, rotation=(0, 0, 0.18), bevel=0.12, segments=3)
+    add_box("Detail_WindowHill_Front", (-1.92, 2.54, 1.49), (0.55, 0.02, 0.30), mats["leaf_light"], arch, rotation=(0, 0, -0.14), bevel=0.12, segments=3)
+    add_box("Detail_WindowCloud", (-1.46, 2.535, 2.18), (0.34, 0.02, 0.10), mats["white"], arch, bevel=0.05, segments=3)
     add_box("Decor_CurtainRod", (-1.72, 2.39, 2.72), (2.05, 0.07, 0.07), mats["metal"], decor, bevel=0.02)
     add_curtain("Decor_Curtain_Left", -2.38, 0.48, mats["pink_light"], decor)
     add_curtain("Decor_Curtain_Right", -1.05, 0.48, mats["pink_light"], decor)
@@ -273,6 +280,9 @@ def build_scene() -> dict[str, object]:
     add_box("Bed_Pillow_Back", (-1.98, 0.84, 1.02), (0.78, 0.48, 0.26), mats["linen_shadow"], bed, rotation=(0.08, 0, -0.05), bevel=0.13, segments=4)
     add_box("Bed_Pillow_Front", (-1.55, 0.75, 1.08), (0.72, 0.44, 0.25), mats["linen"], bed, rotation=(0.06, 0, 0.08), bevel=0.13, segments=4)
     add_box("Bed_Cushion", (-1.76, 0.63, 1.16), (0.40, 0.30, 0.29), mats["pink_dark"], bed, rotation=(0.08, 0, -0.08), bevel=0.10, segments=4)
+    add_box("Detail_DuvetPiping_Left", (-2.50, -0.18, 0.94), (0.025, 1.72, 0.035), mats["linen_shadow"], bed, bevel=0.01)
+    add_box("Detail_DuvetPiping_Right", (-1.06, -0.18, 0.94), (0.025, 1.72, 0.035), mats["linen_shadow"], bed, bevel=0.01)
+    add_sphere("Detail_CushionButton", (-1.76, 0.465, 1.16), (0.035, 0.018, 0.035), mats["cream"], bed, segments=10, rings=6)
 
     # Nightstand and warm lamp.
     add_box("Storage_Nightstand", (-2.64, 1.17, 0.62), (0.58, 0.58, 0.72), mats["oak_light"], storage, bevel=0.045)
@@ -300,10 +310,15 @@ def build_scene() -> dict[str, object]:
     for index, (width, z, color) in enumerate(((0.50, 1.70, mats["white"]), (0.68, 1.59, mats["sage_light"]), (0.40, 1.48, mats["pink_light"]))):
         add_box(f"Detail_MonitorUI_{index}", (1.18, 1.873, z), (width, 0.014, 0.035), color, desk, bevel=0.006)
     add_box("Desk_Keyboard", (1.22, 1.58, 1.08), (0.68, 0.30, 0.055), mats["cream"], desk, rotation=(0.07, 0, 0), bevel=0.025)
+    add_box("Desk_DeskMat", (1.30, 1.66, 1.055), (1.42, 0.54, 0.022), mats["sage"], desk, bevel=0.035)
     for row in range(3):
         for col in range(8):
             add_box(f"Detail_Key_{row}_{col}", (0.94 + col * 0.08, 1.48 + row * 0.07, 1.12 + row * 0.002), (0.055, 0.045, 0.014), mats["white"], desk, bevel=0.004, segments=1)
     add_box("Desk_Notebook", (2.02, 1.68, 1.07), (0.40, 0.30, 0.045), mats["pink"], desk, rotation=(0, 0, -0.12), bevel=0.015)
+    for side, x in (("L", 0.56), ("R", 1.82)):
+        add_box(f"Desk_Speaker_{side}", (x, 1.91, 1.30), (0.22, 0.20, 0.40), mats["black"], desk, bevel=0.045)
+        add_cylinder(f"Desk_SpeakerWoofer_{side}", (x, 1.795, 1.27), 0.070, 0.025, mats["screen_light"], desk, rotation=(math.pi / 2, 0, 0), vertices=16)
+        add_cylinder(f"Desk_SpeakerTweeter_{side}", (x, 1.792, 1.40), 0.035, 0.025, mats["screen_glow"], desk, rotation=(math.pi / 2, 0, 0), vertices=12)
     add_cylinder("Desk_PencilCup", (2.26, 2.00, 1.22), 0.10, 0.26, mats["cream"], desk, rotation=(0, 0, 0), vertices=12)
     for index, color in enumerate((mats["pink_dark"], mats["sage"], mats["gold"])):
         add_box(f"Desk_Pencil_{index}", (2.21 + index * 0.045, 2.00, 1.43 + index * 0.03), (0.025, 0.025, 0.34), color, desk, rotation=(0.0, 0.08 * (index - 1), 0), bevel=0.005)
@@ -321,23 +336,23 @@ def build_scene() -> dict[str, object]:
         add_cylinder(f"Desk_ChairWheel_{index}", (1.36 + math.cos(angle) * 0.44, 1.17 + math.sin(angle) * 0.44, 0.18), 0.06, 0.055, mats["black"], desk, rotation=(math.pi / 2, 0, angle), vertices=10)
 
     # Tall open shelving with books, storage boxes, trophies and plants.
-    add_box("Storage_BookcaseBack", (2.30, 1.15, 1.48), (1.20, 0.13, 2.50), mats["oak_dark"], storage, bevel=0.025)
-    for x in (1.75, 2.85):
-        add_box(f"Storage_BookcaseSide_{x}", (x, 0.85, 1.48), (0.13, 0.60, 2.50), mats["oak"], storage, bevel=0.025)
+    add_box("Storage_BookcaseBack", (3.50, 2.22, 1.48), (1.20, 0.13, 2.50), mats["oak_dark"], storage, bevel=0.025)
+    for x in (2.95, 4.05):
+        add_box(f"Storage_BookcaseSide_{x}", (x, 1.92, 1.48), (0.13, 0.60, 2.50), mats["oak"], storage, bevel=0.025)
     for index, z in enumerate((0.30, 0.78, 1.26, 1.74, 2.22, 2.68)):
-        add_box(f"Storage_BookcaseShelf_{index}", (2.30, 0.85, z), (1.20, 0.60, 0.11), mats["oak_light"], storage, bevel=0.022)
-    add_books("Storage_Books_Lower", (1.90, 0.53, 0.83), 6, mats, storage)
-    add_books("Storage_Books_Middle", (1.93, 0.53, 1.31), 5, mats, storage)
-    add_books("Storage_Books_Stack", (2.30, 0.73, 1.78), 3, mats, storage, vertical=False)
-    add_box("Storage_Box", (2.30, 0.82, 0.53), (0.72, 0.45, 0.28), mats["pink_dark"], storage, bevel=0.045)
-    add_box("Storage_BoxHandle", (2.30, 0.575, 0.54), (0.18, 0.025, 0.055), mats["cream"], storage, bevel=0.012)
+        add_box(f"Storage_BookcaseShelf_{index}", (3.50, 1.92, z), (1.20, 0.60, 0.11), mats["oak_light"], storage, bevel=0.022)
+    add_books("Storage_Books_Lower", (3.10, 1.60, 0.83), 6, mats, storage)
+    add_books("Storage_Books_Middle", (3.13, 1.60, 1.31), 5, mats, storage)
+    add_books("Storage_Books_Stack", (3.50, 1.80, 1.78), 3, mats, storage, vertical=False)
+    add_box("Storage_Box", (3.50, 1.89, 0.53), (0.72, 0.45, 0.28), mats["pink_dark"], storage, bevel=0.045)
+    add_box("Storage_BoxHandle", (3.50, 1.645, 0.54), (0.18, 0.025, 0.055), mats["cream"], storage, bevel=0.012)
 
     # Trophy reads as a premium collectible at room scale.
-    add_cylinder("Decor_TrophyCup", (2.30, 0.78, 2.43), 0.15, 0.24, mats["gold"], decor, rotation=(0, 0, 0), vertices=16)
-    add_cylinder("Decor_TrophyStem", (2.30, 0.78, 2.25), 0.035, 0.22, mats["gold"], decor, rotation=(0, 0, 0), vertices=10)
-    add_box("Decor_TrophyBase", (2.30, 0.78, 2.11), (0.30, 0.26, 0.12), mats["oak_dark"], decor, bevel=0.025)
+    add_cylinder("Decor_TrophyCup", (3.50, 1.85, 2.43), 0.15, 0.24, mats["gold"], decor, rotation=(0, 0, 0), vertices=16)
+    add_cylinder("Decor_TrophyStem", (3.50, 1.85, 2.25), 0.035, 0.22, mats["gold"], decor, rotation=(0, 0, 0), vertices=10)
+    add_box("Decor_TrophyBase", (3.50, 1.85, 2.11), (0.30, 0.26, 0.12), mats["oak_dark"], decor, bevel=0.025)
     for side in (-1, 1):
-        add_box(f"Decor_TrophyHandle_{side}", (2.30 + side * 0.18, 0.78, 2.45), (0.12, 0.05, 0.16), mats["gold"], decor, rotation=(0, 0, side * 0.35), bevel=0.018)
+        add_box(f"Decor_TrophyHandle_{side}", (3.50 + side * 0.18, 1.85, 2.45), (0.12, 0.05, 0.16), mats["gold"], decor, rotation=(0, 0, side * 0.35), bevel=0.018)
 
     # Floating shelf and curated personal objects.
     add_box("Storage_FloatingShelf", (0.58, 2.43, 2.35), (2.25, 0.32, 0.11), mats["oak_light"], storage, bevel=0.025)
@@ -393,14 +408,14 @@ def build_scene() -> dict[str, object]:
             add_cylinder(f"Decor_SkateWheel_{z}_{y}", (-2.75, y, z), 0.065, 0.05, mats["pink"], decor, rotation=(0, math.pi / 2, 0), vertices=10)
 
     # Warm LED line and bulbs, represented as emissive geometry in the GLB.
-    add_box("Decor_LED_BackWall", (0.70, 2.45, 2.91), (4.46, 0.035, 0.035), mats["led"], decor, bevel=0.012)
+    add_box("Decor_LED_BackWall", (1.30, 2.45, 2.91), (5.70, 0.035, 0.035), mats["led"], decor, bevel=0.012)
     add_box("Decor_LED_LeftWall", (-2.90, 0.20, 2.91), (0.035, 4.42, 0.035), mats["led"], decor, bevel=0.012)
     for index in range(10):
         add_sphere(f"Decor_StringBulb_{index}", (-2.84, -2.0 + index * 0.43, 2.66 + 0.08 * math.sin(index * 0.9)), (0.045, 0.045, 0.055), mats["led"], decor, segments=8, rings=5)
 
     # Deliberately empty zone for avatar placement and interaction.
-    root["avatar_anchor"] = [0.65, -0.42, 0.20]
-    root["camera_target"] = [0.0, 0.15, 1.20]
+    root["avatar_anchor"] = [0.85, -0.42, 0.20]
+    root["camera_target"] = [0.60, 0.15, 1.20]
     root["room_theme"] = "cozy_modern"
     root["asset_version"] = 1
     root["style"] = "premium_stylized_voxel"
@@ -420,7 +435,7 @@ def build_scene() -> dict[str, object]:
     bpy.ops.object.light_add(type="AREA", location=(-4.6, -2.0, 3.8))
     fill = bpy.context.object
     fill.name = "Light_Fill"
-    fill.data.energy = 900
+    fill.data.energy = 650
     fill.data.size = 4.0
     fill.data.color = (0.68, 0.82, 1.0)
     look_at(fill, (-0.5, 0.3, 1.0))
@@ -443,20 +458,20 @@ def build_scene() -> dict[str, object]:
 
     studio = collections["STUDIO_PREVIEW"]
     studio_floor = material("MAT_STUDIO", "#EDE8E3", roughness=0.92)
-    add_box("Studio_Ground", (0, 0, -0.18), (11, 11, 0.15), studio_floor, studio, bevel=0.04)
-    bpy.ops.object.camera_add(location=(8.1, -9.4, 7.4))
+    add_box("Studio_Ground", (0.6, 0, -0.18), (12, 11, 0.15), studio_floor, studio, bevel=0.04)
+    bpy.ops.object.camera_add(location=(9.3, -10.5, 8.0))
     camera = bpy.context.object
     camera.name = "Camera_Isometric_Cozy"
     camera.data.type = "ORTHO"
-    camera.data.ortho_scale = 7.7
-    look_at(camera, (0, 0.15, 1.15))
+    camera.data.ortho_scale = 8.5
+    look_at(camera, (0.60, 0.15, 1.15))
     move_to_collection(camera, studio)
     scene.camera = camera
     scene.render.filepath = str(PREVIEW_PATH)
     scene.world.use_nodes = True
     background = scene.world.node_tree.nodes.get("Background")
     background.inputs["Color"].default_value = rgba("#E8E4E1")
-    background.inputs["Strength"].default_value = 0.72
+    background.inputs["Strength"].default_value = 0.55
     return {"root": root, "collections": collections}
 
 

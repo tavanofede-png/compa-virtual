@@ -46,7 +46,7 @@ La paleta, proporciones y geometría se definen en `tools/blender/build_harper.p
 
 `cozy-modern-master-v1.blend` es la primera habitación creada con este flujo. Incluye arquitectura de corte isométrico, ventana con abertura real, cama y textiles ondulados, escritorio, silla, monitor, biblioteca, iluminación, plantas, guitarra, skate, mochila y objetos personales. El área central mantiene un ancla libre para el compañero y las interacciones de estudio.
 
-La fuente separa `ARCHITECTURE`, `BED`, `DESK`, `STORAGE`, `DECOR` y `LIGHTING`. La exportación agrupa geometría por material y entrega un GLB estático de 31 mallas y 40.816 triángulos.
+La fuente separa `ARCHITECTURE`, `BED`, `DESK`, `STORAGE`, `DECOR` y `LIGHTING`. La exportación agrupa geometría por material y entrega un GLB estático de 31 mallas y 46.468 triángulos. La segunda revisión amplía el cuarto hacia la derecha para colocar la biblioteca junto al escritorio, usa tablas con juntas escalonadas y agrega paisaje exterior, parlantes, costuras y más detalle superficial.
 
 Para regenerarlo en Windows:
 
