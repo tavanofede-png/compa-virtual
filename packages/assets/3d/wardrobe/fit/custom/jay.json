@@ -1,0 +1,58 @@
+{
+  "character": "jay",
+  "outfit": [
+    "tee-white-planet",
+    "shorts-olive-cargo",
+    "sneaker-red-panel"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "b73a96d8f92bca9ff3ded5cef11f6b0adc2ca62f0de49634e4c22a9ff3df92f0",
+  "fitScale": [
+    0.9107964634895325,
+    0.9107964634895325,
+    0.9107964634895325
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 12904,
+    "weightSumRange": [
+      0.9999999888241291,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "6e125c883a8a8e432fbadb3da1a3380b629f4656f0f6d68919583a23f1631a61"
+}

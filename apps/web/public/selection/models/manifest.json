@@ -1,0 +1,216 @@
+{
+  "characters": [
+    {
+      "file": "nova-body.glb",
+      "bytes": 5416512,
+      "sha256": "fa5081cf8a3db2c9f0c49dd896706efaa62ca0626ee6ca2d4ba94953935ab697",
+      "batches": 20,
+      "id": "nova",
+      "rigScale": [
+        0.8579588532447815,
+        0.8579588532447815,
+        0.8579588532447815
+      ],
+      "height": 1.66,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "jay-body.glb",
+      "bytes": 6302880,
+      "sha256": "59bc5bae8c7a155cf518ca09bb337c76fa3b48eab57de8c3d18476abe3814908",
+      "batches": 21,
+      "id": "jay",
+      "rigScale": [
+        0.9107964634895325,
+        0.9107964634895325,
+        0.9107964634895325
+      ],
+      "height": 1.76,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "milo-body.glb",
+      "bytes": 5249620,
+      "sha256": "ad5c42b0db798863c018eeadbe4229ea4d5c8b4af1c424b9899679f353d29feb",
+      "batches": 20,
+      "id": "milo",
+      "rigScale": [
+        0.8815991878509521,
+        0.8815991878509521,
+        0.8815991878509521
+      ],
+      "height": 1.72,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "zoe-body.glb",
+      "bytes": 7082772,
+      "sha256": "38a2c4c1fc541edb6bdebb5ce8bbe3e6dff21f927766fec906146f24fa3327f4",
+      "batches": 21,
+      "id": "zoe",
+      "rigScale": [
+        0.800434947013855,
+        0.800434947013855,
+        0.800434947013855
+      ],
+      "height": 1.64,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "sky-body.glb",
+      "bytes": 5416048,
+      "sha256": "0098f3dd0ce7810b01e4acad439eb23008e297d7a0b713860d4a93916ef8cad5",
+      "batches": 20,
+      "id": "sky",
+      "rigScale": [
+        0.8662225008010864,
+        0.8662225008010864,
+        0.8662225008010864
+      ],
+      "height": 1.69,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "harper-body.glb",
+      "bytes": 5195320,
+      "sha256": "6d717f31f2b914a3e97d132cdfb6da8b70d7647c3061878634c4dde225955176",
+      "batches": 20,
+      "id": "harper",
+      "rigScale": [
+        0.8993062376976013,
+        0.8993062376976013,
+        0.8993062376976013
+      ],
+      "height": 1.74,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "river-body.glb",
+      "bytes": 5455804,
+      "sha256": "747727b343e947578a74a34b216dbe823a16351c04c8af1012490fb395d4a3ba",
+      "batches": 20,
+      "id": "river",
+      "rigScale": [
+        0.9199799299240112,
+        0.9199799299240112,
+        0.9199799299240112
+      ],
+      "height": 1.78,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "aria-body.glb",
+      "bytes": 7195224,
+      "sha256": "d1241873596b7d4fc016a89264294c0e574c4780c3f7188a74130a33d3693a37",
+      "batches": 21,
+      "id": "aria",
+      "rigScale": [
+        0.8489624261856079,
+        0.8489624261856079,
+        0.8489624261856079
+      ],
+      "height": 1.68,
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    }
+  ],
+  "rooms": [
+    {
+      "file": "cozy-room.glb",
+      "bytes": 18815068,
+      "sha256": "379bd0ffc5e444687c606ec6692730e6af0664bb3820fcf047878edd4ac02457",
+      "batches": 69,
+      "id": "cozy",
+      "objects": 2633,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "minimalista-room.glb",
+      "bytes": 19188168,
+      "sha256": "524684bc93921061997f55b046715a4ac885d4155f83c547c35b7407459f4abf",
+      "batches": 70,
+      "id": "minimalista",
+      "objects": 2722,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "tecnologia-room.glb",
+      "bytes": 19544380,
+      "sha256": "ea0307aa86344bac978e1ea1aaed032d0c210458e1c83629a819e4fae3d91b25",
+      "batches": 71,
+      "id": "tecnologia",
+      "objects": 2799,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "naturaleza-room.glb",
+      "bytes": 21328448,
+      "sha256": "666a83a710d0ff999a30d8c1932fed9c465c16437a4ce622217cabaf6d1fb706",
+      "batches": 70,
+      "id": "naturaleza",
+      "objects": 2885,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "urbano-room.glb",
+      "bytes": 19763636,
+      "sha256": "517ea744e9bfb4527e4e8bdcba2918eb81d2ba56a54bd34bbf5a47b4759d667d",
+      "batches": 74,
+      "id": "urbano",
+      "objects": 2853,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    },
+    {
+      "file": "biblioteca-moderna-room.glb",
+      "bytes": 25439408,
+      "sha256": "e5ae6cdb9e0a324650115c56d976bbd32f13ffbf8a14168b95b2c9687d44f93c",
+      "batches": 70,
+      "id": "biblioteca-moderna",
+      "objects": 5117,
+      "anchorBlender": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "positionsUnchanged": true,
+      "normalComponentError": 0.007874015748031496
+    }
+  ]
+}

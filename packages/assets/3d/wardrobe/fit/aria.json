@@ -1,0 +1,60 @@
+{
+  "character": "aria",
+  "outfit": [
+    "puffer-ivory-label",
+    "cargo-black-orange-stitch",
+    "boot-yellow-hiker",
+    "bucket-green-flower",
+    "backpack-pink-plain"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "b8714b6cd6ab634a1e73c17692d18779670139cdf3303252584d559a6c01beed",
+  "fitScale": [
+    0.8489624261856079,
+    0.8489624261856079,
+    0.8489624261856079
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 21776,
+    "weightSumRange": [
+      0.9999999850988388,
+      1.0000000298023224
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 4173,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "25a401cf19a12bfa5cc11a460b916a5ba12b45d3c83a74d229df131937e32daf"
+}

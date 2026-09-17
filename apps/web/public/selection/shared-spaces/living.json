@@ -1,0 +1,133 @@
+{
+  "id": "living",
+  "name": "Living colaborativo",
+  "version": 2,
+  "units": "metres",
+  "capacity": 6,
+  "bounds": [
+    -3.9,
+    -2.9,
+    3.9,
+    2.9
+  ],
+  "anchors": [
+    {
+      "id": "SEAT_01",
+      "position": [
+        -2.94,
+        0.46,
+        0.18
+      ],
+      "yaw": 1.5707963267948966,
+      "approach": [
+        -2.02,
+        0.015,
+        0.18
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "sofa"
+    },
+    {
+      "id": "SEAT_02",
+      "position": [
+        -2.94,
+        0.46,
+        -0.98
+      ],
+      "yaw": 1.5707963267948966,
+      "approach": [
+        -2.02,
+        0.015,
+        -0.98
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "sofa"
+    },
+    {
+      "id": "SEAT_03",
+      "position": [
+        -0.23,
+        0.46,
+        -1.79
+      ],
+      "yaw": 0,
+      "approach": [
+        -0.23,
+        0.015,
+        -0.87
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "sofa"
+    },
+    {
+      "id": "SEAT_04",
+      "position": [
+        1.163,
+        0.46,
+        -1.79
+      ],
+      "yaw": 0,
+      "approach": [
+        1.163,
+        0.015,
+        -0.87
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "sofa"
+    },
+    {
+      "id": "SEAT_05",
+      "position": [
+        -2.1,
+        0.46,
+        2.02
+      ],
+      "yaw": 0.7853981633974483,
+      "approach": [
+        -1.4495,
+        0.015,
+        2.6705
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "pouf"
+    },
+    {
+      "id": "SEAT_06",
+      "position": [
+        0.09,
+        0.46,
+        2.12
+      ],
+      "yaw": -0.18,
+      "approach": [
+        -0.0747,
+        0.015,
+        3.0251
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "pouf"
+    }
+  ],
+  "triangles": 304696,
+  "reducedTriangles": 188911,
+  "source": "packages\\assets\\3d\\source\\shared-spaces\\v2\\living-master.blend",
+  "inventory": {
+    "FURNITURE": 698,
+    "INTERIOR_DETAIL": 856,
+    "SEATS": 2,
+    "ARCHITECTURE": 1,
+    "BOTANICALS": 495,
+    "STUDY_OBJECTS": 2,
+    "LIBRARY_VOLUMES": 1484,
+    "LIGHTS": 12,
+    "EXTERIOR_DETAIL": 478,
+    "WALL_STORY": 3,
+    "DECOR": 140
+  }
+}

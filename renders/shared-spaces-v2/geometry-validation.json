@@ -1,0 +1,886 @@
+[
+  {
+    "id": "living",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Living left return separate seat cushion",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion",
+            "height": 0.555
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Living left return separate seat cushion.001",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion.001",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion.001",
+            "height": 0.555
+          },
+          {
+            "surface": "Living left return separate seat cushion.001",
+            "height": 0.555
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 2,
+        "contacts": [
+          {
+            "surface": "Living long return separate seat cushion.001",
+            "height": 0.555
+          },
+          {
+            "surface": "Living long return separate seat cushion.001",
+            "height": 0.555
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 2,
+        "contacts": [
+          {
+            "surface": "Living long return separate seat cushion.002",
+            "height": 0.555
+          },
+          {
+            "surface": "Living long return separate seat cushion.002",
+            "height": 0.555
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Living orange beanbag shaped beanbag",
+            "height": 0.439
+          },
+          {
+            "surface": "Living orange beanbag shaped beanbag",
+            "height": 0.439
+          },
+          {
+            "surface": "Living orange beanbag shaped beanbag",
+            "height": 0.465
+          },
+          {
+            "surface": "Living orange beanbag shaped beanbag",
+            "height": 0.464
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Living moss beanbag shaped beanbag",
+            "height": 0.439
+          },
+          {
+            "surface": "Living moss beanbag shaped beanbag",
+            "height": 0.439
+          },
+          {
+            "surface": "Living moss beanbag shaped beanbag",
+            "height": 0.465
+          },
+          {
+            "surface": "Living moss beanbag shaped beanbag",
+            "height": 0.464
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  },
+  {
+    "id": "study",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study front upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 0 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study front upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 1 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study front upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study front upholstered chair 2 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study back upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 0 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study back upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 1 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Study back upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Study back upholstered chair 2 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  },
+  {
+    "id": "library",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library front oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 0 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library front oak chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 1 padded seat",
+            "height": 0.517
+          },
+          {
+            "surface": "Library front oak chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 1 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library front oak chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library front oak chair 2 padded seat",
+            "height": 0.517
+          },
+          {
+            "surface": "Library front oak chair 2 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library back oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 0 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 0 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library back oak chair 1 padded seat",
+            "height": 0.517
+          },
+          {
+            "surface": "Library back oak chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 1 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 1 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Library back oak chair 2 padded seat",
+            "height": 0.517
+          },
+          {
+            "surface": "Library back oak chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 2 padded seat",
+            "height": 0.518
+          },
+          {
+            "surface": "Library back oak chair 2 padded seat",
+            "height": 0.518
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  },
+  {
+    "id": "projects",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset",
+            "height": 0.492
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset.001",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.001",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.001",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.001",
+            "height": 0.493
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset.002",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset.002",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.002",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.002",
+            "height": 0.492
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset.003",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset.003",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.003",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.003",
+            "height": 0.493
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset.004",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.004",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.004",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.004",
+            "height": 0.492
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Maker stool carved seat inset.005",
+            "height": 0.492
+          },
+          {
+            "surface": "Maker stool carved seat inset.005",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset.005",
+            "height": 0.493
+          },
+          {
+            "surface": "Maker stool carved seat inset.005",
+            "height": 0.493
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  },
+  {
+    "id": "patio",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Garden round table chair linen pad",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad",
+            "height": 0.542
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Garden round table chair linen pad.001",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.001",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.001",
+            "height": 0.542
+          },
+          {
+            "surface": "Garden round table chair linen pad.001",
+            "height": 0.543
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Garden round table chair linen pad.002",
+            "height": 0.542
+          },
+          {
+            "surface": "Garden round table chair linen pad.002",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.002",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.002",
+            "height": 0.543
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Garden round table chair linen pad.003",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.003",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.003",
+            "height": 0.543
+          },
+          {
+            "surface": "Garden round table chair linen pad.003",
+            "height": 0.543
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Bench woven linen pad",
+            "height": 0.533
+          },
+          {
+            "surface": "Bench woven linen pad",
+            "height": 0.532
+          },
+          {
+            "surface": "Bench woven linen pad",
+            "height": 0.533
+          },
+          {
+            "surface": "Bench woven linen pad",
+            "height": 0.533
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Bench woven linen pad.001",
+            "height": 0.533
+          },
+          {
+            "surface": "Bench woven linen pad.001",
+            "height": 0.532
+          },
+          {
+            "surface": "Bench woven linen pad.001",
+            "height": 0.533
+          },
+          {
+            "surface": "Bench woven linen pad.001",
+            "height": 0.533
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  },
+  {
+    "id": "terrace",
+    "valid": true,
+    "seats": [
+      {
+        "seat": "SEAT_01",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell",
+            "height": 0.56
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_02",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.56
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_03",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.002",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.002",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.002",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace rear connected sofa upholstered seat tailored cloth shell.002",
+            "height": 0.561
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_04",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell",
+            "height": 0.561
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_05",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.561
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.56
+          },
+          {
+            "surface": "Terrace left connected sofa upholstered seat tailored cloth shell.001",
+            "height": 0.561
+          }
+        ],
+        "anchorHeight": 0.46
+      },
+      {
+        "seat": "SEAT_06",
+        "validSupport": true,
+        "contactCount": 4,
+        "contacts": [
+          {
+            "surface": "Terrace front study stool seat plank.001",
+            "height": 0.483
+          },
+          {
+            "surface": "Terrace front study stool seat plank.001",
+            "height": 0.483
+          },
+          {
+            "surface": "Terrace front study stool seat plank.002",
+            "height": 0.482
+          },
+          {
+            "surface": "Terrace front study stool seat plank.002",
+            "height": 0.483
+          }
+        ],
+        "anchorHeight": 0.46
+      }
+    ]
+  }
+]

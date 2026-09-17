@@ -1,0 +1,189 @@
+{
+  "room": "loft",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\loft-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 71942,
+      "materials": 26
+    },
+    {
+      "id": "attic-left-bookcase",
+      "triangles": 242984,
+      "materials": 25
+    },
+    {
+      "id": "window-seat",
+      "triangles": 22392,
+      "materials": 8
+    },
+    {
+      "id": "desk",
+      "triangles": 14000,
+      "materials": 4
+    },
+    {
+      "id": "chair",
+      "triangles": 10524,
+      "materials": 6
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-plant",
+      "triangles": 6400,
+      "materials": 5
+    },
+    {
+      "id": "loft-woven-rug",
+      "triangles": 214068,
+      "materials": 4
+    },
+    {
+      "id": "trunk-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "Attic plant 0",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Attic plant 1",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Attic plant 2",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Window seat folded throw",
+      "triangles": 5644,
+      "materials": 3
+    },
+    {
+      "id": "Loft adapted right cabinet",
+      "triangles": 23756,
+      "materials": 16
+    },
+    {
+      "id": "Loft cubby archive",
+      "triangles": 1160,
+      "materials": 4
+    },
+    {
+      "id": "Burgundy puff throw",
+      "triangles": 5644,
+      "materials": 3
+    },
+    {
+      "id": "Loft trailing foliage 0",
+      "triangles": 13952,
+      "materials": 3
+    },
+    {
+      "id": "Loft trailing foliage 1",
+      "triangles": 13952,
+      "materials": 3
+    },
+    {
+      "id": "Loft trailing foliage 2",
+      "triangles": 13952,
+      "materials": 3
+    },
+    {
+      "id": "Loft lush plant 0",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Loft lush plant 1",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Loft lush plant 2",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Attic soft linen storage",
+      "triangles": 432,
+      "materials": 4
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 1680,
+      "materials": 5
+    },
+    {
+      "id": "loft-oak-trunk",
+      "triangles": 6152,
+      "materials": 6
+    },
+    {
+      "id": "Loft framed moon",
+      "triangles": 38776,
+      "materials": 5
+    },
+    {
+      "id": "Loft right cabinet fern",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Loft left reading lamp",
+      "triangles": 1680,
+      "materials": 5
+    },
+    {
+      "id": "Loft varied fern 0",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Loft varied fern 1",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Loft varied fern 2",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    },
+    {
+      "id": "burgundy-knitted-puff",
+      "triangles": 126848,
+      "materials": 1
+    }
+  ],
+  "triangles": 934226,
+  "bytes": 65140680,
+  "status": "authored-model-not-native-performance-approved"
+}

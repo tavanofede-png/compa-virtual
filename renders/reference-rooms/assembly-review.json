@@ -1,0 +1,140 @@
+[
+  {
+    "room": "atico-creativo-review",
+    "objects": 5728,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorFern"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorRubberPlant"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "Premium_Personal_AcousticGuitar"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  },
+  {
+    "room": "estudio-musical-review",
+    "objects": 2924,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "MUSIC_AmplifierCase"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  },
+  {
+    "room": "habitacion-invernadero-review",
+    "objects": 8583,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorMonstera"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorRubberPlant"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  },
+  {
+    "room": "rincon-explorador-review",
+    "objects": 6655,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorMonstera"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorRubberPlant"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "EXP_FootTravelTrunk"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  },
+  {
+    "room": "rincon-urbano-review",
+    "objects": 3390,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorMonstera"
+        ],
+        "intersects": false
+      },
+      {
+        "pair": [
+          "Bed_Frame",
+          "PRM_BOT_FloorRubberPlant"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  },
+  {
+    "room": "sala-control-gamer-review",
+    "objects": 3016,
+    "selected_assembly_checks": [
+      {
+        "pair": [
+          "Bed_Frame",
+          "GAMER_EquipmentChest"
+        ],
+        "intersects": false
+      }
+    ],
+    "external_unpacked_images": [],
+    "full_collision_validation": false,
+    "runtime_validation": false
+  }
+]

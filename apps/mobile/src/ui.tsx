@@ -1,19 +1,29 @@
 import {
   Pressable,
-  Text,
+  Text as NativeText,
+  type TextProps,
   TextInput,
   View,
   StyleSheet,
   type TextInputProps,
 } from "react-native";
 import type { ReactNode } from "react";
+import { designTokens } from "@compa/domain";
+export function Text(props: TextProps) {
+  return (
+    <NativeText
+      {...props}
+      style={[{ fontFamily: "Outfit", color: designTokens.ink }, props.style]}
+    />
+  );
+}
 export const colors = {
-  bg: "#f8f7f3",
-  ink: "#303a2b",
-  muted: "#7d8770",
-  green: "#435840",
-  line: "#dfe4d4",
-  panel: "#ecefdf",
+  bg: "#f8f4f0",
+  ink: "#101e32",
+  muted: "#677186",
+  green: "#345cce",
+  line: "#e8e1db",
+  panel: "#f0e8dd",
 };
 export function Button({
   children,
@@ -53,6 +63,7 @@ export function Field({ label, ...props }: TextInputProps & { label: string }) {
         {...props}
         style={[
           styles.input,
+          { fontFamily: "Outfit" },
           props.multiline && { minHeight: 90, textAlignVertical: "top" },
           props.style,
         ]}
@@ -89,7 +100,7 @@ export function Choices({
             <Text
               style={{
                 color: o.value === value ? "#fffefa" : colors.green,
-                fontSize: 12,
+                fontSize: 16,
               }}
             >
               {o.label}
@@ -105,13 +116,13 @@ export function Card({ children }: { children: ReactNode }) {
 }
 export const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.green,
+    backgroundColor: designTokens.yellow,
     paddingVertical: 13,
     paddingHorizontal: 18,
-    borderRadius: 9,
+    borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 46,
+    minHeight: 52,
     marginVertical: 5,
   },
   secondary: {
@@ -119,46 +130,46 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.line,
   },
-  buttonText: { color: "#fffefa", fontSize: 14, fontWeight: "600" },
-  label: { fontSize: 12, color: colors.muted },
+  buttonText: { color: colors.ink, fontSize: 16, fontWeight: "600" },
+  label: { fontSize: 14, color: colors.muted },
   input: {
     backgroundColor: "#fffefa",
     color: colors.ink,
     borderWidth: 1,
     borderColor: colors.line,
-    borderRadius: 8,
+    borderRadius: 14,
     padding: 13,
-    fontSize: 15,
-    minHeight: 47,
+    fontSize: 16,
+    minHeight: 50,
   },
   choice: {
     borderWidth: 1,
     borderColor: colors.line,
     padding: 12,
-    borderRadius: 7,
-    minHeight: 42,
+    borderRadius: 14,
+    minHeight: 48,
   },
   card: {
     padding: 20,
     borderWidth: 1,
     borderColor: colors.line,
-    borderRadius: 12,
+    borderRadius: 24,
     backgroundColor: "#fffefa",
     marginVertical: 10,
     gap: 10,
   },
   h1: {
-    fontSize: 31,
-    fontWeight: "500",
+    fontSize: 34,
+    fontWeight: "700",
     letterSpacing: -1,
     color: colors.ink,
     lineHeight: 38,
   },
   h2: { fontSize: 20, fontWeight: "600", color: colors.ink },
   h3: { fontSize: 16, fontWeight: "600", color: colors.ink },
-  p: { fontSize: 14, color: colors.muted, lineHeight: 22 },
+  p: { fontSize: 16, color: colors.muted, lineHeight: 25 },
   eyebrow: {
-    fontSize: 10,
+    fontSize: 16,
     letterSpacing: 1.8,
     color: colors.muted,
     marginBottom: 9,
@@ -170,7 +181,7 @@ export const styles = StyleSheet.create({
     gap: 7,
   },
   tag: {
-    fontSize: 10,
+    fontSize: 16,
     color: colors.green,
     backgroundColor: colors.panel,
     padding: 7,
@@ -181,7 +192,7 @@ export const styles = StyleSheet.create({
     color: "#a04c32",
     backgroundColor: "#f6e9df",
     padding: 14,
-    borderRadius: 8,
+    borderRadius: 14,
     lineHeight: 20,
   },
   link: { color: colors.green, paddingVertical: 12, fontWeight: "600" },

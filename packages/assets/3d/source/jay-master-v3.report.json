@@ -1,0 +1,41 @@
+{
+  "character": "Jay",
+  "id": "jay",
+  "personality": "Motivador",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.76,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\jay-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-jay-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-jay-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1133624,
+  "blendBytes": 202820,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 56,
+  "exportedNodes": 74,
+  "exportedMaterials": 22,
+  "exportedVertices": 30988,
+  "exportedTriangles": 15472,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

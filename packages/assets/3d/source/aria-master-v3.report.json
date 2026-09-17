@@ -1,0 +1,41 @@
+{
+  "character": "Aria",
+  "id": "aria",
+  "personality": "Energ\u00e9tica",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.68,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\aria-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-aria-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-aria-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1089084,
+  "blendBytes": 203165,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 57,
+  "exportedNodes": 75,
+  "exportedMaterials": 22,
+  "exportedVertices": 29700,
+  "exportedTriangles": 14852,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

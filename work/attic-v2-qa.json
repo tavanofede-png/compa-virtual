@@ -1,0 +1,172 @@
+{
+  "plant_pots": [
+    {
+      "pot": "PRM_BOT_FloorMonstera_OpenPot",
+      "position": [
+        -2.6,
+        -1.4,
+        0.2
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_FloorFern_OpenPot",
+      "position": [
+        0.51,
+        1.99,
+        0.2
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_BedsideCalathea_OpenPot",
+      "position": [
+        -0.63,
+        1.25,
+        1.02
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_WindowPilea_OpenPot",
+      "position": [
+        -2.12,
+        2.3,
+        1.25
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_WindowAloe_OpenPot",
+      "position": [
+        -1.27,
+        2.3,
+        1.25
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_MainShelfPothos_OpenPot",
+      "position": [
+        -0.35,
+        2.25,
+        2.435
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_BookcaseTopPothos_OpenPot",
+      "position": [
+        3.9,
+        1.9,
+        1.21
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_LeftShelfIvyA_OpenPot",
+      "position": [
+        -2.73,
+        0.83,
+        2.65
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_LeftShelfIvyB_OpenPot",
+      "position": [
+        -2.73,
+        -0.42,
+        2.65
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_DeskSucculent_OpenPot",
+      "position": [
+        1.96,
+        1.78,
+        1.107
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_BookcaseMiddlePilea_OpenPot",
+      "position": [
+        3.57,
+        1.91,
+        0.74
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_ShelfHerb_OpenPot",
+      "position": [
+        1.26,
+        2.22,
+        2.435
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_BedFootCalathea_OpenPot",
+      "position": [
+        -2.68,
+        -2.06,
+        0.2
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_ReadingTablePilea_OpenPot",
+      "position": [
+        0.7,
+        -0.645,
+        0.752
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_MainShelfHaworthia_OpenPot",
+      "position": [
+        1.56,
+        2.39,
+        2.435
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_FloorRubberPlant_OpenPot",
+      "position": [
+        3.9,
+        0.67,
+        0.2
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_BookcaseTinyAloe_OpenPot",
+      "position": [
+        3.43,
+        1.95,
+        1.21
+      ],
+      "in_stair_opening": false
+    },
+    {
+      "pot": "PRM_BOT_WindowCenterPilea_OpenPot",
+      "position": [
+        -1.7,
+        2.27,
+        1.25
+      ],
+      "in_stair_opening": false
+    }
+  ],
+  "stair_pot_intrusions": 0,
+  "artworks": 12,
+  "packed_textures": [
+    "attic-art-atlas.png"
+  ],
+  "note": "Checks pot bases, not full collision-free navigation. Visual checks also required."
+}

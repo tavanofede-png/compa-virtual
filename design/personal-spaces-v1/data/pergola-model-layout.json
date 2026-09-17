@@ -1,0 +1,106 @@
+{
+  "id": "pergola",
+  "name": "Pérgola de jardín",
+  "width": 4.6,
+  "depth": 4.2,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.3,
+    3.9400000000000004
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "Garden border 0",
+      "definitionId": "planter-large",
+      "name": "Garden border 0",
+      "x": 0.26,
+      "z": 2.1,
+      "w": 0.48,
+      "d": 3.95,
+      "h": 0.95,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "Garden border 1",
+      "definitionId": "planter-large",
+      "name": "Garden border 1",
+      "x": 4.34,
+      "z": 2.1,
+      "w": 0.48,
+      "d": 3.95,
+      "h": 0.95,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "Garden border 2",
+      "definitionId": "planter-large",
+      "name": "Garden border 2",
+      "x": 2.3,
+      "z": 0.26,
+      "w": 3.52,
+      "d": 0.48,
+      "h": 0.95,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "garden-cushioned-bench",
+      "definitionId": "bench",
+      "name": "garden-cushioned-bench",
+      "x": 1.85,
+      "z": 1.01,
+      "w": 2.0,
+      "d": 0.8,
+      "h": 1.1,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.8,
+      "z": 2.37,
+      "w": 1.73,
+      "d": 0.83,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.745,
+      "z": 3.15,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.7449999999999997,
+        3.75
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

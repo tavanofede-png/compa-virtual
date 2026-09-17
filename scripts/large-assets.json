@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": "design/personal-spaces-v1/models/pergola.glb",
+      "archive": "design/personal-spaces-v1/models/pergola.glb.gz",
+      "bytes": 140422252,
+      "sha256": "610fb8b24b1094f1132ee156ad450906d7bdea0756508647ad4c6e0a2595f809"
+    }
+  ]
+}

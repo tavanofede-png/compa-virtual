@@ -1,0 +1,339 @@
+{
+  "room": "pergola",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\pergola-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 101300,
+      "materials": 23
+    },
+    {
+      "id": "Climbing post flowers 0",
+      "triangles": 52928,
+      "materials": 3
+    },
+    {
+      "id": "Climbing post flowers 1",
+      "triangles": 52928,
+      "materials": 3
+    },
+    {
+      "id": "Climbing post flowers 2",
+      "triangles": 52928,
+      "materials": 3
+    },
+    {
+      "id": "Climbing post flowers 3",
+      "triangles": 52928,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 0",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 1",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 2",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 3",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 4",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "Flowering overhead vine 5",
+      "triangles": 83168,
+      "materials": 3
+    },
+    {
+      "id": "garden-cushioned-bench",
+      "triangles": 24264,
+      "materials": 8
+    },
+    {
+      "id": "desk",
+      "triangles": 10516,
+      "materials": 3
+    },
+    {
+      "id": "chair",
+      "triangles": 10524,
+      "materials": 6
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 396,
+      "materials": 3
+    },
+    {
+      "id": "study-plant",
+      "triangles": 6400,
+      "materials": 5
+    },
+    {
+      "id": "Garden rear screen 0",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 1",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 2",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 3",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 4",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 5",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 6",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden rear screen 7",
+      "triangles": 36464,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 0",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 1",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 2",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 3",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 4",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden left screen 5",
+      "triangles": 22592,
+      "materials": 3
+    },
+    {
+      "id": "Garden specimen fern 0",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Garden specimen fern 1",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Garden specimen fern 2",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Garden relaxed throw",
+      "triangles": 5644,
+      "materials": 3
+    },
+    {
+      "id": "Garden substantial planting -1-0",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-0",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting -1-1",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-1",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting -1-2",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-2",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting -1-3",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-3",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting -1-4",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-4",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting -1-5",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden substantial planting 1-5",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 0",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 1",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 2",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 3",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 4",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Rear garden leafy depth 5",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Garden border 0",
+      "triangles": 78748,
+      "materials": 11
+    },
+    {
+      "id": "Garden border 1",
+      "triangles": 78748,
+      "materials": 11
+    },
+    {
+      "id": "Garden border 2",
+      "triangles": 77932,
+      "materials": 11
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    },
+    {
+      "id": "Garden hanging lantern 0",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Garden hanging lantern 1",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Garden hanging lantern 2",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Garden hanging lantern 3",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Garden hanging lantern 4",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "Botanical framed art",
+      "triangles": 24584,
+      "materials": 5
+    }
+  ],
+  "triangles": 2056692,
+  "bytes": 140422252,
+  "status": "authored-model-not-native-performance-approved"
+}

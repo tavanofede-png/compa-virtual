@@ -1,0 +1,863 @@
+{
+  "id": "kai",
+  "features": [
+    "short tee sleeves",
+    "pixel flame",
+    "hip chain",
+    "headphones"
+  ],
+  "bones": 17,
+  "structural_validation": {
+    "schema": "compa-mechanical-validation-v1",
+    "passed": true,
+    "errors": [],
+    "warnings": [
+      {
+        "type": "missing_hand_prop_geometry",
+        "message": "A declared hand_prop slot does not currently contain any geometry."
+      }
+    ],
+    "poses": [
+      {
+        "pose": "raised_arm",
+        "anglesRadians": {
+          "upper_arm.L": [
+            0.49207431077957153,
+            -0.2434586137533188,
+            0.9066209197044373
+          ],
+          "upper_arm.R": [
+            0.49207431077957153,
+            0.2434586137533188,
+            -0.9066209197044373
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 62,
+        "maximumFollowerMatrixError": 3.5762786865234375e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "kai_ShortSleeve_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_L"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                -0.46272072196006775,
+                0.05773136392235756,
+                1.105481505393982
+              ],
+              [
+                -0.4640340507030487,
+                0.058475006371736526,
+                1.1031441688537598
+              ],
+              [
+                -0.4649699330329895,
+                0.05936402827501297,
+                1.1056088209152222
+              ],
+              [
+                -0.4628830552101135,
+                0.05830978602170944,
+                1.1041008234024048
+              ],
+              [
+                -0.4634231626987457,
+                0.059196263551712036,
+                1.1046863794326782
+              ],
+              [
+                -0.4644734561443329,
+                0.05946425348520279,
+                1.1041908264160156
+              ],
+              [
+                -0.4635448157787323,
+                0.05893842130899429,
+                1.1058435440063477
+              ],
+              [
+                -0.659420907497406,
+                0.04506684094667435,
+                1.0337882041931152
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "kai_ShortSleeve_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_R"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                0.4450429677963257,
+                -0.020213533192873,
+                1.0707489252090454
+              ],
+              [
+                0.44635629653930664,
+                -0.019469890743494034,
+                1.0684117078781128
+              ],
+              [
+                0.4464940130710602,
+                -0.022100120782852173,
+                1.0693081617355347
+              ],
+              [
+                0.4452052712440491,
+                -0.019635111093521118,
+                1.0693682432174683
+              ],
+              [
+                0.44528457522392273,
+                -0.020780472084879875,
+                1.0690484046936035
+              ],
+              [
+                0.44623130559921265,
+                -0.020969130098819733,
+                1.0683494806289673
+              ],
+              [
+                0.44530266523361206,
+                -0.021494964137673378,
+                1.0700021982192993
+              ],
+              [
+                0.6417431831359863,
+                -0.03287805616855621,
+                0.9990556836128235
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "elbow_90",
+        "anglesRadians": {
+          "forearm.L": [
+            -1.5707963267948966,
+            0,
+            0
+          ],
+          "forearm.R": [
+            -1.5707963267948966,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 18,
+        "maximumFollowerMatrixError": 1.7881393432617188e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "kai_ShortSleeve_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_L"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                -0.31547677516937256,
+                0.006444460246711969,
+                0.8309098482131958
+              ],
+              [
+                -0.3134600818157196,
+                0.004702047910541296,
+                0.8301113843917847
+              ],
+              [
+                -0.316073477268219,
+                0.004293807316571474,
+                0.8292486667633057
+              ],
+              [
+                -0.3141642212867737,
+                0.006018457934260368,
+                0.8303074836730957
+              ],
+              [
+                -0.31485745310783386,
+                0.005621395539492369,
+                0.8294230103492737
+              ],
+              [
+                -0.3145861327648163,
+                0.004497723653912544,
+                0.8291328549385071
+              ],
+              [
+                -0.3160121738910675,
+                0.005729788448661566,
+                0.8296974897384644
+              ],
+              [
+                -0.284534752368927,
+                -0.20081359148025513,
+                0.8397402167320251
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "kai_ShortSleeve_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_R"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                0.2769136130809784,
+                0.01550871878862381,
+                0.9085305333137512
+              ],
+              [
+                0.27489688992500305,
+                0.013766307383775711,
+                0.9077320694923401
+              ],
+              [
+                0.2757691442966461,
+                0.013767322525382042,
+                0.9103740453720093
+              ],
+              [
+                0.27560102939605713,
+                0.015082716941833496,
+                0.9079281687736511
+              ],
+              [
+                0.27528899908065796,
+                0.014921939000487328,
+                0.9090671539306641
+              ],
+              [
+                0.27479177713394165,
+                0.01385137066245079,
+                0.9092317223548889
+              ],
+              [
+                0.27621781826019287,
+                0.0150834359228611,
+                0.9097962975502014
+              ],
+              [
+                0.24597159028053284,
+                -0.19174933433532715,
+                0.9173609018325806
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "knee_70",
+        "anglesRadians": {
+          "shin.L": [
+            1.22,
+            0,
+            0
+          ],
+          "shin.R": [
+            1.22,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 218,
+        "maximumFollowerMatrixError": 1.1920928955078125e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "head_turn",
+        "anglesRadians": {
+          "head": [
+            0.16,
+            0,
+            0.6
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 216,
+        "maximumFollowerMatrixError": 3.5762786865234375e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "walking",
+        "anglesRadians": {
+          "thigh.L": [
+            -0.5,
+            0,
+            0
+          ],
+          "thigh.R": [
+            0.5,
+            0,
+            0
+          ],
+          "shin.L": [
+            0.45,
+            0,
+            0
+          ],
+          "upper_arm.L": [
+            0.35,
+            0,
+            0
+          ],
+          "upper_arm.R": [
+            -0.35,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 328,
+        "maximumFollowerMatrixError": 3.5762786865234375e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "hand_book_hold",
+        "anglesRadians": {
+          "forearm.L": [
+            -1.1,
+            0,
+            0
+          ],
+          "hand.L": [
+            0.15,
+            0.35,
+            0.18
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 9,
+        "maximumFollowerMatrixError": 1.1920928955078125e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "kai_ShortSleeve_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_L"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                -0.31762945652008057,
+                0.03019805997610092,
+                0.8377121686935425
+              ],
+              [
+                -0.31578946113586426,
+                0.028899572789669037,
+                0.8360784649848938
+              ],
+              [
+                -0.3184616267681122,
+                0.029050011187791824,
+                0.8353184461593628
+              ],
+              [
+                -0.31638103723526,
+                0.03002222068607807,
+                0.8368889689445496
+              ],
+              [
+                -0.3171406388282776,
+                0.03009750507771969,
+                0.8359736800193787
+              ],
+              [
+                -0.31696948409080505,
+                0.029210437089204788,
+                0.835196316242218
+              ],
+              [
+                -0.3182705342769623,
+                0.03012859635055065,
+                0.8363515734672546
+              ],
+              [
+                -0.3023696541786194,
+                -0.16036495566368103,
+                0.7514325976371765
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "kai_ShortSleeve_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 20,
+            "openShellObjects": [
+              "kai_ShortSleeve_R"
+            ],
+            "outsideClosedShellSamples": 112,
+            "outsideExamplePositions": [
+              [
+                0.2754368484020233,
+                -0.02021353878080845,
+                0.88588947057724
+              ],
+              [
+                0.2739495635032654,
+                -0.01946989633142948,
+                0.8836588263511658
+              ],
+              [
+                0.2748109698295593,
+                -0.02210012637078762,
+                0.883942723274231
+              ],
+              [
+                0.27428001165390015,
+                -0.019635116681456566,
+                0.8851185441017151
+              ],
+              [
+                0.2740309238433838,
+                -0.020780477672815323,
+                0.8849027752876282
+              ],
+              [
+                0.27383744716644287,
+                -0.02096913568675518,
+                0.8837419748306274
+              ],
+              [
+                0.27488911151885986,
+                -0.021494969725608826,
+                0.8853192925453186
+              ],
+              [
+                0.30076563358306885,
+                -0.03287806361913681,
+                0.678068995475769
+              ]
+            ],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "spine_backpack",
+        "anglesRadians": {
+          "spine": [
+            0.3,
+            0.12,
+            0.15
+          ]
+        },
+        "rigidFollowersTested": 798,
+        "rigidFollowersMoved": 524,
+        "maximumFollowerMatrixError": 2.384185791015625e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      }
+    ],
+    "neutralSleeveContainmentSamples": [
+      {
+        "side": "L",
+        "skinObjects": [
+          "Body_Forearm_L",
+          "Body_UpperArm_L"
+        ],
+        "garmentObjects": [
+          "Premium_Top_SleeveStitch_L_00",
+          "Premium_Top_SleeveStitch_L_01",
+          "Premium_Top_SleeveStitch_L_02",
+          "Premium_Top_SleeveStitch_L_03",
+          "Premium_Top_SleeveStitch_L_04",
+          "Premium_Top_SleeveStitch_L_05",
+          "Premium_Top_SleeveStitch_L_06",
+          "Premium_Top_SleeveStitch_L_07",
+          "Premium_Top_SleeveStitch_L_08",
+          "Premium_Top_SleeveStitch_L_09",
+          "Premium_Top_SleeveStitch_L_10",
+          "Premium_Top_SleeveStitch_L_11",
+          "Premium_Top_SleeveStitch_L_12",
+          "Premium_Top_SleeveStitch_L_13",
+          "Premium_Top_SleeveStitch_L_14",
+          "Premium_Top_SleeveStitch_L_15",
+          "Premium_Top_SleeveStitch_L_16",
+          "Premium_Top_SleeveStitch_L_17",
+          "Premium_Top_SleeveStitch_L_18",
+          "Premium_Top_SleeveStitch_L_19",
+          "kai_ShortSleeve_L"
+        ],
+        "sampleCount": 112,
+        "closedShellCount": 20,
+        "openShellObjects": [
+          "kai_ShortSleeve_L"
+        ],
+        "outsideClosedShellSamples": 112,
+        "outsideExamplePositions": [
+          [
+            -0.3144092857837677,
+            0.05773136019706726,
+            0.8858894109725952
+          ],
+          [
+            -0.31292200088500977,
+            0.05847500264644623,
+            0.883658766746521
+          ],
+          [
+            -0.315542995929718,
+            0.05936402082443237,
+            0.8839426636695862
+          ],
+          [
+            -0.31325241923332214,
+            0.058309778571128845,
+            0.8851184844970703
+          ],
+          [
+            -0.31401926279067993,
+            0.05919625982642174,
+            0.8849027156829834
+          ],
+          [
+            -0.31405410170555115,
+            0.05946424975991249,
+            0.8837419748306274
+          ],
+          [
+            -0.31510576605796814,
+            0.058938413858413696,
+            0.8853192329406738
+          ],
+          [
+            -0.33973807096481323,
+            0.04506683349609375,
+            0.6780689358711243
+          ]
+        ],
+        "status": "sampled",
+        "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+      },
+      {
+        "side": "R",
+        "skinObjects": [
+          "Body_Forearm_R",
+          "Body_UpperArm_R"
+        ],
+        "garmentObjects": [
+          "Premium_Top_SleeveStitch_R_00",
+          "Premium_Top_SleeveStitch_R_01",
+          "Premium_Top_SleeveStitch_R_02",
+          "Premium_Top_SleeveStitch_R_03",
+          "Premium_Top_SleeveStitch_R_04",
+          "Premium_Top_SleeveStitch_R_05",
+          "Premium_Top_SleeveStitch_R_06",
+          "Premium_Top_SleeveStitch_R_07",
+          "Premium_Top_SleeveStitch_R_08",
+          "Premium_Top_SleeveStitch_R_09",
+          "Premium_Top_SleeveStitch_R_10",
+          "Premium_Top_SleeveStitch_R_11",
+          "Premium_Top_SleeveStitch_R_12",
+          "Premium_Top_SleeveStitch_R_13",
+          "Premium_Top_SleeveStitch_R_14",
+          "Premium_Top_SleeveStitch_R_15",
+          "Premium_Top_SleeveStitch_R_16",
+          "Premium_Top_SleeveStitch_R_17",
+          "Premium_Top_SleeveStitch_R_18",
+          "Premium_Top_SleeveStitch_R_19",
+          "kai_ShortSleeve_R"
+        ],
+        "sampleCount": 112,
+        "closedShellCount": 20,
+        "openShellObjects": [
+          "kai_ShortSleeve_R"
+        ],
+        "outsideClosedShellSamples": 112,
+        "outsideExamplePositions": [
+          [
+            0.2754368484020233,
+            -0.02021353878080845,
+            0.88588947057724
+          ],
+          [
+            0.2739495635032654,
+            -0.01946989633142948,
+            0.8836588263511658
+          ],
+          [
+            0.2748109698295593,
+            -0.02210012637078762,
+            0.883942723274231
+          ],
+          [
+            0.27428001165390015,
+            -0.019635116681456566,
+            0.8851185441017151
+          ],
+          [
+            0.2740309238433838,
+            -0.020780477672815323,
+            0.8849027752876282
+          ],
+          [
+            0.27383744716644287,
+            -0.02096913568675518,
+            0.8837419748306274
+          ],
+          [
+            0.27488911151885986,
+            -0.021494969725608826,
+            0.8853192925453186
+          ],
+          [
+            0.30076563358306885,
+            -0.03287806361913681,
+            0.678068995475769
+          ]
+        ],
+        "status": "sampled",
+        "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+      }
+    ],
+    "stateRestoration": {
+      "poseMatrixBasisMaxError": 0.0,
+      "rotationModesRestored": true,
+      "frameRestored": true,
+      "actionRestored": true,
+      "actionSlotRestored": true,
+      "nlaRestored": true,
+      "posePositionRestored": true,
+      "rigTransformMaxError": 0.0
+    },
+    "measuredCharacterBounds": {
+      "minimum": [
+        -0.4365839958190918,
+        -0.2436380386352539,
+        9.313225746154785e-10
+      ],
+      "maximum": [
+        0.4365839958190918,
+        0.38663309812545776,
+        1.7585550546646118
+      ],
+      "dimensionsMeters": [
+        0.8731679916381836,
+        0.6302711367607117,
+        1.7585550537332892
+      ],
+      "heightMeters": 1.7585550537332892,
+      "includesHairAndFootwear": true
+    },
+    "slotObjectCounts": {
+      "body": 74,
+      "bottom": 88,
+      "face_accessory": 9,
+      "hair": 158,
+      "back": 175,
+      "shoes": 182,
+      "top": 112
+    },
+    "rigIdentityPreserved": true,
+    "visualReviewStillRequired": true,
+    "scope": "Finite transforms, 17-bone schema, unchanged rest rig, exact rigid follower motion, sampled closed-shell sleeve coverage, measured dimensions and state restoration. Weighted skin deformation and all collision-free garment combinations require separate visual and export validation."
+  },
+  "clothing_fit_verified": false,
+  "app_integrated": false
+}

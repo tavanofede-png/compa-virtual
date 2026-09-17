@@ -1,0 +1,9 @@
+{
+  "id": "rabbit",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "rabbit",
+  "meshCount": 21,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

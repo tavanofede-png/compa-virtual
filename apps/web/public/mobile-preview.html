@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Compa Virtual · Vista celular</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        background: #e6e7e3;
+        color: #30392e;
+        font:
+          14px/1.5 "Segoe UI",
+          Arial,
+          sans-serif;
+      }
+      header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px 20px;
+        padding: 14px 22px;
+        border-bottom: 1px solid #d3d6cf;
+      }
+      header strong {
+        display: block;
+        font-size: 16px;
+      }
+      header span {
+        color: #61685c;
+      }
+      a {
+        color: #435840;
+        text-underline-offset: 4px;
+      }
+      a:focus-visible {
+        outline: 2px solid #435840;
+        outline-offset: 5px;
+      }
+      main {
+        display: grid;
+        place-items: center;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .device-space {
+        position: relative;
+        width: 410px;
+        height: 864px;
+      }
+      .device {
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 410px;
+        height: 864px;
+        padding: 10px;
+        border-radius: 36px;
+        background: #262b26;
+        box-shadow:
+          0 16px 38px #20291e26,
+          0 0 0 1px #ffffff88;
+        transform-origin: top left;
+      }
+      iframe {
+        display: block;
+        width: 390px;
+        height: 844px;
+        border: 0;
+        border-radius: 26px;
+        background: #f8f7f3;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <strong>Vista celular</strong
+        ><span id="dimensions">390 × 844 · Web móvil</span>
+      </div>
+      <label
+        >Ancho
+        <select id="screen-width" aria-label="Ancho del celular">
+          <option value="360">360 px</option>
+          <option value="390" selected>390 px</option>
+          <option value="430">430 px</option>
+        </select></label
+      >
+      <a id="open-app" href="/?view=today">Abrir sin marco</a>
+    </header>
+    <main aria-label="Vista previa de Compa Virtual en un celular">
+      <div class="device-space">
+        <div class="device">
+          <iframe
+            id="app"
+            title="Compa Virtual · Pantalla de celular"
+            src="/?view=today"
+          ></iframe>
+        </div>
+      </div>
+    </main>
+    <script>
+      // The iframe owns a real 390px viewport, including media queries and fixed controls.
+      // Scale only the surrounding device so resizing the desktop panel cannot widen the app.
+      const stage = document.querySelector("main");
+      const space = document.querySelector(".device-space");
+      const device = document.querySelector(".device");
+      const app = document.querySelector("#app");
+      const fullSize = document.querySelector("#open-app");
+      const widthSelect = document.querySelector("#screen-width");
+      let deviceWidth = 410;
+      const requestedView = new URLSearchParams(location.search).get("view");
+      const requestedDemo = new URLSearchParams(location.search).get("demo") === "1";
+      if (requestedView && /^[a-z-]+$/.test(requestedView)) {
+        const appUrl = "/?view=" + encodeURIComponent(requestedView) + (requestedDemo ? "&demo=1" : "");
+        app.src = appUrl;
+        fullSize.href = appUrl;
+      }
+      const fit = () => {
+        const scale = Math.max(
+          0.1,
+          Math.min(
+            1,
+            (stage.clientWidth - 32) / deviceWidth,
+            (stage.clientHeight - 32) / 864,
+          ),
+        );
+        space.style.width = deviceWidth * scale + "px";
+        space.style.height = 864 * scale + "px";
+        device.style.transform = "scale(" + scale + ")";
+      };
+      new ResizeObserver(fit).observe(stage);
+      widthSelect.addEventListener("change", () => {
+        const width = Number(widthSelect.value);
+        deviceWidth = width + 20;
+        app.style.width = width + "px";
+        device.style.width = deviceWidth + "px";
+        document.querySelector("#dimensions").textContent =
+          width + " × 844 · Web móvil";
+        fit();
+      });
+      fit();
+    </script>
+  </body>
+</html>

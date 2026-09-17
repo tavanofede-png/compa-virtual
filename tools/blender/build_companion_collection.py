@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import bpy
+from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -33,6 +34,7 @@ PREVIEW_DIR = ROOT / "packages" / "assets" / "3d" / "previews"
 EXPORT_DIR = ROOT / "packages" / "assets" / "3d"
 MANIFEST_PATH = EXPORT_DIR / "companion-collection.json"
 LINEUP_PATH = PREVIEW_DIR / "companion-collection-premium.png"
+RENDERS_DIR = ROOT / "renders"
 
 SLOTS = (
     "body",
@@ -84,7 +86,7 @@ CHARACTERS = (
 )
 
 
-def reset_scene() -> bpy.types.Scene:
+def reset_scene(render_engine: str = "BLENDER_EEVEE") -> bpy.types.Scene:
     bpy.ops.object.select_all(action="SELECT")
     bpy.ops.object.delete(use_global=False)
     for collection in list(bpy.data.collections):
@@ -105,16 +107,23 @@ def reset_scene() -> bpy.types.Scene:
     scene = bpy.context.scene
     scene.unit_settings.system = "METRIC"
     scene.unit_settings.scale_length = 1.0
-    scene.render.engine = "BLENDER_EEVEE"
-    scene.render.resolution_x = 900
-    scene.render.resolution_y = 1120
+    scene.render.engine = render_engine
+    scene.render.resolution_x = 1024
+    scene.render.resolution_y = 1024
     scene.render.resolution_percentage = 100
     scene.render.image_settings.file_format = "PNG"
     scene.view_settings.look = "AgX - Medium High Contrast"
+    if render_engine == "CYCLES":
+        scene.cycles.samples = 128
+        scene.cycles.use_denoising = True
+        scene.cycles.preview_samples = 32
+        scene.cycles.max_bounces = 8
+        scene.cycles.diffuse_bounces = 3
+        scene.cycles.glossy_bounces = 3
     scene.world.use_nodes = True
     bg = scene.world.node_tree.nodes.get("Background")
-    bg.inputs["Color"].default_value = rgba("#E9E5DF")
-    bg.inputs["Strength"].default_value = 0.52
+    bg.inputs["Color"].default_value = rgba("#4A403D")
+    bg.inputs["Strength"].default_value = 0.24
     return scene
 
 
@@ -146,8 +155,62 @@ def make_palette(c: Character) -> dict[str, bpy.types.Material]:
         "paper": "#EEE6D8",
     }
     mats = {key: material(f"MAT_{c.id.upper()}_{key.upper()}", value) for key, value in colors.items()}
-    mats["eye_white"].node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.18
-    mats["metal"].node_tree.nodes["Principled BSDF"].inputs["Metallic"].default_value = 0.55
+
+    def tune(key: str, roughness: float, metallic: float = 0.0, specular: float | None = None) -> None:
+        principled = mats[key].node_tree.nodes["Principled BSDF"]
+        principled.inputs["Roughness"].default_value = roughness
+        principled.inputs["Metallic"].default_value = metallic
+        if specular is not None and "Specular IOR Level" in principled.inputs:
+            principled.inputs["Specular IOR Level"].default_value = specular
+
+    for key in ("skin", "skin_light", "skin_shadow", "blush"):
+        tune(key, 0.52, specular=0.32)
+    for key, roughness in (("hair", 0.34), ("hair_mid", 0.38), ("hair_light", 0.32)):
+        tune(key, roughness, specular=0.38)
+    for key in ("top", "top_light", "top_dark", "bottom", "bottom_dark"):
+        tune(key, 0.76, specular=0.22)
+    tune("shoes", 0.34, specular=0.42)
+    tune("sole", 0.44, specular=0.32)
+    tune("backpack", 0.56, specular=0.30)
+    tune("book", 0.42, specular=0.36)
+    tune("paper", 0.84, specular=0.18)
+    tune("eye_white", 0.16, specular=0.48)
+    tune("eye", 0.20, specular=0.44)
+    tune("eye_dark", 0.18, specular=0.42)
+    tune("black", 0.25, specular=0.52)
+    tune("metal", 0.26, metallic=0.55, specular=0.50)
+    glass = material(f"MAT_{c.id.upper()}_GLASS", "#E8F0EE", roughness=0.08)
+    glass_principled = glass.node_tree.nodes["Principled BSDF"]
+    if "Transmission Weight" in glass_principled.inputs:
+        glass_principled.inputs["Transmission Weight"].default_value = 1.0
+    glass_principled.inputs["IOR"].default_value = 1.45
+    if "Coat Weight" in glass_principled.inputs:
+        glass_principled.inputs["Coat Weight"].default_value = 0.12
+    mats["glass"] = glass
+
+    def microtexture(key: str, scale: float, strength: float, distance: float) -> None:
+        nodes = mats[key].node_tree.nodes
+        links = mats[key].node_tree.links
+        principled = nodes["Principled BSDF"]
+        noise = nodes.new("ShaderNodeTexNoise")
+        noise.name = f"{key.title()} microtexture"
+        noise.inputs["Scale"].default_value = scale
+        noise.inputs["Detail"].default_value = 2.0
+        noise.inputs["Roughness"].default_value = 0.62
+        bump = nodes.new("ShaderNodeBump")
+        bump.name = f"{key.title()} micro-bump"
+        bump.inputs["Strength"].default_value = strength
+        bump.inputs["Distance"].default_value = distance
+        links.new(noise.outputs["Fac"], bump.inputs["Height"])
+        links.new(bump.outputs["Normal"], principled.inputs["Normal"])
+
+    for key in ("top", "top_light", "top_dark", "bottom", "bottom_dark"):
+        microtexture(key, 145.0, 0.075, 0.008)
+    microtexture("backpack", 95.0, 0.055, 0.010)
+    for key in ("skin", "skin_light"):
+        microtexture(key, 70.0, 0.018, 0.004)
+    for key in ("hair", "hair_mid", "hair_light"):
+        microtexture(key, 42.0, 0.035, 0.006)
     return mats
 
 
@@ -194,8 +257,31 @@ def create_rig(c: Character, collection: bpy.types.Collection) -> bpy.types.Obje
     return rig
 
 
+def add_cyclorama(collection: bpy.types.Collection, mat: bpy.types.Material) -> bpy.types.Object:
+    """Create a seamless floor-to-wall sweep for the premium character render."""
+    profile = [(-2.4, 0.0), (0.75, 0.0)]
+    radius = 0.78
+    for step in range(1, 9):
+        angle = (math.pi / 2) * step / 8
+        profile.append((0.75 + math.sin(angle) * radius, radius - math.cos(angle) * radius))
+    profile.append((1.53, 3.25))
+    vertices = [(x, y, z) for x in (-3.2, 3.2) for y, z in profile]
+    stride = len(profile)
+    faces = [(index, index + 1, stride + index + 1, stride + index) for index in range(stride - 1)]
+    mesh = bpy.data.meshes.new("CycloramaMesh")
+    mesh.from_pydata(vertices, [], faces)
+    mesh.update()
+    obj = bpy.data.objects.new("Environment_Cyclorama", mesh)
+    collection.objects.link(obj)
+    obj.data.materials.append(mat)
+    bevel = obj.modifiers.new("Cyclorama edge softening", "BEVEL")
+    bevel.width = 0.012
+    bevel.segments = 2
+    return obj
+
+
 def build_character(c: Character) -> dict[str, object]:
-    scene = reset_scene()
+    scene = reset_scene("CYCLES")
     root = bpy.data.collections.new(f"COMPA_{c.id.upper()}_MASTER")
     scene.collection.children.link(root)
     collections: dict[str, bpy.types.Collection] = {}
@@ -220,6 +306,29 @@ def build_character(c: Character) -> dict[str, object]:
     def sphere(slot, bone, name, loc, scale, mat, item="base"):
         return attach(slot, bone, add_sphere(name, loc, scale, mat, collections[slot], segments=12, rings=8), item)
 
+    def torus(slot, bone, name, loc, major_radius, minor_radius, mat, item="base"):
+        bpy.ops.mesh.primitive_torus_add(
+            major_radius=major_radius,
+            minor_radius=minor_radius,
+            major_segments=16,
+            minor_segments=4,
+            location=loc,
+            rotation=(math.pi / 2, 0, 0),
+        )
+        obj = bpy.context.object
+        obj.name = name
+        obj.data.materials.append(mat)
+        move_to_collection(obj, collections[slot])
+        return attach(slot, bone, obj, item)
+
+    def segment_box(slot, bone, name, start, end, width, depth, mat, bevel=0.018, item="base"):
+        start_v, end_v = Vector(start), Vector(end)
+        direction = end_v - start_v
+        obj = add_box(name, tuple((start_v + end_v) / 2), (width, depth, direction.length), mat, collections[slot], bevel=bevel, segments=2)
+        obj.rotation_mode = "QUATERNION"
+        obj.rotation_quaternion = direction.to_track_quat("Z", "Y")
+        return attach(slot, bone, obj, item)
+
     # Neutral body shell: hands, neck and a refined stylized face remain visible with any outfit.
     box("body", "spine", "Body_Neck", (0, 0, 1.335), (0.15, 0.14, 0.17), mats["skin_shadow"], bevel=0.045)
     box("body", "head", "Body_Head", (0, 0, 1.535), (0.49, 0.40, 0.45), mats["skin"], bevel=0.105)
@@ -235,6 +344,8 @@ def build_character(c: Character) -> dict[str, object]:
         box("body", "head", f"Face_Iris_{side}", (x + (0.008 if side == "L" else -0.008), -0.239, 1.553), (0.052, 0.012, 0.066), mats["eye"], bevel=0.015)
         box("body", "head", f"Face_Pupil_{side}", (x + (0.008 if side == "L" else -0.008), -0.247, 1.551), (0.025, 0.009, 0.043), mats["eye_dark"], bevel=0.008)
         box("body", "head", f"Face_Glint_{side}", (x - 0.003, -0.254, 1.575), (0.012, 0.006, 0.016), mats["eye_white"], bevel=0.003)
+        box("body", "head", f"Face_GlintSmall_{side}", (x + 0.019, -0.255, 1.538), (0.007, 0.005, 0.009), mats["eye_white"], bevel=0.002)
+        box("body", "head", f"Face_Cornea_{side}", (x, -0.258, 1.555), (0.124, 0.006, 0.096), mats["glass"], bevel=0.025)
         box("body", "head", f"Face_UpperLid_{side}", (x, -0.242, 1.602), (0.132, 0.012, 0.018), mats["hair"], rotation=(0, 0, 0.05 if side == "L" else -0.05), bevel=0.005)
         box("body", "head", f"Face_Brow_{side}", (x, -0.228, 1.647), (0.125, 0.016, 0.024), mats["hair"], rotation=(0, 0, 0.08 if side == "L" else -0.08), bevel=0.007)
     box("body", "head", "Face_NoseBridge", (0, -0.232, 1.505), (0.030, 0.030, 0.076), mats["skin_shadow"], bevel=0.012)
@@ -248,12 +359,17 @@ def build_character(c: Character) -> dict[str, object]:
     for side, x in (("L", -0.135), ("R", 0.135)):
         box("body", f"thigh.{side}", f"Body_Thigh_{side}", (x, 0, 0.61), (0.16, 0.18, 0.36), mats["skin"], bevel=0.035)
         box("body", f"shin.{side}", f"Body_Shin_{side}", (x, 0, 0.29), (0.145, 0.165, 0.32), mats["skin"], bevel=0.032)
-    for side, x in (("L", -0.355), ("R", 0.355)):
-        box("body", f"upper_arm.{side}", f"Body_UpperArm_{side}", (x, 0, 1.09), (0.14, 0.16, 0.33), mats["skin"], rotation=(0, 0, -0.10 if side == "L" else 0.10), bevel=0.038)
-        box("body", f"forearm.{side}", f"Body_Forearm_{side}", (x + (-0.035 if side == "L" else 0.035), -0.01, 0.82), (0.13, 0.15, 0.27), mats["skin"], bevel=0.035)
-        box("body", f"hand.{side}", f"Body_Hand_{side}", (x + (-0.04 if side == "L" else 0.04), -0.025, 0.655), (0.14, 0.13, 0.17), mats["skin_light"], bevel=0.045)
+    for side, sign in (("L", -1), ("R", 1)):
+        shoulder = (sign * 0.235, 0.0, 1.225)
+        elbow = (sign * 0.375, -0.005, 0.985)
+        wrist = (sign * 0.405, -0.020, 0.755)
+        hand_x = sign * 0.410
+        segment_box("body", f"upper_arm.{side}", f"Body_UpperArm_{side}", shoulder, elbow, 0.105, 0.125, mats["skin"], bevel=0.028)
+        segment_box("body", f"forearm.{side}", f"Body_Forearm_{side}", elbow, wrist, 0.100, 0.120, mats["skin"], bevel=0.026)
+        box("body", f"hand.{side}", f"Body_Hand_{side}", (hand_x, -0.025, 0.665), (0.125, 0.12, 0.17), mats["skin_light"], bevel=0.038)
         for finger in range(3):
-            box("body", f"hand.{side}", f"Detail_Finger_{side}_{finger}", (x + (-0.04 if side == "L" else 0.04) + (finger - 1) * 0.031, -0.091, 0.635), (0.024, 0.026, 0.075), mats["skin"], bevel=0.009)
+            box("body", f"hand.{side}", f"Detail_Finger_{side}_{finger}", (hand_x + (finger - 1) * 0.027, -0.087, 0.64), (0.021, 0.024, 0.070), mats["skin"], bevel=0.007)
+        box("body", f"hand.{side}", f"Detail_Thumb_{side}", (hand_x - sign * 0.068, -0.078, 0.69), (0.040, 0.035, 0.075), mats["skin"], rotation=(0, sign * 0.18, 0), bevel=0.010)
 
     # Bottom garments with waistband, seams, cuffs and cargo pockets.
     bottom_item = c.bottom_style
@@ -273,6 +389,8 @@ def build_character(c: Character) -> dict[str, object]:
     for side, x in (("L", -0.135), ("R", 0.135)):
         box("shoes", f"foot.{side}", f"Shoe_Main_{side}", (x, -0.035, 0.095), (0.215, 0.335, 0.16), mats["shoes"], bevel=0.045, item="sneakers")
         box("shoes", f"foot.{side}", f"Shoe_Toe_{side}", (x, -0.178, 0.078), (0.225, 0.15, 0.125), mats["top_light"], bevel=0.045, item="sneakers")
+        box("shoes", f"foot.{side}", f"Shoe_Tongue_{side}", (x, -0.145, 0.165), (0.135, 0.055, 0.120), mats["shoes"], rotation=(-0.16, 0, 0), bevel=0.018, item="sneakers")
+        box("shoes", f"foot.{side}", f"Shoe_Midsole_{side}", (x, -0.045, 0.050), (0.224, 0.340, 0.045), mats["top_dark"], bevel=0.010, item="sneakers")
         box("shoes", f"foot.{side}", f"Shoe_Sole_{side}", (x, -0.045, 0.023), (0.228, 0.345, 0.048), mats["sole"], bevel=0.012, item="sneakers")
         for lace in range(3):
             box("shoes", f"foot.{side}", f"Shoe_Lace_{side}_{lace}", (x, -0.20 + lace * 0.035, 0.151), (0.12, 0.010, 0.010), mats["sole"], bevel=0.003, item="sneakers")
@@ -281,11 +399,15 @@ def build_character(c: Character) -> dict[str, object]:
     top_item = c.top_style
     attach("top", "spine", add_frustum("Top_Torso", (0, 0, 1.08), (0.48, 0.29), (0.42, 0.25), 0.48, mats["top"], collections["top"], bevel=0.038), top_item)
     box("top", "spine", "Top_Hem", (0, -0.004, 0.855), (0.485, 0.292, 0.070), mats["top_dark"], bevel=0.014, item=top_item)
-    for side, x in (("L", -0.315), ("R", 0.315)):
+    for side, sign in (("L", -1), ("R", 1)):
         sleeve_mat = mats["white"] if c.top_style == "varsity" else mats["top"]
-        box("top", f"upper_arm.{side}", f"Top_UpperSleeve_{side}", (x, 0, 1.095), (0.19, 0.215, 0.35), sleeve_mat, rotation=(0, 0, -0.10 if side == "L" else 0.10), bevel=0.042, item=top_item)
-        box("top", f"forearm.{side}", f"Top_ForeSleeve_{side}", (x + (-0.035 if side == "L" else 0.035), -0.01, 0.855), (0.17, 0.205, 0.25), sleeve_mat, bevel=0.038, item=top_item)
-        box("top", f"forearm.{side}", f"Top_Cuff_{side}", (x + (-0.038 if side == "L" else 0.038), -0.01, 0.735), (0.177, 0.212, 0.065), mats["top_dark"], bevel=0.014, item=top_item)
+        shoulder = (sign * 0.225, 0.0, 1.23)
+        elbow = (sign * 0.375, -0.005, 0.985)
+        wrist = (sign * 0.405, -0.020, 0.755)
+        segment_box("top", f"upper_arm.{side}", f"Top_UpperSleeve_{side}", shoulder, elbow, 0.195, 0.220, sleeve_mat, bevel=0.034, item=top_item)
+        sphere("top", f"upper_arm.{side}", f"Top_ShoulderCap_{side}", (sign * 0.245, 0, 1.205), (0.112, 0.120, 0.135), sleeve_mat, item=top_item)
+        segment_box("top", f"forearm.{side}", f"Top_ForeSleeve_{side}", elbow, wrist, 0.175, 0.205, sleeve_mat, bevel=0.031, item=top_item)
+        segment_box("top", f"forearm.{side}", f"Top_Cuff_{side}", (sign * 0.394, -0.014, 0.82), wrist, 0.184, 0.214, mats["top_dark"], bevel=0.014, item=top_item)
     if c.top_style == "hoodie":
         box("top", "spine", "Top_Hood", (0, 0.155, 1.285), (0.36, 0.18, 0.26), mats["top_dark"], bevel=0.072, item=top_item)
         box("top", "spine", "Top_KangarooPocket", (0, -0.158, 1.00), (0.30, 0.035, 0.15), mats["top_light"], bevel=0.028, item=top_item)
@@ -322,6 +444,31 @@ def build_character(c: Character) -> dict[str, object]:
             tuft(f"Hair_Crown_{row}_{col}", (x + rng.uniform(-0.012, 0.012), -0.06 + row * 0.035, z), (rng.uniform(0.10, 0.14), rng.uniform(0.11, 0.15), rng.uniform(0.09, 0.13)), row + col, (rng.uniform(-0.10, 0.10), rng.uniform(-0.08, 0.08), rng.uniform(-0.18, 0.18)))
     for i, (x, z) in enumerate(((-0.20, 1.69), (-0.10, 1.68), (0, 1.69), (0.10, 1.68), (0.20, 1.69))):
         tuft(f"Hair_Fringe_{i}", (x, -0.19, z), (0.13, 0.10, 0.16), i, (0, 0, (i - 2) * 0.08))
+    # Smaller overlay clumps break the helmet silhouette and catch the rim light.
+    for i, (x, y, z, rz) in enumerate(
+        (
+            (-0.205, -0.205, 1.735, -0.16),
+            (-0.135, -0.218, 1.705, -0.09),
+            (-0.055, -0.221, 1.735, 0.04),
+            (0.030, -0.218, 1.708, -0.03),
+            (0.115, -0.210, 1.742, 0.11),
+            (0.198, -0.196, 1.710, 0.17),
+            (-0.145, -0.125, 1.835, -0.12),
+            (-0.025, -0.135, 1.855, 0.03),
+            (0.105, -0.120, 1.832, 0.14),
+        )
+    ):
+        tuft(f"Hair_MicroClump_{i}", (x, y, z), (0.082, 0.070, 0.090), i + 1, (0, 0, rz))
+    if c.hair_style in ("tousled", "messy"):
+        for side, sign in (("L", -1), ("R", 1)):
+            for i, z in enumerate((1.62, 1.53, 1.44)):
+                tuft(
+                    f"Hair_SideLayer_{side}_{i}",
+                    (sign * (0.245 + i * 0.004), 0.015, z),
+                    (0.095, 0.105, 0.125),
+                    i + (0 if side == "L" else 1),
+                    (0, 0, sign * 0.08),
+                )
     if c.hair_style == "long":
         for side, x in (("L", -0.245), ("R", 0.245)):
             for i, z in enumerate((1.53, 1.37, 1.21, 1.05)):
@@ -346,11 +493,12 @@ def build_character(c: Character) -> dict[str, object]:
         round_frames = c.accessory == "round_glasses"
         for side, x in (("L", -0.128), ("R", 0.128)):
             if round_frames:
-                attach("face_accessory", "head", add_cylinder(f"Glasses_Lens_{side}", (x, -0.258, 1.555), 0.076, 0.018, mats["black"], collections["face_accessory"], vertices=16), c.accessory)
-                box("face_accessory", "head", f"Glasses_Cutout_{side}", (x, -0.270, 1.555), (0.105, 0.012, 0.105), mats["eye_white"], bevel=0.040, item=c.accessory)
+                torus("face_accessory", "head", f"Glasses_Frame_{side}", (x, -0.270, 1.555), 0.070, 0.009, mats["black"], c.accessory)
+                attach("face_accessory", "head", add_cylinder(f"Glasses_Lens_{side}", (x, -0.263, 1.555), 0.061, 0.006, mats["glass"], collections["face_accessory"], vertices=16), c.accessory)
             else:
                 for suffix, loc, dims in (("T", (x, -0.267, 1.61), (0.16, 0.022, 0.022)), ("B", (x, -0.267, 1.50), (0.16, 0.022, 0.022)), ("O", (x + (-0.08 if side == "L" else 0.08), -0.267, 1.555), (0.022, 0.022, 0.13)), ("I", (x + (0.08 if side == "L" else -0.08), -0.267, 1.555), (0.022, 0.022, 0.13))):
                     box("face_accessory", "head", f"Glasses_{side}_{suffix}", loc, dims, mats["black"], bevel=0.006, item=c.accessory)
+                box("face_accessory", "head", f"Glasses_Lens_{side}", (x, -0.263, 1.555), (0.135, 0.006, 0.090), mats["glass"], bevel=0.018, item=c.accessory)
         box("face_accessory", "head", "Glasses_Bridge", (0, -0.270, 1.56), (0.09, 0.022, 0.018), mats["black"], bevel=0.005, item=c.accessory)
     if c.accessory == "headphones":
         for side, x in (("L", -0.29), ("R", 0.29)):
@@ -405,42 +553,64 @@ def build_character(c: Character) -> dict[str, object]:
     root["slots"] = ",".join(SLOTS)
     root["license"] = "Original Compa Virtual production asset"
 
-    studio = bpy.data.collections.new("STUDIO_PREVIEW")
+    studio = bpy.data.collections.new("ENVIRONMENT")
     scene.collection.children.link(studio)
-    add_box("StudioFloor", (0, 0, -0.035), (4.5, 4.5, 0.07), material("MAT_STUDIO", "#E5E0D8", 0.92), studio, bevel=0.018)
+    studio_mat = material("MAT_STUDIO_CYCLORAMA", "#746965", 0.88)
+    add_cyclorama(studio, studio_mat)
+    lights = bpy.data.collections.new("LIGHTS")
+    root.children.link(lights)
     for name, light_type, loc, energy, size, color in (
-        ("Key", "AREA", (2.8, -3.5, 4.0), 850, 3.0, (1.0, 0.86, 0.74)),
-        ("Fill", "AREA", (-2.4, -1.4, 2.5), 520, 2.5, (0.72, 0.83, 1.0)),
-        ("Rim", "AREA", (1.2, 2.5, 3.2), 700, 2.0, (0.76, 0.86, 1.0)),
+        ("Key", "AREA", (-3.2, -4.0, 4.2), 1250, 3.4, (1.0, 0.72, 0.50)),
+        ("Fill", "AREA", (3.0, -2.0, 2.6), 260, 3.0, (0.66, 0.78, 1.0)),
+        ("Rim", "AREA", (1.4, 2.6, 3.5), 940, 2.3, (1.0, 0.68, 0.46)),
     ):
         bpy.ops.object.light_add(type=light_type, location=loc)
         light = bpy.context.object
         light.name = f"Studio{name}"
         light.data.energy, light.data.size, light.data.color = energy, size, color
         look_at(light, (0, 0, 0.92))
-        move_to_collection(light, studio)
-    bpy.ops.object.camera_add(location=(2.15, -4.15, 1.95))
+        move_to_collection(light, lights)
+    camera_collection = bpy.data.collections.new("CAMERA")
+    root.children.link(camera_collection)
+    focus = bpy.data.objects.new("Camera_Focus_Eyes", None)
+    focus.location = (0, -0.02, 1.56)
+    camera_collection.objects.link(focus)
+    bpy.ops.object.camera_add(location=(1.88, -3.72, 1.91))
     camera = bpy.context.object
-    camera.name = "CameraCharacter"
-    camera.data.lens = 68
-    look_at(camera, (0, 0, 0.91))
-    move_to_collection(camera, studio)
+    camera.name = "Camera_Premium_ThreeQuarter"
+    camera.data.lens = 64
+    camera.data.dof.use_dof = True
+    camera.data.dof.focus_object = focus
+    camera.data.dof.aperture_fstop = 5.6
+    look_at(camera, (0, 0, 0.94))
+    move_to_collection(camera, camera_collection)
     scene.camera = camera
     return {"scene": scene, "root": root, "rig": rig, "collections": collections}
 
 
 def save_character(c: Character, built: dict[str, object]) -> dict[str, object]:
-    blend_path = SOURCE_DIR / f"{c.id}-master-v2.blend"
+    blend_path = SOURCE_DIR / f"{c.id}-master-v3.blend"
     glb_path = EXPORT_DIR / f"compa-{c.id}-premium.glb"
     preview_path = PREVIEW_DIR / f"compa-{c.id}-premium.png"
-    report_path = SOURCE_DIR / f"{c.id}-master-v2.report.json"
+    report_path = SOURCE_DIR / f"{c.id}-master-v3.report.json"
     scene: bpy.types.Scene = built["scene"]
     rig: bpy.types.Object = built["rig"]
     scene.frame_set(1)
     scene.render.filepath = str(preview_path)
     bpy.context.preferences.filepaths.save_version = 0
     bpy.ops.wm.save_as_mainfile(filepath=str(blend_path), compress=True)
+    if c.id == "harper":
+        bpy.ops.wm.save_as_mainfile(
+            filepath=str(SOURCE_DIR / "character_voxel_premium.blend"),
+            compress=True,
+            copy=True,
+        )
     bpy.ops.render.render(write_still=True)
+    if c.id == "harper":
+        RENDERS_DIR.mkdir(parents=True, exist_ok=True)
+        bpy.data.images["Render Result"].save_render(
+            str(RENDERS_DIR / "character_voxel_premium.png"), scene=scene
+        )
     export_collections = tuple(f"SLOT_{slot.upper()}" for slot in SLOTS)
     export_meshes = optimize_export_meshes(export_collections)
     bpy.ops.object.select_all(action="DESELECT")
@@ -464,6 +634,9 @@ def save_character(c: Character, built: dict[str, object]) -> dict[str, object]:
         "glbBytes": glb_path.stat().st_size,
         "blendBytes": blend_path.stat().st_size,
         "blenderVersion": bpy.app.version_string,
+        "renderEngine": scene.render.engine,
+        "renderSamples": scene.cycles.samples,
+        "denoise": scene.cycles.use_denoising,
         **metrics,
     }
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -522,7 +695,7 @@ def main() -> None:
     reports = [save_character(c, build_character(c)) for c in chosen]
     existing_reports = []
     for c in CHARACTERS:
-        path = SOURCE_DIR / f"{c.id}-master-v2.report.json"
+        path = SOURCE_DIR / f"{c.id}-master-v3.report.json"
         if path.exists():
             existing_reports.append(json.loads(path.read_text(encoding="utf-8")))
     manifest = {

@@ -23,6 +23,9 @@ export interface Profile {
   free_day_limit?: number;
 }
 export interface Companion {
+  character_id?: import("./companions").CharacterId;
+  room_style?: import("./companions").RoomId;
+  wardrobe?: string[];
   avatar_style?: "boy" | "girl" | "neutral";
   skin_tone?: number;
   hair_style?: "short" | "curls" | "afro" | "bob" | "long" | "braids";
@@ -182,6 +185,7 @@ export interface NotificationPreferences {
   weekends: boolean;
 }
 export interface Snapshot {
+  onboarding?: { step: number; updated_at: string };
   correction_bonuses?: string[];
   flashcard_reviews?: {
     quiz_id: string;
@@ -205,6 +209,10 @@ export interface Snapshot {
   messages: Message[];
   notifications: Notification[];
   inventory: string[];
+  ownedPets: import("./pets").OwnedPet[];
+  activePetId: string | null;
+  equippedPetSetup: import("./pets").EquippedPetSetup;
+  petPreferences: import("./pets").PetPreferences;
   coins: number;
   xp: number;
   streak: number;
@@ -354,6 +362,10 @@ export const emptySnapshot = (): Snapshot => ({
   messages: [],
   notifications: [],
   inventory: [],
+  ownedPets: [],
+  activePetId: null,
+  equippedPetSetup: { activePetId: null, bedId: "pet-bed-cozy", toyIds: ["pet-ball-cozy", "pet-rope-cozy"], accessoryId: "pet-bandana-blue" },
+  petPreferences: { visible: true, automaticMovement: true, activityLevel: "normal", reducedMotion: false },
   coins: 0,
   xp: 0,
   streak: 0,

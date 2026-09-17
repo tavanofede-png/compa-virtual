@@ -1,0 +1,194 @@
+{
+  "room": "minimal",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\minimal-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 26512,
+      "materials": 25
+    },
+    {
+      "id": "desk",
+      "triangles": 2544,
+      "materials": 4
+    },
+    {
+      "id": "chair",
+      "triangles": 3292,
+      "materials": 5
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 1032,
+      "materials": 3
+    },
+    {
+      "id": "minimal-L-return",
+      "triangles": 2544,
+      "materials": 4
+    },
+    {
+      "id": "minimal-pegboard",
+      "triangles": 96540,
+      "materials": 7
+    },
+    {
+      "id": "Floating shelf fern 0-0",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "Floating shelf fern 0-1",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "Floating shelf fern 1-0",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "Floating shelf fern 1-1",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "Floating shelf fern 2-0",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "Floating shelf fern 2-1",
+      "triangles": 6472,
+      "materials": 5
+    },
+    {
+      "id": "minimal-woven-rug",
+      "triangles": 212852,
+      "materials": 3
+    },
+    {
+      "id": "Minimal floor plant",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Minimal shelf books 0",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Minimal shelf books 1",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Minimal shelf books 2",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Shelf photography camera",
+      "triangles": 2372,
+      "materials": 5
+    },
+    {
+      "id": "Minimal desk clock",
+      "triangles": 4480,
+      "materials": 3
+    },
+    {
+      "id": "Minimal desk organizer",
+      "triangles": 1160,
+      "materials": 4
+    },
+    {
+      "id": "Pegboard headphones",
+      "triangles": 1192,
+      "materials": 2
+    },
+    {
+      "id": "Minimal ceramic vessel 0",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Minimal ceramic vessel 1",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Minimal snake fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Substantial white pedestal",
+      "triangles": 1080,
+      "materials": 2
+    },
+    {
+      "id": "Minimal full shelf plant (-1.72, 0.14, 1.52)",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Minimal full shelf plant (-1.72, 0.95, 2.35)",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Minimal trailing shelf plant",
+      "triangles": 15680,
+      "materials": 3
+    },
+    {
+      "id": "Quiet desktop fan",
+      "triangles": 2396,
+      "materials": 3
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "Minimal focus print",
+      "triangles": 24812,
+      "materials": 5
+    },
+    {
+      "id": "Focus rhythm print",
+      "triangles": 40860,
+      "materials": 5
+    },
+    {
+      "id": "ivory-lounge-pouf",
+      "triangles": 126848,
+      "materials": 1
+    }
+  ],
+  "triangles": 660484,
+  "bytes": 45885672,
+  "status": "authored-model-not-native-performance-approved"
+}

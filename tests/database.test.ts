@@ -59,6 +59,8 @@ beforeAll(async () => {
     ),
   );
   await db.query("insert into auth.users(id) values($1),($2)", [a, b]);
+  // Additive migration must coexist with the personal state/projection functions.
+  await db.exec(await readFile(new URL("../supabase/migrations/20260912203428_private_collaboration.sql",import.meta.url),"utf8"));
   stateA = demoSnapshot();
   stateA.profile!.id = a;
   stateA.coins = 0;

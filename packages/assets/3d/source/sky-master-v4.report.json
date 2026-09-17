@@ -1,0 +1,1507 @@
+{
+  "character": "Sky",
+  "id": "sky",
+  "schema": "compa-humanoid-v2",
+  "assetVersion": 4,
+  "heightMeters": 1.690000177051872,
+  "sourceUnchanged": true,
+  "originalSourceSha256": "2057ad2869ac628aff8bae640495ca95c8d7bdf41458f3c20bfbfd61b1f9dc74",
+  "source": "packages/assets/3d/source/sky-master-v4.blend",
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "bones": 17,
+  "changes": {
+    "faceHair": {
+      "module": "premium_face_hair",
+      "style": "long",
+      "removedMeshes": [
+        "Body_Head",
+        "Body_FacePlane",
+        "Body_JawPlane",
+        "Body_Ear_L",
+        "Detail_Ear_L",
+        "Body_Ear_R",
+        "Detail_Ear_R",
+        "Face_EyeWhite_L",
+        "Face_Iris_L",
+        "Face_Pupil_L",
+        "Face_Glint_L",
+        "Face_GlintSmall_L",
+        "Face_Cornea_L",
+        "Face_UpperLid_L",
+        "Face_Brow_L",
+        "Face_EyeWhite_R",
+        "Face_Iris_R",
+        "Face_Pupil_R",
+        "Face_Glint_R",
+        "Face_GlintSmall_R",
+        "Face_Cornea_R",
+        "Face_UpperLid_R",
+        "Face_Brow_R",
+        "Face_NoseBridge",
+        "Face_NoseTip",
+        "Face_Blush_L",
+        "Face_Blush_R",
+        "Face_Lip",
+        "Face_SmileHighlight",
+        "Hair_UnderCap",
+        "Hair_Crown_0_0",
+        "Hair_Crown_0_1",
+        "Hair_Crown_0_2",
+        "Hair_Crown_0_3",
+        "Hair_Crown_0_4",
+        "Hair_Crown_1_0",
+        "Hair_Crown_1_1",
+        "Hair_Crown_1_2",
+        "Hair_Crown_1_3",
+        "Hair_Crown_1_4",
+        "Hair_Crown_2_1",
+        "Hair_Crown_2_2",
+        "Hair_Crown_2_3",
+        "Hair_Fringe_0",
+        "Hair_Fringe_1",
+        "Hair_Fringe_2",
+        "Hair_Fringe_3",
+        "Hair_Fringe_4",
+        "Hair_MicroClump_0",
+        "Hair_MicroClump_1",
+        "Hair_MicroClump_2",
+        "Hair_MicroClump_3",
+        "Hair_MicroClump_4",
+        "Hair_MicroClump_5",
+        "Hair_MicroClump_6",
+        "Hair_MicroClump_7",
+        "Hair_MicroClump_8",
+        "Hair_Long_L_0",
+        "Hair_Long_L_1",
+        "Hair_Long_L_2",
+        "Hair_Long_L_3",
+        "Hair_Long_R_0",
+        "Hair_Long_R_1",
+        "Hair_Long_R_2",
+        "Hair_Long_R_3"
+      ],
+      "addedMeshes": [
+        "PRM_Face_Head",
+        "PRM_Face_EarOuter_L",
+        "PRM_Face_EarHelix_L",
+        "PRM_Face_EarConcha_L",
+        "PRM_Face_EarFold_L",
+        "PRM_Face_EarLobe_L",
+        "PRM_Face_CheekWarmth_L",
+        "PRM_Face_EarOuter_R",
+        "PRM_Face_EarHelix_R",
+        "PRM_Face_EarConcha_R",
+        "PRM_Face_EarFold_R",
+        "PRM_Face_EarLobe_R",
+        "PRM_Face_CheekWarmth_R",
+        "PRM_Face_EyeSocket_L",
+        "PRM_Face_Sclera_L",
+        "PRM_Face_IrisLimbal_L",
+        "PRM_Face_Iris_L",
+        "PRM_Face_IrisLower_L",
+        "PRM_Face_Pupil_L",
+        "PRM_Face_Catchlight_L",
+        "PRM_Face_CatchlightPin_L",
+        "PRM_Face_UpperLidInner_L",
+        "PRM_Face_UpperLidOuter_L",
+        "PRM_Face_LowerLid_L",
+        "PRM_Face_BrowInner_L",
+        "PRM_Face_BrowOuter_L",
+        "PRM_Face_EyeSocket_R",
+        "PRM_Face_Sclera_R",
+        "PRM_Face_IrisLimbal_R",
+        "PRM_Face_Iris_R",
+        "PRM_Face_IrisLower_R",
+        "PRM_Face_Pupil_R",
+        "PRM_Face_Catchlight_R",
+        "PRM_Face_CatchlightPin_R",
+        "PRM_Face_UpperLidInner_R",
+        "PRM_Face_UpperLidOuter_R",
+        "PRM_Face_LowerLid_R",
+        "PRM_Face_BrowInner_R",
+        "PRM_Face_BrowOuter_R",
+        "PRM_Face_NoseBridge",
+        "PRM_Face_NoseTip",
+        "PRM_Face_NoseLight",
+        "PRM_Face_NoseUnderside",
+        "PRM_Face_Smile_00",
+        "PRM_Face_Smile_01",
+        "PRM_Face_Smile_02",
+        "PRM_Face_Smile_03",
+        "PRM_Face_Smile_04",
+        "PRM_Face_LowerLipSoft",
+        "PRM_Hair_RootCrown",
+        "PRM_Hair_RootDome",
+        "PRM_Hair_RootBack",
+        "PRM_Hair_Crown_0_0",
+        "PRM_Hair_Crown_0_1",
+        "PRM_Hair_Crown_0_2",
+        "PRM_Hair_Crown_0_3",
+        "PRM_Hair_Crown_0_4",
+        "PRM_Hair_Crown_0_5",
+        "PRM_Hair_Crown_0_6",
+        "PRM_Hair_Crown_0_7",
+        "PRM_Hair_Crown_0_8",
+        "PRM_Hair_Crown_1_0",
+        "PRM_Hair_Crown_1_1",
+        "PRM_Hair_Crown_1_2",
+        "PRM_Hair_Crown_1_3",
+        "PRM_Hair_Crown_1_4",
+        "PRM_Hair_Crown_1_5",
+        "PRM_Hair_Crown_1_6",
+        "PRM_Hair_Crown_1_7",
+        "PRM_Hair_Crown_1_8",
+        "PRM_Hair_Crown_2_0",
+        "PRM_Hair_Crown_2_1",
+        "PRM_Hair_Crown_2_2",
+        "PRM_Hair_Crown_2_3",
+        "PRM_Hair_Crown_2_4",
+        "PRM_Hair_Crown_2_5",
+        "PRM_Hair_Crown_2_6",
+        "PRM_Hair_Crown_2_7",
+        "PRM_Hair_Crown_2_8",
+        "PRM_Hair_Crown_3_0",
+        "PRM_Hair_Crown_3_1",
+        "PRM_Hair_Crown_3_2",
+        "PRM_Hair_Crown_3_3",
+        "PRM_Hair_Crown_3_4",
+        "PRM_Hair_Crown_3_5",
+        "PRM_Hair_Crown_3_6",
+        "PRM_Hair_Crown_3_7",
+        "PRM_Hair_Crown_3_8",
+        "PRM_Hair_Crown_4_0",
+        "PRM_Hair_Crown_4_1",
+        "PRM_Hair_Crown_4_2",
+        "PRM_Hair_Crown_4_3",
+        "PRM_Hair_Crown_4_4",
+        "PRM_Hair_Crown_4_5",
+        "PRM_Hair_Crown_4_6",
+        "PRM_Hair_Crown_4_7",
+        "PRM_Hair_Crown_4_8",
+        "PRM_Hair_Crown_5_0",
+        "PRM_Hair_Crown_5_1",
+        "PRM_Hair_Crown_5_2",
+        "PRM_Hair_Crown_5_3",
+        "PRM_Hair_Crown_5_4",
+        "PRM_Hair_Crown_5_5",
+        "PRM_Hair_Crown_5_6",
+        "PRM_Hair_Crown_5_7",
+        "PRM_Hair_Crown_5_8",
+        "PRM_Hair_Fringe_00",
+        "PRM_Hair_Fringe_01",
+        "PRM_Hair_FringeLayer_01",
+        "PRM_Hair_Fringe_07",
+        "PRM_Hair_FringeLayer_07",
+        "PRM_Hair_Fringe_08",
+        "PRM_Hair_SideLayer_L_0_0",
+        "PRM_Hair_SideLayer_L_0_1",
+        "PRM_Hair_SideLayer_L_0_2",
+        "PRM_Hair_SideLayer_L_0_3",
+        "PRM_Hair_SideLayer_L_0_4",
+        "PRM_Hair_SideLayer_L_1_0",
+        "PRM_Hair_SideLayer_L_1_1",
+        "PRM_Hair_SideLayer_L_1_2",
+        "PRM_Hair_SideLayer_L_1_3",
+        "PRM_Hair_SideLayer_L_1_4",
+        "PRM_Hair_SideLayer_L_2_0",
+        "PRM_Hair_SideLayer_L_2_1",
+        "PRM_Hair_SideLayer_L_2_2",
+        "PRM_Hair_SideLayer_L_2_3",
+        "PRM_Hair_SideLayer_L_2_4",
+        "PRM_Hair_Temple_L_0",
+        "PRM_Hair_Temple_L_1",
+        "PRM_Hair_Temple_L_2",
+        "PRM_Hair_Temple_L_3",
+        "PRM_Hair_Back_0_0",
+        "PRM_Hair_Back_0_1",
+        "PRM_Hair_Back_0_2",
+        "PRM_Hair_Back_0_3",
+        "PRM_Hair_Back_0_4",
+        "PRM_Hair_Back_1_0",
+        "PRM_Hair_Back_1_1",
+        "PRM_Hair_Back_1_2",
+        "PRM_Hair_Back_1_3",
+        "PRM_Hair_Back_1_4",
+        "PRM_Hair_Back_2_0",
+        "PRM_Hair_Back_2_1",
+        "PRM_Hair_Back_2_2",
+        "PRM_Hair_Back_2_3",
+        "PRM_Hair_Back_2_4",
+        "PRM_Hair_Back_3_0",
+        "PRM_Hair_Back_3_1",
+        "PRM_Hair_Back_3_2",
+        "PRM_Hair_Back_3_3",
+        "PRM_Hair_Back_3_4",
+        "PRM_Hair_SideLayer_R_0_0",
+        "PRM_Hair_SideLayer_R_0_1",
+        "PRM_Hair_SideLayer_R_0_2",
+        "PRM_Hair_SideLayer_R_0_3",
+        "PRM_Hair_SideLayer_R_0_4",
+        "PRM_Hair_SideLayer_R_1_0",
+        "PRM_Hair_SideLayer_R_1_1",
+        "PRM_Hair_SideLayer_R_1_2",
+        "PRM_Hair_SideLayer_R_1_3",
+        "PRM_Hair_SideLayer_R_1_4",
+        "PRM_Hair_SideLayer_R_2_0",
+        "PRM_Hair_SideLayer_R_2_1",
+        "PRM_Hair_SideLayer_R_2_2",
+        "PRM_Hair_SideLayer_R_2_3",
+        "PRM_Hair_SideLayer_R_2_4",
+        "PRM_Hair_Temple_R_0",
+        "PRM_Hair_Temple_R_1",
+        "PRM_Hair_Temple_R_2",
+        "PRM_Hair_Temple_R_3",
+        "PRM_Hair_Long_L_0",
+        "PRM_Hair_Long_L_1",
+        "PRM_Hair_Long_L_2",
+        "PRM_Hair_Long_L_3",
+        "PRM_Hair_Long_L_4",
+        "PRM_Hair_Long_R_0",
+        "PRM_Hair_Long_R_1",
+        "PRM_Hair_Long_R_2",
+        "PRM_Hair_Long_R_3",
+        "PRM_Hair_Long_R_4",
+        "PRM_Hair_LongBack_0",
+        "PRM_Hair_LongBack_1",
+        "PRM_Hair_LongBack_2",
+        "PRM_Hair_LongBack_3",
+        "PRM_Hair_LongBack_4",
+        "PRM_Hair_LongBack_5"
+      ],
+      "hairLocks": 134,
+      "beforeMeshCount": 136,
+      "afterMeshCount": 293,
+      "beforeRawVertices": 1414,
+      "afterRawVertices": 8290,
+      "notes": [
+        "Geometric stepped locks, layered eyes, ear anatomy, multi-segment smile.",
+        "All additions preserve the existing head bone and modular slot parenting.",
+        "Visual and pose QA are performed by the calling pipeline, not asserted here."
+      ]
+    },
+    "garments": {
+      "removed": 53,
+      "created": 597,
+      "weighted_elbow_bridges": 2,
+      "character": "sky",
+      "garment_construction": "shaped cloth rings; continuous two-bone weighted sleeves; constructed accessories",
+      "modular_slots": [
+        "top",
+        "bottom",
+        "shoes",
+        "back",
+        "hand_prop"
+      ]
+    },
+    "originalRigObjectScale": [
+      0.9657142758369446,
+      0.9657142758369446,
+      0.9657142758369446
+    ],
+    "normalCheckedMeshes": 836
+  },
+  "validation": {
+    "schema": "compa-mechanical-validation-v1",
+    "passed": true,
+    "errors": [],
+    "warnings": [
+      {
+        "type": "missing_hand_prop_geometry",
+        "message": "A declared hand_prop slot does not currently contain any geometry."
+      }
+    ],
+    "poses": [
+      {
+        "pose": "raised_arm",
+        "anglesRadians": {
+          "upper_arm.L": [
+            0.49207431077957153,
+            -0.2434586137533188,
+            0.9066209197044373
+          ],
+          "upper_arm.R": [
+            0.49207431077957153,
+            0.2434586137533188,
+            -0.9066209197044373
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 84,
+        "maximumFollowerMatrixError": 1.7881393432617188e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_L",
+              "Premium_Top_CuffRib_L_0",
+              "Premium_Top_CuffRib_L_1",
+              "Premium_Top_CuffRib_L_10",
+              "Premium_Top_CuffRib_L_2",
+              "Premium_Top_CuffRib_L_3",
+              "Premium_Top_CuffRib_L_4",
+              "Premium_Top_CuffRib_L_5",
+              "Premium_Top_CuffRib_L_6",
+              "Premium_Top_CuffRib_L_7",
+              "Premium_Top_CuffRib_L_8",
+              "Premium_Top_CuffRib_L_9",
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "Premium_Top_TurnedCuff_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_R",
+              "Premium_Top_CuffRib_R_0",
+              "Premium_Top_CuffRib_R_1",
+              "Premium_Top_CuffRib_R_10",
+              "Premium_Top_CuffRib_R_2",
+              "Premium_Top_CuffRib_R_3",
+              "Premium_Top_CuffRib_R_4",
+              "Premium_Top_CuffRib_R_5",
+              "Premium_Top_CuffRib_R_6",
+              "Premium_Top_CuffRib_R_7",
+              "Premium_Top_CuffRib_R_8",
+              "Premium_Top_CuffRib_R_9",
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "Premium_Top_TurnedCuff_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "elbow_90",
+        "anglesRadians": {
+          "forearm.L": [
+            -1.5707963267948966,
+            0,
+            0
+          ],
+          "forearm.R": [
+            -1.5707963267948966,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 42,
+        "maximumFollowerMatrixError": 1.9371509552001953e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_L",
+              "Premium_Top_CuffRib_L_0",
+              "Premium_Top_CuffRib_L_1",
+              "Premium_Top_CuffRib_L_10",
+              "Premium_Top_CuffRib_L_2",
+              "Premium_Top_CuffRib_L_3",
+              "Premium_Top_CuffRib_L_4",
+              "Premium_Top_CuffRib_L_5",
+              "Premium_Top_CuffRib_L_6",
+              "Premium_Top_CuffRib_L_7",
+              "Premium_Top_CuffRib_L_8",
+              "Premium_Top_CuffRib_L_9",
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "Premium_Top_TurnedCuff_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_R",
+              "Premium_Top_CuffRib_R_0",
+              "Premium_Top_CuffRib_R_1",
+              "Premium_Top_CuffRib_R_10",
+              "Premium_Top_CuffRib_R_2",
+              "Premium_Top_CuffRib_R_3",
+              "Premium_Top_CuffRib_R_4",
+              "Premium_Top_CuffRib_R_5",
+              "Premium_Top_CuffRib_R_6",
+              "Premium_Top_CuffRib_R_7",
+              "Premium_Top_CuffRib_R_8",
+              "Premium_Top_CuffRib_R_9",
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "Premium_Top_TurnedCuff_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "knee_70",
+        "anglesRadians": {
+          "shin.L": [
+            1.22,
+            0,
+            0
+          ],
+          "shin.R": [
+            1.22,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 218,
+        "maximumFollowerMatrixError": 1.1920928955078125e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "head_turn",
+        "anglesRadians": {
+          "head": [
+            0.16,
+            0,
+            0.6
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 224,
+        "maximumFollowerMatrixError": 2.384185791015625e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "walking",
+        "anglesRadians": {
+          "thigh.L": [
+            -0.5,
+            0,
+            0
+          ],
+          "thigh.R": [
+            0.5,
+            0,
+            0
+          ],
+          "shin.L": [
+            0.45,
+            0,
+            0
+          ],
+          "upper_arm.L": [
+            0.35,
+            0,
+            0
+          ],
+          "upper_arm.R": [
+            -0.35,
+            0,
+            0
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 350,
+        "maximumFollowerMatrixError": 2.4586915969848633e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      },
+      {
+        "pose": "hand_book_hold",
+        "anglesRadians": {
+          "forearm.L": [
+            -1.1,
+            0,
+            0
+          ],
+          "hand.L": [
+            0.15,
+            0.35,
+            0.18
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 21,
+        "maximumFollowerMatrixError": 2.5331974029541016e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": [
+          {
+            "side": "L",
+            "skinObjects": [
+              "Body_Forearm_L",
+              "Body_UpperArm_L"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_L",
+              "Premium_Top_CuffRib_L_0",
+              "Premium_Top_CuffRib_L_1",
+              "Premium_Top_CuffRib_L_10",
+              "Premium_Top_CuffRib_L_2",
+              "Premium_Top_CuffRib_L_3",
+              "Premium_Top_CuffRib_L_4",
+              "Premium_Top_CuffRib_L_5",
+              "Premium_Top_CuffRib_L_6",
+              "Premium_Top_CuffRib_L_7",
+              "Premium_Top_CuffRib_L_8",
+              "Premium_Top_CuffRib_L_9",
+              "Premium_Top_SleeveStitch_L_00",
+              "Premium_Top_SleeveStitch_L_01",
+              "Premium_Top_SleeveStitch_L_02",
+              "Premium_Top_SleeveStitch_L_03",
+              "Premium_Top_SleeveStitch_L_04",
+              "Premium_Top_SleeveStitch_L_05",
+              "Premium_Top_SleeveStitch_L_06",
+              "Premium_Top_SleeveStitch_L_07",
+              "Premium_Top_SleeveStitch_L_08",
+              "Premium_Top_SleeveStitch_L_09",
+              "Premium_Top_SleeveStitch_L_10",
+              "Premium_Top_SleeveStitch_L_11",
+              "Premium_Top_SleeveStitch_L_12",
+              "Premium_Top_SleeveStitch_L_13",
+              "Premium_Top_SleeveStitch_L_14",
+              "Premium_Top_SleeveStitch_L_15",
+              "Premium_Top_SleeveStitch_L_16",
+              "Premium_Top_SleeveStitch_L_17",
+              "Premium_Top_SleeveStitch_L_18",
+              "Premium_Top_SleeveStitch_L_19",
+              "Premium_Top_TurnedCuff_L"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          },
+          {
+            "side": "R",
+            "skinObjects": [
+              "Body_Forearm_R",
+              "Body_UpperArm_R"
+            ],
+            "garmentObjects": [
+              "Premium_Top_ContinuousSleeve_R",
+              "Premium_Top_CuffRib_R_0",
+              "Premium_Top_CuffRib_R_1",
+              "Premium_Top_CuffRib_R_10",
+              "Premium_Top_CuffRib_R_2",
+              "Premium_Top_CuffRib_R_3",
+              "Premium_Top_CuffRib_R_4",
+              "Premium_Top_CuffRib_R_5",
+              "Premium_Top_CuffRib_R_6",
+              "Premium_Top_CuffRib_R_7",
+              "Premium_Top_CuffRib_R_8",
+              "Premium_Top_CuffRib_R_9",
+              "Premium_Top_SleeveStitch_R_00",
+              "Premium_Top_SleeveStitch_R_01",
+              "Premium_Top_SleeveStitch_R_02",
+              "Premium_Top_SleeveStitch_R_03",
+              "Premium_Top_SleeveStitch_R_04",
+              "Premium_Top_SleeveStitch_R_05",
+              "Premium_Top_SleeveStitch_R_06",
+              "Premium_Top_SleeveStitch_R_07",
+              "Premium_Top_SleeveStitch_R_08",
+              "Premium_Top_SleeveStitch_R_09",
+              "Premium_Top_SleeveStitch_R_10",
+              "Premium_Top_SleeveStitch_R_11",
+              "Premium_Top_SleeveStitch_R_12",
+              "Premium_Top_SleeveStitch_R_13",
+              "Premium_Top_SleeveStitch_R_14",
+              "Premium_Top_SleeveStitch_R_15",
+              "Premium_Top_SleeveStitch_R_16",
+              "Premium_Top_SleeveStitch_R_17",
+              "Premium_Top_SleeveStitch_R_18",
+              "Premium_Top_SleeveStitch_R_19",
+              "Premium_Top_TurnedCuff_R"
+            ],
+            "sampleCount": 112,
+            "closedShellCount": 33,
+            "openShellObjects": [],
+            "outsideClosedShellSamples": 0,
+            "outsideExamplePositions": [],
+            "status": "sampled",
+            "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+          }
+        ]
+      },
+      {
+        "pose": "spine_backpack",
+        "anglesRadians": {
+          "spine": [
+            0.3,
+            0.12,
+            0.15
+          ]
+        },
+        "rigidFollowersTested": 834,
+        "rigidFollowersMoved": 560,
+        "maximumFollowerMatrixError": 3.5762786865234375e-07,
+        "passed": true,
+        "failures": [],
+        "sleeveContainmentSamples": []
+      }
+    ],
+    "neutralSleeveContainmentSamples": [
+      {
+        "side": "L",
+        "skinObjects": [
+          "Body_Forearm_L",
+          "Body_UpperArm_L"
+        ],
+        "garmentObjects": [
+          "Premium_Top_ContinuousSleeve_L",
+          "Premium_Top_CuffRib_L_0",
+          "Premium_Top_CuffRib_L_1",
+          "Premium_Top_CuffRib_L_10",
+          "Premium_Top_CuffRib_L_2",
+          "Premium_Top_CuffRib_L_3",
+          "Premium_Top_CuffRib_L_4",
+          "Premium_Top_CuffRib_L_5",
+          "Premium_Top_CuffRib_L_6",
+          "Premium_Top_CuffRib_L_7",
+          "Premium_Top_CuffRib_L_8",
+          "Premium_Top_CuffRib_L_9",
+          "Premium_Top_SleeveStitch_L_00",
+          "Premium_Top_SleeveStitch_L_01",
+          "Premium_Top_SleeveStitch_L_02",
+          "Premium_Top_SleeveStitch_L_03",
+          "Premium_Top_SleeveStitch_L_04",
+          "Premium_Top_SleeveStitch_L_05",
+          "Premium_Top_SleeveStitch_L_06",
+          "Premium_Top_SleeveStitch_L_07",
+          "Premium_Top_SleeveStitch_L_08",
+          "Premium_Top_SleeveStitch_L_09",
+          "Premium_Top_SleeveStitch_L_10",
+          "Premium_Top_SleeveStitch_L_11",
+          "Premium_Top_SleeveStitch_L_12",
+          "Premium_Top_SleeveStitch_L_13",
+          "Premium_Top_SleeveStitch_L_14",
+          "Premium_Top_SleeveStitch_L_15",
+          "Premium_Top_SleeveStitch_L_16",
+          "Premium_Top_SleeveStitch_L_17",
+          "Premium_Top_SleeveStitch_L_18",
+          "Premium_Top_SleeveStitch_L_19",
+          "Premium_Top_TurnedCuff_L"
+        ],
+        "sampleCount": 112,
+        "closedShellCount": 33,
+        "openShellObjects": [],
+        "outsideClosedShellSamples": 0,
+        "outsideExamplePositions": [],
+        "status": "sampled",
+        "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+      },
+      {
+        "side": "R",
+        "skinObjects": [
+          "Body_Forearm_R",
+          "Body_UpperArm_R"
+        ],
+        "garmentObjects": [
+          "Premium_Top_ContinuousSleeve_R",
+          "Premium_Top_CuffRib_R_0",
+          "Premium_Top_CuffRib_R_1",
+          "Premium_Top_CuffRib_R_10",
+          "Premium_Top_CuffRib_R_2",
+          "Premium_Top_CuffRib_R_3",
+          "Premium_Top_CuffRib_R_4",
+          "Premium_Top_CuffRib_R_5",
+          "Premium_Top_CuffRib_R_6",
+          "Premium_Top_CuffRib_R_7",
+          "Premium_Top_CuffRib_R_8",
+          "Premium_Top_CuffRib_R_9",
+          "Premium_Top_SleeveStitch_R_00",
+          "Premium_Top_SleeveStitch_R_01",
+          "Premium_Top_SleeveStitch_R_02",
+          "Premium_Top_SleeveStitch_R_03",
+          "Premium_Top_SleeveStitch_R_04",
+          "Premium_Top_SleeveStitch_R_05",
+          "Premium_Top_SleeveStitch_R_06",
+          "Premium_Top_SleeveStitch_R_07",
+          "Premium_Top_SleeveStitch_R_08",
+          "Premium_Top_SleeveStitch_R_09",
+          "Premium_Top_SleeveStitch_R_10",
+          "Premium_Top_SleeveStitch_R_11",
+          "Premium_Top_SleeveStitch_R_12",
+          "Premium_Top_SleeveStitch_R_13",
+          "Premium_Top_SleeveStitch_R_14",
+          "Premium_Top_SleeveStitch_R_15",
+          "Premium_Top_SleeveStitch_R_16",
+          "Premium_Top_SleeveStitch_R_17",
+          "Premium_Top_SleeveStitch_R_18",
+          "Premium_Top_SleeveStitch_R_19",
+          "Premium_Top_TurnedCuff_R"
+        ],
+        "sampleCount": 112,
+        "closedShellCount": 33,
+        "openShellObjects": [],
+        "outsideClosedShellSamples": 0,
+        "outsideExamplePositions": [],
+        "status": "sampled",
+        "meaning": "Sampled skin vertices outside the union of closed sleeve shells. Open garments and hidden body regions require visual inspection; this is not a collision-free guarantee."
+      }
+    ],
+    "stateRestoration": {
+      "poseMatrixBasisMaxError": 0.0,
+      "rotationModesRestored": true,
+      "frameRestored": true,
+      "actionRestored": true,
+      "actionSlotRestored": true,
+      "nlaRestored": true,
+      "posePositionRestored": true,
+      "rigTransformMaxError": 0.0
+    },
+    "measuredCharacterBounds": {
+      "minimum": [
+        -0.4588175117969513,
+        -0.23171450197696686,
+        -5.40167022222704e-10
+      ],
+      "maximum": [
+        0.4588175117969513,
+        0.3677114248275757,
+        1.6900001764297485
+      ],
+      "dimensionsMeters": [
+        0.9176350235939026,
+        0.5994259268045425,
+        1.6900001769699156
+      ],
+      "heightMeters": 1.6900001769699156,
+      "includesHairAndFootwear": true
+    },
+    "slotObjectCounts": {
+      "body": 74,
+      "bottom": 88,
+      "hair": 137,
+      "face_accessory": 38,
+      "back": 175,
+      "shoes": 182,
+      "top": 142
+    },
+    "rigIdentityPreserved": true,
+    "visualReviewStillRequired": true,
+    "scope": "Finite transforms, 17-bone schema, unchanged rest rig, exact rigid follower motion, sampled closed-shell sleeve coverage, measured dimensions and state restoration. Weighted skin deformation and all collision-free garment combinations require separate visual and export validation."
+  },
+  "geometryBefore": {
+    "meshCount": 135,
+    "sourceVertices": 1392,
+    "evaluatedTriangles": 15220,
+    "bounds": {
+      "minimum": [
+        -0.5334665179252625,
+        -0.26100000739097595,
+        -0.0010000326437875628
+      ],
+      "maximum": [
+        0.5334665179252625,
+        0.35300004482269287,
+        1.9426294565200806
+      ],
+      "dimensionsMeters": [
+        1.066933035850525,
+        0.6140000522136688,
+        1.9436294891638681
+      ],
+      "heightMeters": 1.9436294891638681,
+      "includesHairAndFootwear": true
+    },
+    "declaredHeightMeters": 1.69,
+    "heightDifferenceMeters": 0.2536294891638682,
+    "bindings": {
+      "rigidBoneParent": 135
+    },
+    "slots": {
+      "back": 5,
+      "body": 48,
+      "bottom": 14,
+      "hair": 36,
+      "face_accessory": 2,
+      "shoes": 16,
+      "top": 14
+    },
+    "uvComplete": false
+  },
+  "geometryAfter": {
+    "meshCount": 836,
+    "sourceVertices": 13344,
+    "evaluatedTriangles": 139648,
+    "bounds": {
+      "minimum": [
+        -0.4588175117969513,
+        -0.23171450197696686,
+        -5.40167022222704e-10
+      ],
+      "maximum": [
+        0.4588175117969513,
+        0.3677114248275757,
+        1.6900001764297485
+      ],
+      "dimensionsMeters": [
+        0.9176350235939026,
+        0.5994259268045425,
+        1.6900001769699156
+      ],
+      "heightMeters": 1.6900001769699156,
+      "includesHairAndFootwear": true
+    },
+    "declaredHeightMeters": 1.69,
+    "heightDifferenceMeters": 1.7696991561066966e-07,
+    "bindings": {
+      "rigidBoneParent": 834,
+      "armatureModifier": 2
+    },
+    "slots": {
+      "body": 74,
+      "bottom": 88,
+      "hair": 137,
+      "face_accessory": 38,
+      "back": 175,
+      "shoes": 182,
+      "top": 142
+    },
+    "uvComplete": false
+  },
+  "validGlb2": true,
+  "exportedMeshes": 35,
+  "exportedNodes": 53,
+  "exportedMaterials": 25,
+  "exportedVertices": 133710,
+  "exportedTriangles": 64324,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0,
+  "export": "packages/assets/3d/compa-sky-premium.glb",
+  "glbBytes": 4748268,
+  "preview": "packages/assets/3d/previews/compa-sky-premium.png",
+  "renderEngine": "CYCLES",
+  "renderSamples": 64,
+  "denoise": true,
+  "glbSha256": "f2b8ba7c97f0b9d1e5b46a200041101fc18a02592bf2138afdf8d63862b344ef",
+  "skinPacking": {
+    "bytesBefore": 6351436,
+    "bytesAfter": 4748268,
+    "packedAccessors": [
+      {
+        "accessor": 3,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 9,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 14,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 19,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 24,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 29,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 34,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 39,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 44,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 49,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 53,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 57,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 61,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 65,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 70,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 75,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 80,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 85,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 89,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 94,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 99,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 104,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 108,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 113,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 118,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 123,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 128,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 132,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 137,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 142,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 147,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 152,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 157,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 161,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 165,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 170,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 175,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 179,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 184,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 189,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 194,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 199,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 204,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 209,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 213,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 218,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 223,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 227,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 232,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 237,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 241,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 246,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 251,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 256,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 261,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 266,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 271,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 276,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 281,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 286,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 291,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 296,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 300,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 305,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 309,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 313,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 317,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 321,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 326,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 330,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 334,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 339,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 344,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 349,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 354,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 359,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 364,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 369,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 374,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 379,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      },
+      {
+        "accessor": 384,
+        "semantic": "WEIGHTS_0",
+        "from": 5126,
+        "to": 5121
+      }
+    ],
+    "positionDataUnchanged": true,
+    "maximumBlendWeightError": 0.00392156862745098,
+    "compressionExtensionRequired": false
+  }
+}

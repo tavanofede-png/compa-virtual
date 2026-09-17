@@ -1,0 +1,244 @@
+{
+  "room": "cafe",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\cafe-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 67814,
+      "materials": 22
+    },
+    {
+      "id": "espresso-machine",
+      "triangles": 4896,
+      "materials": 5
+    },
+    {
+      "id": "coffee-grinder",
+      "triangles": 1936,
+      "materials": 4
+    },
+    {
+      "id": "pastry-display",
+      "triangles": 8452,
+      "materials": 9
+    },
+    {
+      "id": "cafe-banquette",
+      "triangles": 24264,
+      "materials": 8
+    },
+    {
+      "id": "desk",
+      "triangles": 10516,
+      "materials": 3
+    },
+    {
+      "id": "chair",
+      "triangles": 10524,
+      "materials": 6
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 1032,
+      "materials": 3
+    },
+    {
+      "id": "study-plant",
+      "triangles": 6400,
+      "materials": 5
+    },
+    {
+      "id": "Cafe pendant 0",
+      "triangles": 684,
+      "materials": 3
+    },
+    {
+      "id": "Cafe pendant 1",
+      "triangles": 684,
+      "materials": 3
+    },
+    {
+      "id": "Cafe pendant 2",
+      "triangles": 684,
+      "materials": 3
+    },
+    {
+      "id": "cafe-menu",
+      "triangles": 16224,
+      "materials": 5
+    },
+    {
+      "id": "Window large fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Pastry greenery",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Cafe shelf plant 0",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Cafe trailing leaves 0",
+      "triangles": 17408,
+      "materials": 3
+    },
+    {
+      "id": "Cafe shelf plant 1",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Cafe trailing leaves 1",
+      "triangles": 17408,
+      "materials": 3
+    },
+    {
+      "id": "Cafe shelf plant 2",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Cafe trailing leaves 2",
+      "triangles": 17408,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 1.58-0",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 1.58-1",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 1.58-2",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.02-0",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.02-1",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.02-2",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.43-0",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.43-1",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Coffee archive jar 2.43-2",
+      "triangles": 520,
+      "materials": 3
+    },
+    {
+      "id": "Fresh pastry plate",
+      "triangles": 500,
+      "materials": 2
+    },
+    {
+      "id": "Cafe clock",
+      "triangles": 4480,
+      "materials": 3
+    },
+    {
+      "id": "Cafe rich planting 0",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Cafe rich planting 1",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Cafe rich planting 2",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Cafe rich planting 3",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Caf\u00e9 coffee sacks",
+      "triangles": 432,
+      "materials": 4
+    },
+    {
+      "id": "coffee-cabinet",
+      "triangles": 7384,
+      "materials": 6
+    },
+    {
+      "id": "Coffee chalkboard",
+      "triangles": 34296,
+      "materials": 5
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "student-backpack",
+      "triangles": 4212,
+      "materials": 4
+    },
+    {
+      "id": "Cafe corner fern",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Cafe top foliage",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    }
+  ],
+  "triangles": 370630,
+  "bytes": 26342892,
+  "status": "authored-model-not-native-performance-approved"
+}

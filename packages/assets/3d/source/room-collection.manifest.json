@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "count": 6,
+  "applicationIntegrated": false,
+  "rooms": [
+    {
+      "id": "cozy-moderno",
+      "name": "Cozy moderno",
+      "source": "room_cozy_premium.blend",
+      "objects": 5765,
+      "render": "renders/room-cozy-premium/hero.png",
+      "image": {
+        "width": 2400,
+        "height": 1800,
+        "bytes": 4991523,
+        "sha256": "e7326e9378eacea7684adbc638676cba0df12e16eea437e3504b2cfe735289b4"
+      },
+      "sourceSha256": "5381fc9ca8b150d739a8bb53815308c3d81289663e7090b4635728aed51cee21"
+    },
+    {
+      "id": "minimalista",
+      "name": "Minimalista",
+      "source": "packages\\assets\\3d\\source\\rooms\\minimalista-master-v1.blend",
+      "sourceSha256": "23f21dbcdf501448c41cf1a6fb924357bf28316251ccd7534742ff3047cb2ec0",
+      "objects": 5860,
+      "addedObjects": 95,
+      "render": "renders\\room-collection\\minimalista\\hero.png",
+      "image": {
+        "width": 1920,
+        "height": 1440,
+        "bytes": 3263180,
+        "sha256": "fabbd682e0d0efe63a53e5482a804ac948f268838248af1c1e5be76a7bf5d838"
+      },
+      "features": [
+        "Ash fluted wall",
+        "Layered Roman shade",
+        "Three-drawer filing cabinet",
+        "Magazine archives",
+        "Architect reading lamp"
+      ]
+    },
+    {
+      "id": "tecnologia",
+      "name": "Tecnología",
+      "source": "packages\\assets\\3d\\source\\rooms\\tecnologia-master-v1.blend",
+      "sourceSha256": "c6cc0ec3a09197bab02cb926625edf29b683096ede472e884841d73f1f2e6a24",
+      "objects": 5946,
+      "addedObjects": 181,
+      "render": "renders\\room-collection\\tecnologia\\hero.png",
+      "image": {
+        "width": 1920,
+        "height": 1440,
+        "bytes": 3297881,
+        "sha256": "d93b94bab01a3ce052f96fb3dbf73eb76cce8099d2e0132da3341e78e178175a"
+      },
+      "features": [
+        "Three-screen study station",
+        "PC with three lit fans, internal board and ports",
+        "Under-shelf light channels",
+        "Acoustic tiles",
+        "Robotics display console"
+      ]
+    },
+    {
+      "id": "naturaleza",
+      "name": "Naturaleza",
+      "source": "packages\\assets\\3d\\source\\rooms\\naturaleza-master-v1.blend",
+      "sourceSha256": "42ead6079e02e2aa00682ed4199e451de185889d83fa5fbc187b3a48a7baf4df",
+      "objects": 6615,
+      "addedObjects": 850,
+      "render": "renders\\room-collection\\naturaleza\\hero.png",
+      "image": {
+        "width": 1920,
+        "height": 1440,
+        "bytes": 3397108,
+        "sha256": "542142403d98870ba1ab601fe6acdba02031e000aa8cc7aa9f8821c9f4b21798"
+      },
+      "features": [
+        "Timber lattice",
+        "Roman bamboo-style folds",
+        "Two suspended macrame plants",
+        "Potting bench with six seedlings",
+        "Watering can and specimen journal",
+        "Additional floor foliage"
+      ]
+    },
+    {
+      "id": "urbano",
+      "name": "Urbano",
+      "source": "packages\\assets\\3d\\source\\rooms\\urbano-master-v1.blend",
+      "sourceSha256": "66d485b16d9cf97647691d99b78648524a914c0f07d3be3bc3901e9552c60ede",
+      "objects": 5993,
+      "addedObjects": 228,
+      "render": "renders\\room-collection\\urbano\\hero.png",
+      "image": {
+        "width": 1920,
+        "height": 1440,
+        "bytes": 3366443,
+        "sha256": "4cc532b469651b0be36ad3d06db042dc6c6cb13400d730780d01642f66ee14e3"
+      },
+      "features": [
+        "Staggered masonry wall",
+        "Original city art",
+        "Record console and playable-looking turntable mechanics",
+        "Ten record sleeves",
+        "Basketball with seams",
+        "Graphic sewn rug accents"
+      ]
+    },
+    {
+      "id": "biblioteca-moderna",
+      "name": "Biblioteca moderna",
+      "source": "packages\\assets\\3d\\source\\rooms\\biblioteca-moderna-master-v1.blend",
+      "sourceSha256": "a61d37b35feedaed1f3d95763818f9c79e30aca9b0a4db2ed4b06ec89934137b",
+      "objects": 8440,
+      "addedObjects": 2675,
+      "render": "renders\\room-collection\\biblioteca-moderna\\hero.png",
+      "image": {
+        "width": 1920,
+        "height": 1440,
+        "bytes": 3440330,
+        "sha256": "3a8184c2c4af84441cc41641018d0b5a07d8e07de59c82fb250415bd79170c04"
+      },
+      "features": [
+        "Left-wall library",
+        "Desk-side book tower",
+        "Book-filled reading bench with stitched seat",
+        "Brass reading lamp",
+        "Catalog plates",
+        "174 additional bound books"
+      ]
+    }
+  ],
+  "validation": {
+    "sameMeterScale": true,
+    "allBaseObjectsRetained": true,
+    "sourceHashesVerified": true,
+    "renderDimensionsVerified": true,
+    "visuallyReviewed": true
+  }
+}

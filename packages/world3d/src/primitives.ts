@@ -188,9 +188,11 @@ export function compact(group: T.Group) {
 }
 export function disposeModel(root: T.Object3D) {
   const geometries = new Set<T.BufferGeometry>(),
-    materials = new Set<T.Material>();
+    materials = new Set<T.Material>(),
+    skeletons = new Set<T.Skeleton>();
   root.traverse((o) => {
     if (o instanceof T.Mesh) {
+      if (o instanceof T.SkinnedMesh) skeletons.add(o.skeleton);
       geometries.add(o.geometry);
       (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) =>
         materials.add(m),
@@ -199,4 +201,5 @@ export function disposeModel(root: T.Object3D) {
   });
   geometries.forEach((g) => g.dispose());
   materials.forEach((m) => m.dispose());
+  skeletons.forEach((s) => s.dispose());
 }

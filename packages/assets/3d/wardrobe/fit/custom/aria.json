@@ -1,0 +1,58 @@
+{
+  "character": "aria",
+  "outfit": [
+    "tee-white-planet",
+    "shorts-olive-cargo",
+    "sneaker-red-panel"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "b8714b6cd6ab634a1e73c17692d18779670139cdf3303252584d559a6c01beed",
+  "fitScale": [
+    0.8489624261856079,
+    0.8489624261856079,
+    0.8489624261856079
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 12904,
+    "weightSumRange": [
+      0.9999999888241291,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "1b4c3b3bd9a5ac5ef3dbcc12b88c812dc6388bff20de5fde1adc9002cef7dc7d"
+}

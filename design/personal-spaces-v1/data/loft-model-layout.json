@@ -1,0 +1,94 @@
+{
+  "id": "loft",
+  "name": "Ático acogedor",
+  "width": 4.4,
+  "depth": 3.9,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.2,
+    3.6399999999999997
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "attic-left-bookcase",
+      "definitionId": "bookshelf-large",
+      "name": "attic-left-bookcase",
+      "x": 0.3,
+      "z": 1.95,
+      "w": 0.53,
+      "d": 3.5,
+      "h": 2.35,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "window-seat",
+      "definitionId": "bench",
+      "name": "window-seat",
+      "x": 2.32,
+      "z": 0.78,
+      "w": 1.8,
+      "d": 0.74,
+      "h": 1.1,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.12,
+      "z": 2.18,
+      "w": 1.65,
+      "d": 0.78,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.065,
+      "z": 2.935,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    },
+    {
+      "id": "loft-oak-trunk",
+      "definitionId": "storage-boxes",
+      "name": "loft-oak-trunk",
+      "x": 3.95,
+      "z": 1.71,
+      "w": 0.75,
+      "d": 0.57,
+      "h": 0.54,
+      "yaw": 0,
+      "role": "furniture"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.0650000000000004,
+        3.535
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

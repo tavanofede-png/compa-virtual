@@ -1,0 +1,42 @@
+[
+  {
+    "id": "kai-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#F2E8D6",
+    "design": "signature",
+    "label": "Kai \u00b7 back"
+  },
+  {
+    "id": "kai-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#F2E8D6",
+    "design": "signature",
+    "label": "Kai \u00b7 bottom"
+  },
+  {
+    "id": "kai-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#F2E8D6",
+    "design": "signature",
+    "label": "Kai \u00b7 face_accessory"
+  },
+  {
+    "id": "kai-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#F2E8D6",
+    "design": "signature",
+    "label": "Kai \u00b7 shoes"
+  },
+  {
+    "id": "kai-signature-top",
+    "slot": "top",
+    "family": "tee",
+    "color": "#F2E8D6",
+    "design": "signature",
+    "label": "Kai \u00b7 top"
+  }
+]

@@ -1,4 +1,5 @@
 "use client";
+import { MotionPreference } from "./MotionPreference";
 import { useState, useEffect, useRef } from "react";
 import {
   Check,
@@ -32,10 +33,22 @@ import {
   type PlanSlot,
   type Quiz,
   type Memory,
+  activePet,
+  petDefinition,
+  petDefinitions,
+  defaultPetPreferences,
 } from "@compa/domain";
 import { useApp } from "./context";
 import { Creature } from "./Room";
 import { Field, Empty, Tag, formData, kinds, days } from "./ui";
+function SignOutButton() {
+  const { leave, busy } = useApp();
+  return (
+    <button className="settings-row" disabled={busy} onClick={leave}>
+      Cerrar sesión
+    </button>
+  );
+}
 export const titles: Record<string, string> = {
   item: "Una actividad para tu agenda",
   subjects: "Tus materias",
@@ -43,6 +56,7 @@ export const titles: Record<string, string> = {
   plan: "Un plan para revisar",
   chat: "Conversar con tu compa",
   companion: "Tu compa, a tu manera",
+  pet: "Mi mascota",
   checkin: "Un minuto para mirar tu día",
   method: "Una herramienta para aprender",
   focus: "Un bloque, una intención",
@@ -58,6 +72,89 @@ export const titles: Record<string, string> = {
   "delete-material": "Eliminar material",
   "delete-account": "Eliminar tu cuenta",
 };
+
+function PetForm() {
+  const { env, busy, run, command } = useApp();
+  const pet = activePet(env.state);
+  const definition = petDefinition(pet?.petDefinitionId);
+  const initial = env.state.petPreferences ?? defaultPetPreferences;
+  const [name, setName] = useState(pet?.name ?? definition.name);
+  const [visible, setVisible] = useState(initial.visible);
+  const [automaticMovement, setAutomaticMovement] = useState(initial.automaticMovement);
+  const [activityLevel, setActivityLevel] = useState(initial.activityLevel);
+  const [reducedMotion, setReducedMotion] = useState(initial.reducedMotion);
+  const [petFamily, setPetFamily] = useState<"dogs" | "cats" | "others">(
+    definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others",
+  );
+  const visiblePetDefinitions = petDefinitions.filter((candidate) =>
+    petFamily === "dogs" ? candidate.species === "dog" : petFamily === "cats" ? candidate.species === "cat" : !["dog", "cat"].includes(candidate.species),
+  );
+  useEffect(() => setName(pet?.name ?? definition.name), [pet?.id, pet?.name, definition.name]);
+  if (!pet)
+    return (
+      <div className="pet-config">
+        <img src={definition.variant.portrait} alt="Golden retriever voxel 3D" />
+        <p className="eyebrow">TU PRIMERA MASCOTA · GRATIS</p>
+        <h3>{definition.breed}</h3>
+        <p>{definition.description}</p>
+        <Field label="¿Cómo se va a llamar?">
+          <input value={name} onChange={(e) => setName(e.target.value)} maxLength={30} />
+        </Field>
+        <button className="primary" disabled={busy || !name.trim()} onClick={() => run(() => command("pet.chooseFirst", { name }))}>
+          Conocer a {name.trim() || definition.name}
+        </button>
+      </div>
+    );
+  return (
+    <form className="pet-config" onSubmit={(event) => {
+      event.preventDefault();
+      void run(() => command("pet.configure", { id: pet.id, name, visible, automaticMovement, activityLevel, reducedMotion }));
+    }}>
+      <img src={definition.variant.portrait} alt={`${pet.name}, ${definition.breed} voxel 3D`} />
+      <p className="eyebrow">MASCOTA ACTIVA</p>
+      <div className="pet-family-tabs" aria-label="Familias de mascotas">
+        {([['dogs', 'Perros'], ['cats', 'Gatos'], ['others', 'Otros amigos']] as const).map(([id, label]) => (
+          <button type="button" key={id} aria-pressed={petFamily === id} onClick={() => setPetFamily(id)}>{label}</button>
+        ))}
+      </div>
+      <div className="pet-collection" aria-label="Colección de mascotas">
+        {visiblePetDefinitions.map((candidate) => {
+          const owned = env.state.ownedPets.find((entry) => entry.petDefinitionId === candidate.id);
+          const selected = owned?.id === pet.id;
+          const price = candidate.unlock.kind === "coins" ? Number(candidate.unlock.value) : 0;
+          return (
+            <button
+              type="button"
+              className={selected ? "pet-card selected" : "pet-card"}
+              key={candidate.id}
+              disabled={busy || selected}
+              onClick={() => void run(() => owned
+                ? command("pet.setActive", { id: owned.id })
+                : command("pet.unlock", { definitionId: candidate.id }))}
+            >
+              <img src={candidate.variant.portrait} alt={candidate.breed} />
+              <strong>{candidate.breed}</strong>
+              <small>{selected ? "Está con vos" : owned ? "Elegir" : `${price} monedas`}</small>
+            </button>
+          );
+        })}
+      </div>
+      <Field label="Nombre">
+        <input value={name} onChange={(e) => setName(e.target.value)} maxLength={30} required />
+      </Field>
+      <Field label="Nivel de actividad">
+        <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value as typeof activityLevel)}>
+          <option value="calm">Tranquilo</option><option value="normal">Normal</option><option value="active">Activo</option>
+        </select>
+      </Field>
+      <label className="settings-check"><input type="checkbox" checked={visible} onChange={(e) => setVisible(e.target.checked)} /> Mostrar mascota en la habitación</label>
+      <label className="settings-check"><input type="checkbox" checked={automaticMovement} onChange={(e) => setAutomaticMovement(e.target.checked)} /> Movimiento automático</label>
+      <label className="settings-check"><input type="checkbox" checked={reducedMotion} onChange={(e) => setReducedMotion(e.target.checked)} /> Reducir movimiento</label>
+      <p className="callout">Su lugar de descanso y sus objetos compatibles quedan preparados dentro de la habitación.</p>
+      <button className="primary" disabled={busy}>Guardar mascota</button>
+    </form>
+  );
+}
 export function Forms({ name, selected }: { name: string; selected: unknown }) {
   const { repo, env, busy, run, command, open, close, update, notice, go } =
       useApp(),
@@ -86,6 +183,7 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
     }, 250);
     return () => clearInterval(t);
   }, [running, notice]);
+  if (name === "pet") return <PetForm />;
   const subjectOptions = s.subjects.map((x) => (
     <option value={x.id} key={x.id}>
       {x.name}
@@ -1219,6 +1317,7 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
   if (name === "settings")
     return (
       <>
+        <MotionPreference />
         <button className="settings-row" onClick={() => open("profile")}>
           Perfil, descanso y autonomía →
         </button>
@@ -1292,6 +1391,7 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
         <button className="settings-row" onClick={() => open("privacy")}>
           Privacidad y datos →
         </button>
+        <SignOutButton />
       </>
     );
   if (name === "privacy")

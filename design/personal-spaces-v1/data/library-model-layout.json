@@ -1,0 +1,118 @@
+{
+  "id": "library",
+  "name": "Rincón de biblioteca",
+  "width": 4.4,
+  "depth": 3.8,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.2,
+    3.54
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "bookcase-left",
+      "definitionId": "bookshelf-large",
+      "name": "bookcase-left",
+      "x": 0.26,
+      "z": 1.8,
+      "w": 0.5,
+      "d": 3.1999999999999997,
+      "h": 2.75,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "bookcase-rear",
+      "definitionId": "bookshelf-large",
+      "name": "bookcase-rear",
+      "x": 2.05,
+      "z": 0.30000000000000004,
+      "w": 3.01,
+      "d": 0.54,
+      "h": 2.75,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "reading-armchair",
+      "definitionId": "lounge-chair",
+      "name": "reading-armchair",
+      "x": 1.21,
+      "z": 2.45,
+      "w": 1.0,
+      "d": 0.9,
+      "h": 1.12,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.9,
+      "z": 2.06,
+      "w": 1.8,
+      "d": 0.85,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.845,
+      "z": 2.85,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    },
+    {
+      "id": "rolling-book-cart",
+      "definitionId": "book-cart",
+      "name": "rolling-book-cart",
+      "x": 4.1,
+      "z": 2.7,
+      "w": 0.56,
+      "d": 0.4,
+      "h": 0.91,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "rear-side-cabinet",
+      "definitionId": "rolling-drawers",
+      "name": "rear-side-cabinet",
+      "x": 3.99,
+      "z": 0.77,
+      "w": 0.6,
+      "d": 0.56,
+      "h": 0.65,
+      "yaw": 0,
+      "role": "furniture"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.845,
+        3.45
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

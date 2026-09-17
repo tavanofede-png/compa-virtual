@@ -1,0 +1,131 @@
+{
+  "id": "library",
+  "name": "Biblioteca moderna",
+  "version": 2,
+  "units": "metres",
+  "capacity": 6,
+  "bounds": [
+    -3.9,
+    -2.9,
+    3.9,
+    2.9
+  ],
+  "anchors": [
+    {
+      "id": "SEAT_01",
+      "position": [
+        -1.75,
+        0.46,
+        2.33
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        -1.75,
+        0.015,
+        1.41
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_02",
+      "position": [
+        -0.17,
+        0.46,
+        2.33
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        -0.17,
+        0.015,
+        1.41
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_03",
+      "position": [
+        1.41,
+        0.46,
+        2.33
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        1.41,
+        0.015,
+        1.41
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_04",
+      "position": [
+        -1.75,
+        0.46,
+        0.18
+      ],
+      "yaw": 0,
+      "approach": [
+        -1.75,
+        0.015,
+        1.1
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_05",
+      "position": [
+        -0.17,
+        0.46,
+        0.18
+      ],
+      "yaw": 0,
+      "approach": [
+        -0.17,
+        0.015,
+        1.1
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_06",
+      "position": [
+        1.41,
+        0.46,
+        0.18
+      ],
+      "yaw": 0,
+      "approach": [
+        1.41,
+        0.015,
+        1.1
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    }
+  ],
+  "triangles": 1091016,
+  "reducedTriangles": 825852,
+  "source": "packages\\assets\\3d\\source\\shared-spaces\\v2\\library-master.blend",
+  "inventory": {
+    "FURNITURE": 899,
+    "INTERIOR_DETAIL": 1211,
+    "DISTANT_WORLD": 1,
+    "LIBRARY_VOLUMES": 7924,
+    "ARCHITECTURE": 6,
+    "WALL_STORY": 2,
+    "STUDY_OBJECTS": 2,
+    "LIGHTS": 18,
+    "BOTANICALS": 478
+  }
+}

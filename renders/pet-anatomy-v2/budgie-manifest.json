@@ -1,0 +1,9 @@
+{
+  "id": "budgie",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "avian",
+  "meshCount": 37,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

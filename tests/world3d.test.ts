@@ -1,5 +1,6 @@
 import { it, expect } from "vitest";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import {
   avatarPresets,
   avatarAppearance,
@@ -108,12 +109,20 @@ it("exports original editable glTF 2.0 binary assets with a valid scene", async 
   }
 });
 
-it("ships eight modular Blender companions within the mobile budget", async () => {
+it("preserves detailed Blender wardrobe geometry, weights and measured export scale", async () => {
   const root = new URL("../packages/assets/3d/", import.meta.url),
     manifest = JSON.parse(
       await readFile(new URL("companion-collection.json", root), "utf8"),
     );
   expect(manifest.schema).toBe("compa-humanoid-v2");
+  expect(manifest.assetVersion).toBe(4);
+  const audit = JSON.parse(
+    await readFile(
+      new URL("source/collection-v4-export.audit.json", root),
+      "utf8",
+    ),
+  );
+  expect(audit.characters).toHaveLength(8);
   expect(manifest.characters).toHaveLength(8);
   expect(manifest.slots).toEqual([
     "body",
@@ -130,7 +139,17 @@ it("ships eight modular Blender companions within the mobile budget", async () =
     expect(companion.heightMeters).toBeGreaterThanOrEqual(1.6);
     expect(companion.heightMeters).toBeLessThanOrEqual(1.8);
     expect(companion.bones).toBe(17);
-    const file = companion.export.replace("packages\\assets\\3d\\", ""),
+    expect(companion.validation.passed).toBe(true);
+    expect(companion.validation.rigIdentityPreserved).toBe(true);
+    expect(
+      companion.validation.stateRestoration.poseMatrixBasisMaxError,
+    ).toBeLessThan(0.000001);
+    expect(companion.geometryAfter.sourceVertices).toBeGreaterThan(
+      companion.geometryBefore.sourceVertices * 5,
+    );
+    const file = companion.export
+        .replaceAll("\\", "/")
+        .replace("packages/assets/3d/", ""),
       buffer = await readFile(new URL(file, root));
     expect(buffer.toString("ascii", 0, 4)).toBe("glTF");
     expect(buffer.readUInt32LE(4)).toBe(2);
@@ -147,10 +166,107 @@ it("ships eight modular Blender companions within the mobile budget", async () =
         triangles += indexCount / 3;
       }
     }
-    expect(gltf.meshes.length).toBeLessThanOrEqual(60);
-    expect(triangles).toBeLessThanOrEqual(15_000);
-    expect(buffer.length).toBeLessThanOrEqual(1_200_000);
+    expect(gltf.meshes.length).toBeLessThanOrEqual(40);
+    expect(triangles).toBeLessThanOrEqual(80_000);
+    // v4 keeps the complete hairstyle/wardrobe and per-vertex skinning data.
+    // The densest validated companion is 5.58 MB after lossless-position packing.
+    expect(buffer.length).toBeLessThanOrEqual(5_800_000);
+    expect(companion.exportedTriangles).toBe(triangles);
+    const hash = createHash("sha256").update(buffer).digest("hex");
+    expect(companion.glbSha256).toBe(hash);
+    const measured = audit.characters.find(
+      (entry: { id: string }) => entry.id === companion.id,
+    );
+    expect(measured.sha256).toBe(hash);
+    expect(measured.passed).toBe(true);
+    expect(
+      Math.abs(measured.measuredBounds.heightMeters - companion.heightMeters),
+    ).toBeLessThan(0.01);
+    expect(measured.blendedVertices).toBeGreaterThan(0);
+    expect(measured.weightedSleeves).toHaveLength(2);
     expect(gltf.skins).toHaveLength(1);
+    expect(gltf.skins[0].joints).toHaveLength(17);
+    const readAccessor = (index: number): number[][] => {
+      const accessor = gltf.accessors[index],
+        view = gltf.bufferViews[accessor.bufferView];
+      const sizes: Record<number, number> = {
+        5121: 1,
+        5123: 2,
+        5125: 4,
+        5126: 4,
+      };
+      const counts: Record<string, number> = {
+        SCALAR: 1,
+        VEC2: 2,
+        VEC3: 3,
+        VEC4: 4,
+        MAT4: 16,
+      };
+      const size = sizes[accessor.componentType],
+        count = counts[accessor.type];
+      if (!size || !count) throw new Error("Unsupported asset accessor");
+      const start =
+        28 + jsonLength + (view.byteOffset ?? 0) + (accessor.byteOffset ?? 0);
+      const values: number[][] = [];
+      for (let i = 0; i < accessor.count; i++) {
+        const row: number[] = [];
+        for (let j = 0; j < count; j++) {
+          const offset =
+            start + i * (view.byteStride ?? size * count) + j * size;
+          let value =
+            accessor.componentType === 5126
+              ? buffer.readFloatLE(offset)
+              : accessor.componentType === 5125
+                ? buffer.readUInt32LE(offset)
+                : accessor.componentType === 5123
+                  ? buffer.readUInt16LE(offset)
+                  : buffer.readUInt8(offset);
+          if (accessor.normalized)
+            value /= accessor.componentType === 5121 ? 255 : 65535;
+          row.push(value);
+        }
+        values.push(row);
+      }
+      return values;
+    };
+    let blended = 0;
+    const occupied = new Set<string>();
+    for (const node of gltf.nodes) {
+      if (node.mesh === undefined) continue;
+      expect(manifest.slots).toContain(node.extras?.compa_slot);
+      occupied.add(node.extras.compa_slot);
+      for (const primitive of gltf.meshes[node.mesh].primitives) {
+        const positions = readAccessor(primitive.attributes.POSITION);
+        expect(positions.every((row) => row.every(Number.isFinite))).toBe(true);
+        const weights = readAccessor(primitive.attributes.WEIGHTS_0);
+        const joints = readAccessor(primitive.attributes.JOINTS_0);
+        expect(weights.length).toBe(positions.length);
+        expect(
+          weights.every(
+            (row) =>
+              row.every((v) => Number.isFinite(v) && v >= 0) &&
+              Math.abs(row.reduce((a, b) => a + b, 0) - 1) < 0.0001,
+          ),
+        ).toBe(true);
+        const usedJoints = new Set<string>();
+        for (let i = 0; i < weights.length; i++) {
+          if (weights[i].filter((w) => w > 1e-6).length > 1) blended++;
+          for (let j = 0; j < 4; j++)
+            if (weights[i][j] > 1e-6) {
+              const jointIndex = gltf.skins[0].joints[joints[i][j]];
+              if (jointIndex === undefined)
+                throw new Error("Weight references missing joint");
+              usedJoints.add(gltf.nodes[jointIndex].name);
+            }
+        }
+        if (node.extras.compa_rigid_bone)
+          expect([...usedJoints]).toEqual([node.extras.compa_rigid_bone]);
+      }
+    }
+    expect(blended).toBeGreaterThan(0);
+    for (const slot of ["body", "hair", "top", "bottom", "shoes", "back"])
+      expect(occupied.has(slot)).toBe(true);
+    if (companion.id === "harper") expect(occupied.has("hand_prop")).toBe(true);
     expect(
       gltf.animations.map((animation: { name: string }) => animation.name),
     ).toEqual(["Idle"]);

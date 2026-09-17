@@ -1,0 +1,110 @@
+[
+  {
+    "id": "living",
+    "variant": "full",
+    "bytes": 24245668,
+    "triangles": 304696,
+    "primitives": 56,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "living",
+    "variant": "reduced",
+    "bytes": 15999404,
+    "triangles": 188911,
+    "primitives": 56,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "study",
+    "variant": "full",
+    "bytes": 22632840,
+    "triangles": 284606,
+    "primitives": 51,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "study",
+    "variant": "reduced",
+    "bytes": 15112344,
+    "triangles": 176455,
+    "primitives": 51,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "library",
+    "variant": "full",
+    "bytes": 62091932,
+    "triangles": 1091016,
+    "primitives": 54,
+    "scenery": 1,
+    "capacity": 6
+  },
+  {
+    "id": "library",
+    "variant": "reduced",
+    "bytes": 45278052,
+    "triangles": 825852,
+    "primitives": 54,
+    "scenery": 1,
+    "capacity": 6
+  },
+  {
+    "id": "projects",
+    "variant": "full",
+    "bytes": 31180136,
+    "triangles": 390820,
+    "primitives": 52,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "projects",
+    "variant": "reduced",
+    "bytes": 19984156,
+    "triangles": 242307,
+    "primitives": 52,
+    "scenery": 0,
+    "capacity": 6
+  },
+  {
+    "id": "patio",
+    "variant": "full",
+    "bytes": 70608148,
+    "triangles": 987580,
+    "primitives": 45,
+    "scenery": 1,
+    "capacity": 6
+  },
+  {
+    "id": "patio",
+    "variant": "reduced",
+    "bytes": 48075548,
+    "triangles": 694403,
+    "primitives": 45,
+    "scenery": 1,
+    "capacity": 6
+  },
+  {
+    "id": "terrace",
+    "variant": "full",
+    "bytes": 32349264,
+    "triangles": 526780,
+    "primitives": 50,
+    "scenery": 1,
+    "capacity": 6
+  },
+  {
+    "id": "terrace",
+    "variant": "reduced",
+    "bytes": 22816396,
+    "triangles": 403649,
+    "primitives": 50,
+    "scenery": 1,
+    "capacity": 6
+  }
+]

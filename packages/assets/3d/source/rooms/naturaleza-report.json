@@ -1,0 +1,39 @@
+{
+  "theme": "naturaleza",
+  "name": "Naturaleza",
+  "features": [
+    "Timber lattice",
+    "Roman bamboo-style folds",
+    "Two suspended macrame plants",
+    "Potting bench with six seedlings",
+    "Watering can and specimen journal",
+    "Additional floor foliage"
+  ],
+  "sourceBase": "room_cozy_premium.blend",
+  "baseSha256": "5381fc9ca8b150d739a8bb53815308c3d81289663e7090b4635728aed51cee21",
+  "objects": 6615,
+  "baseObjects": 5765,
+  "addedObjects": 850,
+  "removedObjects": 0,
+  "nonFiniteObjects": [],
+  "sourceFile": "packages\\assets\\3d\\source\\rooms\\naturaleza-master-v1.blend",
+  "sourceSha256": "42ead6079e02e2aa00682ed4199e451de185889d83fa5fbc187b3a48a7baf4df",
+  "sourceBytes": 4860274,
+  "render": "renders\\room-collection\\naturaleza\\hero.png",
+  "units": "meters",
+  "companionHeight": 1.73991,
+  "blender": "5.2.1 LTS",
+  "renderSettings": {
+    "engine": "CYCLES",
+    "samples": 32,
+    "width": 1920,
+    "height": 1440
+  },
+  "status": "Rendered and visually reviewed; editable scene ready for design review.",
+  "renderVerified": {
+    "width": 1920,
+    "height": 1440,
+    "bytes": 3397108,
+    "sha256": "542142403d98870ba1ab601fe6acdba02031e000aa8cc7aa9f8821c9f4b21798"
+  }
+}

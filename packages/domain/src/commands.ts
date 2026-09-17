@@ -5,10 +5,11 @@ import {
   itemSchema,
   blockSchema,
   companionSchema,
-  penalty,
 } from "./validation";
 import { generatePlan } from "./planner";
 import { today, addDays } from "./time";
+import { chooseFirstPet, normalizePetState } from "./pet-state";
+import { petDefinitions, petHabitats, petToys } from "./pets";
 export interface Command {
   type: string;
   payload: unknown;
@@ -21,7 +22,7 @@ export function transition(
   command: Command,
   now: string,
 ): Snapshot {
-  const s = structuredClone(previous),
+  const s = normalizePetState(structuredClone(previous)),
     p = obj.parse(command.payload),
     uid = () => crypto.randomUUID();
   const current = today(s.profile?.timezone, now);
@@ -34,6 +35,44 @@ export function transition(
     s.xp += amount;
   };
   switch (command.type) {
+    case "onboarding.save":
+    case "onboarding.complete": {
+      const value = z
+        .object({
+          step: z.number().int().min(0).max(5),
+          companion: companionSchema,
+          profile: profileSchema.optional(),
+          petName: z.string().trim().min(1).max(30).optional(),
+        })
+        .parse(p);
+      if (!value.companion.character_id) throw Error("Elegí tu personaje.");
+      if (
+        ["accessory", "outfit", "decoration"].some(
+          (k) =>
+            value.companion[k as "accessory"] !== "none" &&
+            !s.inventory.includes(value.companion[k as "accessory"]),
+        )
+      )
+        throw Error("Ese objeto todavía no está desbloqueado.");
+      const complete = command.type === "onboarding.complete";
+      if (complete && !value.profile)
+        throw Error("Completá tus datos para empezar.");
+      if (value.profile)
+        s.profile = {
+          id: s.profile?.id ?? uid(),
+          ...value.profile,
+          onboarding_complete: complete,
+        };
+      else if (s.profile) s.profile.onboarding_complete = false;
+      s.companion = { ...s.companion, ...value.companion };
+      s.onboarding = { step: complete ? 5 : value.step, updated_at: now };
+      if (complete && s.profile) {
+        s.preferences.quiet_start = s.profile.sleep_start;
+        s.preferences.quiet_end = s.profile.sleep_end;
+        chooseFirstPet(s, value.petName ?? "Miel", now);
+      }
+      break;
+    }
     case "profile.save":
       s.profile = { id: s.profile?.id ?? uid(), ...profileSchema.parse(p) };
       break;
@@ -50,6 +89,99 @@ export function transition(
         )
           throw Error("Ese objeto no corresponde a esta parte de tu compa.");
       s.companion = { ...s.companion, ...next };
+      break;
+    }
+    case "pet.chooseFirst": {
+      const value = z.object({ name: z.string().trim().min(1).max(30) }).parse(p);
+      chooseFirstPet(s, value.name, now);
+      break;
+    }
+    case "pet.unlock": {
+      const value = z.object({ definitionId: id, name: z.string().trim().min(1).max(30).optional() }).parse(p);
+      const definition = petDefinitions.find((entry) => entry.id === value.definitionId);
+      if (!definition || definition.unlock.kind !== "coins" || typeof definition.unlock.value !== "number")
+        throw Error("Esa mascota todavía no se puede desbloquear.");
+      const existing = s.ownedPets.find((entry) => entry.petDefinitionId === definition.id);
+      if (existing) break;
+      if (s.coins < definition.unlock.value) throw Error("Todavía no alcanzan las monedas.");
+      s.coins -= definition.unlock.value;
+      const pet = {
+        id: uid(),
+        petDefinitionId: definition.id,
+        name: value.name ?? definition.name,
+        acquiredAt: now,
+        acquisition: "coins" as const,
+        accessories: [],
+        updatedAt: now,
+      };
+      s.ownedPets.push(pet);
+      s.inventory = [...new Set([...s.inventory, `pet:${definition.id}`])];
+      s.activePetId = pet.id;
+      s.equippedPetSetup.activePetId = pet.id;
+      break;
+    }
+    case "pet.rename": {
+      const value = z.object({ id, name: z.string().trim().min(1).max(30) }).parse(p);
+      const pet = s.ownedPets.find((entry) => entry.id === value.id);
+      if (!pet) throw Error("Mascota no encontrada.");
+      pet.name = value.name;
+      pet.updatedAt = now;
+      break;
+    }
+    case "pet.setActive": {
+      const value = z.object({ id: id.nullable() }).parse(p);
+      if (value.id && !s.ownedPets.some((pet) => pet.id === value.id))
+        throw Error("Mascota no encontrada.");
+      s.activePetId = value.id;
+      s.equippedPetSetup.activePetId = value.id;
+      break;
+    }
+    case "pet.equipAccessory": {
+      const value = z.object({ id, accessoryId: z.string().max(80).nullable() }).parse(p);
+      const pet = s.ownedPets.find((entry) => entry.id === value.id);
+      if (!pet) throw Error("Mascota no encontrada.");
+      const definition = petDefinitions.find((entry) => entry.id === pet.petDefinitionId);
+      if (value.accessoryId && (!s.inventory.includes(value.accessoryId) || !definition?.compatibleAccessories.includes(value.accessoryId)))
+        throw Error("Ese accesorio no está disponible para esta mascota.");
+      pet.accessories = value.accessoryId ? [value.accessoryId] : [];
+      pet.updatedAt = now;
+      s.equippedPetSetup.accessoryId = value.accessoryId;
+      break;
+    }
+    case "pet.placeHabitat": {
+      const value = z.object({ bedId: id, toyIds: z.array(id).max(2) }).parse(p);
+      if (!petHabitats.some((item) => item.id === value.bedId) || value.toyIds.some((toy) => !petToys.some((item) => item.id === toy)))
+        throw Error("Objeto de mascota desconocido.");
+      if (![value.bedId, ...value.toyIds].every((item) => s.inventory.includes(item)))
+        throw Error("Ese objeto todavía no está desbloqueado.");
+      s.equippedPetSetup = { ...s.equippedPetSetup, bedId: value.bedId, toyIds: value.toyIds };
+      break;
+    }
+    case "pet.setPreferences":
+      s.petPreferences = z.object({
+        visible: z.boolean(), automaticMovement: z.boolean(),
+        activityLevel: z.enum(["calm", "normal", "active"]), reducedMotion: z.boolean(),
+      }).parse(p);
+      break;
+    case "pet.configure": {
+      const value = z.object({
+        id,
+        name: z.string().trim().min(1).max(30),
+        visible: z.boolean(),
+        automaticMovement: z.boolean(),
+        activityLevel: z.enum(["calm", "normal", "active"]),
+        reducedMotion: z.boolean(),
+      }).parse(p);
+      const pet = s.ownedPets.find((entry) => entry.id === value.id);
+      if (!pet) throw Error("Mascota no encontrada.");
+      pet.name = value.name;
+      pet.updatedAt = now;
+      s.petPreferences = {
+        visible: value.visible,
+        automaticMovement: value.automaticMovement,
+        activityLevel: value.activityLevel,
+        reducedMotion: value.reducedMotion,
+      };
       break;
     }
     case "subject.save": {
@@ -182,22 +314,8 @@ export function transition(
         active?.slots.filter(
           (x) => x.date === current && x.status === "PENDING",
         ) ?? [];
-      const last7 = s.checkins
-        .filter(
-          (x) => x.date >= addDays(current, -6) && x.outcome === "PENDING",
-        )
-        .reduce(
-          (sum, x) =>
-            sum + ((x as typeof x & { deducted?: number }).deducted ?? 0),
-          0,
-        );
-      const deducted = penalty(
-        s.coins,
-        last7,
-        v.outcome === "PENDING" && pending.length > 0,
-        v.outcome === "EXCUSED",
-      );
-      s.coins -= deducted;
+      // New check-ins preserve the balance. Historical ledger entries remain intact.
+      const deducted = 0;
       if (v.outcome === "PENDING" || v.outcome === "EXCUSED")
         pending.forEach((x) => {
           x.status = v.outcome === "EXCUSED" ? "EXCUSED" : "MISSED";
@@ -336,7 +454,7 @@ export function transition(
   return s;
 }
 export function publicSnapshot(state: Snapshot): Snapshot {
-  const s = structuredClone(state);
+  const s = normalizePetState(structuredClone(state));
   s.quizzes.forEach((q) =>
     q.questions.forEach((question) => {
       delete question.answer;

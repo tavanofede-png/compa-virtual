@@ -1,0 +1,126 @@
+{
+  "id": "patio",
+  "name": "Patio de estudio",
+  "version": 2,
+  "units": "metres",
+  "capacity": 6,
+  "bounds": [
+    -3.9,
+    -2.9,
+    3.9,
+    2.9
+  ],
+  "anchors": [
+    {
+      "id": "SEAT_01",
+      "position": [
+        -1.59,
+        0.46,
+        1.46
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        -1.59,
+        0.015,
+        0.54
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-chair"
+    },
+    {
+      "id": "SEAT_02",
+      "position": [
+        -0.35,
+        0.46,
+        0.22
+      ],
+      "yaw": 4.71238898038469,
+      "approach": [
+        -1.27,
+        0.015,
+        0.22
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-chair"
+    },
+    {
+      "id": "SEAT_03",
+      "position": [
+        -1.59,
+        0.46,
+        -1.02
+      ],
+      "yaw": 6.283185307179586,
+      "approach": [
+        -1.59,
+        0.015,
+        -0.1
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-chair"
+    },
+    {
+      "id": "SEAT_04",
+      "position": [
+        -2.83,
+        0.46,
+        0.22
+      ],
+      "yaw": 7.853981633974483,
+      "approach": [
+        -1.91,
+        0.015,
+        0.22
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-chair"
+    },
+    {
+      "id": "SEAT_05",
+      "position": [
+        1.11,
+        0.46,
+        -1.15
+      ],
+      "yaw": 0,
+      "approach": [
+        1.11,
+        0.015,
+        -0.23
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-bench"
+    },
+    {
+      "id": "SEAT_06",
+      "position": [
+        2.2,
+        0.46,
+        -1.15
+      ],
+      "yaw": 0,
+      "approach": [
+        2.2,
+        0.015,
+        -0.23
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "garden-bench"
+    }
+  ],
+  "triangles": 987580,
+  "reducedTriangles": 694403,
+  "source": "packages\\assets\\3d\\source\\shared-spaces\\v2\\patio-master.blend",
+  "inventory": {
+    "FURNITURE": 273,
+    "DISTANT_WORLD": 1,
+    "EXTERIOR_DETAIL": 8843,
+    "ARCHITECTURE": 2
+  }
+}

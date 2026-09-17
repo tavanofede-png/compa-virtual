@@ -1,0 +1,70 @@
+{
+  "id": "tech",
+  "name": "Estudio tecnológico",
+  "width": 4.3,
+  "depth": 3.9,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.15,
+    3.6399999999999997
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.23,
+      "z": 0.65,
+      "w": 3.75,
+      "d": 0.85,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "ergonomic-chair",
+      "name": "chair",
+      "x": 2.175,
+      "z": 1.44,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    },
+    {
+      "id": "left-desk-return",
+      "definitionId": "compact-desk",
+      "name": "left-desk-return",
+      "x": 0.65,
+      "z": 2.13,
+      "w": 0.65,
+      "d": 2.1,
+      "h": 0.78,
+      "yaw": 0,
+      "role": "furniture"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.175,
+        2.04
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

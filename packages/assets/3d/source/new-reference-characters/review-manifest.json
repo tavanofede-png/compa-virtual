@@ -1,0 +1,45 @@
+{
+  "status": "first artistic review; not final reference fidelity",
+  "characters": [
+    {
+      "id": "lux",
+      "master": "lux-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "finn",
+      "master": "finn-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "elise",
+      "master": "elise-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "kai",
+      "master": "kai-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "noa",
+      "master": "noa-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "rem",
+      "master": "rem-reference-v2.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "sage",
+      "master": "sage-reference-v1.blend",
+      "app_integrated": false
+    },
+    {
+      "id": "orion",
+      "master": "orion-reference-v2.blend",
+      "app_integrated": false
+    }
+  ]
+}

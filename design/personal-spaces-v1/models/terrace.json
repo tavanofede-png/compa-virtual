@@ -1,0 +1,174 @@
+{
+  "room": "terrace",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\terrace-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 34298,
+      "materials": 24
+    },
+    {
+      "id": "terrace-side-table",
+      "triangles": 4904,
+      "materials": 3
+    },
+    {
+      "id": "side-potted-flowers",
+      "triangles": 10144,
+      "materials": 9
+    },
+    {
+      "id": "terrace-woven-rug",
+      "triangles": 207356,
+      "materials": 3
+    },
+    {
+      "id": "desk",
+      "triangles": 14000,
+      "materials": 4
+    },
+    {
+      "id": "chair",
+      "triangles": 10524,
+      "materials": 6
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-plant",
+      "triangles": 6400,
+      "materials": 5
+    },
+    {
+      "id": "Olive tree pot",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Terrace climbing branch 1",
+      "triangles": 19136,
+      "materials": 3
+    },
+    {
+      "id": "Terrace climbing branch 2",
+      "triangles": 19136,
+      "materials": 3
+    },
+    {
+      "id": "Terrace border tall fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Terrace layered fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Outdoor cushion throw",
+      "triangles": 5644,
+      "materials": 3
+    },
+    {
+      "id": "Terrace mature garden 0",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Terrace mature garden 1",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Terrace mature garden 2",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "Terrace mature garden 3",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Terrace mature garden 4",
+      "triangles": 25144,
+      "materials": 6
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    },
+    {
+      "id": "Terrace planter 0",
+      "triangles": 25260,
+      "materials": 11
+    },
+    {
+      "id": "Terrace planter 1",
+      "triangles": 25332,
+      "materials": 11
+    },
+    {
+      "id": "Terrace planter 2",
+      "triangles": 25284,
+      "materials": 11
+    },
+    {
+      "id": "Terrace lantern 0",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Terrace lantern 1",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "Terrace lantern 2",
+      "triangles": 800,
+      "materials": 2
+    },
+    {
+      "id": "terrace-reading-chair",
+      "triangles": 33384,
+      "materials": 5
+    },
+    {
+      "id": "Terrace sun",
+      "triangles": 1640,
+      "materials": 5
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 1680,
+      "materials": 5
+    },
+    {
+      "id": "rust-knitted-puff",
+      "triangles": 113888,
+      "materials": 1
+    }
+  ],
+  "triangles": 698086,
+  "bytes": 49888428,
+  "status": "authored-model-not-native-performance-approved"
+}

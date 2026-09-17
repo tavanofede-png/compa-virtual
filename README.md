@@ -17,6 +17,12 @@ pnpm dev
 
 La web abre en el puerto 3000. **Explorar con datos ficticios** habilita un recorrido local persistente, con agenda, planificador, sesiones, un quiz de ejemplo, monedas, memoria y personalización. La demo no llama a IA, no crea cuentas reales y no sube archivos. Sus datos no se sincronizan con una cuenta.
 
+## Archivos 3D grandes
+
+El repositorio incluye los modelos y los archivos editables de Blender, sin requerir Git LFS. El modelo maestro de la pérgola supera el límite individual de GitHub y se guarda como `pergola.glb.gz`, comprimido sin pérdida. `pnpm install` lo restaura automáticamente; si la instalación omite scripts, ejecutar `pnpm assets:restore` antes de abrir la revisión de espacios personales. La restauración comprueba tamaño y SHA-256, y no sobrescribe un modelo local modificado.
+
+Después de modificar ese modelo, ejecutar `pnpm assets:pack-large` para actualizar el archivo comprimido y su manifiesto antes del commit.
+
 ## Estructura
 
 | Carpeta          | Responsabilidad                                                                      |

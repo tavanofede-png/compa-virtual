@@ -1,8 +1,12 @@
+import { MotionPreference } from "../src/MotionPreference";
+import { NativeHome, NativeCompa, TabIcon } from "../src/HomeScreen";
+import { Text } from "../src/ui";
+import { NativeTogether } from "../src/Together";
 import { Creature, Equipment, NativeRoom } from "../src/Creature";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { CompanionSetup } from "../src/CompanionSetup";
 import {
   View,
-  Text,
   ScrollView,
   Pressable,
   Modal,
@@ -11,6 +15,8 @@ import {
   Linking,
   KeyboardAvoidingView,
   AppState,
+  BackHandler,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
@@ -26,7 +32,9 @@ import {
   type Envelope,
 } from "@compa/client";
 import {
+  destinations,
   emptySnapshot,
+  selectCharacter,
   methods,
   methodById,
   today,
@@ -47,23 +55,51 @@ import {
   type Quiz,
   type PlanSlot,
   type Companion,
+  activePet,
+  petDefinition,
+  petDefinitions,
 } from "@compa/domain";
 import { cache, secureStorage } from "../src/storage";
 import { registerPush } from "../src/push";
 import { Button, Field, Choices, Card, styles as st, colors } from "../src/ui";
+
+const petPortraits: Record<string, number> = {
+  "golden-retriever": require("../../web/public/selection/pets/golden-retriever.webp"),
+  "border-collie": require("../../web/public/selection/pets/border-collie.webp"),
+  corgi: require("../../web/public/selection/pets/corgi.webp"),
+  dachshund: require("../../web/public/selection/pets/dachshund.webp"),
+  "french-bulldog": require("../../web/public/selection/pets/french-bulldog.webp"),
+  "shiba-inu": require("../../web/public/selection/pets/shiba-inu.webp"),
+  poodle: require("../../web/public/selection/pets/poodle.webp"),
+  husky: require("../../web/public/selection/pets/husky.webp"),
+  "orange-tabby": require("../../web/public/selection/pets/orange-tabby.webp"),
+  "black-cat": require("../../web/public/selection/pets/black-cat.webp"),
+  siamese: require("../../web/public/selection/pets/siamese.webp"),
+  ragdoll: require("../../web/public/selection/pets/ragdoll.webp"),
+  "british-shorthair": require("../../web/public/selection/pets/british-shorthair.webp"),
+  "maine-coon": require("../../web/public/selection/pets/maine-coon.webp"),
+  calico: require("../../web/public/selection/pets/calico.webp"),
+  sphynx: require("../../web/public/selection/pets/sphynx.webp"),
+  rabbit: require("../../web/public/selection/pets/rabbit.webp"),
+  hamster: require("../../web/public/selection/pets/hamster.webp"),
+  "guinea-pig": require("../../web/public/selection/pets/guinea-pig.webp"),
+  ferret: require("../../web/public/selection/pets/ferret.webp"),
+  hedgehog: require("../../web/public/selection/pets/hedgehog.webp"),
+  turtle: require("../../web/public/selection/pets/turtle.webp"),
+  gecko: require("../../web/public/selection/pets/gecko.webp"),
+  budgie: require("../../web/public/selection/pets/budgie.webp"),
+};
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL,
   key = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 const backend =
   process.env.EXPO_PUBLIC_DEMO_MODE !== "1" && url && key
     ? createBackend(url, key, secureStorage)
     : null;
-const tabs = [
-  ["room", "Mi cuarto"],
-  ["today", "Hoy"],
-  ["agenda", "Agenda"],
-  ["study", "Estudiar"],
-  ["more", "Más"],
-];
+const welcomeCompanion = {
+  ...selectCharacter("harper"),
+  room_theme: "evening" as const,
+};
+const tabs = destinations.map((d) => [d.id, d.label]);
 const kindOptions = [
   { value: "TASK", label: "Tarea" },
   { value: "EXAM", label: "Examen" },
@@ -81,11 +117,31 @@ export default function App() {
     [values, setValues] = useState<Record<string, string>>({}),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [authMode, setAuthMode] = useState("login"),
+    [authMode, setAuthMode] = useState("register"),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [seconds, setSeconds] = useState(1500),
     [end, setEnd] = useState<number | null>(null);
+  const [loaded, setLoaded] = useState(false),
+    [authReady, setAuthReady] = useState(!backend);
+  const account = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        if (modal) {
+          if (!busy) setModal(null);
+          return true;
+        }
+        if (view !== "room") {
+          setView("room");
+          return true;
+        }
+        return false;
+      },
+    );
+    return () => subscription.remove();
+  }, [modal, busy, view]);
   const s = env.state,
     date = today(s.profile?.timezone),
     active = s.plans.find((p) => p.status === "ACCEPTED"),
@@ -97,17 +153,34 @@ export default function App() {
   }, [params.view]);
   useEffect(() => {
     if (!backend) return;
-    backend.auth.getSession().then(({ data }) => {
-      if (data.session)
-        setRepo(createRepository(backend, cache, data.session.user.id));
-    });
+    let alive = true;
+    const apply = (id?: string) => {
+      if (!alive) return;
+      setAuthReady(true);
+      if (account.current === id) return;
+      account.current = id;
+      setLoaded(false);
+      setEnv({ state: emptySnapshot(), version: 0 });
+      setModal(null);
+      setRepo(id ? createRepository(backend, cache, id) : null);
+    };
+    backend.auth
+      .getSession()
+      .then(({ data }) => apply(data.session?.user.id))
+      .catch(() => {
+        if (alive) {
+          setAuthReady(true);
+          setError("No pudimos recuperar tu sesión. Intentá entrar de nuevo.");
+        }
+      });
     const { data } = backend.auth.onAuthStateChange((event, session) => {
-      setRepo(
-        session ? createRepository(backend, cache, session.user.id) : null,
-      );
+      apply(session?.user.id);
       if (event === "PASSWORD_RECOVERY") setModal("password");
     });
-    return () => data.subscription.unsubscribe();
+    return () => {
+      alive = false;
+      data.subscription.unsubscribe();
+    };
   }, []);
   useEffect(() => {
     if (!backend) return;
@@ -133,13 +206,21 @@ export default function App() {
   }, []);
   useEffect(() => {
     if (!repo) return;
+    let alive = true;
+    setLoaded(false);
     repo
       .load()
       .then((result) => {
+        if (!alive) return;
         setEnv(result);
-        if (!result.state.profile) open("profile");
+        setLoaded(true);
       })
-      .catch((e) => setError(e.message));
+      .catch((e) => {
+        if (alive) setError(e.message);
+      });
+    return () => {
+      alive = false;
+    };
   }, [repo]);
   useEffect(() => {
     const receive = (response: Notifications.NotificationResponse) => {
@@ -306,6 +387,10 @@ export default function App() {
       agenda: "Tu semana, en orden.",
       study: "Aprender se practica.",
       more: "Tu progreso y tus decisiones",
+      progress: "Cada intento cuenta.",
+      compa: "Tu compa",
+      memory: "Memoria académica",
+      notifications: "Tus avisos",
     }[view] ?? "Compa Virtual";
   const upload = () =>
     run(async () => {
@@ -344,6 +429,67 @@ export default function App() {
       await Sharing.shareAsync(file.uri, { mimeType: "application/json" });
       file.delete();
     });
+  if (!authReady || (repo && !loaded))
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          padding: 24,
+          justifyContent: "center",
+          backgroundColor: colors.bg,
+        }}
+      >
+        <Text style={st.p}>{error || "Recuperando tu espacio…"}</Text>
+        {error && (
+          <Button
+            onPress={() =>
+              void run(async () => {
+                if (repo) {
+                  setEnv(await repo.load());
+                  setLoaded(true);
+                }
+              })
+            }
+          >
+            Reintentar
+          </Button>
+        )}
+      </SafeAreaView>
+    );
+  if (
+    repo &&
+    loaded &&
+    modal !== "password" &&
+    (!s.profile?.onboarding_complete ||
+      !s.companion.character_id ||
+      modal === "companion")
+  )
+    return (
+      <CompanionSetup
+        key={modal === "companion" ? "editor" : "welcome"}
+        repo={repo}
+        env={env}
+        update={setEnv}
+        editing={
+          modal === "companion" &&
+          !!s.profile?.onboarding_complete &&
+          !!s.companion.character_id
+        }
+        onExit={() => {
+          if (modal === "companion") setModal(null);
+          else
+            void run(async () => {
+              await repo.signOut();
+              setRepo(null);
+              setEnv({ state: emptySnapshot(), version: 0 });
+            });
+        }}
+        onComplete={() => {
+          setModal(null);
+          setView("room");
+        }}
+      />
+    );
   if (!repo)
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
@@ -356,15 +502,18 @@ export default function App() {
             Tu mundo.{"\n"}Tu manera de aprender.
           </Text>
           <NativeRoom
-            companion={s.companion}
-            onTalk={() => setRepo(createDemo(cache))}
+            companion={welcomeCompanion}
+            onTalk={() => setRepo(createDemo(cache, { onboarding: true }))}
             height={330}
           />
           <Text style={st.p}>
             Organizá tu semana, practicá y celebrá cada paso.
           </Text>
-          <Button onPress={() => setRepo(createDemo(cache))}>
-            Explorar con datos ficticios
+          <Button
+            secondary
+            onPress={() => setRepo(createDemo(cache, { onboarding: true }))}
+          >
+            Probar la bienvenida sin cuenta
           </Button>
           <Text style={st.label}>
             Demostración local. La IA y los materiales requieren una cuenta
@@ -398,16 +547,17 @@ export default function App() {
                         throw Error(
                           "Usá una contraseña de al menos 12 caracteres.",
                         );
-                      const { error } = await backend.auth.signUp({
+                      const { data, error } = await backend.auth.signUp({
                         email,
                         password,
                         options: { emailRedirectTo: "compavirtual://" },
                       });
                       if (error) throw error;
-                      Alert.alert(
-                        "Revisá tu correo",
-                        "Confirmá la cuenta para ingresar.",
-                      );
+                      if (!data.session)
+                        Alert.alert(
+                          "Revisá tu correo",
+                          "Confirmá la cuenta para ingresar.",
+                        );
                     } else {
                       const { error } = await backend.auth.signInWithPassword({
                         email,
@@ -461,6 +611,82 @@ export default function App() {
       </SafeAreaView>
     );
   const renderModal = (): ReactNode => {
+    if (modal === "pet") {
+      const pet = activePet(s), definition = petDefinition(pet?.petDefinitionId);
+      return (
+        <>
+          <View style={{ alignItems: "center", gap: 8 }}>
+            <Image source={petPortraits[definition.id]} style={{ width: 210, height: 210, borderRadius: 28 }} />
+            <Text style={st.eyebrow}>TU MASCOTA · {definition.breed.toUpperCase()}</Text>
+            <Text style={st.p}>{definition.description}</Text>
+          </View>
+          {input("pet_name", "¿Cómo se va a llamar?", pet?.name ?? definition.name)}
+          {!pet ? (
+            <Button disabled={busy} onPress={() => run(() => command("pet.chooseFirst", { name: v("pet_name", definition.name) }))}>
+              Conocer a {v("pet_name", definition.name)}
+            </Button>
+          ) : (
+            <>
+              <Text style={st.h3}>Tu colección</Text>
+              {choices("pet_family", "Familia", [
+                { value: "dogs", label: "Perros" },
+                { value: "cats", label: "Gatos" },
+                { value: "others", label: "Otros amigos" },
+              ], definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others")}
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+                {petDefinitions.filter((candidate) => {
+                  const family = v("pet_family", definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others");
+                  return family === "dogs" ? candidate.species === "dog" : family === "cats" ? candidate.species === "cat" : !["dog", "cat"].includes(candidate.species);
+                }).map((candidate) => {
+                  const owned = s.ownedPets.find((entry) => entry.petDefinitionId === candidate.id);
+                  const selected = owned?.id === pet.id;
+                  const price = candidate.unlock.kind === "coins" ? Number(candidate.unlock.value) : 0;
+                  return (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityState={{ selected, disabled: busy || selected }}
+                      key={candidate.id}
+                      disabled={busy || selected}
+                      onPress={() => run(() => owned
+                        ? command("pet.setActive", { id: owned.id })
+                        : command("pet.unlock", { definitionId: candidate.id }))}
+                      style={{
+                        width: "48%", padding: 10, borderRadius: 18, borderWidth: selected ? 2 : 1,
+                        borderColor: selected ? "#d9a62e" : colors.line,
+                        backgroundColor: selected ? "#fff2c9" : "#fffaf2", gap: 5,
+                      }}
+                    >
+                      <Image source={petPortraits[candidate.id]} style={{ width: "100%", aspectRatio: 1, borderRadius: 14 }} />
+                      <Text style={[st.p, { fontWeight: "700" }]}>{candidate.breed}</Text>
+                      <Text style={{ color: colors.muted, fontSize: 12 }}>
+                        {selected ? "Está con vos" : owned ? "Elegir" : `${price} monedas`}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+              {choices("pet_activity", "Nivel de actividad", [
+                { value: "calm", label: "Tranquilo" },
+                { value: "normal", label: "Normal" },
+                { value: "active", label: "Activo" },
+              ], s.petPreferences.activityLevel)}
+              {choices("pet_visible", "Mostrar en la habitación", [{ value: "true", label: "Sí" }, { value: "false", label: "No" }], String(s.petPreferences.visible))}
+              {choices("pet_auto", "Movimiento automático", [{ value: "true", label: "Activado" }, { value: "false", label: "Desactivado" }], String(s.petPreferences.automaticMovement))}
+              {choices("pet_reduced", "Movimiento reducido", [{ value: "false", label: "No" }, { value: "true", label: "Sí" }], String(s.petPreferences.reducedMotion))}
+              <Text style={st.p}>Su lugar de descanso y sus objetos compatibles quedan preparados dentro del cuarto.</Text>
+              <Button disabled={busy} onPress={() => run(() => command("pet.configure", {
+                id: pet.id,
+                name: v("pet_name", pet.name),
+                visible: v("pet_visible", String(s.petPreferences.visible)) === "true",
+                automaticMovement: v("pet_auto", String(s.petPreferences.automaticMovement)) === "true",
+                activityLevel: v("pet_activity", s.petPreferences.activityLevel),
+                reducedMotion: v("pet_reduced", String(s.petPreferences.reducedMotion)) === "true",
+              }))}>Guardar mascota</Button>
+            </>
+          )}
+        </>
+      );
+    }
     if (modal === "password")
       return (
         <>
@@ -1235,6 +1461,7 @@ export default function App() {
     if (modal === "settings")
       return (
         <>
+          <MotionPreference />
           <Button secondary onPress={() => open("profile")}>
             Perfil, descanso y autonomía
           </Button>
@@ -1381,57 +1608,31 @@ export default function App() {
         <Text style={st.tag}>Sin conexión · Copia para consulta</Text>
       )}
       <ScrollView
-        contentContainerStyle={{ padding: 22, paddingBottom: 35 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 35 }}
         keyboardShouldPersistTaps="handled"
       >
-        <Text style={st.eyebrow}>{dateLabel(date).toUpperCase()}</Text>
-        <Text style={st.h1}>
-          {view === "room"
-            ? "Hola, " + (s.profile?.nickname ?? "bienvenido") + "."
-            : title}
-        </Text>
+        {view !== "room" && view !== "compa" && view !== "together" && (
+          <>
+            <Text style={st.eyebrow}>{dateLabel(date).toUpperCase()}</Text>
+            <Text style={st.h1}>{title}</Text>
+          </>
+        )}
         {error && !modal && (
           <Text accessibilityRole="alert" style={st.error}>
             {error}
           </Text>
         )}
         {view === "room" && (
-          <>
-            <Text style={[st.p, { marginVertical: 12 }]}>
-              Hagamos algo bueno con este ratito.
-            </Text>
-            <NativeRoom companion={s.companion} onTalk={() => open("chat")} />
-            <Button secondary onPress={() => open("companion", s.companion)}>
-              Personalizar mi compa
-            </Button>
-            <Card>
-              <Text style={st.h2}>Tu próximo paso</Text>
-              <Text style={st.p}>
-                Un plan que entre en tu día, con margen para lo inesperado.
-              </Text>
-              <Button
-                disabled={busy}
-                onPress={() =>
-                  todaySlots.find((x) => x.status === "PENDING")
-                    ? open(
-                        "focus",
-                        todaySlots.find((x) => x.status === "PENDING"),
-                      )
-                    : showPlan()
-                }
-              >
-                {todaySlots.some((x) => x.status === "PENDING")
-                  ? "Empezar sesión"
-                  : "Preparar mi plan"}
-              </Button>
-            </Card>
-            <Button secondary onPress={() => open("checkin")}>
-              ¿Cómo viene el día? · Check-in
-            </Button>
-            <Text style={[st.h2, st.section]}>Lo que se viene</Text>
-            {itemList(pending.slice(0, 3))}
-          </>
+          <NativeHome
+            s={s}
+            busy={busy}
+            open={open}
+            go={setView}
+            plan={showPlan}
+            visible={!modal}
+          />
         )}
+        {view === "compa" && <NativeCompa s={s} open={open} go={setView} />}
         {view === "today" && (
           <>
             {todaySlots.length ? (
@@ -1500,8 +1701,10 @@ export default function App() {
             ])}
           </>
         )}
+        {view === "together" && <NativeTogether key={s.profile?.id ?? "demo"} repo={repo.collaboration} back={() => setView("study")} />}
         {view === "study" && (
           <>
+            <Button secondary onPress={() => setView("together")}>Estudiar juntos</Button>
             <Button onPress={() => open("generate")}>Crear práctica</Button>
             <Button secondary onPress={() => open("upload")}>
               Subir material
@@ -1587,7 +1790,7 @@ export default function App() {
             ))}
           </>
         )}
-        {view === "more" && (
+        {(view === "progress" || view === "more") && (
           <>
             <Card>
               <Text style={st.h2}>Cada intento cuenta.</Text>
@@ -1611,6 +1814,33 @@ export default function App() {
             <Button secondary onPress={() => open("chat")}>
               Conversar con mi compa
             </Button>
+            <Text style={[st.h2, st.section]}>Un detalle para tu mundo</Text>
+            {catalog.map((item) => (
+              <Card key={item.id}>
+                <Equipment id={item.id} width={58} />
+                <Text style={st.h3}>{item.name}</Text>
+                <Button
+                  secondary
+                  disabled={
+                    busy ||
+                    s.inventory.includes(item.id) ||
+                    s.coins < item.price
+                  }
+                  onPress={() =>
+                    run(() => command("inventory.buy", { id: item.id }, false))
+                  }
+                >
+                  {s.inventory.includes(item.id)
+                    ? "En tu colección"
+                    : item.price + " monedas"}
+                </Button>
+              </Card>
+            ))}
+          </>
+        )}
+        {view === "notifications" && (
+          <>
+            {" "}
             <Text style={[st.h2, st.section]}>Tus avisos</Text>
             {!s.notifications.length && (
               <Text style={st.p}>
@@ -1640,6 +1870,11 @@ export default function App() {
                   </Button>
                 </Card>
               ))}
+          </>
+        )}
+        {view === "memory" && (
+          <>
+            {" "}
             <Text style={[st.h2, st.section]}>Memoria académica</Text>
             {s.memories.map((m) => (
               <Card key={m.id}>
@@ -1660,28 +1895,6 @@ export default function App() {
             <Button secondary onPress={() => open("memory")}>
               Agregar recuerdo
             </Button>
-            <Text style={[st.h2, st.section]}>Un detalle para tu mundo</Text>
-            {catalog.map((item) => (
-              <Card key={item.id}>
-                <Equipment id={item.id} width={58} />
-                <Text style={st.h3}>{item.name}</Text>
-                <Button
-                  secondary
-                  disabled={
-                    busy ||
-                    s.inventory.includes(item.id) ||
-                    s.coins < item.price
-                  }
-                  onPress={() =>
-                    run(() => command("inventory.buy", { id: item.id }, false))
-                  }
-                >
-                  {s.inventory.includes(item.id)
-                    ? "En tu colección"
-                    : item.price + " monedas"}
-                </Button>
-              </Card>
-            ))}
           </>
         )}
       </ScrollView>
@@ -1690,23 +1903,32 @@ export default function App() {
           flexDirection: "row",
           borderTopWidth: 1,
           borderColor: colors.line,
-          backgroundColor: "#efefe7",
+          backgroundColor: "#fffaf7",
           paddingVertical: 10,
+          borderTopLeftRadius: 24,
+          borderTopRightRadius: 24,
         }}
       >
         {tabs.map(([id, label]) => (
           <Pressable
             accessibilityRole="tab"
-            accessibilityState={{ selected: view === id }}
+            accessibilityState={{ selected: view === id || (id === "study" && view === "together") }}
             key={id}
             onPress={() => setView(id)}
-            style={{ flex: 1, alignItems: "center", paddingVertical: 12 }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              paddingVertical: 8,
+              gap: 5,
+              minHeight: 60,
+            }}
           >
+            <TabIcon id={id} active={view === id || (id === "study" && view === "together")} />
             <Text
               style={{
                 fontSize: 12,
-                color: view === id ? colors.green : "#99a189",
-                fontWeight: view === id ? "700" : "400",
+                color: view === id || (id === "study" && view === "together") ? colors.ink : colors.muted,
+                fontWeight: view === id || (id === "study" && view === "together") ? "700" : "400",
               }}
             >
               {label}
@@ -1717,8 +1939,10 @@ export default function App() {
       <Modal
         visible={!!modal}
         animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setModal(null)}
+        presentationStyle="fullScreen"
+        onRequestClose={() => {
+          if (!busy) setModal(null);
+        }}
       >
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
           <View

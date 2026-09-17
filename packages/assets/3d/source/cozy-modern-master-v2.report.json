@@ -1,0 +1,271 @@
+{
+  "version": 2,
+  "sourceOriginal": {
+    "path": "packages\\assets\\3d\\source\\cozy-modern-master-v1.blend",
+    "sha256": "41b48005c62441d247a652e02610fda3422208971cc9048783731a04c4e5493a",
+    "bytes": 333373
+  },
+  "sourceOutput": "packages\\assets\\3d\\source\\cozy-modern-master-v2.blend",
+  "master": "room_cozy_premium.blend",
+  "blender": "5.2.1 LTS",
+  "units": "meters",
+  "objects": 5765,
+  "geometryObjectsByCollection": {
+    "ARCHITECTURE": 187,
+    "BED": 156,
+    "DESK": 279,
+    "STORAGE": 782,
+    "DECOR": 3427,
+    "STUDIO_PREVIEW": 2,
+    "WINDOW_EXTERIOR": 63,
+    "TEXTILES": 97,
+    "WALL_STORY": 127,
+    "LIGHT_DECOR": 107,
+    "PERSONAL_PROPS": 373,
+    "COMPANION_HARPER": 34
+  },
+  "roomEvaluatedVertices": 434240,
+  "roomEvaluatedTriangles": 735274,
+  "createdObjects": 5646,
+  "replacedObjects": 283,
+  "nonFiniteObjects": [],
+  "modules": {
+    "architecture": {
+      "windowAperture": {
+        "x": [
+          -2.47,
+          -0.95
+        ],
+        "z": [
+          1.25,
+          2.72
+        ]
+      },
+      "lanterns": 35,
+      "wallStory": "Botanical observations, quiet horizons and constellations",
+      "floorJoints": true
+    },
+    "textiles": {
+      "created": 507,
+      "cloth_shells": 4,
+      "sewn_paths": 427,
+      "replaced_prefixes": [
+        "Bed_Duvet",
+        "Bed_PinkThrow",
+        "Bed_Pillow",
+        "Bed_Cushion",
+        "Detail_DuvetPiping",
+        "Detail_Cushion",
+        "Decor_Rug",
+        "Decor_Pouf",
+        "Detail_PoufSeam",
+        "Decor_SideTable",
+        "Decor_TableBooks",
+        "Decor_TableMug"
+      ],
+      "layout": {
+        "bed_center": [
+          -1.78,
+          0.15
+        ],
+        "rug_center": [
+          0.35,
+          -0.72
+        ],
+        "rug_radius": 1.48,
+        "pouf_center": [
+          -0.35,
+          -1.5
+        ],
+        "table_center": [
+          0.55,
+          -0.8
+        ],
+        "table_top": 0.73,
+        "avatar_clearance_center": [
+          1.55,
+          -0.1
+        ],
+        "avatar_clearance_radius": 0.38
+      }
+    },
+    "study": {
+      "subsystem": "study_and_bookcase",
+      "newObjects": 906,
+      "newMeshes": 774,
+      "individualBoundBooks": 41,
+      "keyboardKeycaps": 47,
+      "desktopBoundsXY": {
+        "min": [
+          0.125,
+          1.65
+        ],
+        "max": [
+          2.475,
+          2.45
+        ]
+      },
+      "deskMatBoundsXY": {
+        "min": [
+          0.62,
+          1.675
+        ],
+        "max": [
+          1.92,
+          2.105
+        ]
+      },
+      "keyboardBoundsXY": {
+        "min": [
+          0.757,
+          1.6905
+        ],
+        "max": [
+          1.473,
+          1.9375
+        ]
+      },
+      "chair": {
+        "seatCenter": [
+          1.36,
+          1.17,
+          0.68
+        ],
+        "backY": 0.895,
+        "faces": "+Y toward desk"
+      },
+      "detailFeatures": [
+        "bound books with covers, page blocks, page edges, spine titles and raised bands",
+        "bookends, horizontal stacks, photo frames, globe and hollow handled trophy",
+        "layered study application UI, keyboard keys and legends, sculpted mouse and routed cables",
+        "open spiral notebook with writing and chart geometry",
+        "hollow ceramic mug with tea and handle, six sharpened pencils",
+        "articulated task lamp, headset on hook, corrected chair with armrests and upholstery seams"
+      ],
+      "remainingVisualReview": "Check shelf leaning clearances and desk close-up in the combined room render."
+    },
+    "botanicals": {
+      "module": "room_premium_botanicals",
+      "plants": [
+        "FloorMonstera",
+        "FloorFern",
+        "BedsideCalathea",
+        "WindowPilea",
+        "WindowAloe",
+        "MainShelfPothos",
+        "BookcaseTopPothos",
+        "LeftShelfIvyA",
+        "LeftShelfIvyB",
+        "DeskSucculent",
+        "BookcaseMiddlePilea",
+        "ShelfHerb",
+        "BedFootCalathea",
+        "ReadingTablePilea",
+        "MainShelfHaworthia",
+        "FloorRubberPlant",
+        "BookcaseTinyAloe",
+        "WindowCenterPilea"
+      ],
+      "counts": {
+        "leaves": 598,
+        "veins": 1666,
+        "stems": 224,
+        "pots": 18,
+        "trailingVines": 12
+      },
+      "newMeshes": 814,
+      "design": "Eighteen botanicals; hollow pots, saucers, soil, folded leaves, actual veins, fern pinnae and trailing stems.",
+      "qa": "Geometry created; final room camera, overlap and export review belong to the caller."
+    },
+    "personal": {
+      "created": 205,
+      "removed": [
+        "Decor_BackpackMain",
+        "Decor_BackpackPocket",
+        "Decor_BackpackZip",
+        "Decor_GuitarBodyLower",
+        "Decor_GuitarBodyUpper",
+        "Decor_GuitarHead",
+        "Decor_GuitarNeck",
+        "Decor_GuitarSoundhole",
+        "Decor_SkateDeck",
+        "Decor_SkateWheel_0.65_0.02",
+        "Decor_SkateWheel_0.65_0.28",
+        "Decor_SkateWheel_1.35_0.02",
+        "Decor_SkateWheel_1.35_0.28"
+      ],
+      "backpack_anchor": [
+        2.65,
+        1.1,
+        0.18
+      ],
+      "guitar_anchor": [
+        -2.76,
+        -1.26,
+        0.18
+      ],
+      "skate_anchor": [
+        -2.82,
+        0.16,
+        0.748
+      ],
+      "guitar_has_open_soundhole": true,
+      "guitar_strings": 6,
+      "skate_wheels": 4
+    },
+    "companion": {
+      "asset": "packages\\assets\\3d\\compa-harper-premium.glb",
+      "heightMeters": 1.73991,
+      "feetZ": 0.18,
+      "anchor": [
+        1.940000057220459,
+        0.30000001192092896,
+        0.18000011146068573
+      ],
+      "rigBones": 17
+    }
+  },
+  "densityPolicy": "All designed geometry preserved in editable source. No object-density reduction or decimation.",
+  "renders": {
+    "hero": "renders/room-cozy-premium/hero.png",
+    "desk": "renders/room-cozy-premium/desk.png",
+    "bed": "renders/room-cozy-premium/bed.png",
+    "lounge": "renders/room-cozy-premium/lounge.png"
+  },
+  "renderEngine": "Cycles CPU / AgX",
+  "reviewStatus": "Rendered and visually reviewed: hero, desk, bed and lounge. Original source preserved.",
+  "blendBytes": 4667750,
+  "masterSha256": "5381fc9ca8b150d739a8bb53815308c3d81289663e7090b4635728aed51cee21",
+  "portability": {
+    "linkedLibraries": 0,
+    "missingExternalImages": [],
+    "viewportRoofHidden": true,
+    "sourceOriginalUnchanged": true
+  },
+  "renderFilesVerified": {
+    "hero": {
+      "width": 2400,
+      "height": 1800,
+      "bytes": 4991523,
+      "sha256": "e7326e9378eacea7684adbc638676cba0df12e16eea437e3504b2cfe735289b4"
+    },
+    "desk": {
+      "width": 1600,
+      "height": 1400,
+      "bytes": 2762737,
+      "sha256": "2643cc2becef17af69eab5edab3daeb48033c2acaa077ec242db190e86347a5c"
+    },
+    "bed": {
+      "width": 1600,
+      "height": 1400,
+      "bytes": 2709863,
+      "sha256": "42e4cd7ddab77543ed0194c0f2b822edc8c646e1a0dfbdaff36dd01bb7b3a41a"
+    },
+    "lounge": {
+      "width": 1600,
+      "height": 1400,
+      "bytes": 2859827,
+      "sha256": "697c0557b559ca9a948745161610b33f59c52d188f7029c2580d72d54f7c255c"
+    }
+  }
+}

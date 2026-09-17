@@ -1,0 +1,41 @@
+{
+  "character": "Sky",
+  "id": "sky",
+  "personality": "Creativa",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.69,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\sky-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-sky-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-sky-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1112456,
+  "blendBytes": 204663,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 59,
+  "exportedNodes": 77,
+  "exportedMaterials": 22,
+  "exportedVertices": 30472,
+  "exportedTriangles": 15220,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

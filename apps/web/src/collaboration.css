@@ -1,0 +1,299 @@
+.together {
+  display: grid;
+  gap: 24px;
+  max-width: 1180px;
+  margin: auto;
+}
+.together .page-heading {
+  margin-bottom: 0;
+}
+.together-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: none;
+  padding: 8px 0;
+  justify-self: start;
+  color: #345cce;
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+.together-welcome {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 32px;
+  align-items: center;
+  background: #eee7db;
+  border-radius: 24px;
+  padding: 32px;
+}
+.together-welcome h2 {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 16px 0;
+}
+.together-welcome p,
+.together .surface > p {
+  color: #677186;
+  line-height: 1.6;
+}
+.together-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.together-code {
+  padding: 24px;
+  background: #fffdfa;
+  border-radius: 18px;
+}
+.together-code code {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  margin: 14px 0;
+  color: #677186;
+  line-height: 1.6;
+}
+.together .surface {
+  margin: 0;
+  min-width: 0;
+}
+.together-columns {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 24px;
+}
+.together-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.together-fields > .field {
+  flex: 1;
+  min-width: 145px;
+}
+.together fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.together-editor form {
+  display: grid;
+  gap: 16px;
+}
+.together-editor form > fieldset {
+  display: grid;
+  gap: 12px;
+}
+.together .field {
+  margin: 0;
+}
+.together input,
+.together select,
+.together textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 48px;
+}
+.together textarea {
+  resize: vertical;
+}
+.together-hint {
+  font-size: 13px;
+  color: #677186;
+  line-height: 1.5;
+  margin: 8px 0 16px;
+}
+.together-spaces {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.together-spaces legend {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+.together-spaces label {
+  position: relative;
+  cursor: pointer;
+}
+.together-spaces input {
+  position: absolute;
+  width: 20px;
+  min-height: 20px;
+  height: 20px;
+  left: 10px;
+  top: 12px;
+  margin: 0;
+  accent-color: #345cce;
+}
+.together-spaces span {
+  display: block;
+  height: 100%;
+  border: 1px solid #e8e1db;
+  border-left: 4px solid;
+  border-radius: 10px;
+  padding: 12px 12px 14px 37px;
+}
+.together-spaces small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #677186;
+  margin-top: 6px;
+}
+.together-spaces input:checked + span {
+  background: #eef2fd;
+  border-color: #345cce;
+}
+.together-spaces input:focus-visible + span {
+  outline: 3px solid #345cce;
+  outline-offset: 3px;
+}
+.together-session {
+  border: 0;
+  border-bottom: 1px solid #e8e1db;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  text-align: left;
+  font: inherit;
+  gap: 16px;
+  cursor: pointer;
+  color: #101e32;
+}
+.together-session strong,
+.together-session small {
+  display: block;
+  margin-top: 8px;
+}
+.together-session strong {
+  font-size: 19px;
+}
+.together-session small,
+.together-group small {
+  color: #677186;
+  font-size: 13px;
+}
+.together-group {
+  border-bottom: 1px solid #e8e1db;
+  padding: 18px 0;
+}
+.together-group summary {
+  cursor: pointer;
+  min-height: 48px;
+}
+.together-group summary span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.together-group small {
+  display: block;
+  margin-top: 5px;
+}
+.together-people {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+.together-people li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #e8e1db;
+  flex-wrap: wrap;
+}
+.together-people small {
+  display: block;
+  color: #677186;
+  margin-top: 5px;
+}
+.together-invite {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.together-invite .field {
+  flex: 1;
+  min-width: 180px;
+}
+.together-invitation {
+  padding: 18px 0;
+  border-top: 1px solid #e8e1db;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.together-invitation p {
+  font-size: 13px;
+  color: #677186;
+  margin: 6px 0;
+}
+.together-message {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 16px;
+  background: #e8f0e9;
+  border-radius: 12px;
+}
+.together-message.error {
+  background: #f8e9e4;
+  color: #873b29;
+}
+.together a.primary {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.together button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+@media (max-width: 850px) {
+  .together-welcome,
+  .together-columns {
+    grid-template-columns: 1fr;
+  }
+  .together-welcome {
+    padding: 24px;
+  }
+  .together-welcome h2 {
+    font-size: 28px;
+  }
+  .together-spaces {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 450px) {
+  .together-spaces {
+    grid-template-columns: 1fr;
+  }
+  .together .page-heading {
+    align-items: start;
+    gap: 16px;
+    flex-direction: column;
+  }
+  .together-actions .primary,
+  .together-actions .secondary {
+    min-height: 48px;
+  }
+  .together-code {
+    padding: 18px;
+  }
+}

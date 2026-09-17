@@ -1,0 +1,58 @@
+{
+  "character": "river",
+  "outfit": [
+    "tee-white-planet",
+    "shorts-olive-cargo",
+    "sneaker-red-panel"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "9875755370ecb83980f4ffdcac890ceacc9efcf0afef229057ffb9b9ab1b85b4",
+  "fitScale": [
+    0.9199799299240112,
+    0.9199799299240112,
+    0.9199799299240112
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 12904,
+    "weightSumRange": [
+      0.9999999888241291,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "d52767a23eb2803b381e318c8b67c8beef6c91c7d4d39ec058380ce4c45b5a68"
+}

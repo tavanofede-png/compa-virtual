@@ -1,0 +1,107 @@
+[
+  {
+    "clip": "pet_carry",
+    "contactSamples": 61,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_celebrate",
+    "contactSamples": 55,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": 0.03499998897314072
+  },
+  {
+    "clip": "pet_get_up",
+    "contactSamples": 55,
+    "originalMin": -0.021000009030103683,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": 2.2351741790771484e-08
+  },
+  {
+    "clip": "pet_idle",
+    "contactSamples": 121,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_lie_down",
+    "contactSamples": 52,
+    "originalMin": -0.021000009030103683,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": 2.2351741790771484e-08
+  },
+  {
+    "clip": "pet_look",
+    "contactSamples": 73,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_play",
+    "contactSamples": 55,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_react",
+    "contactSamples": 37,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_rest",
+    "contactSamples": 151,
+    "originalMin": -0.021000009030103683,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": -7.450580596923828e-09
+  },
+  {
+    "clip": "pet_run",
+    "contactSamples": 25,
+    "originalMin": -0.016885772347450256,
+    "correctedMin": -5.587935447692871e-09,
+    "correctedMax": 1.4901161193847656e-08
+  },
+  {
+    "clip": "pet_seated",
+    "contactSamples": 121,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_sit_down",
+    "contactSamples": 37,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_sniff",
+    "contactSamples": 49,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_stand_up",
+    "contactSamples": 37,
+    "originalMin": 0.0040000006556510925,
+    "correctedMin": 7.450580596923828e-09,
+    "correctedMax": 7.450580596923828e-09
+  },
+  {
+    "clip": "pet_walk",
+    "contactSamples": 41,
+    "originalMin": -0.016885772347450256,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": 1.862645149230957e-08
+  }
+]

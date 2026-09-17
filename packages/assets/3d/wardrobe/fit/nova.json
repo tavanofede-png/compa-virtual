@@ -1,0 +1,60 @@
+{
+  "character": "nova",
+  "outfit": [
+    "tee-white-planet",
+    "cargo-denim-plain",
+    "sneaker-pink-panel",
+    "crossbody-pink-label",
+    "glasses-pink-round"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "7838953092bd3b4c1dd5fd73f73ee5557cd964cf8c45e0c8ba57ebb120e8ff0b",
+  "fitScale": [
+    0.8579588532447815,
+    0.8579588532447815,
+    0.8579588532447815
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 14648,
+    "weightSumRange": [
+      0.9999999850988388,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "3653d5216b496aaec72aac9f6ea45f1686a617352e712b87c5e0c68fa298b0dd"
+}

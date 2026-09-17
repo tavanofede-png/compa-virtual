@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
+import { handleCollaboration } from "./collaboration";
 import {
   emptySnapshot,
   transition,
@@ -80,6 +81,8 @@ export function createHandler(env: Env) {
           },
           403,
         );
+      if (body.type.startsWith("collaboration."))
+        return await handleCollaboration(db, env, user.id, body, json);
       const load = async () => {
         const { data, error } = await db
           .from("student_states")
@@ -104,6 +107,15 @@ export function createHandler(env: Env) {
       });
       if (body.type === "snapshot") return json(output());
       if (body.type === "privacy.export") {
+        const social = await db.rpc("collaboration_read", { p_user: user.id });
+        // Older environments can export before the additive migration lands.
+        // A real database failure must not silently produce an incomplete export.
+        if (social.error && !["PGRST202", "42883"].includes(social.error.code))
+          return json({ error: "No pudimos completar la exportación. Reintentá." }, 503);
+        const collaboration = social.data ? { ...social.data, contact_code: undefined } : null;
+        const sharedRoom = await db.rpc("shared_room_export", { p_user: user.id });
+        if (sharedRoom.error && !["PGRST202", "42883"].includes(sharedRoom.error.code))
+          return json({ error: "No pudimos completar la exportación. Reintentá." }, 503);
         const { data: points } = await db
           .from("point_transactions")
           .select("amount,reason,created_at")
@@ -131,6 +143,8 @@ export function createHandler(env: Env) {
           point_transactions: points,
           consents,
           files,
+          collaboration,
+          shared_room_contributions: sharedRoom.data ?? null,
         });
       }
       if (body.type === "privacy.delete") {
@@ -273,8 +287,15 @@ export function createHandler(env: Env) {
             );
         }
       };
-      if (body.type === "profile.save") {
-        const birth = z.iso.date().parse(p.birth_date),
+      if (
+        body.type === "profile.save" ||
+        (body.type.startsWith("onboarding.") && p.profile)
+      ) {
+        const profile =
+          body.type === "profile.save"
+            ? p
+            : z.record(z.string(), z.unknown()).parse(p.profile);
+        const birth = z.iso.date().parse(profile.birth_date),
           age = ageAt(birth);
         if (age < 0 || age > 100) throw Error("Revisá la fecha de nacimiento.");
         if (age < 18 && env.MINOR_BETA_APPROVED !== "true")

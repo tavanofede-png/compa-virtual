@@ -1,10 +1,14 @@
 import * as T from "three";
 import { avatarAppearance, type Companion } from "@compa/domain";
+import type { CompanionController } from './motion';
+export * from './motion';
+export * from './pet';
 import { avatarModel } from "./avatar";
 import { roomModel } from "./room";
 import { equipmentModel } from "./equipment";
 export { avatarModel, roomModel, equipmentModel };
 export { disposeModel } from "./primitives";
+export { createPremiumWorld, bindWearable, type ReadModel } from "./premium";
 export type ViewKind = "room" | "avatar" | "icon" | "equipment";
 export function appearanceKey(
   c: Companion,
@@ -15,6 +19,9 @@ export function appearanceKey(
     ? "equipment:" + item
     : JSON.stringify([
         kind,
+        c.character_id,
+        c.wardrobe,
+        kind === "room" ? c.room_style : undefined,
         avatarAppearance(c),
         c.eyes,
         c.mouth,
@@ -138,5 +145,14 @@ export function createWorld(
           : new T.Vector3(1.8, 1.7, 4.1),
   );
   camera.lookAt(target);
-  return { scene, camera, target, avatar };
+  return {
+    scene,
+    camera,
+    target,
+    avatar,
+    controller: undefined as CompanionController | undefined,
+    pet: undefined as T.Group | undefined,
+    petController: undefined as import("./pet").PetController | undefined,
+  };
 }
+export * from "./shared-space";

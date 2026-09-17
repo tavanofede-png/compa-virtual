@@ -1,0 +1,39 @@
+{
+  "theme": "urbano",
+  "name": "Urbano",
+  "features": [
+    "Staggered masonry wall",
+    "Original city art",
+    "Record console and playable-looking turntable mechanics",
+    "Ten record sleeves",
+    "Basketball with seams",
+    "Graphic sewn rug accents"
+  ],
+  "sourceBase": "room_cozy_premium.blend",
+  "baseSha256": "5381fc9ca8b150d739a8bb53815308c3d81289663e7090b4635728aed51cee21",
+  "objects": 5993,
+  "baseObjects": 5765,
+  "addedObjects": 228,
+  "removedObjects": 0,
+  "nonFiniteObjects": [],
+  "sourceFile": "packages\\assets\\3d\\source\\rooms\\urbano-master-v1.blend",
+  "sourceSha256": "66d485b16d9cf97647691d99b78648524a914c0f07d3be3bc3901e9552c60ede",
+  "sourceBytes": 4788089,
+  "render": "renders\\room-collection\\urbano\\hero.png",
+  "units": "meters",
+  "companionHeight": 1.73991,
+  "blender": "5.2.1 LTS",
+  "renderSettings": {
+    "engine": "CYCLES",
+    "samples": 32,
+    "width": 1920,
+    "height": 1440
+  },
+  "status": "Rendered and visually reviewed; editable scene ready for design review.",
+  "renderVerified": {
+    "width": 1920,
+    "height": 1440,
+    "bytes": 3366443,
+    "sha256": "4cc532b469651b0be36ad3d06db042dc6c6cb13400d730780d01642f66ee14e3"
+  }
+}

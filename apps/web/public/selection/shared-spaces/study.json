@@ -1,0 +1,130 @@
+{
+  "id": "study",
+  "name": "Sala de estudio",
+  "version": 2,
+  "units": "metres",
+  "capacity": 6,
+  "bounds": [
+    -3.9,
+    -2.9,
+    3.9,
+    2.9
+  ],
+  "anchors": [
+    {
+      "id": "SEAT_01",
+      "position": [
+        -1.55,
+        0.46,
+        1.73
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        -1.55,
+        0.015,
+        0.81
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_02",
+      "position": [
+        0.05,
+        0.46,
+        1.73
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        0.05,
+        0.015,
+        0.81
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_03",
+      "position": [
+        1.65,
+        0.46,
+        1.73
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        1.65,
+        0.015,
+        0.81
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_04",
+      "position": [
+        -1.55,
+        0.46,
+        -1.17
+      ],
+      "yaw": 0,
+      "approach": [
+        -1.55,
+        0.015,
+        -0.25
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_05",
+      "position": [
+        0.05,
+        0.46,
+        -1.17
+      ],
+      "yaw": 0,
+      "approach": [
+        0.05,
+        0.015,
+        -0.25
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    },
+    {
+      "id": "SEAT_06",
+      "position": [
+        1.65,
+        0.46,
+        -1.17
+      ],
+      "yaw": 0,
+      "approach": [
+        1.65,
+        0.015,
+        -0.25
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "chair"
+    }
+  ],
+  "triangles": 284606,
+  "reducedTriangles": 176455,
+  "source": "packages\\assets\\3d\\source\\shared-spaces\\v2\\study-master.blend",
+  "inventory": {
+    "FURNITURE": 923,
+    "INTERIOR_DETAIL": 517,
+    "STUDY_OBJECTS": 25,
+    "ARCHITECTURE": 6,
+    "BOTANICALS": 229,
+    "WALL_STORY": 4,
+    "LIGHTS": 6,
+    "LIBRARY_VOLUMES": 1582
+  }
+}

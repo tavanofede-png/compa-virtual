@@ -1,0 +1,41 @@
+{
+  "character": "Milo",
+  "id": "milo",
+  "personality": "Divertido",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.72,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\milo-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-milo-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-milo-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1096132,
+  "blendBytes": 203390,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 58,
+  "exportedNodes": 76,
+  "exportedMaterials": 22,
+  "exportedVertices": 30040,
+  "exportedTriangles": 15004,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

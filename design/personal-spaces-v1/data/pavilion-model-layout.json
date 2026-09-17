@@ -1,0 +1,70 @@
+{
+  "id": "pavilion",
+  "name": "Pabellón del parque",
+  "width": 5.0,
+  "depth": 4.5,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.5,
+    4.24
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "pavilion-reading-bench",
+      "definitionId": "bench",
+      "name": "pavilion-reading-bench",
+      "x": 1.85,
+      "z": 1.25,
+      "w": 1.92,
+      "d": 0.73,
+      "h": 1.1,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 3.05,
+      "z": 2.45,
+      "w": 1.77,
+      "d": 0.86,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.995,
+      "z": 3.245,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.995,
+        3.8449999999999998
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

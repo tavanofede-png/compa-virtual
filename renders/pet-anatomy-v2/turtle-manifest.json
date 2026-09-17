@@ -1,0 +1,9 @@
+{
+  "id": "turtle",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "turtle",
+  "meshCount": 47,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

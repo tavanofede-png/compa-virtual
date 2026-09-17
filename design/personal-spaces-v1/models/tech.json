@@ -1,0 +1,214 @@
+{
+  "room": "tech",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\tech-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 27100,
+      "materials": 18
+    },
+    {
+      "id": "desk",
+      "triangles": 8248,
+      "materials": 5
+    },
+    {
+      "id": "chair",
+      "triangles": 3292,
+      "materials": 5
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 1032,
+      "materials": 3
+    },
+    {
+      "id": "left-desk-return",
+      "triangles": 7968,
+      "materials": 5
+    },
+    {
+      "id": "Monitor 0",
+      "triangles": 1044,
+      "materials": 4
+    },
+    {
+      "id": "Monitor 1",
+      "triangles": 1044,
+      "materials": 4
+    },
+    {
+      "id": "Monitor 2",
+      "triangles": 1044,
+      "materials": 4
+    },
+    {
+      "id": "tempered-pc",
+      "triangles": 5484,
+      "materials": 6
+    },
+    {
+      "id": "studio-speakers",
+      "triangles": 2296,
+      "materials": 3
+    },
+    {
+      "id": "headphones-rest",
+      "triangles": 1192,
+      "materials": 2
+    },
+    {
+      "id": "blue-braided-rug",
+      "triangles": 114044,
+      "materials": 3
+    },
+    {
+      "id": "Desk corner succulent",
+      "triangles": 5968,
+      "materials": 5
+    },
+    {
+      "id": "Tech wall plant (0.3, 1.5, 2.4)",
+      "triangles": 6352,
+      "materials": 5
+    },
+    {
+      "id": "Tech wall plant (1.7, 1.51, 2.3)",
+      "triangles": 6352,
+      "materials": 5
+    },
+    {
+      "id": "Tech shelf folios 0",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Tech shelf folios 1",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Tech shelf folios 2",
+      "triangles": 1056,
+      "materials": 5
+    },
+    {
+      "id": "Tech camera",
+      "triangles": 2372,
+      "materials": 5
+    },
+    {
+      "id": "Tech working tablet",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "Tech archived notes",
+      "triangles": 1160,
+      "materials": 4
+    },
+    {
+      "id": "Credenza foliage",
+      "triangles": 6352,
+      "materials": 5
+    },
+    {
+      "id": "Desk technology headphones",
+      "triangles": 1192,
+      "materials": 2
+    },
+    {
+      "id": "Tech left workstation pedestal",
+      "triangles": 1080,
+      "materials": 2
+    },
+    {
+      "id": "Tech right workstation pedestal",
+      "triangles": 1080,
+      "materials": 2
+    },
+    {
+      "id": "Tech wall full fern 0",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Tech wall full fern 1",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Tech wall full fern 2",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Dedicated mechanical keyboard",
+      "triangles": 30046,
+      "materials": 4
+    },
+    {
+      "id": "Wireless study mouse",
+      "triangles": 1080,
+      "materials": 4
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "Tech shelf fern 0",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Tech shelf fern 1",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Tech shelf fern 2",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "tech-right-credenza",
+      "triangles": 6936,
+      "materials": 6
+    },
+    {
+      "id": "Tech gallery artwork",
+      "triangles": 9784,
+      "materials": 5
+    },
+    {
+      "id": "Visible student backpack",
+      "triangles": 748,
+      "materials": 4
+    }
+  ],
+  "triangles": 331430,
+  "bytes": 20637176,
+  "status": "authored-model-not-native-performance-approved"
+}

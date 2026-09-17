@@ -1,0 +1,9 @@
+{
+  "id": "hedgehog",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "small-mammal",
+  "meshCount": 28,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

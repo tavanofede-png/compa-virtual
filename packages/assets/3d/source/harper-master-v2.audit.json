@@ -1,0 +1,451 @@
+{
+  "file": "C:\\Users\\tavan\\Documents\\Codex\\2026-09-05\\haz\\outputs\\compa-virtual\\packages\\assets\\3d\\source\\character_voxel_premium.blend",
+  "objects": 120,
+  "meshes": 115,
+  "armature": "RIG_Harper",
+  "bones": [
+    "root",
+    "hips",
+    "spine",
+    "neck",
+    "head",
+    "upper_arm.L",
+    "forearm.L",
+    "hand.L",
+    "upper_arm.R",
+    "forearm.R",
+    "hand.R",
+    "thigh.L",
+    "shin.L",
+    "foot.L",
+    "thigh.R",
+    "shin.R",
+    "foot.R"
+  ],
+  "modifiers": {
+    "Backpack_Main": [
+      "BEVEL"
+    ],
+    "Backpack_Pocket": [
+      "BEVEL"
+    ],
+    "Backpack_Strap_L": [
+      "BEVEL"
+    ],
+    "Backpack_Strap_R": [
+      "BEVEL"
+    ],
+    "Backpack_Zip": [
+      "BEVEL"
+    ],
+    "Body_Ear_L": [
+      "BEVEL"
+    ],
+    "Body_Ear_R": [
+      "BEVEL"
+    ],
+    "Body_FacePlane": [
+      "BEVEL"
+    ],
+    "Body_Forearm_L": [
+      "BEVEL"
+    ],
+    "Body_Forearm_R": [
+      "BEVEL"
+    ],
+    "Body_Hand_L": [
+      "BEVEL"
+    ],
+    "Body_Hand_R": [
+      "BEVEL"
+    ],
+    "Body_Head": [
+      "BEVEL"
+    ],
+    "Body_JawPlane": [
+      "BEVEL"
+    ],
+    "Body_Neck": [
+      "BEVEL"
+    ],
+    "Body_Shin_L": [
+      "BEVEL"
+    ],
+    "Body_Shin_R": [
+      "BEVEL"
+    ],
+    "Body_Thigh_L": [
+      "BEVEL"
+    ],
+    "Body_Thigh_R": [
+      "BEVEL"
+    ],
+    "Body_UpperArm_L": [
+      "BEVEL"
+    ],
+    "Body_UpperArm_R": [
+      "BEVEL"
+    ],
+    "Bottom_Cuff_L": [
+      "BEVEL"
+    ],
+    "Bottom_Cuff_R": [
+      "BEVEL"
+    ],
+    "Bottom_Hips": [
+      "BEVEL"
+    ],
+    "Bottom_OuterSeam_L": [
+      "BEVEL"
+    ],
+    "Bottom_OuterSeam_R": [
+      "BEVEL"
+    ],
+    "Bottom_Shin_L": [
+      "BEVEL"
+    ],
+    "Bottom_Shin_R": [
+      "BEVEL"
+    ],
+    "Bottom_Thigh_L": [
+      "BEVEL"
+    ],
+    "Bottom_Thigh_R": [
+      "BEVEL"
+    ],
+    "Bottom_Waistband": [
+      "BEVEL"
+    ],
+    "Detail_Ear_L": [
+      "BEVEL"
+    ],
+    "Detail_Ear_R": [
+      "BEVEL"
+    ],
+    "Detail_Finger_L_0": [
+      "BEVEL"
+    ],
+    "Detail_Finger_L_1": [
+      "BEVEL"
+    ],
+    "Detail_Finger_L_2": [
+      "BEVEL"
+    ],
+    "Detail_Finger_R_0": [
+      "BEVEL"
+    ],
+    "Detail_Finger_R_1": [
+      "BEVEL"
+    ],
+    "Detail_Finger_R_2": [
+      "BEVEL"
+    ],
+    "Face_Blush_L": [
+      "BEVEL"
+    ],
+    "Face_Blush_R": [
+      "BEVEL"
+    ],
+    "Face_Brow_L": [
+      "BEVEL"
+    ],
+    "Face_Brow_R": [
+      "BEVEL"
+    ],
+    "Face_EyeWhite_L": [
+      "BEVEL"
+    ],
+    "Face_EyeWhite_R": [
+      "BEVEL"
+    ],
+    "Face_Glint_L": [
+      "BEVEL"
+    ],
+    "Face_Glint_R": [
+      "BEVEL"
+    ],
+    "Face_Iris_L": [
+      "BEVEL"
+    ],
+    "Face_Iris_R": [
+      "BEVEL"
+    ],
+    "Face_Lip": [
+      "BEVEL"
+    ],
+    "Face_NoseBridge": [
+      "BEVEL"
+    ],
+    "Face_NoseTip": [
+      "BEVEL"
+    ],
+    "Face_Pupil_L": [
+      "BEVEL"
+    ],
+    "Face_Pupil_R": [
+      "BEVEL"
+    ],
+    "Face_SmileHighlight": [
+      "BEVEL"
+    ],
+    "Face_UpperLid_L": [
+      "BEVEL"
+    ],
+    "Face_UpperLid_R": [
+      "BEVEL"
+    ],
+    "Glasses_Bridge": [
+      "BEVEL"
+    ],
+    "Glasses_L_B": [
+      "BEVEL"
+    ],
+    "Glasses_L_I": [
+      "BEVEL"
+    ],
+    "Glasses_L_O": [
+      "BEVEL"
+    ],
+    "Glasses_L_T": [
+      "BEVEL"
+    ],
+    "Glasses_R_B": [
+      "BEVEL"
+    ],
+    "Glasses_R_I": [
+      "BEVEL"
+    ],
+    "Glasses_R_O": [
+      "BEVEL"
+    ],
+    "Glasses_R_T": [
+      "BEVEL"
+    ],
+    "Hair_Crown_0_0": [
+      "BEVEL"
+    ],
+    "Hair_Crown_0_1": [
+      "BEVEL"
+    ],
+    "Hair_Crown_0_2": [
+      "BEVEL"
+    ],
+    "Hair_Crown_0_3": [
+      "BEVEL"
+    ],
+    "Hair_Crown_0_4": [
+      "BEVEL"
+    ],
+    "Hair_Crown_1_0": [
+      "BEVEL"
+    ],
+    "Hair_Crown_1_1": [
+      "BEVEL"
+    ],
+    "Hair_Crown_1_2": [
+      "BEVEL"
+    ],
+    "Hair_Crown_1_3": [
+      "BEVEL"
+    ],
+    "Hair_Crown_1_4": [
+      "BEVEL"
+    ],
+    "Hair_Crown_2_1": [
+      "BEVEL"
+    ],
+    "Hair_Crown_2_2": [
+      "BEVEL"
+    ],
+    "Hair_Crown_2_3": [
+      "BEVEL"
+    ],
+    "Hair_Fringe_0": [
+      "BEVEL"
+    ],
+    "Hair_Fringe_1": [
+      "BEVEL"
+    ],
+    "Hair_Fringe_2": [
+      "BEVEL"
+    ],
+    "Hair_Fringe_3": [
+      "BEVEL"
+    ],
+    "Hair_Fringe_4": [
+      "BEVEL"
+    ],
+    "Hair_UnderCap": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_L_0": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_L_1": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_L_2": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_R_0": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_R_1": [
+      "BEVEL"
+    ],
+    "Shoe_Lace_R_2": [
+      "BEVEL"
+    ],
+    "Shoe_Main_L": [
+      "BEVEL"
+    ],
+    "Shoe_Main_R": [
+      "BEVEL"
+    ],
+    "Shoe_Sole_L": [
+      "BEVEL"
+    ],
+    "Shoe_Sole_R": [
+      "BEVEL"
+    ],
+    "Shoe_Toe_L": [
+      "BEVEL"
+    ],
+    "Shoe_Toe_R": [
+      "BEVEL"
+    ],
+    "StudioFloor": [
+      "BEVEL"
+    ],
+    "Top_Collar_L": [
+      "BEVEL"
+    ],
+    "Top_Collar_R": [
+      "BEVEL"
+    ],
+    "Top_Cuff_L": [
+      "BEVEL"
+    ],
+    "Top_Cuff_R": [
+      "BEVEL"
+    ],
+    "Top_ForeSleeve_L": [
+      "BEVEL"
+    ],
+    "Top_ForeSleeve_R": [
+      "BEVEL"
+    ],
+    "Top_Hem": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_+0.000": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_+0.055": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_+0.110": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_+0.170": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_-0.055": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_-0.110": [
+      "BEVEL"
+    ],
+    "Top_KnitRib_-0.170": [
+      "BEVEL"
+    ],
+    "Top_Torso": [
+      "BEVEL"
+    ],
+    "Top_UpperSleeve_L": [
+      "BEVEL"
+    ],
+    "Top_UpperSleeve_R": [
+      "BEVEL"
+    ]
+  },
+  "materials": [
+    "MAT_HARPER_BACKPACK",
+    "MAT_HARPER_BLACK",
+    "MAT_HARPER_BLUSH",
+    "MAT_HARPER_BOTTOM",
+    "MAT_HARPER_BOTTOM_DARK",
+    "MAT_HARPER_EYE",
+    "MAT_HARPER_EYE_DARK",
+    "MAT_HARPER_EYE_WHITE",
+    "MAT_HARPER_HAIR",
+    "MAT_HARPER_HAIR_LIGHT",
+    "MAT_HARPER_HAIR_MID",
+    "MAT_HARPER_METAL",
+    "MAT_HARPER_SHOES",
+    "MAT_HARPER_SKIN",
+    "MAT_HARPER_SKIN_LIGHT",
+    "MAT_HARPER_SKIN_SHADOW",
+    "MAT_HARPER_SOLE",
+    "MAT_HARPER_TOP",
+    "MAT_HARPER_TOP_DARK",
+    "MAT_HARPER_TOP_LIGHT",
+    "MAT_HARPER_WHITE",
+    "MAT_STUDIO"
+  ],
+  "parenting": {
+    "boneParentedMeshes": 114,
+    "unparentedMeshes": 1
+  },
+  "vertexGroups": {},
+  "constraints": {},
+  "rigScale": [
+    0.9942857027053833,
+    0.9942857027053833,
+    0.9942857027053833
+  ],
+  "cameras": [
+    "CameraCharacter"
+  ],
+  "lights": [
+    "StudioFill",
+    "StudioKey",
+    "StudioRim"
+  ],
+  "collections": [
+    "COMPA_HARPER_MASTER",
+    "SLOT_BACK",
+    "SLOT_BODY",
+    "SLOT_BOTTOM",
+    "SLOT_FACE_ACCESSORY",
+    "SLOT_HAIR",
+    "SLOT_HAND_PROP",
+    "SLOT_RIG",
+    "SLOT_SHOES",
+    "SLOT_TOP",
+    "STUDIO_PREVIEW"
+  ],
+  "poseProbes": {
+    "upper_arm.L": {
+      "followers": 2,
+      "movesWithBone": true
+    },
+    "upper_arm.R": {
+      "followers": 2,
+      "movesWithBone": true
+    },
+    "thigh.L": {
+      "followers": 2,
+      "movesWithBone": true
+    },
+    "head": {
+      "followers": 53,
+      "movesWithBone": true
+    },
+    "spine": {
+      "followers": 17,
+      "movesWithBone": true
+    }
+  },
+  "poseRestored": true
+}

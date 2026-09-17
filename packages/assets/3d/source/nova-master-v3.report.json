@@ -1,0 +1,41 @@
+{
+  "character": "Nova",
+  "id": "nova",
+  "personality": "Calma",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.66,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\nova-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-nova-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-nova-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1052524,
+  "blendBytes": 198592,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 52,
+  "exportedNodes": 70,
+  "exportedMaterials": 21,
+  "exportedVertices": 28744,
+  "exportedTriangles": 14356,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

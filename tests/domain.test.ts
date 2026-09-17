@@ -4,7 +4,6 @@ import {
   generatePlan,
   availableMinutes,
   transition,
-  penalty,
   publicSnapshot,
   ageAt,
   methods,
@@ -195,22 +194,19 @@ describe("academic transitions", () => {
     expect(s.sessions).toEqual(completed);
     expect(s.plans.some((x) => x.status === "ACCEPTED")).toBe(true);
   });
-  it("limits penalties to acknowledged misses, 15 per seven days, and available balance", () => {
-    expect(penalty(100, 0, false, false)).toBe(0);
-    expect(penalty(100, 0, true, true)).toBe(0);
-    expect(penalty(3, 0, true, false)).toBe(3);
-    expect(penalty(100, 13, true, false)).toBe(2);
-    expect(penalty(100, 15, true, false)).toBe(0);
-    const s = fixture();
-    const next = transition(
-      s,
-      {
-        type: "checkin.save",
-        payload: { learned: "", news: "", outcome: "PENDING" },
-      },
-      now,
-    );
-    expect(next.coins).toBe(s.coins);
+  it("preserves balances for every check-in outcome, including accepted missed work and historical deductions", () => {
+    for (const outcome of ['DONE','PENDING','EXCUSED','UNCONFIRMED']) {
+      const s=fixture();
+      s.coins=37;
+      s.checkins=[{id:'past',date:'2026-09-06',learned:'',news:'',outcome:'PENDING',deducted:5}];
+      s.plans=[{id:'accepted',version:1,status:'ACCEPTED',created_at:now,unscheduled:[],slots:[{id:'slot',academic_item_id:s.items[0].id,date:'2026-09-07',start_minute:1000,duration_minutes:25,method_id:'retrieval',objective:'Practicar',status:'PENDING'}]}];
+      const next=transition(s,{type:'checkin.save',payload:{learned:'',news:'',outcome,exception_reason:'Cambio de horario'}},now);
+      expect(next.coins).toBe(37);
+      expect(next.checkins[0]).toEqual(s.checkins[0]);
+      expect(next.checkins[1].deducted).toBe(0);
+      expect(next.plans[0].slots[0].status).toBe(outcome==='EXCUSED'?'EXCUSED':outcome==='PENDING'?'MISSED':'PENDING');
+      if(outcome!=='UNCONFIRMED')expect(()=>transition(next,{type:'checkin.save',payload:{learned:'',news:'',outcome}},now)).toThrow('registrado');
+    }
   });
   it("does not reveal answer keys before an attempt and only grants one correction bonus", () => {
     let s = fixture();

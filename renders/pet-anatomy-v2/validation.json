@@ -1,0 +1,120 @@
+[
+  {
+    "id": "hamster",
+    "bytes": 2513212,
+    "meshes": 36,
+    "vertices": 35754,
+    "triangles": 68338,
+    "vertexColorMeshes": 2,
+    "clips": 15,
+    "bounds": [
+      {
+        "clip": "pet_idle",
+        "minY": 0,
+        "maxY": 0.5733,
+        "maxSpan": 0.9918
+      },
+      {
+        "clip": "pet_walk",
+        "minY": 0,
+        "maxY": 0.5938,
+        "maxSpan": 1.0038
+      },
+      {
+        "clip": "pet_run",
+        "minY": 0,
+        "maxY": 0.5938,
+        "maxSpan": 1.0039
+      },
+      {
+        "clip": "pet_lie_down",
+        "minY": 0,
+        "maxY": 0.5756,
+        "maxSpan": 0.9918
+      },
+      {
+        "clip": "pet_rest",
+        "minY": 0,
+        "maxY": 0.5764,
+        "maxSpan": 0.9898
+      },
+      {
+        "clip": "pet_get_up",
+        "minY": 0,
+        "maxY": 0.5756,
+        "maxSpan": 0.9918
+      },
+      {
+        "clip": "pet_react",
+        "minY": 0,
+        "maxY": 0.5733,
+        "maxSpan": 0.9918
+      },
+      {
+        "clip": "pet_celebrate",
+        "minY": 0,
+        "maxY": 0.5871,
+        "maxSpan": 0.9917
+      }
+    ]
+  },
+  {
+    "id": "orange-tabby",
+    "bytes": 2434464,
+    "meshes": 43,
+    "vertices": 34571,
+    "triangles": 67376,
+    "vertexColorMeshes": 3,
+    "clips": 15,
+    "bounds": [
+      {
+        "clip": "pet_idle",
+        "minY": 0,
+        "maxY": 1.0352,
+        "maxSpan": 1.7668
+      },
+      {
+        "clip": "pet_walk",
+        "minY": 0,
+        "maxY": 1.0436,
+        "maxSpan": 1.7714
+      },
+      {
+        "clip": "pet_run",
+        "minY": 0,
+        "maxY": 1.0396,
+        "maxSpan": 1.7694
+      },
+      {
+        "clip": "pet_lie_down",
+        "minY": 0,
+        "maxY": 1.0352,
+        "maxSpan": 1.7689
+      },
+      {
+        "clip": "pet_rest",
+        "minY": 0,
+        "maxY": 1.0021,
+        "maxSpan": 1.748
+      },
+      {
+        "clip": "pet_get_up",
+        "minY": 0,
+        "maxY": 1.0352,
+        "maxSpan": 1.769
+      },
+      {
+        "clip": "pet_react",
+        "minY": 0,
+        "maxY": 1.0352,
+        "maxSpan": 1.7668
+      },
+      {
+        "clip": "pet_celebrate",
+        "minY": 0,
+        "maxY": 1.0825,
+        "maxSpan": 1.7728
+      }
+    ]
+  }
+]

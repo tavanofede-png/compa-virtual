@@ -1,0 +1,14 @@
+{
+  "status": "awaiting visual review",
+  "objects": 6194,
+  "new_objects": 751,
+  "new_architecture": [
+    "gable",
+    "roof tiles",
+    "exposed rafters",
+    "skylight",
+    "open stairwell",
+    "railing"
+  ],
+  "app_integrated": false
+}

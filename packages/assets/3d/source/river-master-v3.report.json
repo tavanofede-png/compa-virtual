@@ -1,0 +1,41 @@
+{
+  "character": "River",
+  "id": "river",
+  "personality": "Relajado",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.78,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\river-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-river-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-river-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1204520,
+  "blendBytes": 211892,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 59,
+  "exportedNodes": 77,
+  "exportedMaterials": 23,
+  "exportedVertices": 33040,
+  "exportedTriangles": 16480,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

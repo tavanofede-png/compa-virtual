@@ -1,0 +1,42 @@
+[
+  {
+    "id": "sage-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#787459",
+    "design": "signature",
+    "label": "Sage \u00b7 back"
+  },
+  {
+    "id": "sage-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#787459",
+    "design": "signature",
+    "label": "Sage \u00b7 bottom"
+  },
+  {
+    "id": "sage-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#787459",
+    "design": "signature",
+    "label": "Sage \u00b7 face_accessory"
+  },
+  {
+    "id": "sage-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#787459",
+    "design": "signature",
+    "label": "Sage \u00b7 shoes"
+  },
+  {
+    "id": "sage-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#787459",
+    "design": "signature",
+    "label": "Sage \u00b7 top"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "character": "Harper",
+  "id": "harper",
+  "personality": "Organizado",
+  "schema": "compa-humanoid-v2",
+  "heightMeters": 1.74,
+  "slots": [
+    "body",
+    "hair",
+    "face_accessory",
+    "top",
+    "bottom",
+    "shoes",
+    "back",
+    "hand_prop"
+  ],
+  "source": "packages\\assets\\3d\\source\\harper-master-v3.blend",
+  "export": "packages\\assets\\3d\\compa-harper-premium.glb",
+  "preview": "packages\\assets\\3d\\previews\\compa-harper-premium.png",
+  "bones": 17,
+  "animations": [
+    "Idle"
+  ],
+  "glbBytes": 1177296,
+  "blendBytes": 208996,
+  "blenderVersion": "5.2.1 LTS",
+  "renderEngine": "CYCLES",
+  "renderSamples": 128,
+  "denoise": true,
+  "validGlb2": true,
+  "exportedMeshes": 54,
+  "exportedNodes": 72,
+  "exportedMaterials": 22,
+  "exportedVertices": 32200,
+  "exportedTriangles": 16084,
+  "skins": 1,
+  "animationClips": [
+    "Idle"
+  ],
+  "externalImages": 0
+}

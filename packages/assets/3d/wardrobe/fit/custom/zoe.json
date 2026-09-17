@@ -1,0 +1,58 @@
+{
+  "character": "zoe",
+  "outfit": [
+    "tee-white-planet",
+    "shorts-olive-cargo",
+    "sneaker-red-panel"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "77b2efec802635a9c6b5b1a5e66493e2f561a5c378b6b71b3907cfcb776783b1",
+  "fitScale": [
+    0.800434947013855,
+    0.800434947013855,
+    0.800434947013855
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 12904,
+    "weightSumRange": [
+      0.9999999888241291,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "8774520b61d3fe3b204d2718987d29224137e20b2585006c54ea2842d5bfa2ed"
+}

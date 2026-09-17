@@ -1,0 +1,42 @@
+[
+  {
+    "id": "orion-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#AF906C",
+    "design": "signature",
+    "label": "Orion \u00b7 back"
+  },
+  {
+    "id": "orion-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#AF906C",
+    "design": "signature",
+    "label": "Orion \u00b7 bottom"
+  },
+  {
+    "id": "orion-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#AF906C",
+    "design": "signature",
+    "label": "Orion \u00b7 face_accessory"
+  },
+  {
+    "id": "orion-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#AF906C",
+    "design": "signature",
+    "label": "Orion \u00b7 shoes"
+  },
+  {
+    "id": "orion-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#AF906C",
+    "design": "signature",
+    "label": "Orion \u00b7 top"
+  }
+]

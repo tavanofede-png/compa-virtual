@@ -956,6 +956,13 @@ fieldset {
   font-size: 12px;
 }
 .compa-modal {
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: calc(100% - 32px) !important;
+  translate: -50% -50% !important;
+  transform: none !important;
   background: #fffefa !important;
   color: var(--ink) !important;
   max-width: 560px !important;
@@ -1634,9 +1641,21 @@ fieldset {
     display: none;
   }
   .compa-modal {
-    max-width: calc(100% - 24px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100dvh;
+    max-width: 100% !important;
+    --tw-translate-x: 0px !important;
+    --tw-translate-y: 0px !important;
+    translate: 0px 0px !important;
+    transform: none !important;
     padding: 23px !important;
-    max-height: 90dvh;
+    max-height: 100dvh;
+    border: 0 !important;
+    border-radius: 0 !important;
   }
   .form-grid.three {
     grid-template-columns: 1fr 1fr;
@@ -1723,6 +1742,7 @@ fieldset {
   background: radial-gradient(ellipse at 50% 40%, #76829c, #424e6d);
 }
 .welcome-scene .room.room-three {
+  width: 100%;
   aspect-ratio: 1.04;
   min-height: 470px;
   border-width: 1px;

@@ -1,0 +1,58 @@
+{
+  "character": "nova",
+  "outfit": [
+    "tee-white-planet",
+    "shorts-olive-cargo",
+    "sneaker-red-panel"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "7838953092bd3b4c1dd5fd73f73ee5557cd964cf8c45e0c8ba57ebb120e8ff0b",
+  "fitScale": [
+    0.8579588532447815,
+    0.8579588532447815,
+    0.8579588532447815
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 12904,
+    "weightSumRange": [
+      0.9999999888241291,
+      1.0000000223517418
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 0,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "54681cb7788db0436bf2444566b3a483c7a2fb8c1ca806558a59fddc86f6ed31"
+}

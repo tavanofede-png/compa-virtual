@@ -1,0 +1,10 @@
+{
+  "id": "hamster",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "small-mammal",
+  "meshCount": 36,
+  "vertices": 34241,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "noa-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 back"
+  },
+  {
+    "id": "noa-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 bottom"
+  },
+  {
+    "id": "noa-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 face_accessory"
+  },
+  {
+    "id": "noa-signature-hand_prop",
+    "slot": "handheld",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 hand_prop"
+  },
+  {
+    "id": "noa-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 shoes"
+  },
+  {
+    "id": "noa-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#3C5342",
+    "design": "signature",
+    "label": "Noa \u00b7 top"
+  }
+]

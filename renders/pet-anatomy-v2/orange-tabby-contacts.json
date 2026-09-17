@@ -1,0 +1,107 @@
+[
+  {
+    "clip": "pet_carry",
+    "contactSamples": 61,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_celebrate",
+    "contactSamples": 55,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": 0.07500001788139343
+  },
+  {
+    "clip": "pet_get_up",
+    "contactSamples": 55,
+    "originalMin": -0.06852693855762482,
+    "correctedMin": -3.725290298461914e-08,
+    "correctedMax": 5.587935447692871e-08
+  },
+  {
+    "clip": "pet_idle",
+    "contactSamples": 121,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_lie_down",
+    "contactSamples": 52,
+    "originalMin": -0.069490447640419,
+    "correctedMin": -4.470348358154297e-08,
+    "correctedMax": 5.21540641784668e-08
+  },
+  {
+    "clip": "pet_look",
+    "contactSamples": 73,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_play",
+    "contactSamples": 55,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_react",
+    "contactSamples": 37,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_rest",
+    "contactSamples": 151,
+    "originalMin": -0.018422838300466537,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": -7.450580596923828e-09
+  },
+  {
+    "clip": "pet_run",
+    "contactSamples": 25,
+    "originalMin": -0.008058145642280579,
+    "correctedMin": -4.0978193283081055e-08,
+    "correctedMax": -1.4901161193847656e-08
+  },
+  {
+    "clip": "pet_seated",
+    "contactSamples": 121,
+    "originalMin": -0.05670131370425224,
+    "correctedMin": -7.450580596923828e-09,
+    "correctedMax": -7.450580596923828e-09
+  },
+  {
+    "clip": "pet_sit_down",
+    "contactSamples": 37,
+    "originalMin": -0.05842280015349388,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": 4.470348358154297e-08
+  },
+  {
+    "clip": "pet_sniff",
+    "contactSamples": 49,
+    "originalMin": -2.9802322387695312e-08,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": -2.9802322387695312e-08
+  },
+  {
+    "clip": "pet_stand_up",
+    "contactSamples": 37,
+    "originalMin": -0.058422770351171494,
+    "correctedMin": -2.9802322387695312e-08,
+    "correctedMax": 4.842877388000488e-08
+  },
+  {
+    "clip": "pet_walk",
+    "contactSamples": 41,
+    "originalMin": -0.008419346064329147,
+    "correctedMin": -3.725290298461914e-08,
+    "correctedMax": 1.4901161193847656e-08
+  }
+]

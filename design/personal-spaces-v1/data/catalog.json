@@ -1,0 +1,2358 @@
+[
+  {
+    "id": "tables-a",
+    "name": "Escritorios y mesas de estudio",
+    "category": "Muebles",
+    "reference": 2,
+    "items": [
+      {
+        "id": "desk",
+        "name": "Escritorio de roble",
+        "detail": "Oak desk with three drawers and brass recessed pulls, beveled top and mortise legs",
+        "targetDimensions": [
+          1.5,
+          0.75,
+          0.76
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "study-table",
+        "name": "Mesa de estudio",
+        "detail": "Long oak table for two independent work places, visible apron joints",
+        "targetDimensions": [
+          1.8,
+          0.8,
+          0.76
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "compact-desk",
+        "name": "Escritorio compacto",
+        "detail": "Oak top on slim graphite square metal frame with side drawer pedestal",
+        "targetDimensions": [
+          1.2,
+          0.6,
+          0.75
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "cafe-table",
+        "name": "Mesa de café",
+        "detail": "Round honey oak top on dark cast-metal pedestal",
+        "targetDimensions": [
+          0.95,
+          0.95,
+          0.75
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "tables-b",
+    "name": "Mesas especiales",
+    "category": "Muebles",
+    "reference": 2,
+    "items": [
+      {
+        "id": "outdoor-table",
+        "name": "Mesa con sombrilla",
+        "detail": "Round wooden outdoor table with cream ribbed umbrella and weighted center base",
+        "targetDimensions": [
+          1.15,
+          1.15,
+          2.3
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "picnic-table",
+        "name": "Mesa con bancos",
+        "detail": "Solid picnic table with two benches and structural angled braces",
+        "targetDimensions": [
+          1.8,
+          1.5,
+          0.76
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bar-table",
+        "name": "Barra alta",
+        "detail": "Long oak bar top on graphite metal frame, shelf under top and footrail",
+        "targetDimensions": [
+          1.6,
+          0.65,
+          1.02
+        ],
+        "support": "floor",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "window-counter",
+        "name": "Mostrador de ventana",
+        "detail": "Deep wooden window counter with narrow storage and integrated footrail",
+        "targetDimensions": [
+          1.8,
+          0.65,
+          1
+        ],
+        "support": "wall",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "seating-a",
+    "name": "Sillas, sillones y puffs",
+    "category": "Muebles",
+    "reference": 2,
+    "items": [
+      {
+        "id": "ergonomic-chair",
+        "name": "Silla ergonómica",
+        "detail": "Graphite adjustable chair, mesh upholstery, lumbar support, arms, five castors",
+        "targetDimensions": [
+          0.68,
+          0.7,
+          1.15
+        ],
+        "support": "floor",
+        "interaction": "sit",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "lounge-chair",
+        "name": "Sillón de lectura",
+        "detail": "Olive upholstered oak armchair with ivory cushion and piped seams",
+        "targetDimensions": [
+          0.92,
+          0.85,
+          0.9
+        ],
+        "support": "floor",
+        "interaction": "sit",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "beanbag",
+        "name": "Puff envolvente",
+        "detail": "Sculpted rust or sage beanbag with depressed seat, fine woven panels and sewn seams",
+        "targetDimensions": [
+          0.95,
+          0.9,
+          0.7
+        ],
+        "support": "floor",
+        "interaction": "rest",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "wood-chair",
+        "name": "Silla de madera",
+        "detail": "Oak chair with sage or ivory upholstered seat and back, fine joinery",
+        "targetDimensions": [
+          0.56,
+          0.6,
+          0.86
+        ],
+        "support": "floor",
+        "interaction": "sit",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "stool",
+        "name": "Taburete",
+        "detail": "Oak stool with sage upholstered square seat and sturdy cross braces",
+        "targetDimensions": [
+          0.4,
+          0.4,
+          0.47
+        ],
+        "support": "floor",
+        "interaction": "sit",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "ottoman",
+        "name": "Otomana",
+        "detail": "Square cream and gray woven ottoman with piping and concealed feet",
+        "targetDimensions": [
+          0.65,
+          0.65,
+          0.43
+        ],
+        "support": "floor",
+        "interaction": "rest",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bench",
+        "name": "Banco",
+        "detail": "Oak bench with full green/ivory/rust cushions, slatted rear back and arms",
+        "targetDimensions": [
+          1.5,
+          0.58,
+          0.88
+        ],
+        "support": "floor",
+        "interaction": "sit",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "floor-cushion",
+        "name": "Almohadón de piso",
+        "detail": "Thick striped rust and cream floor cushion with tufting and tassels",
+        "targetDimensions": [
+          0.65,
+          0.65,
+          0.16
+        ],
+        "support": "floor",
+        "interaction": "rest",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "storage",
+    "name": "Bibliotecas y almacenamiento",
+    "category": "Muebles",
+    "reference": 2,
+    "items": [
+      {
+        "id": "bookshelf-large",
+        "name": "Biblioteca grande",
+        "detail": "Wide tall oak bookcase, adjustable shelves, brass hardware and lower drawers",
+        "targetDimensions": [
+          1.8,
+          0.36,
+          2.3
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bookshelf-medium",
+        "name": "Biblioteca mediana",
+        "detail": "Two-column oak shelves with lower closed compartment",
+        "targetDimensions": [
+          1.05,
+          0.34,
+          1.7
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bookshelf-narrow",
+        "name": "Biblioteca angosta",
+        "detail": "Tall narrow five-level oak bookcase",
+        "targetDimensions": [
+          0.5,
+          0.3,
+          2.15
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "ladder-shelf",
+        "name": "Estante escalera",
+        "detail": "Leaning ladder shelving with five progressively deeper oak trays",
+        "targetDimensions": [
+          0.7,
+          0.44,
+          1.9
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "cube-storage",
+        "name": "Mueble de cubos",
+        "detail": "Six oak cubes with sage doors and open storage bays",
+        "targetDimensions": [
+          1.2,
+          0.4,
+          1.1
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "wall-shelves",
+        "name": "Estantes flotantes",
+        "detail": "Pair of solid oak floating ledges with hidden brackets",
+        "targetDimensions": [
+          1.1,
+          0.23,
+          0.1
+        ],
+        "support": "wall",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "side-table",
+        "name": "Mesa auxiliar",
+        "detail": "Oak side table with drawer, open lower shelf and brass handle",
+        "targetDimensions": [
+          0.48,
+          0.42,
+          0.55
+        ],
+        "support": "floor",
+        "interaction": "surface",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "rolling-drawers",
+        "name": "Cajonera móvil",
+        "detail": "Ivory or oak three-drawer pedestal on black castors",
+        "targetDimensions": [
+          0.45,
+          0.5,
+          0.61
+        ],
+        "support": "floor",
+        "interaction": "surface",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "architecture",
+    "name": "Módulos arquitectónicos",
+    "category": "Arquitectura",
+    "reference": 2,
+    "items": [
+      {
+        "id": "partition",
+        "name": "Divisor de listones",
+        "detail": "Oak vertical slat partition with framed base and ivy side edge",
+        "targetDimensions": [
+          1.2,
+          0.16,
+          2
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "window",
+        "name": "Ventana modular",
+        "detail": "Black framed double window with deep oak sill and blue city garden view",
+        "targetDimensions": [
+          1.8,
+          0.22,
+          1.6
+        ],
+        "support": "wall",
+        "interaction": "surface",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pergola-module",
+        "name": "Módulo de pérgola",
+        "detail": "Oak post-and-beam corner with cross rafters, tenon joints and flowering ivy",
+        "targetDimensions": [
+          2.4,
+          2.4,
+          2.6
+        ],
+        "support": "structure",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "railing",
+        "name": "Baranda",
+        "detail": "Black metal frame and glass terrace railing with oak handrail",
+        "targetDimensions": [
+          1.5,
+          0.12,
+          1.1
+        ],
+        "support": "structure",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "awning",
+        "name": "Toldo",
+        "detail": "Green and cream striped awning with metal side brackets",
+        "targetDimensions": [
+          1.8,
+          1.2,
+          0.5
+        ],
+        "support": "structure",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "planter-large",
+        "name": "Jardinera grande",
+        "detail": "Stacked limestone raised rectangular bed with mixed shrubs and flowers",
+        "targetDimensions": [
+          1.3,
+          0.45,
+          0.5
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "planter-small",
+        "name": "Jardinera pequeña",
+        "detail": "Square limestone or oak planter with varied botanical foliage",
+        "targetDimensions": [
+          0.42,
+          0.42,
+          0.65
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "roof-module",
+        "name": "Cubierta de pabellón",
+        "detail": "Hipped green overlapping voxel clay tiles with oak underside rafters",
+        "targetDimensions": [
+          2.5,
+          2.5,
+          1.2
+        ],
+        "support": "structure",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "lighting",
+    "name": "Luz y atmósfera",
+    "category": "Confort",
+    "reference": 2,
+    "items": [
+      {
+        "id": "desk-lamp",
+        "name": "Lámpara articulada",
+        "detail": "Black metal tasklamp with sprung elbow joints, small switch and weighted base",
+        "targetDimensions": [
+          0.22,
+          0.22,
+          0.5
+        ],
+        "support": "surface",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "banker-lamp",
+        "name": "Lámpara de biblioteca",
+        "detail": "Green glass bankers lamp on warm brushed brass base",
+        "targetDimensions": [
+          0.32,
+          0.2,
+          0.4
+        ],
+        "support": "surface",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "floor-lamp",
+        "name": "Lámpara de pie",
+        "detail": "Pleated ivory fabric shade on oak tripod with power switch",
+        "targetDimensions": [
+          0.4,
+          0.4,
+          1.5
+        ],
+        "support": "floor",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pendant",
+        "name": "Lámpara colgante",
+        "detail": "Black and brass faceted pendant with real inner diffuser and ceiling rose",
+        "targetDimensions": [
+          0.3,
+          0.3,
+          0.45
+        ],
+        "support": "ceiling",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "string-lights",
+        "name": "Guirnalda",
+        "detail": "Black cable with eight tiny warm glass bulbs and secure hanging hooks",
+        "targetDimensions": [
+          2,
+          0.06,
+          0.35
+        ],
+        "support": "wall",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "ambient-lantern",
+        "name": "Farol",
+        "detail": "Brass framed glass lantern with warm candle, carry handle and feet",
+        "targetDimensions": [
+          0.22,
+          0.22,
+          0.38
+        ],
+        "support": "surface",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "cube-lamp",
+        "name": "Lámpara cúbica",
+        "detail": "Warm glowing layered paper cube on a dark oak pedestal",
+        "targetDimensions": [
+          0.18,
+          0.18,
+          0.3
+        ],
+        "support": "surface",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "led-panels",
+        "name": "Paneles luminosos",
+        "detail": "Six beveled hexagonal diffused cyan violet wall light modules",
+        "targetDimensions": [
+          0.9,
+          0.05,
+          0.6
+        ],
+        "support": "wall",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "decor-a",
+    "name": "Botánica y objetos de colección",
+    "category": "Decoración",
+    "reference": 3,
+    "items": [
+      {
+        "id": "table-plant",
+        "name": "Planta de mesa",
+        "detail": "Pilea with distinct round stepped leaves in square cream ceramic pot and visible soil",
+        "targetDimensions": [
+          0.2,
+          0.2,
+          0.32
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "floor-plant",
+        "name": "Planta de piso",
+        "detail": "Tall broad-leaf monstera in ribbed stone planter with small inner pot",
+        "targetDimensions": [
+          0.45,
+          0.45,
+          1.15
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "hanging-plant",
+        "name": "Planta colgante",
+        "detail": "Trailing pothos in glazed pot suspended in woven macrame holder with knots",
+        "targetDimensions": [
+          0.3,
+          0.3,
+          0.9
+        ],
+        "support": "ceiling",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "terrarium",
+        "name": "Terrario decorativo",
+        "detail": "Black geometric glass terrarium with miniature ferns, pebbles and moss",
+        "targetDimensions": [
+          0.24,
+          0.24,
+          0.34
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "globe",
+        "name": "Globo terráqueo",
+        "detail": "Blue and ocher geographic globe with engraved brass meridian and oak foot",
+        "targetDimensions": [
+          0.25,
+          0.25,
+          0.38
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "small-sculpture",
+        "name": "Escultura pequeña",
+        "detail": "Finished voxel calico cat statuette resting on books, ceramic appearance",
+        "targetDimensions": [
+          0.16,
+          0.12,
+          0.22
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "figurines",
+        "name": "Figuras de colección",
+        "detail": "Two separate small dog and cat voxel figurines with species-specific faces",
+        "targetDimensions": [
+          0.18,
+          0.12,
+          0.18
+        ],
+        "support": "shelf",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "book-stack-plant",
+        "name": "Libros y enredadera",
+        "detail": "Removable trailing succulent pot on four intricately bound stacked books",
+        "targetDimensions": [
+          0.26,
+          0.2,
+          0.32
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "decor-b",
+    "name": "Arte, paneles y carteles",
+    "category": "Decoración",
+    "reference": 3,
+    "items": [
+      {
+        "id": "framed-print",
+        "name": "Cuadro enmarcado",
+        "detail": "Oak frame with ivory print and small botanical illustration",
+        "targetDimensions": [
+          0.45,
+          0.035,
+          0.65
+        ],
+        "support": "wall",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "corkboard",
+        "name": "Panel de corcho",
+        "detail": "Oak corkboard with pinned notes, polaroids and tiny brass clips",
+        "targetDimensions": [
+          0.85,
+          0.04,
+          0.6
+        ],
+        "support": "wall",
+        "interaction": "notes",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "poster",
+        "name": "Póster",
+        "detail": "Tall sunset illustrated poster in navy, peach and cream with subtle type",
+        "targetDimensions": [
+          0.45,
+          0.02,
+          0.7
+        ],
+        "support": "wall",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "whiteboard",
+        "name": "Pizarra",
+        "detail": "White dry erase board, graphite corners, eraser tray and four colored markers",
+        "targetDimensions": [
+          1.2,
+          0.06,
+          0.75
+        ],
+        "support": "wall",
+        "interaction": "plan",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pinboard",
+        "name": "Panel organizador",
+        "detail": "Cream perforated pegboard with graphite baskets, hooks and stationery",
+        "targetDimensions": [
+          0.85,
+          0.1,
+          0.65
+        ],
+        "support": "wall",
+        "interaction": "organize",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "photo-grid",
+        "name": "Grilla de recuerdos",
+        "detail": "Black wire grid with wooden clips and prepared illustrated postcards",
+        "targetDimensions": [
+          0.7,
+          0.04,
+          0.6
+        ],
+        "support": "wall",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "letterboard",
+        "name": "Tablero de letras",
+        "detail": "Oak framed ivory grooved letterboard with simple navy letters",
+        "targetDimensions": [
+          0.4,
+          0.04,
+          0.5
+        ],
+        "support": "wall",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "polaroids",
+        "name": "Postales ilustradas",
+        "detail": "Five white-bordered printed landscape postcards with distinct illustrations",
+        "targetDimensions": [
+          0.1,
+          0.015,
+          0.12
+        ],
+        "support": "wall",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "personal-sign",
+        "name": "Cartel personal",
+        "detail": "Upright oak frame holding a cream personal handwritten short message",
+        "targetDimensions": [
+          0.22,
+          0.06,
+          0.3
+        ],
+        "support": "surface",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "comfort",
+    "name": "Textiles y confort",
+    "category": "Confort",
+    "reference": 3,
+    "items": [
+      {
+        "id": "rug-small",
+        "name": "Alfombra pequeña",
+        "detail": "Small ivory/rust striped handwoven rug with tied fringe",
+        "targetDimensions": [
+          1.2,
+          0.7,
+          0.025
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "rug-medium",
+        "name": "Alfombra a cuadros",
+        "detail": "Large sage and ivory checker weave rug with dense loops and stitched edges",
+        "targetDimensions": [
+          2.1,
+          1.6,
+          0.025
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "rug-round",
+        "name": "Alfombra redonda",
+        "detail": "Honey jute circular braided rug with concentric rope structure",
+        "targetDimensions": [
+          1.6,
+          1.6,
+          0.025
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "knit-pouf",
+        "name": "Puff tejido",
+        "detail": "Round burnt-orange knitted pouf with dense individual rope loops",
+        "targetDimensions": [
+          0.65,
+          0.65,
+          0.4
+        ],
+        "support": "floor",
+        "interaction": "rest",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "cushions",
+        "name": "Almohadones",
+        "detail": "Three removable cushions: sage herringbone, cream/rust embroidery, black/cream pattern",
+        "targetDimensions": [
+          0.45,
+          0.45,
+          0.14
+        ],
+        "support": "seat",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "blankets",
+        "name": "Mantas",
+        "detail": "Sage, ivory and terracotta folded knitted blankets with clear layered tassels",
+        "targetDimensions": [
+          0.5,
+          0.4,
+          0.12
+        ],
+        "support": "seat",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "storage-basket",
+        "name": "Cesto tejido",
+        "detail": "Round woven basket with oak handles, visible interior and separate weave bands",
+        "targetDimensions": [
+          0.4,
+          0.4,
+          0.42
+        ],
+        "support": "floor",
+        "interaction": "storage",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bed",
+        "name": "Cama de dormitorio",
+        "detail": "Oak single bed with lower storage drawers, sage duvet, ivory sheets and pillows",
+        "targetDimensions": [
+          1.1,
+          2.1,
+          0.65
+        ],
+        "support": "floor",
+        "interaction": "sleep",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "study-a",
+    "name": "Herramientas de estudio",
+    "category": "Estudio",
+    "reference": 3,
+    "items": [
+      {
+        "id": "laptop",
+        "name": "Notebook",
+        "detail": "Navy laptop with open study screen, separate keys, trackpad, ports and hinge",
+        "targetDimensions": [
+          0.33,
+          0.24,
+          0.23
+        ],
+        "support": "surface",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "tablet",
+        "name": "Tablet",
+        "detail": "Slate tablet with thin bezel and oak angled stand",
+        "targetDimensions": [
+          0.25,
+          0.18,
+          0.23
+        ],
+        "support": "surface",
+        "interaction": "materials",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "books",
+        "name": "Libros",
+        "detail": "Five separate green/navy/rust books with detailed spines, page edges and bookmarks",
+        "targetDimensions": [
+          0.24,
+          0.2,
+          0.28
+        ],
+        "support": "shelf",
+        "interaction": "materials",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "notebooks",
+        "name": "Cuadernos",
+        "detail": "Sage clothbound notebook plus cream spiral notebook and ribbon marker",
+        "targetDimensions": [
+          0.21,
+          0.15,
+          0.035
+        ],
+        "support": "surface",
+        "interaction": "notes",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "loose-papers",
+        "name": "Hojas de estudio",
+        "detail": "Neat layered note sheets with lines, folded corner and a paperclip",
+        "targetDimensions": [
+          0.21,
+          0.3,
+          0.015
+        ],
+        "support": "surface",
+        "interaction": "notes",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pencil-holder",
+        "name": "Portalápices",
+        "detail": "Ribbed ceramic pot holding distinct pencils, pens, ruler and scissors",
+        "targetDimensions": [
+          0.1,
+          0.1,
+          0.18
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "organizer",
+        "name": "Organizador",
+        "detail": "Graphite stepped compartment organizer with sticky notes, pencils and small drawer",
+        "targetDimensions": [
+          0.27,
+          0.16,
+          0.14
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "sticky-notes",
+        "name": "Notas adhesivas",
+        "detail": "Five blocks of pastel sticky notes with separately layered paper edges",
+        "targetDimensions": [
+          0.09,
+          0.09,
+          0.065
+        ],
+        "support": "surface",
+        "interaction": "notes",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "study-b",
+    "name": "Tiempo, hábitos y escritorio",
+    "category": "Estudio",
+    "reference": 3,
+    "items": [
+      {
+        "id": "mug",
+        "name": "Taza",
+        "detail": "Ivory faceted ceramic mug with green interior and formed handle",
+        "targetDimensions": [
+          0.1,
+          0.08,
+          0.1
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "mate",
+        "name": "Mate",
+        "detail": "Dark sage insulated mate cup with metal rim and curved steel bombilla",
+        "targetDimensions": [
+          0.095,
+          0.095,
+          0.18
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "water-bottle",
+        "name": "Botella",
+        "detail": "Sage metal reusable bottle with rubber grip and loop cap",
+        "targetDimensions": [
+          0.09,
+          0.09,
+          0.27
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "digital-clock",
+        "name": "Reloj",
+        "detail": "Oak digital clock with inset black face and crisp white digits",
+        "targetDimensions": [
+          0.2,
+          0.07,
+          0.1
+        ],
+        "support": "surface",
+        "interaction": "timer",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "calendar",
+        "name": "Calendario",
+        "detail": "Cream standing flip calendar with brass wire rings and solid oak base",
+        "targetDimensions": [
+          0.18,
+          0.12,
+          0.2
+        ],
+        "support": "surface",
+        "interaction": "agenda",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "focus-timer",
+        "name": "Temporizador",
+        "detail": "Red tomato-shaped mechanical study timer with grooved dial and minute marks",
+        "targetDimensions": [
+          0.1,
+          0.1,
+          0.09
+        ],
+        "support": "surface",
+        "interaction": "timer",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "desk-fan",
+        "name": "Ventilador",
+        "detail": "White small desk fan with protective layered grill, motor and tilting support",
+        "targetDimensions": [
+          0.2,
+          0.15,
+          0.28
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "trophy",
+        "name": "Trofeo",
+        "detail": "Gold cup with two handles, black stepped plinth and engraved achievement plate",
+        "targetDimensions": [
+          0.17,
+          0.13,
+          0.28
+        ],
+        "support": "shelf",
+        "interaction": "achievements",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "personal",
+    "name": "Objetos personales",
+    "category": "Personal",
+    "reference": 3,
+    "items": [
+      {
+        "id": "storage-boxes",
+        "name": "Cajas",
+        "detail": "Three sage and cream cardboard storage boxes with label slots and lids",
+        "targetDimensions": [
+          0.35,
+          0.28,
+          0.2
+        ],
+        "support": "shelf",
+        "interaction": "storage",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "backpack",
+        "name": "Mochila",
+        "detail": "Sage canvas backpack with tan buckles, pockets, seams, zipper pulls and carry loop",
+        "targetDimensions": [
+          0.32,
+          0.2,
+          0.45
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pencil-case",
+        "name": "Cartuchera",
+        "detail": "Navy canvas pencil case with brass zipper, stitched border and fabric label",
+        "targetDimensions": [
+          0.22,
+          0.08,
+          0.08
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "charger",
+        "name": "Cargador portátil",
+        "detail": "Compact graphite powerbank with braided cable and status indicator",
+        "targetDimensions": [
+          0.12,
+          0.065,
+          0.02
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "inspiration-stack",
+        "name": "Libros de inspiración",
+        "detail": "Four large clothbound illustrated books stacked with contrasting page edges",
+        "targetDimensions": [
+          0.27,
+          0.21,
+          0.12
+        ],
+        "support": "surface",
+        "interaction": "materials",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "tea-cup",
+        "name": "Taza de té",
+        "detail": "Cream mug with embossed rust heart and saucer, warm tea surface",
+        "targetDimensions": [
+          0.11,
+          0.11,
+          0.1
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "diffuser",
+        "name": "Difusor",
+        "detail": "Small translucent square glass vessel with wooden cap and five reed sticks",
+        "targetDimensions": [
+          0.09,
+          0.09,
+          0.24
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "candles",
+        "name": "Velas",
+        "detail": "Three ivory wax candles of varying heights on a small oak tray",
+        "targetDimensions": [
+          0.22,
+          0.16,
+          0.2
+        ],
+        "support": "surface",
+        "interaction": "light",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "audio",
+    "name": "Audio personal",
+    "category": "Audio",
+    "reference": 4,
+    "items": [
+      {
+        "id": "headphones",
+        "name": "Auriculares",
+        "detail": "Cream graphite over-ear headphones with padded band, detailed controls and stitched cushions",
+        "targetDimensions": [
+          0.18,
+          0.09,
+          0.2
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "earbuds",
+        "name": "Auriculares de bolsillo",
+        "detail": "White earbuds and open charging case with hinge, sockets and indicator",
+        "targetDimensions": [
+          0.065,
+          0.05,
+          0.06
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "speakers",
+        "name": "Parlantes",
+        "detail": "Pair of oak bookshelf speakers with two black drivers each, screws and woven grille edge",
+        "targetDimensions": [
+          0.32,
+          0.18,
+          0.27
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "bluetooth-speaker",
+        "name": "Parlante portátil",
+        "detail": "Sage portable fabric speaker with rubber buttons, mesh and carry loop",
+        "targetDimensions": [
+          0.22,
+          0.09,
+          0.1
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "radio",
+        "name": "Radio vintage",
+        "detail": "Oak and cream radio with analog dial, two knobs, speaker grille and telescopic antenna",
+        "targetDimensions": [
+          0.28,
+          0.12,
+          0.23
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "record-player",
+        "name": "Tocadiscos",
+        "detail": "Open walnut suitcase turntable with vinyl record, tonearm, hinges and controls",
+        "targetDimensions": [
+          0.38,
+          0.3,
+          0.28
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "music-dock",
+        "name": "Soporte musical",
+        "detail": "Oak tablet music dock with angled back, grooves and small volume knob",
+        "targetDimensions": [
+          0.28,
+          0.18,
+          0.24
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "noise-machine",
+        "name": "Máquina de ambiente",
+        "detail": "Small white cylindrical sound machine with speaker perforations and moon icon",
+        "targetDimensions": [
+          0.12,
+          0.12,
+          0.07
+        ],
+        "support": "surface",
+        "interaction": "audio",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "pets",
+    "name": "Objetos de mascota · dormitorio",
+    "category": "Mascotas",
+    "reference": 0,
+    "items": [
+      {
+        "id": "pet-bed",
+        "name": "Camita",
+        "detail": "Oval sage and cream padded dog bed with washable inner cushion and piped edge",
+        "targetDimensions": [
+          0.85,
+          0.65,
+          0.18
+        ],
+        "support": "floor",
+        "interaction": "pet-rest",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pet-ball",
+        "name": "Pelota",
+        "detail": "Red woven rubber pet ball with inset channels",
+        "targetDimensions": [
+          0.1,
+          0.1,
+          0.1
+        ],
+        "support": "floor",
+        "interaction": "pet-play",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pet-rope",
+        "name": "Cuerda",
+        "detail": "Braided cream/rust rope toy with two knotted ends and frayed tips",
+        "targetDimensions": [
+          0.28,
+          0.065,
+          0.065
+        ],
+        "support": "floor",
+        "interaction": "pet-play",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pet-bowls",
+        "name": "Bowls",
+        "detail": "Water and food ceramic bowls on a low oak stand with rubber feet",
+        "targetDimensions": [
+          0.32,
+          0.18,
+          0.1
+        ],
+        "support": "floor",
+        "interaction": "none",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pet-house",
+        "name": "Casita",
+        "detail": "Warm wooden pet refuge with round opening, sage padded inner floor and pitched roof",
+        "targetDimensions": [
+          0.7,
+          0.65,
+          0.65
+        ],
+        "support": "floor",
+        "interaction": "pet-rest",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "scratcher",
+        "name": "Rascador",
+        "detail": "Sisal scratching tower with ivory cushioned shelf and stable wooden base",
+        "targetDimensions": [
+          0.55,
+          0.45,
+          1.1
+        ],
+        "support": "floor",
+        "interaction": "pet-climb",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "perch",
+        "name": "Percha",
+        "detail": "Oak bird perch with branch-textured beam, base and small hanging toy",
+        "targetDimensions": [
+          0.45,
+          0.3,
+          0.6
+        ],
+        "support": "floor",
+        "interaction": "pet-perch",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "tunnel",
+        "name": "Túnel",
+        "detail": "Small-animal curved woven tunnel with two safe open ends",
+        "targetDimensions": [
+          0.6,
+          0.2,
+          0.2
+        ],
+        "support": "floor",
+        "interaction": "pet-play",
+        "variants": [
+          "original"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  },
+  {
+    "id": "cafe-kit",
+    "name": "Detalles de café y tecnología",
+    "category": "Equipamiento",
+    "reference": 1,
+    "items": [
+      {
+        "id": "pastry-case",
+        "name": "Vitrina",
+        "detail": "Oak pastry display with metal glass frame, two shelves, hinges and tray rails",
+        "targetDimensions": [
+          0.7,
+          0.4,
+          0.8
+        ],
+        "support": "floor",
+        "interaction": "surface",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "coffee-machine",
+        "name": "Cafetera",
+        "detail": "Steel espresso machine with two knobs, steam wand, tray and pressure gauge",
+        "targetDimensions": [
+          0.3,
+          0.24,
+          0.3
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "coffee-grinder",
+        "name": "Molinillo",
+        "detail": "Coffee grinder with transparent bean hopper, dial and metal dispenser",
+        "targetDimensions": [
+          0.16,
+          0.18,
+          0.32
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pastry-tray",
+        "name": "Bandeja de pastelería",
+        "detail": "Removable tray of distinct croissant, muffin and small decorated cake",
+        "targetDimensions": [
+          0.3,
+          0.22,
+          0.12
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "monitor-set",
+        "name": "Monitores",
+        "detail": "Three slim navy monitors on articulated stands, keyboard and mouse",
+        "targetDimensions": [
+          1.2,
+          0.35,
+          0.45
+        ],
+        "support": "surface",
+        "interaction": "study",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "pc-case",
+        "name": "Gabinete",
+        "detail": "Graphite PC case with glass side, visible fan rings, ports and vents",
+        "targetDimensions": [
+          0.23,
+          0.45,
+          0.45
+        ],
+        "support": "surface",
+        "interaction": "none",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "menu-board",
+        "name": "Pizarra de pie",
+        "detail": "Oak hinged A-frame café sign with matte navy face and brass hinge",
+        "targetDimensions": [
+          0.45,
+          0.4,
+          0.85
+        ],
+        "support": "floor",
+        "interaction": "custom-text",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      },
+      {
+        "id": "book-cart",
+        "name": "Carro de libros",
+        "detail": "Three-level graphite cart with oak shelves, four castors and book dividers",
+        "targetDimensions": [
+          0.55,
+          0.35,
+          0.8
+        ],
+        "support": "floor",
+        "interaction": "shelf",
+        "variants": [
+          "original",
+          "salvia",
+          "marfil",
+          "grafito"
+        ],
+        "unlock": "starter-or-earned-design",
+        "reuse": "unlimited-compatible-layouts"
+      }
+    ]
+  }
+]

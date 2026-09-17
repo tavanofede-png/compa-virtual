@@ -1,0 +1,34 @@
+[
+  {
+    "id": "elise-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#819268",
+    "design": "signature",
+    "label": "Elise \u00b7 back"
+  },
+  {
+    "id": "elise-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#819268",
+    "design": "signature",
+    "label": "Elise \u00b7 bottom"
+  },
+  {
+    "id": "elise-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#819268",
+    "design": "signature",
+    "label": "Elise \u00b7 shoes"
+  },
+  {
+    "id": "elise-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#819268",
+    "design": "signature",
+    "label": "Elise \u00b7 top"
+  }
+]

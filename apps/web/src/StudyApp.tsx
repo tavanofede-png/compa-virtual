@@ -1,8 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Home,
-  Sun,
   CalendarDays,
   BookOpen,
   Trophy,
@@ -14,8 +13,6 @@ import {
   X,
   Coins,
   MessageCircle,
-  ArrowRight,
-  ArrowUpRight,
   LogOut,
 } from "lucide-react";
 import {
@@ -31,12 +28,14 @@ import {
   type Repository,
   type Envelope,
 } from "@compa/client";
-import { emptySnapshot } from "@compa/domain";
+import { emptySnapshot, destinations } from "@compa/domain";
 import { AppContext } from "./context";
 import { Pages } from "./Pages";
 import { Forms, titles } from "./Forms";
-import { Room, Creature } from "./Room";
+import { Creature } from "./Room";
 import { Field, formData } from "./ui";
+import { Landing } from "./Landing";
+import { CompanionSetup } from "./CompanionSetup";
 const storage = {
   getItem: async (k: string) => localStorage.getItem(k),
   setItem: async (k: string, v: string) => {
@@ -49,14 +48,17 @@ const storage = {
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL,
   key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const backend = url && key ? createBackend(url, key) : null;
-const navigation = [
-  { icon: Home, id: "room", label: "Mi habitación" },
-  { icon: Sun, id: "today", label: "Hoy" },
-  { icon: CalendarDays, id: "agenda", label: "Agenda" },
-  { icon: BookOpen, id: "study", label: "Estudiar" },
-  { icon: Trophy, id: "progress", label: "Mis logros" },
-  { icon: Sparkles, id: "memory", label: "Memoria académica" },
-];
+const navIcons = {
+  room: Home,
+  agenda: CalendarDays,
+  study: BookOpen,
+  progress: Trophy,
+  compa: Sparkles,
+};
+const navigation = destinations.map((item) => ({
+  ...item,
+  icon: navIcons[item.id],
+}));
 export default function StudyApp() {
   const [repo, setRepo] = useState<Repository | null>(null),
     [env, setEnv] = useState<Envelope>({ state: emptySnapshot(), version: 0 }),
@@ -69,21 +71,42 @@ export default function StudyApp() {
     [mobileNav, setMobileNav] = useState(false),
     [authMode, setAuthMode] = useState("login"),
     [loaded, setLoaded] = useState(false);
+  const [authReady, setAuthReady] = useState(!backend);
+  const account = useRef<string | undefined>(undefined);
   const s = env.state;
   useEffect(() => {
     if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator)
       navigator.serviceWorker.register("/sw.js").catch(() => {});
   }, []);
   useEffect(() => {
+    if (new URLSearchParams(location.search).get("demo") === "1") {
+      setAuthReady(true);
+      setRepo(createDemo(storage));
+      return;
+    }
     if (!backend) return;
     let alive = true;
     const apply = (id?: string) => {
       if (alive) {
+        setAuthReady(true);
+        if (account.current === id) return;
+        account.current = id;
         setLoaded(false);
+        setEnv({ state: emptySnapshot(), version: 0 });
+        setModal(null);
         setRepo(id ? createRepository(backend, storage, id) : null);
       }
     };
-    backend.auth.getSession().then(({ data }) => apply(data.session?.user.id));
+    backend.auth
+      .getSession()
+      .then(({ data, error }) => {
+        if (error && alive)
+          setError("No pudimos recuperar tu sesión. Intentá entrar de nuevo.");
+        apply(data.session?.user.id);
+      })
+      .catch(() => {
+        if (alive) setAuthReady(true);
+      });
     const { data } = backend.auth.onAuthStateChange((event, session) => {
       apply(session?.user.id);
       if (event === "PASSWORD_RECOVERY") setModal("password");
@@ -95,23 +118,42 @@ export default function StudyApp() {
   }, []);
   useEffect(() => {
     if (!repo) return;
+    let alive = true;
+    setLoaded(false);
     repo
       .load()
       .then((data) => {
+        if (!alive) return;
         setEnv(data);
         setLoaded(true);
-        if (!data.state.profile) setModal("profile");
       })
-      .catch((e) => setError(e.message));
+      .catch((e) => {
+        if (alive) setError(e.message);
+      });
+    return () => {
+      alive = false;
+    };
   }, [repo]);
   useEffect(() => {
-    const v = new URLSearchParams(location.search).get("view");
-    if (navigation.some((x) => x.id === v)) setView(v!);
+    const restoreView = () => {
+      const v = new URLSearchParams(location.search).get("view");
+      if (
+        v &&
+        [...navigation.map((x) => x.id), "today", "memory", "together"].includes(v as never)
+      )
+        setView(v);
+      setModal(null);
+    };
+    restoreView();
+    window.addEventListener("popstate", restoreView);
+    return () => window.removeEventListener("popstate", restoreView);
   }, []);
   const go = (name: string) => {
     setView(name);
     setMobileNav(false);
-    history.replaceState(null, "", "?view=" + name);
+    if (new URLSearchParams(location.search).get("view") !== name)
+      history.pushState(null, "", "?view=" + name);
+    window.scrollTo({ top: 0 });
   };
   const run = async (action: () => Promise<void>) => {
     if (busy) return;
@@ -161,51 +203,59 @@ export default function StudyApp() {
       )}
     </>
   );
+  if (!authReady)
+    return (
+      <main className="session-loading" role="status">
+        Recuperando tu espacio…
+      </main>
+    );
+  if (
+    repo &&
+    loaded &&
+    modal !== "password" &&
+    (!s.profile?.onboarding_complete ||
+      !s.companion.character_id ||
+      modal === "companion")
+  )
+    return (
+      <CompanionSetup
+        key={modal === "companion" ? "editor" : "welcome"}
+        repo={repo}
+        env={env}
+        update={setEnv}
+        editing={
+          modal === "companion" &&
+          !!s.profile?.onboarding_complete &&
+          !!s.companion.character_id
+        }
+        onExit={() => {
+          if (modal === "companion") setModal(null);
+          else void leave();
+        }}
+        onComplete={() => {
+          setModal(null);
+          go("room");
+          setNotice("Tu compa está listo. Podés cambiarlo desde Personalizar.");
+        }}
+      />
+    );
   if (!repo)
     return (
-      <main className="welcome">
-        <div className="welcome-copy">
-          <div className="brand">
-            <span className="brand-mark">c.</span>compa virtual
-            <span className="beta">BETA</span>
-          </div>
-          <p className="eyebrow">UN PASO A LA VEZ</p>
-          <h1>
-            Tu mundo.
-            <br />
-            Tu manera
-            <br />
-            de aprender.
-          </h1>
-          <p>
-            Un compa para organizar la semana, entender lo difícil y celebrar lo
-            que vas aprendiendo.
-          </p>
-          <button
-            className="primary"
-            onClick={() => setRepo(createDemo(storage))}
-          >
-            Explorar con datos ficticios <ArrowRight size={18} />
-          </button>
-          <small>Demostración local · Sin registro · Sin IA conectada</small>
-          <button className="text-button" onClick={() => open("auth")}>
-            Ya tengo una cuenta / Registrarme <ArrowUpRight size={16} />
-          </button>
-        </div>
-        <div className="welcome-scene">
-          <Room
-            companion={s.companion}
-            onTalk={() => setRepo(createDemo(storage))}
-          />
-          <div className="welcome-note">
-            <span>✦</span>
-            <p>
-              No hace falta hacer todo hoy.
-              <br />
-              <strong>Hagamos lugar para el próximo paso.</strong>
-            </p>
-          </div>
-        </div>
+      <Landing
+        register={() => {
+          setAuthMode("register");
+          open("auth");
+        }}
+        login={() => {
+          setAuthMode("login");
+          open("auth");
+        }}
+        demo={() => {
+          setRepo(createDemo(storage));
+          go("room");
+        }}
+        onboarding={() => setRepo(createDemo(storage, { onboarding: true }))}
+      >
         <Dialog
           open={modal === "auth"}
           onOpenChange={(v) => {
@@ -241,13 +291,19 @@ export default function StudyApp() {
                       if (error) throw error;
                       setNotice("Revisá tu correo para recuperar el acceso.");
                     } else if (authMode === "register") {
-                      const { error } = await backend.auth.signUp({
+                      const { data, error } = await backend.auth.signUp({
                         email: d.email,
                         password: d.password,
                         options: { emailRedirectTo: location.origin },
                       });
                       if (error) throw error;
-                      setNotice("Revisá tu correo para confirmar tu cuenta.");
+                      if (data.session) {
+                        setModal(null);
+                        setNotice("");
+                      } else
+                        setNotice(
+                          "Revisá tu correo y confirmá la cuenta. Al volver vas a elegir tu compa.",
+                        );
                     } else {
                       const { error } = await backend.auth.signInWithPassword({
                         email: d.email,
@@ -314,11 +370,12 @@ export default function StudyApp() {
             {feedback}
           </DialogContent>
         </Dialog>
-      </main>
+      </Landing>
     );
   return (
     <AppContext.Provider
       value={{
+        modal,
         repo,
         env,
         busy,
@@ -328,10 +385,14 @@ export default function StudyApp() {
         command,
         update: setEnv,
         close: () => setModal(null),
+        leave,
         notice: setNotice,
       }}
     >
       <div className="app-shell">
+        <a className="skip-link" href="#main-content">
+          Saltar al contenido
+        </a>
         <aside className={"sidebar " + (mobileNav ? "is-open" : "")}>
           <a
             className="brand"
@@ -353,7 +414,7 @@ export default function StudyApp() {
             {navigation.map(({ icon: Icon, id, label }, i) => (
               <button
                 className={
-                  (view === id ? "active " : "") + (i === 4 ? "separated" : "")
+                  (view === id || (id === "study" && view === "together") ? "active " : "") + (i === 4 ? "separated" : "")
                 }
                 key={id}
                 onClick={() => go(id)}
@@ -398,7 +459,7 @@ export default function StudyApp() {
             </button>
             <span className="breadcrumb">
               Mi espacio <ChevronRight size={13} />{" "}
-              <strong>{navigation.find((x) => x.id === view)?.label}</strong>
+              <strong>{view === "together" ? "Estudiar juntos" : navigation.find((x) => x.id === view)?.label}</strong>
             </span>
             <div className="topbar-actions">
               <span className="coin-pill">
@@ -440,11 +501,27 @@ export default function StudyApp() {
             </div>
           )}
           {!modal && feedback}
-          <div className="page-content">
+          <div id="main-content" className="page-content">
             {loaded ? (
               <Pages view={view} />
             ) : (
-              <p role="status">Preparando tu espacio…</p>
+              <div role="status">
+                <p>Preparando tu espacio…</p>
+                {error && (
+                  <button
+                    className="secondary"
+                    onClick={() =>
+                      run(async () => {
+                        const data = await repo.load();
+                        setEnv(data);
+                        setLoaded(true);
+                      })
+                    }
+                  >
+                    Reintentar
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <footer className="footer">
@@ -454,6 +531,33 @@ export default function StudyApp() {
             </button>
           </footer>
         </main>
+        <nav className="bottom-nav" aria-label="Navegación principal">
+          {navigation.map(({ id, label, icon: Icon }) => (
+            <button
+              key={id}
+              className={
+                view === id ||
+                (id === "study" && view === "together") ||
+                (id === "room" && view === "today") ||
+                (id === "compa" && view === "memory")
+                  ? "active"
+                  : ""
+              }
+              aria-current={
+                view === id ||
+                (id === "study" && view === "together") ||
+                (id === "room" && view === "today") ||
+                (id === "compa" && view === "memory")
+                  ? "page"
+                  : undefined
+              }
+              onClick={() => go(id)}
+            >
+              <Icon />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
         <button
           className="chat-launcher"
           onClick={() => open("chat")}

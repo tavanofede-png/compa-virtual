@@ -1,0 +1,60 @@
+{
+  "character": "sky",
+  "outfit": [
+    "utility-black-purple",
+    "cargo-ivory-chain",
+    "sneaker-purple-panel",
+    "beanie-gray-label",
+    "crossbody-black-checker"
+  ],
+  "sourceUnchanged": true,
+  "sourceSha256": "ae6cf7213fb041de8ce02e959b081ef8406f7ceb8a4c83dfd9baf2e3efed2b64",
+  "fitScale": [
+    0.8662225008010864,
+    0.8662225008010864,
+    0.8662225008010864
+  ],
+  "rigMatrixDelta": 0.0,
+  "bones": 17,
+  "skin": {
+    "vertices": 27320,
+    "weightSumRange": [
+      0.9999999850988388,
+      1.0000000298023224
+    ],
+    "invalidVertices": [],
+    "unknownBones": [],
+    "passed": true
+  },
+  "poses": [
+    {
+      "pose": "rest",
+      "finite": true
+    },
+    {
+      "pose": "elbows90",
+      "finite": true
+    },
+    {
+      "pose": "walk",
+      "finite": true
+    },
+    {
+      "pose": "reach",
+      "finite": true
+    }
+  ],
+  "hatHairAdjustedVertices": 1914,
+  "bodyMasks": [
+    "Body_Thigh_L",
+    "Body_Shin_L",
+    "Body_Thigh_R",
+    "Body_Shin_R",
+    "Body_UpperArm_L",
+    "Body_Forearm_L",
+    "Body_UpperArm_R",
+    "Body_Forearm_R"
+  ],
+  "scope": "Bind alignment and normalized skin validated; visual pose review is separate. Arbitrary animation collision is not certified.",
+  "fittedMasterSha256": "14be1d6a7f647ba18d7dc238e9e9c06b5656f78251eedd583a645515dfe31476"
+}

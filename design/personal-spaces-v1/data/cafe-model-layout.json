@@ -1,0 +1,94 @@
+{
+  "id": "cafe",
+  "name": "Rincón de café",
+  "width": 4.2,
+  "depth": 3.8,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.1,
+    3.54
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "coffee-cabinet",
+      "definitionId": "rolling-drawers",
+      "name": "coffee-cabinet",
+      "x": 0.57,
+      "z": 1.76,
+      "w": 0.78,
+      "d": 0.57,
+      "h": 0.95,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "pastry-display",
+      "definitionId": "pastry-case",
+      "name": "pastry-display",
+      "x": 0.57,
+      "z": 2.72,
+      "w": 0.74,
+      "d": 0.45,
+      "h": 1.1,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "cafe-banquette",
+      "definitionId": "bench",
+      "name": "cafe-banquette",
+      "x": 1.78,
+      "z": 0.82,
+      "w": 1.98,
+      "d": 0.72,
+      "h": 1.1,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.45,
+      "z": 2.07,
+      "w": 1.83,
+      "d": 0.82,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.395,
+      "z": 2.845,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.395,
+        3.445
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "minimal",
+  "name": "Estudio minimalista",
+  "width": 4.1,
+  "depth": 3.7,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.05,
+    3.4400000000000004
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 0.76,
+      "z": 1.75,
+      "w": 2.6,
+      "d": 0.78,
+      "h": 0.76,
+      "yaw": -90.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "ergonomic-chair",
+      "name": "chair",
+      "x": 1.515,
+      "z": 1.805,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -90.0,
+      "role": "study-seat"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.1149999999999998,
+        1.8050000000000002
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

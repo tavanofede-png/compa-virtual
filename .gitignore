@@ -19,3 +19,18 @@ apps/mobile/ios/
 .DS_Store
 __pycache__/
 *.py[cod]
+
+.vercel
+.vercel-npm-cache/
+
+# Generated platform export copies (canonical assets remain under apps/ and packages/)
+work/collaboration-mobile-export/
+work/collaboration-ios-export/
+work/pw-daemon/
+
+# Blender automatic recovery files
+*.blend1
+*.blend2
+
+# Losslessly packed to respect GitHub's per-file size limit; restored on install
+/design/personal-spaces-v1/models/pergola.glb

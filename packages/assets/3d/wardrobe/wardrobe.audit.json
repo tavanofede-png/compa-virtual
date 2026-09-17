@@ -1,0 +1,2320 @@
+{
+  "passed": true,
+  "items": 182,
+  "sourceCells": 206,
+  "characterFits": [
+    {
+      "character": "nova",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 2.384185791015625e-07,
+      "uniformScale": 0.8579588532447815,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "jay",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 1.1920928955078125e-07,
+      "uniformScale": 0.9107964634895325,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "milo",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 1.1920928955078125e-07,
+      "uniformScale": 0.8815991878509521,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "zoe",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 1.1920928955078125e-07,
+      "uniformScale": 0.800434947013855,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "sky",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 3.5762786865234375e-07,
+      "uniformScale": 0.8662225008010864,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "harper",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 0.0,
+      "uniformScale": 0.8993062376976013,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "river",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 2.384185791015625e-07,
+      "uniformScale": 0.9199799299240112,
+      "illustratedOutfitPoseChecks": 4
+    },
+    {
+      "character": "aria",
+      "allCatalogItemsShareBindFit": true,
+      "canonicalBoneDelta": 0.0,
+      "limbEnvelopeDelta": 1.1920928955078125e-07,
+      "uniformScale": 0.8489624261856079,
+      "illustratedOutfitPoseChecks": 4
+    }
+  ],
+  "bindCombinationsChecked": 1456,
+  "glbBytes": 91469532,
+  "maximumItemBytes": 4804520,
+  "catalogSourceSha256": "41110a7ab28b79c8e20864bffa7e79e384846180ffd85dd5440b4700245f3aad",
+  "checks": [
+    "reference coverage",
+    "unique IDs",
+    "all files and SHA-256",
+    "glTF v2 container",
+    "finite positions",
+    "normalized weights",
+    "valid joint indices",
+    "same canonical bind on eight rigs",
+    "same measured limb envelopes",
+    "four finite-pose checks per fitted outfit"
+  ],
+  "limitations": [
+    "No exhaustive cloth collision proof for arbitrary animation or arbitrary layered combinations.",
+    "Room props are separate assets; catalog does not claim all props are wearables.",
+    "No Android performance measurement or application integration in this asset delivery."
+  ],
+  "exports": [
+    {
+      "id": "tee-white-smile",
+      "vertices": 17872,
+      "triangles": 9596,
+      "bytes": 647408,
+      "sha256": "68d06bd88c0066439dae5302f71d85631b54c362febd588bb10e206e4354465d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-black-robot",
+      "vertices": 16080,
+      "triangles": 8636,
+      "bytes": 586616,
+      "sha256": "1c7512fbf03a8a4c4e069e9190c8e3234c7a2465bd2138c70381d817372dc65a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-ivory-good-days",
+      "vertices": 24592,
+      "triangles": 13196,
+      "bytes": 883044,
+      "sha256": "22d651414168ba70ea265f2555119b9a361e742800b23604b9694784670b0d5a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-green-98",
+      "vertices": 13840,
+      "triangles": 7436,
+      "bytes": 504324,
+      "sha256": "f1a0c5daca0b29fb3539ab71f5be290671778e3916927edeac75f74dd78f7e94",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-blue-double-stripe",
+      "vertices": 10496,
+      "triangles": 5640,
+      "bytes": 388168,
+      "sha256": "534152268e275ccd8616b5338034da463cda2decce32b42083d1093dd9c2b130",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-black-flame",
+      "vertices": 15520,
+      "triangles": 8336,
+      "bytes": 564672,
+      "sha256": "1a60b964a093ed946003c79c67b9e7889920b820e117b78fd7f1eebcc2adebdb",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-gray-plain",
+      "vertices": 14248,
+      "triangles": 7628,
+      "bytes": 523592,
+      "sha256": "75955213c7dd6cf91839ac820bf7f37fbefb0ef6218a0a1a75f606d574d8b56d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-blue-wave",
+      "vertices": 20856,
+      "triangles": 11168,
+      "bytes": 758796,
+      "sha256": "08bf800515c2b92ab026e36b3cf30a25b53a2bd968e87f490be7b9049f6387a9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-purple-butterfly",
+      "vertices": 19848,
+      "triangles": 10628,
+      "bytes": 723468,
+      "sha256": "45ae8b679819dbd1ccffaba43db4fbddc800700106bdeb4e702593ef4ddf3fd9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-black-red-butterfly",
+      "vertices": 19848,
+      "triangles": 10628,
+      "bytes": 723548,
+      "sha256": "3be632060e4b993c44006edf93e23ab1135933597974e2e1e425c63c58187c5b",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-ivory-nyc",
+      "vertices": 18728,
+      "triangles": 10028,
+      "bytes": 681592,
+      "sha256": "1a74cd17ea0ffc5c8486896cc48c06e8d911d864fb9b521b403b5899480d832d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-green-focus",
+      "vertices": 22424,
+      "triangles": 12008,
+      "bytes": 812736,
+      "sha256": "46959742b61605ec546718fef19c9ebf85dff9b06052ff2ddf96191d7d9d75cc",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-denim-plain",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 194320,
+      "sha256": "f8d4f442614faffec0545aae5c9d5f63a130a76cf5cf6a9f5b6357e0c4b0a41a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-black-plain",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 194332,
+      "sha256": "62629043932ddba1404b86f17a5a061d89a2d6cd0a1633b18f04bf03964af0e9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-tan-plain",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 194300,
+      "sha256": "5650cd4c4a41e1f64766dd4cb6211a4869125f06108cf8f3513997a1f7b107f1",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-olive-plain",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 194324,
+      "sha256": "c2468a57aca10b67b08cfe9c363d36cddfff40d71c3b2ba1ff06489f13c68e92",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-gray-plain",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 194312,
+      "sha256": "d20e1e70c770b2a7c93527f428fd70c5f56271f7828ca930503d52a694912215",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-ivory-chain",
+      "vertices": 9448,
+      "triangles": 4920,
+      "bytes": 346708,
+      "sha256": "2c338989078852ab62f52199bcb1e14e6c5a28aee4cb1ec4477e1c9cdff4d51c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cargo-black-orange-stitch",
+      "vertices": 5128,
+      "triangles": 2760,
+      "bytes": 192320,
+      "sha256": "d1641d56b98630a6ed11809d777c24483c0abb80ddad1b325289bf194c01fff7",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-red-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765512,
+      "sha256": "9c8bc37180394c6176d9deca53e4d5b58fd8a36a2fddebf185ea44cb52868e2f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-black-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765528,
+      "sha256": "6fca458ed2829904fc1310b0a141cb9051caee897f4365cd3897b34b7b7d08ce",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-yellow-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765504,
+      "sha256": "c9c88e939fa6ff6a36b1c22c0082cd45d85685d3a8da5eeb749fd6ea7dde1f2c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-blue-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765512,
+      "sha256": "c6d7b45262c3976249f4a96011d9761b9aa933cbdae3fd78b76c4dc315ebad5e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-pink-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765492,
+      "sha256": "f08de4dead57d35344e9e75a3c25ad73e58576f5715844677af771ff96659545",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-green-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765524,
+      "sha256": "0097ff8d6ebdb80088b70b8107317ea8303f790f5d939b73c5e5918d83ef095c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-ivory-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 763596,
+      "sha256": "b9534cb82f7359a2ed94426fc0b7088b23b6c9568e6f97fc6ca312bb9062542d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-black-mono",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 767428,
+      "sha256": "88bbe9d4c427f5d24b8d450dc84fd77250fefc33a8af96e1c8a43eed9c5d2729",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-ivory-calm",
+      "vertices": 17504,
+      "triangles": 9376,
+      "bytes": 633340,
+      "sha256": "fc483671a004c1e5237c7e3303b9b437ab383a43ce9291ce4f144b0a59825289",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-navy-better-days",
+      "vertices": 28368,
+      "triangles": 15196,
+      "bytes": 1016064,
+      "sha256": "e7c547e34c4b50bf446bf91824dcf14244c50f4697d98b012c1843ee55c614ce",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-green-mountain",
+      "vertices": 15264,
+      "triangles": 8176,
+      "bytes": 556792,
+      "sha256": "d18bf6aa8819f7d152e8c8cea322a27a8335f3f8d647ac43b37a6dc257be8fed",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-pink-heart",
+      "vertices": 15936,
+      "triangles": 8536,
+      "bytes": 578160,
+      "sha256": "5f03b2242b80006c872c6aeca21826545e3bc78cf5a8e786b1b932b18d6c9607",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-sky-double-stripe",
+      "vertices": 11264,
+      "triangles": 6024,
+      "bytes": 415472,
+      "sha256": "0c74ef3db51ad611b64d2e00564447bfec33770a815e8b5b9b908b81c8d0dc71",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweatshirt-charcoal-study",
+      "vertices": 18512,
+      "triangles": 9916,
+      "bytes": 668948,
+      "sha256": "3b261b8d4dcada785893278bb159bca546dc335b657d117dff5edb32ccb57869",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "varsity-red-a",
+      "vertices": 24784,
+      "triangles": 13276,
+      "bytes": 893700,
+      "sha256": "10e8c66e5f89d3cffeaacd58c50da859f159d1aa9250e8366d7b2dacade55235",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "puffer-black-label",
+      "vertices": 23248,
+      "triangles": 12444,
+      "bytes": 840076,
+      "sha256": "b25813b8e7e8bb9950ddb3cadd06a186a9216be72aa1dda322e11d6bb5b39b1a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "varsity-green-s",
+      "vertices": 24448,
+      "triangles": 13096,
+      "bytes": 881904,
+      "sha256": "bbc9a6622c5a8faaa4a3b68f5726d3cfc93cb04df7015a6eabfeaf5ad6e5d6ca",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "denimjacket-denim-hood",
+      "vertices": 22984,
+      "triangles": 12308,
+      "bytes": 832532,
+      "sha256": "c30e06270fd9b14dfd21c7a42960b403abe1777108e2404f158ed073c716fd2c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "shearling-tan-plain",
+      "vertices": 29152,
+      "triangles": 15616,
+      "bytes": 1047636,
+      "sha256": "e386c6df2c84855b279fe11b7714fefa0dd0c47f0cc9dfc01214d6b893a51fbf",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "utility-black-purple",
+      "vertices": 22880,
+      "triangles": 12256,
+      "bytes": 827812,
+      "sha256": "2968c76c15d310bafa6d2fe9d7b04081756a3c16a4e53a2f65a767fea5a1005d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-yellow-smile",
+      "vertices": 12120,
+      "triangles": 6528,
+      "bytes": 437332,
+      "sha256": "6e1e5fce2dbc2c78739143ae6f26660faa19ed0dde89db69e32e357376c11b4b",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-black-cross",
+      "vertices": 8088,
+      "triangles": 4368,
+      "bytes": 294244,
+      "sha256": "cd6f01da51db41fee09c39e5089c40ca3db05ee3b35978a2cd2563b2e6ac0fec",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-ivory-good-days",
+      "vertices": 18840,
+      "triangles": 10128,
+      "bytes": 672840,
+      "sha256": "4440d677bc6800ca54db7b6cfbdedc52b12301357b24f3d54765551f7e273389",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "beanie-blue-cat",
+      "vertices": 29488,
+      "triangles": 15796,
+      "bytes": 1048752,
+      "sha256": "e7338aa13aa8b9e51c6e5e5060a419859f3231481395dd403015599266f42a2f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "beanie-red-label",
+      "vertices": 24560,
+      "triangles": 13156,
+      "bytes": 873584,
+      "sha256": "a3c02efbf71d242f0f090785c7e4e9cdda5a47ba2d5c9967d9aec55126f47b0e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bucket-green-flower",
+      "vertices": 6392,
+      "triangles": 3508,
+      "bytes": 235932,
+      "sha256": "a61c6299c08c0d8a9bc30a02e40467d830e029777aead0cbc7eacdfb9d23ced4",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-black-rect",
+      "vertices": 752,
+      "triangles": 396,
+      "bytes": 33408,
+      "sha256": "771e8208d18ae14a5ffc6992def94f77d52925dd625ae37e7a562257c33363c5",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-gold-round",
+      "vertices": 1712,
+      "triangles": 876,
+      "bytes": 67012,
+      "sha256": "22bf063a374f9192be70183f8830e49cd15ea469efb7999b5a36544c44ea251f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-black-sun",
+      "vertices": 1936,
+      "triangles": 996,
+      "bytes": 76008,
+      "sha256": "1d21591d4569aae2d7c0bc79b3c1f8012e50ed2a7c781578839c80ccf8f0ca76",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-white-rect",
+      "vertices": 752,
+      "triangles": 396,
+      "bytes": 33404,
+      "sha256": "7285b3b4535e86068e296b55a08a07979f8e8af6d6fcf65127cfb21ccf38fa92",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-gray-smoke",
+      "vertices": 976,
+      "triangles": 516,
+      "bytes": 42400,
+      "sha256": "c0812e454cb5f630f5968100ff10e1a052fc51216e410cdb82f469b625d8c031",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-pink-rect",
+      "vertices": 752,
+      "triangles": 396,
+      "bytes": 33400,
+      "sha256": "5885a870500521c08ec504765880004bd27a9f932c27df0b43cc6665251899ae",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "headphones-black-plain",
+      "vertices": 828,
+      "triangles": 440,
+      "bytes": 36392,
+      "sha256": "beb19d41f064e02050627dcfbe5d30d62b480e62b496b2232dbfb5fbb7ab8044",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "headphones-white-plain",
+      "vertices": 828,
+      "triangles": 440,
+      "bytes": 36300,
+      "sha256": "150bfe463062083558a4f66714917ab1bd3c65d9294ba5946e66939e0a0bd761",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "headphones-pink-plain",
+      "vertices": 828,
+      "triangles": 440,
+      "bytes": 36356,
+      "sha256": "4db3ceb3f136f3822d0fbbccf048008301f393fc9e4cda159c291e47e26e44a4",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "headphones-blue-cat",
+      "vertices": 5980,
+      "triangles": 3200,
+      "bytes": 220288,
+      "sha256": "2173aec43606e171eb1772e873561139a80aec99822dc103edf1de2a9e61afc2",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-black-heart",
+      "vertices": 19380,
+      "triangles": 10380,
+      "bytes": 693908,
+      "sha256": "12388dd8e48e3099c98de8f689e92d15eb9a0d4a769fa28b0c14b5f83c0d8acd",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-red-plain",
+      "vertices": 14228,
+      "triangles": 7620,
+      "bytes": 511600,
+      "sha256": "5b68bc159d5a9f4f444fa7e842c0e678a4777bae769bb594bcb5833ad0e294ed",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-green-smile",
+      "vertices": 21956,
+      "triangles": 11760,
+      "bytes": 786008,
+      "sha256": "0732c0a7d5536c076299fadc976d7e5cbb6a0f27f9c69c76c3bbf921d25ddd70",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-ivory-plain",
+      "vertices": 14228,
+      "triangles": 7620,
+      "bytes": 511564,
+      "sha256": "24d5d55c0af4fcd7f40750313afdd64a7a025bcd3622d97caec0a998cbf504c5",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "watch-black-digital",
+      "vertices": 7312,
+      "triangles": 3948,
+      "bytes": 264656,
+      "sha256": "3e6f72cf097e6ab6f03261620c0ab68d47cb2535c34d16dd78634314f19349d6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bracelet-black-bead-gold",
+      "vertices": 3360,
+      "triangles": 1728,
+      "bytes": 124900,
+      "sha256": "fafc8e6e1466ef34684522b85719d7f68a285898d4404016c7aa84ac8938b16a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "necklace-silver-smile",
+      "vertices": 15408,
+      "triangles": 7980,
+      "bytes": 549084,
+      "sha256": "54d1badec1b6c08a6eca595c4b5fdf0f40825ad7c2182cff7b58b25a2451f136",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "belt-black-square",
+      "vertices": 128,
+      "triangles": 64,
+      "bytes": 11416,
+      "sha256": "c78a14e90899e5ce8fb1611c8ba42f6f067ebda5b01c2354eb2a79b87713c5f5",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "wristband-ivory-label",
+      "vertices": 704,
+      "triangles": 408,
+      "bytes": 31960,
+      "sha256": "4d4773ba68e2b59f26e4b373f9942e78935da064bc528d6a28ede56172f64e7e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pin-gold-star",
+      "vertices": 5040,
+      "triangles": 2688,
+      "bytes": 184364,
+      "sha256": "6d94820c86786c4eb0bbb497cfa1ed7dce8f7858a433b5fab1974c23109ccdd0",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "carabiner-silver-plain",
+      "vertices": 624,
+      "triangles": 312,
+      "bytes": 27728,
+      "sha256": "e4bb39ef89e5bc3b59f75fdc85459b863aab5cc11f4cee8d50d3a84002b06d95",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "charm-green-dino",
+      "vertices": 4592,
+      "triangles": 2448,
+      "bytes": 169720,
+      "sha256": "2ccd7d17c56ffa7472ca8d4dc2b0c9650a0cdca85e77eb044e859897f50a0da6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "charm-pink-flower",
+      "vertices": 4592,
+      "triangles": 2448,
+      "bytes": 170836,
+      "sha256": "7c48caf6c6478ab7b43c8025ab6b4c9ce81b09b8b57959fed2754b73e77e243d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "books-green-study",
+      "vertices": 3696,
+      "triangles": 1980,
+      "bytes": 136836,
+      "sha256": "9c674463eae3a589fb15fbdc8c329ce100cbd44a177a77956b8d7188491c04a4",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "laptop-gray-cat",
+      "vertices": 12880,
+      "triangles": 6900,
+      "bytes": 466092,
+      "sha256": "971c9b619568f830c0c18ef28b80430e9883faeb9b616bfb8a92aebaae893c08",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "frame-ivory-good-days",
+      "vertices": 14784,
+      "triangles": 7920,
+      "bytes": 527608,
+      "sha256": "e545cfcfff32c95b9cb6b3fcca351622ade25c2c4d7105d2638586093ab31ef1",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "mug-ivory-fuel-good",
+      "vertices": 15360,
+      "triangles": 8256,
+      "bytes": 550236,
+      "sha256": "520efcbfa14a3ccfb3509aca680a90c8ab59d0b194e6f5980e3cc33b5350b643",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bottle-blue-cat",
+      "vertices": 5440,
+      "triangles": 2940,
+      "bytes": 202156,
+      "sha256": "5dc7de80f854ad633bc814f429a4da425bd6ccd2be8e11dd8c8121ea2d7d204c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "phone-black-plain",
+      "vertices": 224,
+      "triangles": 120,
+      "bytes": 14336,
+      "sha256": "63ce99a6a752d7a326ca3b18c025131a13dc4f04e7005b4d99cee6e28e9c8caf",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "camera-black-gold",
+      "vertices": 1200,
+      "triangles": 648,
+      "bytes": 52708,
+      "sha256": "69da3772a1817408d0f534f1cc37ab7b11305e1579266f4b41d79b6171a1e360",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pouch-blue-cat",
+      "vertices": 7504,
+      "triangles": 4020,
+      "bytes": 274584,
+      "sha256": "74aa217d3a6708e000c00ab7ae89507e48f4bf18574820920a90ead55544f672",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "plant-tan-leaf",
+      "vertices": 3816,
+      "triangles": 1976,
+      "bytes": 143152,
+      "sha256": "5830835a4e0cd0857bad8ae9d88a61486a4239d8122f4665dfd54c325147c326",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "lamp-silver-plain",
+      "vertices": 1168,
+      "triangles": 620,
+      "bytes": 48052,
+      "sha256": "9ecd2ae196194e63a0839ba3d5f8c0b8a496885f81aa815945bf822863cbc0bf",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "trophy-gold-cup",
+      "vertices": 1760,
+      "triangles": 972,
+      "bytes": 70224,
+      "sha256": "d70720c186361083727f96a327ccdc74195c66750dfc096eb9d2f942e0fbea71",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-white-planet",
+      "vertices": 17424,
+      "triangles": 9356,
+      "bytes": 632756,
+      "sha256": "6b793f079fce2763911b140cf7cb791a79b6e4097c4b5793bacb0b41793dce68",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-black-cat",
+      "vertices": 15296,
+      "triangles": 8216,
+      "bytes": 557852,
+      "sha256": "010522d68d006e87c77bacea0db441a9ad8b5df18f765daffe337a7b6d7faa25",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-green-good-study",
+      "vertices": 25488,
+      "triangles": 13676,
+      "bytes": 914652,
+      "sha256": "b90785207184315c3e48d3c5225ac5c1270f3ab53c9c79ca2d99fae32c4d3bd9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-ivory-mountain",
+      "vertices": 14624,
+      "triangles": 7856,
+      "bytes": 534220,
+      "sha256": "f3f5bd96215000360d2fb9862dc2934c234282cdaa7dcfb1af533bc8e98cd60f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-blue-all-stripe",
+      "vertices": 10720,
+      "triangles": 5760,
+      "bytes": 396004,
+      "sha256": "296e326011f44549f57c3cf268bda0ac41fbf484bdb51c76a61c5be05558f301",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tee-black-galaxy",
+      "vertices": 13728,
+      "triangles": 7376,
+      "bytes": 500460,
+      "sha256": "eb69cef778650407c672ebb1330ecf9ac2b95243bae5afd5d751012c603bb239",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-black-all-stripe",
+      "vertices": 11488,
+      "triangles": 6144,
+      "bytes": 423380,
+      "sha256": "e90db26eadc8c44fb36d7dc884683b6334814494e16da91c9b26ea843a12fb68",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-ivory-stay-kind",
+      "vertices": 23552,
+      "triangles": 12616,
+      "bytes": 846420,
+      "sha256": "55b6a4f63f8f3d9691243f10fbfc1b101c631768a0c483c3447d458ce1d21da2",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-brown-raglan-star",
+      "vertices": 15488,
+      "triangles": 8296,
+      "bytes": 562512,
+      "sha256": "b7bbd21dc959e0f5fb152b00e7094aed721749bfa8d48c4df1e3410095fd9ef6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-black-flame",
+      "vertices": 16160,
+      "triangles": 8656,
+      "bytes": 587204,
+      "sha256": "a111e5ea4ae6a28bd06d2ebf206d9fa86ea5f4aaee3e394be3d43ca0c1ff5e64",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-green-all-stripe",
+      "vertices": 11488,
+      "triangles": 6144,
+      "bytes": 423376,
+      "sha256": "372f240de27d7402344f393014e3a83226985a0ca4d959a65b59839911158aa9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "longsleeve-ivory-label",
+      "vertices": 11008,
+      "triangles": 5896,
+      "bytes": 404996,
+      "sha256": "279fb0bd783433dc751394a27ea2737c1f9d958e71630888793a83683e984814",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-gray-focus",
+      "vertices": 22424,
+      "triangles": 12008,
+      "bytes": 812912,
+      "sha256": "b5a4acb073f8b0308c4dab123e8c22bc4f1e404d75324364c68ea275a62237bc",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-blue-cloud",
+      "vertices": 17944,
+      "triangles": 9608,
+      "bytes": 655152,
+      "sha256": "c70dc8c663998b27a98b21806a5210375850f12acf90eabb8267d8fc790f75c9",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-purple-cloud",
+      "vertices": 17944,
+      "triangles": 9608,
+      "bytes": 655200,
+      "sha256": "fcae1ff0da6a4796e5d422d51582dae12d54bb5808a3aa08b48daf26fb194e26",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-black-orange-butterfly",
+      "vertices": 19848,
+      "triangles": 10628,
+      "bytes": 723620,
+      "sha256": "2d8ddd7c07fa4ff70ae25eb3e2f100713e7d4cf67a9584e43dc586601ea66273",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-green-plain",
+      "vertices": 14248,
+      "triangles": 7628,
+      "bytes": 523620,
+      "sha256": "43892af0aeec87c3dce5e67a6638b99882d064d9128a4e6d831177772aa91678",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-ivory-better-days",
+      "vertices": 31832,
+      "triangles": 17048,
+      "bytes": 1143260,
+      "sha256": "e07ed604bcdd916ed6494c9dc1f3a8f8519dacf8bed1b9467653e9f37d66bb42",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-ivory-cable",
+      "vertices": 74288,
+      "triangles": 39796,
+      "bytes": 2632736,
+      "sha256": "f4d63588c343710d8821528e2052e7e3dd0d5cf1484baee2b9bc1cd8ac308d30",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-navy-bear",
+      "vertices": 67344,
+      "triangles": 36076,
+      "bytes": 2391852,
+      "sha256": "98e9cc23e53e70bb96146f2b0e905b1bc9332475533d46b94ce73fb11f3589d7",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-green-stripe",
+      "vertices": 74992,
+      "triangles": 40164,
+      "bytes": 2660744,
+      "sha256": "370be5bfbc307c0529a1c9d54c08f45b34bc3072887b76390b80a902406ed007",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-red-cable",
+      "vertices": 74288,
+      "triangles": 39796,
+      "bytes": 2632744,
+      "sha256": "71f77c441e81f55b03f48e8014e089de0e4fba984f878c5b5ddb234ff668bf83",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-sky-fairisle",
+      "vertices": 135888,
+      "triangles": 72796,
+      "bytes": 4804520,
+      "sha256": "1a0679c6e5c5f546b9da1ff689277d56a7b829e8439aacdcaeffdb026fe448d6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sweater-black-smile",
+      "vertices": 68912,
+      "triangles": 36916,
+      "bytes": 2446016,
+      "sha256": "bbbe02bd0a34292da80ec25af9723496e342087fe747a9534c2cb6564f012ad7",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "trackpants-black-piping",
+      "vertices": 1176,
+      "triangles": 784,
+      "bytes": 54648,
+      "sha256": "5eff5244f950c44980d9080a8d4a2d42831bfc5bf0a234ecc355781b04a49d18",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sportshorts-black-piping",
+      "vertices": 728,
+      "triangles": 440,
+      "bytes": 38908,
+      "sha256": "8515962d740559f00d0914a2caba17ed7da5fc828590b7f231f5df8cfeb91c92",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sportshorts-green-piping",
+      "vertices": 728,
+      "triangles": 440,
+      "bytes": 38904,
+      "sha256": "525b168e1473a596438e02f3e3b90057710c5b398cf20ce17c5f805c43836580",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "shorts-tan-cargo",
+      "vertices": 4512,
+      "triangles": 2416,
+      "bytes": 173188,
+      "sha256": "416ba79b2d8c935d2661c85925e4577cffc101001740e4ff5c7b5a2b7b470fa0",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "shorts-denim-cargo",
+      "vertices": 4512,
+      "triangles": 2416,
+      "bytes": 173208,
+      "sha256": "01bbff6047490f35283c4f3b7004a0df9ad0bd13da15ba88d51a294b843d26eb",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "shorts-olive-cargo",
+      "vertices": 4512,
+      "triangles": 2416,
+      "bytes": 173212,
+      "sha256": "0cb34e6d278eba0a757e620a74375c595a9f247d57b3a00d46e01ddd586a167c",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-olive-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765520,
+      "sha256": "f7a111499ba8e1278637b58ffbdf72eeefcc59bcde1335a42d25f59733733eab",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sneaker-purple-panel",
+      "vertices": 22144,
+      "triangles": 11680,
+      "bytes": 765524,
+      "sha256": "688d9baade73154019420ae7f6ed5935f9fa393109640a66098126842df5cdd0",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "boot-yellow-hiker",
+      "vertices": 26368,
+      "triangles": 13840,
+      "bytes": 913332,
+      "sha256": "d8f93f314a1dc4498e53797d4c4b8b2863f681382e790f67caa7fa94a522a822",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "boot-black-hiker",
+      "vertices": 26368,
+      "triangles": 13840,
+      "bytes": 911480,
+      "sha256": "096773c435520af9e291c34b9e1197435595e1533a04907f793d94036575db99",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "boot-brown-hiker",
+      "vertices": 26368,
+      "triangles": 13840,
+      "bytes": 913348,
+      "sha256": "ec7d25fc927b15ed6aac9ca5168246e16e94ca2aa2ea37a9c11633550328b8fb",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "boot-olive-hiker",
+      "vertices": 26368,
+      "triangles": 13840,
+      "bytes": 913348,
+      "sha256": "631e71d3b2a547ee192d195a2b28086e78c068196207c7e7b9f5c379f0a9c263",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "boot-ivory-hiker",
+      "vertices": 26368,
+      "triangles": 13840,
+      "bytes": 909556,
+      "sha256": "cb2a1e9905d6a6abebf8d0b36c569ccec3c100761e188f096c0fae3d798c8175",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "varsity-green-b",
+      "vertices": 25008,
+      "triangles": 13396,
+      "bytes": 901624,
+      "sha256": "c9996703b185f9797c4b70b4cc2bc7a5f6d8fff47a1096f03515a1250df2a75a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "denimjacket-denim-shearling",
+      "vertices": 29824,
+      "triangles": 15976,
+      "bytes": 1071448,
+      "sha256": "d275b5a50f0a951b60dae28e8398bb3703863d633c690eaca428e3ba8d1fd939",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "puffer-ivory-label",
+      "vertices": 23248,
+      "triangles": 12444,
+      "bytes": 840036,
+      "sha256": "69bd75c3ecb3ea2a48797cf2f47deffc12571946d16a72dc5d81565267e8ba94",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "utility-black-orange",
+      "vertices": 22880,
+      "triangles": 12256,
+      "bytes": 827808,
+      "sha256": "f0ce5f17ae298e117cfb5f5b244d1135657f0e3d503d85b86461554adf600e67",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-black-smile",
+      "vertices": 21956,
+      "triangles": 11760,
+      "bytes": 785756,
+      "sha256": "eef8c9bc7b4be34cb6d1b54fd45b6049f6cf49cba7dcd616249ba5e7437efa8a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-olive-plain",
+      "vertices": 14228,
+      "triangles": 7620,
+      "bytes": 511604,
+      "sha256": "453cd3434129c506cc6eb560c683f08240585050223a6dc0c0fb9012526caf94",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-purple-plain",
+      "vertices": 14228,
+      "triangles": 7620,
+      "bytes": 511608,
+      "sha256": "6ea33d8782656740e8b25544bd96b41519e7daea807fb5ab9ea6b62f7c6e75c2",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-pink-plain",
+      "vertices": 14228,
+      "triangles": 7620,
+      "bytes": 511580,
+      "sha256": "68f23d0c3e5314fbcc7a5de9522c34213930e52ec2791b11639fc408c2c1cf4e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "backpack-navy-flower",
+      "vertices": 18484,
+      "triangles": 9900,
+      "bytes": 664844,
+      "sha256": "2bf5c20dafd49d21bc5e3205f91e9b6eff8e1e2d9bdb1043f0d195f6f096ab4f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-black-cat",
+      "vertices": 8848,
+      "triangles": 4740,
+      "bytes": 323024,
+      "sha256": "8c4216a41604242a896fcf6b304aba6afc885ca767e340ea60bfc23dc8835e1e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-ivory-label",
+      "vertices": 3920,
+      "triangles": 2100,
+      "bytes": 146756,
+      "sha256": "1ffbd843526d039d34ad6f480bfcb3c53cd70f6ff55ed2a984c1d31249c3fdfc",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-green-smile",
+      "vertices": 11424,
+      "triangles": 6120,
+      "bytes": 412636,
+      "sha256": "a6dbf6fb779be2dba258b0b186de89f2f202fa350adbbe2c930275eb3d2c476e",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-blue-cat",
+      "vertices": 8848,
+      "triangles": 4740,
+      "bytes": 323016,
+      "sha256": "dc97c134a870f44c3cc8b748dbe85304df7fabc487405af206f5ed3e9986938b",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-pink-label",
+      "vertices": 3920,
+      "triangles": 2100,
+      "bytes": 147364,
+      "sha256": "a78c19793879c5c1b4fd989ecd34e43e4cb379e34dde081d094d77d14fe49aab",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-black-checker",
+      "vertices": 16128,
+      "triangles": 8640,
+      "bytes": 579416,
+      "sha256": "00e81bdf3336807199c86c40a0a8ca8f9f7967945825b637ed636403b4cac8af",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-black-ny",
+      "vertices": 7416,
+      "triangles": 4008,
+      "bytes": 270568,
+      "sha256": "041c826a3dd1eccc8791571cd15e2225e8b3f1200d58c0ee78b363fbc4eae50a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-ivory-mountain",
+      "vertices": 8872,
+      "triangles": 4788,
+      "bytes": 324048,
+      "sha256": "85651942f326c76cffb6ae6a12330ea45b8a0f79b597b4ff9bb0dfbc081b6e29",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-blue-label",
+      "vertices": 4616,
+      "triangles": 2508,
+      "bytes": 172572,
+      "sha256": "51145e20a68fd027571ca6b350242044f8a76c1bfb207e138278adc7919d165d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "cap-green-flower",
+      "vertices": 8648,
+      "triangles": 4668,
+      "bytes": 316192,
+      "sha256": "0c551fbecacd7d27b78cb8608acab7697adf23c80f1700825eb3b59026fdb109",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "beanie-gray-label",
+      "vertices": 24560,
+      "triangles": 13156,
+      "bytes": 873584,
+      "sha256": "745dc2e797c2245a96bf6f934b2583c243742f94032ed6cf457baa26dfd2b385",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bucket-blue-smile",
+      "vertices": 9864,
+      "triangles": 5368,
+      "bytes": 357084,
+      "sha256": "8884f7754ffce4d5d2b95b56547119f352311e2f9b970b404440000ea27fcdeb",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bucket-ivory-label",
+      "vertices": 2360,
+      "triangles": 1348,
+      "bytes": 91664,
+      "sha256": "4f68a6787eaa47d3a3257f2cdbe4144f714f78e24d68bda333924a9d8d5019b8",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-silver-rect",
+      "vertices": 752,
+      "triangles": 396,
+      "bytes": 32316,
+      "sha256": "22b578f2cca7b94b057de06317a942296c7edc00ec20b3d75e52f483042ba532",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-blue-sun",
+      "vertices": 1936,
+      "triangles": 996,
+      "bytes": 76000,
+      "sha256": "2180c005a755901fc7c322ad946e2e4615e70e7b99462d865217fbce47f702fa",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "glasses-pink-round",
+      "vertices": 1712,
+      "triangles": 876,
+      "bytes": 67012,
+      "sha256": "f4b513615168fa5c13a738423fbd54ca28473efb2f511fe7d47b1bf4be36b642",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "watch-gold-analog",
+      "vertices": 928,
+      "triangles": 528,
+      "bytes": 39824,
+      "sha256": "badf77ec45fdff03a26d14a801bf01f6f37f70146b4e89ca0657cd2a894c2fa8",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "necklace-silver-chain",
+      "vertices": 7680,
+      "triangles": 3840,
+      "bytes": 274700,
+      "sha256": "c21d824975683f557d575073744b35842ab797f1822aa79118e23459ded7cf95",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "necklace-gold-chain",
+      "vertices": 7680,
+      "triangles": 3840,
+      "bytes": 274692,
+      "sha256": "57c4f6ee3885387adea5336272cebfb17affa235f3e9b84fb116887549bff3dc",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "keyring-silver-plain",
+      "vertices": 624,
+      "triangles": 312,
+      "bytes": 27716,
+      "sha256": "1d10b7f63e376a7d592eaf189386347ab9027a16d879dcf48f583b9119c99231",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "ring-silver-plain",
+      "vertices": 480,
+      "triangles": 288,
+      "bytes": 22944,
+      "sha256": "d60c8ef686ae30b9d9884586689c306fa8570d62fe79a6525fe4813c3d4df0c4",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "bracelet-black-bead-white",
+      "vertices": 3360,
+      "triangles": 1728,
+      "bytes": 124900,
+      "sha256": "ac66d740365312a6f39706c4e9602ca0529f42a4576c732e61e44a4aec5c5b83",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "charm-yellow-smile",
+      "vertices": 8064,
+      "triangles": 4308,
+      "bytes": 292000,
+      "sha256": "1d44bab9819b79e449f9a3fe9ffd4a3dd482fd4520e897f673a22b619c8f55d6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "charm-green-clover",
+      "vertices": 6384,
+      "triangles": 3408,
+      "bytes": 231712,
+      "sha256": "4912b6b1ad35c149b394cd4f1e284d8eaa2d5a28763816a4d9ed4bf7cefd67af",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "charm-pink-tag",
+      "vertices": 960,
+      "triangles": 492,
+      "bytes": 41716,
+      "sha256": "2ba6eac4f5572b33e24621d53f96cf31defc366e8a1c5c3467b47fdc28573406",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "laptop-gray-plain",
+      "vertices": 7728,
+      "triangles": 4140,
+      "bytes": 281344,
+      "sha256": "e680ab15d97c0fb4c536c75bcccb739566b858c737ac99e2aebaf778627da3a7",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "tablet-black-plain",
+      "vertices": 224,
+      "triangles": 120,
+      "bytes": 14336,
+      "sha256": "674c6f14a37318866010c816a4d880398e04703a1186c04f003ff16255449aea",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "planner-tan-plan",
+      "vertices": 11520,
+      "triangles": 6048,
+      "bytes": 413016,
+      "sha256": "f4a6d822ce6f5287b6509c577ca86380189ff7339199abfb23317305acebe465",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pen-black-fine",
+      "vertices": 292,
+      "triangles": 168,
+      "bytes": 17288,
+      "sha256": "34b70282a525f454f6bd0fc8fd1ebda12e97377321cc5ab5ed99f042d5503455",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pen-blue-fine",
+      "vertices": 292,
+      "triangles": 168,
+      "bytes": 18392,
+      "sha256": "2eeed98690056c64eb93110ef0c850f1cad27115fce8434a26e1c7ae01a853d7",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pen-pink-fine",
+      "vertices": 292,
+      "triangles": 168,
+      "bytes": 18388,
+      "sha256": "368fd5c137f56102b3ff059ca4f8f8158d52468f8176cff78f02a5046ee29e59",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pen-green-fine",
+      "vertices": 292,
+      "triangles": 168,
+      "bytes": 18396,
+      "sha256": "76cf57ec1fbe265dadc43153fb3cb612ae9d838b47371331b345e36b556d3431",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "pen-red-fine",
+      "vertices": 292,
+      "triangles": 168,
+      "bytes": 18388,
+      "sha256": "190791646c1cc0e6241bc7a0524e48244f085d293ad8628608c2afac4e5be5a0",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "postits-yellow-pastel",
+      "vertices": 560,
+      "triangles": 300,
+      "bytes": 28052,
+      "sha256": "d2c28efb2725c09bd8a2d578ec013c0aa9bdfb3a5fe76ed3e7dfe8c96f6f6d8b",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "lamp-black-plain",
+      "vertices": 1168,
+      "triangles": 620,
+      "bytes": 49160,
+      "sha256": "1ca4964be260fd9697f20060a99c9b3ff759b45a89e4c42d269eecf09de8a9d8",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "mug-ivory-good-ideas",
+      "vertices": 17824,
+      "triangles": 9576,
+      "bytes": 637008,
+      "sha256": "f90beee6105276c47ee4b3e5d5be748edf03b73ddc36212cb9fa2b2fee0e69f5",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "penholder-gray-color",
+      "vertices": 352,
+      "triangles": 200,
+      "bytes": 22564,
+      "sha256": "c886a4b0dc9d520f0d358fdd17b771bb96d1e1acbc8b4ee1c6f08267f33d85e1",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "clock-black-digital",
+      "vertices": 6832,
+      "triangles": 3660,
+      "bytes": 248192,
+      "sha256": "d042cf641ecb207b50614ecd9f8a7cd25f4a02dfbe85839e4f961d4888a9eb6b",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "books-tan-stack",
+      "vertices": 3696,
+      "triangles": 1980,
+      "bytes": 136928,
+      "sha256": "98c861333465f7945259db5fce4996370cad348d655f30f32f74a9efbb9e27a5",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "camera-black-plain",
+      "vertices": 1200,
+      "triangles": 648,
+      "bytes": 51740,
+      "sha256": "42415fff51befce8aa6344e178b884ef4f2deb6ff07fa4a83f24ce02e108cca3",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "gamepad-black-plain",
+      "vertices": 2176,
+      "triangles": 1120,
+      "bytes": 85552,
+      "sha256": "4616c0071527764a8342f777423503b2a9bedf44a057777dba1b715d49c1ddce",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "console-blue-red",
+      "vertices": 2624,
+      "triangles": 1360,
+      "bytes": 100900,
+      "sha256": "3a3899a33b20b04e8be18a82047ef3b6eb1e85d50c3d4ffb31ac945b68c44549",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "soccer-white-panel",
+      "vertices": 1704,
+      "triangles": 864,
+      "bytes": 66680,
+      "sha256": "4efaaac0ab46f56f53b2a0d23caa97035fb500336ab5f75f2220869d5f1d0a33",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "basketball-orange-panel",
+      "vertices": 3520,
+      "triangles": 1824,
+      "bytes": 130576,
+      "sha256": "a52c715ef99e60b0488d196748dfcdc5e05231260327ec3639ff4f0f31c26835",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "keyboard-black-music",
+      "vertices": 4704,
+      "triangles": 2520,
+      "bytes": 172624,
+      "sha256": "0aa29d2fffe3f88a3a59e3b83b3612e532ac40d2f2a02aab7e813fc740149c04",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "sketchbook-ivory-sketch",
+      "vertices": 20704,
+      "triangles": 10968,
+      "bytes": 739836,
+      "sha256": "738c92570360a30a7701464e64cd77fbc7afe0f45e305bd14fd3a412201e1b1d",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "skateboard-black-plain",
+      "vertices": 1984,
+      "triangles": 1008,
+      "bytes": 78240,
+      "sha256": "1b8dd7045377d3fd3915f91f35e4795c55c48d3933330597409d48c0a8f0d886",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "guitar-tan-acoustic",
+      "vertices": 5456,
+      "triangles": 2852,
+      "bytes": 200924,
+      "sha256": "20624a8413fad90e89d6d714e9f972a7d0880a4f50746b33aac54fccdf76328f",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "medal-gold-ribbon",
+      "vertices": 5364,
+      "triangles": 2852,
+      "bytes": 196848,
+      "sha256": "6267bfbcb0a26d64c8d109d1ae6b1d31d73425daf91f9a6081bee56a03ca84ca",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "trophy-gold-star",
+      "vertices": 5024,
+      "triangles": 2700,
+      "bytes": 185056,
+      "sha256": "06df32f39e6d0e3f23b9435e5f969bd1ffd47040a83539f533a83b564a8678d6",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "frame-brown-well-done",
+      "vertices": 14448,
+      "triangles": 7740,
+      "bytes": 515784,
+      "sha256": "54c0c5d63617121eac1f7ef3265174cba8a7956d90e355616431f16dca226939",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "books-purple-plant",
+      "vertices": 7512,
+      "triangles": 3956,
+      "bytes": 274176,
+      "sha256": "d127482becc04ff00818027c6bb3c8023fbbc14be4aa1d57701865c15af320a2",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "hoodie-ivory-smile",
+      "vertices": 21976,
+      "triangles": 11768,
+      "bytes": 797144,
+      "sha256": "f30ea581954c5fcf3e024210d39fa152b30f678e78d1f257c1de30355834b712",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "varsity-navy-c",
+      "vertices": 24224,
+      "triangles": 12976,
+      "bytes": 874000,
+      "sha256": "ae1776660441df33ded6463f9b9a7c4f6b13d028a497611f1eb2966a5154ce45",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "beanie-black-gold-label",
+      "vertices": 24560,
+      "triangles": 13156,
+      "bytes": 872984,
+      "sha256": "1b969fc49f72d9877dd565cd2d914152f3bdadf1a36663b4fbd51d992c938a54",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "headphones-black-ivory-pads",
+      "vertices": 828,
+      "triangles": 440,
+      "bytes": 36404,
+      "sha256": "4a23ac5b8bab878b8aa4ab75858fcc687ea0adb7bab561480ac092099079672a",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "id": "crossbody-black-stickers",
+      "vertices": 21280,
+      "triangles": 11400,
+      "bytes": 761972,
+      "sha256": "7005319617944c9ba27aff06e24b16d3abc8dab2470d62ce1137e305bd3d9b33",
+      "weightSums": [
+        1,
+        1
+      ],
+      "passed": true
+    }
+  ],
+  "continuousBodyFits": [
+    {
+      "character": "nova",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "jay",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "milo",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "zoe",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "sky",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "harper",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "river",
+      "passed": true,
+      "meshes": 4
+    },
+    {
+      "character": "aria",
+      "passed": true,
+      "meshes": 4
+    }
+  ]
+}

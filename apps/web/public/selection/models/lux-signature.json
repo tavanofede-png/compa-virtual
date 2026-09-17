@@ -1,0 +1,34 @@
+[
+  {
+    "id": "lux-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#EEE4D3",
+    "design": "signature",
+    "label": "Lux \u00b7 back"
+  },
+  {
+    "id": "lux-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#EEE4D3",
+    "design": "signature",
+    "label": "Lux \u00b7 bottom"
+  },
+  {
+    "id": "lux-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#EEE4D3",
+    "design": "signature",
+    "label": "Lux \u00b7 shoes"
+  },
+  {
+    "id": "lux-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#EEE4D3",
+    "design": "signature",
+    "label": "Lux \u00b7 top"
+  }
+]

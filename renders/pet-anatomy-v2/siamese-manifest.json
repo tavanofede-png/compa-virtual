@@ -1,0 +1,10 @@
+{
+  "id": "siamese",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "feline",
+  "meshCount": 41,
+  "vertices": 33862,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

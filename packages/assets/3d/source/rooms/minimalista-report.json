@@ -1,0 +1,38 @@
+{
+  "theme": "minimalista",
+  "name": "Minimalista",
+  "features": [
+    "Ash fluted wall",
+    "Layered Roman shade",
+    "Three-drawer filing cabinet",
+    "Magazine archives",
+    "Architect reading lamp"
+  ],
+  "sourceBase": "room_cozy_premium.blend",
+  "baseSha256": "5381fc9ca8b150d739a8bb53815308c3d81289663e7090b4635728aed51cee21",
+  "objects": 5860,
+  "baseObjects": 5765,
+  "addedObjects": 95,
+  "removedObjects": 0,
+  "nonFiniteObjects": [],
+  "sourceFile": "packages\\assets\\3d\\source\\rooms\\minimalista-master-v1.blend",
+  "sourceSha256": "23f21dbcdf501448c41cf1a6fb924357bf28316251ccd7534742ff3047cb2ec0",
+  "sourceBytes": 4738922,
+  "render": "renders\\room-collection\\minimalista\\hero.png",
+  "units": "meters",
+  "companionHeight": 1.73991,
+  "blender": "5.2.1 LTS",
+  "renderSettings": {
+    "engine": "CYCLES",
+    "samples": 32,
+    "width": 1920,
+    "height": 1440
+  },
+  "status": "Rendered and visually reviewed; editable scene ready for design review.",
+  "renderVerified": {
+    "width": 1920,
+    "height": 1440,
+    "bytes": 3263180,
+    "sha256": "fabbd682e0d0efe63a53e5482a804ac948f268838248af1c1e5be76a7bf5d838"
+  }
+}

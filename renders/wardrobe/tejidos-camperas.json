@@ -1,0 +1,27 @@
+{
+  "group": "tejidos-camperas",
+  "items": [
+    "varsity-red-a",
+    "puffer-black-label",
+    "varsity-green-s",
+    "denimjacket-denim-hood",
+    "shearling-tan-plain",
+    "utility-black-purple",
+    "sweater-ivory-cable",
+    "sweater-navy-bear",
+    "sweater-green-stripe",
+    "sweater-red-cable",
+    "sweater-sky-fairisle",
+    "sweater-black-smile",
+    "varsity-green-b",
+    "denimjacket-denim-shearling",
+    "puffer-ivory-label",
+    "utility-black-orange",
+    "varsity-navy-c"
+  ],
+  "pixels": [
+    2400,
+    1240
+  ],
+  "engine": "BLENDER_EEVEE"
+}

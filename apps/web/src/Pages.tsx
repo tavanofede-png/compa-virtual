@@ -1,6 +1,5 @@
 "use client";
 import {
-  ArrowRight,
   ArrowUpRight,
   BookOpen,
   CalendarDays,
@@ -8,9 +7,7 @@ import {
   ChevronRight,
   Plus,
   RefreshCw,
-  Settings2,
   Sparkles,
-  Sun,
   Trash2,
   Trophy,
   Upload,
@@ -26,8 +23,10 @@ import {
   type AcademicItem,
 } from "@compa/domain";
 import { useApp } from "./context";
-import { Room, Equipment } from "./Room";
+import { Equipment } from "./Room";
 import { Empty, Tag, kinds } from "./ui";
+import { HomeScreen, CompaScreen } from "./HomeScreen";
+import { Together } from "./Together";
 export function ItemRows({ items }: { items: AcademicItem[] }) {
   const { env, open, run, command, busy, notice } = useApp(),
     s = env.state;
@@ -80,7 +79,7 @@ export function ItemRows({ items }: { items: AcademicItem[] }) {
   );
 }
 export function Pages({ view }: { view: string }) {
-  const { env, repo, busy, open, go, run, command, update } = useApp(),
+  const { env, repo, busy, open, run, command, update, go } = useApp(),
     s = env.state,
     date = today(s.profile?.timezone);
   const active = s.plans.find((x) => x.status === "ACCEPTED"),
@@ -88,138 +87,15 @@ export function Pages({ view }: { view: string }) {
     pending = s.items
       .filter((x) => x.status === "PENDING")
       .sort((a, b) => a.due_date.localeCompare(b.due_date)),
-    slots = active?.slots.filter((x) => x.date === date) ?? [],
-    next = slots.find((x) => x.status === "PENDING");
+    slots = active?.slots.filter((x) => x.date === date) ?? [];
   const plan = () =>
     run(async () => {
       await command("plan.propose", {}, false);
       open("plan");
     });
-  if (view === "room")
-    return (
-      <>
-        <div className="page-heading">
-          <div>
-            <p className="eyebrow">{dateLabel(date).toUpperCase()}</p>
-            <h1>
-              Hola, {s.profile?.nickname ?? "bienvenido"}.{" "}
-              <span className="wave">✷</span>
-            </h1>
-            <p>Hagamos algo bueno con este ratito.</p>
-          </div>
-          <button
-            className="secondary"
-            onClick={() => open("companion", s.companion)}
-          >
-            <Settings2 size={16} />
-            Personalizar
-          </button>
-        </div>
-        <div className="home-grid">
-          <section>
-            <Room companion={s.companion} onTalk={() => open("chat")} />
-            <div className="compa-message">
-              <span className="quote-mark">“</span>
-              <p>
-                {pending.length
-                  ? "No hace falta resolver todo de una. Elegimos una cosa y empezamos."
-                  : "Tu espacio está listo. Sumemos la primera materia para preparar tu semana."}
-              </p>
-              <button
-                className="round-button"
-                aria-label="Conversar"
-                onClick={() => open("chat")}
-              >
-                <ArrowUpRight size={19} />
-              </button>
-            </div>
-          </section>
-          <aside className="today-panel">
-            <div className="section-heading">
-              <h2>Tu próximo paso</h2>
-              <Sun size={19} />
-            </div>
-            <div className="next-step">
-              <Tag>
-                {next
-                  ? clock(next.start_minute) +
-                    " · " +
-                    next.duration_minutes +
-                    " MIN"
-                  : "A TU RITMO"}
-              </Tag>
-              <h3>
-                {next
-                  ? s.items.find((x) => x.id === next.academic_item_id)?.title
-                  : active
-                    ? "Hoy tenés espacio para respirar."
-                    : "Un plan que entre en tu día."}
-              </h3>
-              <p>
-                {next
-                  ? methodById(next.method_id).name
-                  : "Partimos de tus horarios y dejamos margen para lo inesperado."}
-              </p>
-              <button
-                className="primary"
-                disabled={busy}
-                onClick={() =>
-                  next ? open("focus", next) : active ? go("agenda") : plan()
-                }
-              >
-                {next
-                  ? "Empezar sesión"
-                  : active
-                    ? "Ver mi agenda"
-                    : "Preparar mi plan"}{" "}
-                <ArrowRight size={17} />
-              </button>
-            </div>
-            <div className="mini-stats">
-              <div>
-                <strong>{s.sessions.length}</strong>
-                <span>sesiones completadas</span>
-              </div>
-              <div>
-                <strong>
-                  {s.streak}
-                  <small> días</small>
-                </strong>
-                <span>de práctica reciente</span>
-              </div>
-            </div>
-            <div className="checkin-card">
-              <div>
-                <span className="small-icon">✦</span>
-                <h3>¿Cómo viene el día?</h3>
-              </div>
-              <p>
-                Lo que aprendiste también cuenta. Tomate un minuto para
-                registrarlo.
-              </p>
-              <button className="text-button" onClick={() => open("checkin")}>
-                {s.checkins.some((x) => x.date === date)
-                  ? "Ver mi check-in"
-                  : "Hacer check-in"}{" "}
-                <ArrowUpRight size={16} />
-              </button>
-            </div>
-          </aside>
-        </div>
-        <section className="upcoming">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">SIN PERDERLO DE VISTA</p>
-              <h2>Lo que se viene</h2>
-            </div>
-            <button className="text-button" onClick={() => go("agenda")}>
-              Toda mi agenda <ArrowRight size={16} />
-            </button>
-          </div>
-          <ItemRows items={pending.slice(0, 3)} />
-        </section>
-      </>
-    );
+  if (view === "room") return <HomeScreen />;
+  if (view === "compa") return <CompaScreen />;
+  if (view === "together") return <Together key={s.profile?.id ?? "demo"} repo={repo.collaboration} back={() => go("study")} />;
   if (view === "today")
     return (
       <>
@@ -385,6 +261,10 @@ export function Pages({ view }: { view: string }) {
             <Plus size={18} />
             Crear práctica
           </button>
+        </div>
+        <div className="study-intro">
+          <div><h2>Estudiar juntos.</h2><p>Grupos privados y sesiones con las personas que conocés.</p></div>
+          <button className="secondary" onClick={() => go("together")}>Preparar un encuentro <ArrowUpRight size={17} /></button>
         </div>
         <div className="study-intro">
           <BookOpen size={32} />

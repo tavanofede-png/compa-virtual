@@ -3,11 +3,15 @@ import {
   type SupabaseClient,
   type SupportedStorage,
 } from "@supabase/supabase-js";
+import { createCollaborationRepository, type CollaborationRepository } from "./collaboration";
+export * from "./collaboration";
 import {
   demoSnapshot,
+  emptySnapshot,
   transition,
   publicSnapshot,
   validateUpload,
+  chooseFirstPet,
   type Snapshot,
   type Command,
 } from "@compa/domain";
@@ -23,6 +27,7 @@ export interface Envelope {
 }
 export interface Repository {
   mode: "demo" | "live";
+  collaboration?: CollaborationRepository;
   load(): Promise<Envelope>;
   command(
     command: Command,
@@ -46,11 +51,14 @@ export interface Repository {
   signOut(): Promise<void>;
   registerDevice(token: string, platform: string): Promise<void>;
 }
-export function createDemo(storage: AsyncStorage): Repository {
-  const key = "compa-demo-v1";
+export function createDemo(storage: AsyncStorage, options?: { onboarding?: boolean }): Repository {
+  const key = options?.onboarding ? "compa-onboarding-demo-v2" : "compa-demo-v2";
   const get = async (): Promise<Envelope> => {
     const raw = await storage.getItem(key);
-    return raw ? JSON.parse(raw) : { state: demoSnapshot(), version: 0 };
+    const envelope: Envelope = raw ? JSON.parse(raw) : { state: options?.onboarding ? emptySnapshot() : demoSnapshot(), version: 0 };
+    if (!options?.onboarding && envelope.state.profile?.onboarding_complete && !envelope.state.ownedPets?.length)
+      chooseFirstPet(envelope.state, "Miel", new Date().toISOString(), "demo-golden");
+    return envelope;
   };
   const unavailable = async (): Promise<never> => {
     throw Error(
@@ -129,6 +137,7 @@ export function createRepository(
     if (data.error) throw Error(data.error);
     return data;
   };
+  const collaboration = createCollaborationRepository(request, cache, userId, client);
   const save = async (data: Envelope) => {
     await cache.setItem(cacheKey, JSON.stringify(data));
     return data;
@@ -194,6 +203,7 @@ export function createRepository(
   };
   return {
     mode: "live",
+    collaboration,
     load: async () => {
       try {
         return await save(await request({ type: "snapshot" }));
@@ -281,6 +291,7 @@ export function createRepository(
       });
       await cache.removeItem(cacheKey);
       await cache.removeItem(pendingKey);
+      await collaboration.clear();
       await client.auth.signOut();
     },
     signOut: async () => {
@@ -290,6 +301,7 @@ export function createRepository(
       await cache.removeItem(cacheKey + ":device");
       await cache.removeItem(cacheKey);
       await cache.removeItem(pendingKey);
+      await collaboration.clear();
       const { error } = await client.auth.signOut();
       if (error) throw error;
     },
@@ -305,3 +317,4 @@ export function createRepository(
     },
   };
 }
+export * from "./shared-room";

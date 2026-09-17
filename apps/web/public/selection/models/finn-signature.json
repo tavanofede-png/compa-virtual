@@ -1,0 +1,50 @@
+[
+  {
+    "id": "finn-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 back"
+  },
+  {
+    "id": "finn-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 bottom"
+  },
+  {
+    "id": "finn-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 face_accessory"
+  },
+  {
+    "id": "finn-signature-hand_prop",
+    "slot": "handheld",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 hand_prop"
+  },
+  {
+    "id": "finn-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 shoes"
+  },
+  {
+    "id": "finn-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#3B619C",
+    "design": "signature",
+    "label": "Finn \u00b7 top"
+  }
+]

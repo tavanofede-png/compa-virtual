@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { characterIds, roomIds } from "./companions";
+import { wardrobeError } from "./wardrobe";
 const date = z.iso.date();
 export const profileSchema = z.object({
   nickname: z.string().trim().min(1).max(40),
@@ -62,26 +64,43 @@ export const blockSchema = z
     (b) => b.end_minute > b.start_minute,
     "El fin debe ser posterior al inicio.",
   );
-export const companionSchema = z.object({
-  avatar_style: z.enum(["boy", "girl", "neutral"]).optional(),
-  skin_tone: z.number().int().min(0).max(7).optional(),
-  hair_style: z
-    .enum(["short", "curls", "afro", "bob", "long", "braids"])
-    .optional(),
-  hair_color: z.number().int().min(0).max(5).optional(),
-  clothing_style: z.enum(["hoodie", "tee", "jacket", "overshirt"]).optional(),
-  clothing_color: z.number().int().min(0).max(7).optional(),
-  name: z.string().trim().min(1).max(30),
-  base: z.number().int().min(0).max(2),
-  palette: z.number().int().min(0).max(7),
-  eyes: z.number().int().min(0).max(5),
-  mouth: z.number().int().min(0).max(5),
-  accessory: z.string().max(40),
-  outfit: z.string().max(40),
-  personality: z.string().max(40),
-  room_theme: z.enum(["evening", "day", "night"]),
-  decoration: z.string().max(40),
-});
+export const companionSchema = z
+  .object({
+    character_id: z.enum(characterIds).optional(),
+    room_style: z.enum(roomIds).optional(),
+    wardrobe: z.array(z.string().max(80)).max(12).optional(),
+    avatar_style: z.enum(["boy", "girl", "neutral"]).optional(),
+    skin_tone: z.number().int().min(0).max(7).optional(),
+    hair_style: z
+      .enum(["short", "curls", "afro", "bob", "long", "braids"])
+      .optional(),
+    hair_color: z.number().int().min(0).max(5).optional(),
+    clothing_style: z.enum(["hoodie", "tee", "jacket", "overshirt"]).optional(),
+    clothing_color: z.number().int().min(0).max(7).optional(),
+    name: z.string().trim().min(1).max(30),
+    base: z.number().int().min(0).max(2),
+    palette: z.number().int().min(0).max(7),
+    eyes: z.number().int().min(0).max(5),
+    mouth: z.number().int().min(0).max(5),
+    accessory: z.string().max(40),
+    outfit: z.string().max(40),
+    personality: z.string().max(40),
+    room_theme: z.enum(["evening", "day", "night"]),
+    decoration: z.string().max(40),
+  })
+  .superRefine((value, context) => {
+    if (value.character_id && (!value.room_style || !value.wardrobe)) {
+      context.addIssue({
+        code: "custom",
+        message: "Elegí una habitación y un conjunto para tu compa.",
+      });
+    }
+    if (value.wardrobe) {
+      const message = wardrobeError(value.wardrobe);
+      if (message)
+        context.addIssue({ code: "custom", message, path: ["wardrobe"] });
+    }
+  });
 export function penalty(
   balance: number,
   lastSevenDays: number,

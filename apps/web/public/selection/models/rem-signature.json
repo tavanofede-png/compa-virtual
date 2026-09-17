@@ -1,0 +1,42 @@
+[
+  {
+    "id": "rem-signature-back",
+    "slot": "back",
+    "family": "signature",
+    "color": "#282326",
+    "design": "signature",
+    "label": "Rem \u00b7 back"
+  },
+  {
+    "id": "rem-signature-bottom",
+    "slot": "bottom",
+    "family": "signature",
+    "color": "#282326",
+    "design": "signature",
+    "label": "Rem \u00b7 bottom"
+  },
+  {
+    "id": "rem-signature-face_accessory",
+    "slot": "face_accessory",
+    "family": "signature",
+    "color": "#282326",
+    "design": "signature",
+    "label": "Rem \u00b7 face_accessory"
+  },
+  {
+    "id": "rem-signature-shoes",
+    "slot": "shoes",
+    "family": "signature",
+    "color": "#282326",
+    "design": "signature",
+    "label": "Rem \u00b7 shoes"
+  },
+  {
+    "id": "rem-signature-top",
+    "slot": "top",
+    "family": "signature",
+    "color": "#282326",
+    "design": "signature",
+    "label": "Rem \u00b7 top"
+  }
+]

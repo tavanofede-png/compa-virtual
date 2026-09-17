@@ -1,0 +1,1376 @@
+[
+  {
+    "id": "library",
+    "name": "Rincón de biblioteca",
+    "tagline": "Libros cerca. Ideas más lejos.",
+    "width": 4.8,
+    "depth": 4.6,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/library-hero.png",
+    "alternate": "images/library-alternate.png",
+    "detail": "images/library-detail.png",
+    "catalog": [
+      "wall-back",
+      "wall-left",
+      "desk",
+      "wood-chair",
+      "lounge-chair",
+      "book-cart",
+      "rug-medium",
+      "banker-lamp",
+      "books",
+      "hanging-plant"
+    ],
+    "spawn": [
+      2.4,
+      4.239999999999999
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 3.2,
+        "z": 2.3,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 3.2,
+        "z": 3.0549999999999997,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "shelves-back",
+        "name": "Biblioteca",
+        "x": 2.4,
+        "z": 0.19,
+        "w": 4.8,
+        "d": 0.38,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "shelves-left",
+        "name": "Biblioteca",
+        "x": 0.19,
+        "z": 1.5,
+        "w": 0.38,
+        "d": 2.6,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "lounge",
+        "name": "Lectura",
+        "x": 1.02,
+        "z": 2.7,
+        "w": 0.9,
+        "d": 0.85,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "cart",
+        "name": "Carro",
+        "x": 4.23,
+        "z": 2.7,
+        "w": 0.55,
+        "d": 0.35,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          3.2,
+          3.63
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 4.68,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 4.8,
+        "d": 4.6
+      }
+    ]
+  },
+  {
+    "id": "terrace",
+    "name": "Terraza al atardecer",
+    "tagline": "Otra perspectiva para tus ideas.",
+    "width": 5.2,
+    "depth": 4.5,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/terrace-hero.png",
+    "alternate": "images/terrace-alternate.png",
+    "detail": "images/terrace-detail.png",
+    "catalog": [
+      "railing",
+      "desk",
+      "wood-chair",
+      "lounge-chair",
+      "knit-pouf",
+      "string-lights",
+      "ambient-lantern",
+      "planter-large"
+    ],
+    "spawn": [
+      2.6,
+      4.14
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 3.5,
+        "z": 2.15,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 3.5,
+        "z": 2.905,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "rear-planters",
+        "name": "Jardineras",
+        "x": 2.6,
+        "z": 0.26,
+        "w": 5.2,
+        "d": 0.52,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "side-planters",
+        "name": "Jardineras",
+        "x": 4.91,
+        "z": 1.5,
+        "w": 0.5,
+        "d": 2,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "lounge",
+        "name": "Lectura",
+        "x": 0.85,
+        "z": 1.9,
+        "w": 0.9,
+        "d": 0.85,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "pouf",
+        "name": "Puff",
+        "x": 1.05,
+        "z": 3.25,
+        "w": 0.65,
+        "d": 0.65,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          3.5,
+          3.48
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 5.08,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5.2,
+        "d": 4.5
+      }
+    ]
+  },
+  {
+    "id": "pergola",
+    "name": "Pérgola de jardín",
+    "tagline": "Un lugar para que crezcan las ideas.",
+    "width": 5.4,
+    "depth": 5,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/pergola-hero.png",
+    "alternate": "images/pergola-alternate.png",
+    "detail": "images/pergola-detail.png",
+    "catalog": [
+      "pergola-module",
+      "study-table",
+      "wood-chair",
+      "bench",
+      "planter-large",
+      "ambient-lantern"
+    ],
+    "spawn": [
+      2.7,
+      4.64
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 3.15,
+        "z": 2.65,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 3.15,
+        "z": 3.405,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "rear-garden",
+        "name": "Jardín",
+        "x": 2.7,
+        "z": 0.35,
+        "w": 5.4,
+        "d": 0.7,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "left-garden",
+        "name": "Jardín",
+        "x": 0.38,
+        "z": 2.35,
+        "w": 0.76,
+        "d": 4,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "right-garden",
+        "name": "Jardín",
+        "x": 5.02,
+        "z": 2.35,
+        "w": 0.76,
+        "d": 4,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "bench",
+        "name": "Banco",
+        "x": 2.28,
+        "z": 1.14,
+        "w": 2,
+        "d": 0.65,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          3.15,
+          3.98
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 5.28,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5.4,
+        "d": 5
+      }
+    ]
+  },
+  {
+    "id": "cafe",
+    "name": "Rincón de café",
+    "tagline": "Tu mesa de siempre.",
+    "width": 5,
+    "depth": 4.7,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/cafe-hero.png",
+    "alternate": "images/cafe-alternate.png",
+    "detail": "images/cafe-detail.png",
+    "catalog": [
+      "cafe-table",
+      "study-table",
+      "wood-chair",
+      "bench",
+      "window",
+      "pastry-case",
+      "coffee-machine",
+      "coffee-grinder",
+      "menu-board"
+    ],
+    "spawn": [
+      2.5,
+      4.34
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 2.85,
+        "z": 2.45,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 2.85,
+        "z": 3.205,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "coffee",
+        "name": "Café",
+        "x": 0.6,
+        "z": 1.4,
+        "w": 1.05,
+        "d": 2.5,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "banquette",
+        "name": "Asiento corrido",
+        "x": 2.6,
+        "z": 0.63,
+        "w": 2.7,
+        "d": 0.7,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "window-side",
+        "name": "Jardinera",
+        "x": 4.65,
+        "z": 1.2,
+        "w": 0.5,
+        "d": 1.7,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "menu",
+        "name": "Menú",
+        "x": 4.42,
+        "z": 3.67,
+        "w": 0.42,
+        "d": 0.4,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          2.85,
+          3.7800000000000002
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 4.88,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5,
+        "d": 4.7
+      }
+    ]
+  },
+  {
+    "id": "minimal",
+    "name": "Estudio minimalista",
+    "tagline": "Espacio para lo importante.",
+    "width": 4.5,
+    "depth": 4.3,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/minimal-hero.png",
+    "alternate": "images/minimal-alternate.png",
+    "detail": "images/minimal-detail.png",
+    "catalog": [
+      "compact-desk",
+      "ergonomic-chair",
+      "rolling-drawers",
+      "pinboard",
+      "wall-shelves",
+      "desk-lamp",
+      "beanbag"
+    ],
+    "spawn": [
+      2.25,
+      3.94
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 2.05,
+        "z": 1.12,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 2.05,
+        "z": 1.875,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "drawer",
+        "name": "Cajonera",
+        "x": 3.45,
+        "z": 1.18,
+        "w": 0.48,
+        "d": 0.55,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "plant",
+        "name": "Planta",
+        "x": 0.55,
+        "z": 0.68,
+        "w": 0.44,
+        "d": 0.44,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "pouf",
+        "name": "Puff",
+        "x": 3.43,
+        "z": 3.15,
+        "w": 0.94,
+        "d": 0.94,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          2.05,
+          2.45
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 4.38,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 4.5,
+        "d": 4.3
+      }
+    ]
+  },
+  {
+    "id": "tech",
+    "name": "Estudio tecnológico",
+    "tagline": "Tu próxima idea está acá.",
+    "width": 5,
+    "depth": 4.6,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/tech-hero.png",
+    "alternate": "images/tech-alternate.png",
+    "detail": "images/tech-detail.png",
+    "catalog": [
+      "compact-desk",
+      "ergonomic-chair",
+      "monitor-set",
+      "pc-case",
+      "led-panels",
+      "speakers",
+      "rug-round",
+      "headphones"
+    ],
+    "spawn": [
+      2.5,
+      4.239999999999999
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 2.85,
+        "z": 1.55,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 2.85,
+        "z": 2.305,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "left-wing",
+        "name": "Ala de escritorio",
+        "x": 1.05,
+        "z": 1.23,
+        "w": 1.45,
+        "d": 0.65,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "drawer",
+        "name": "Cajonera",
+        "x": 0.58,
+        "z": 2.25,
+        "w": 0.48,
+        "d": 0.6,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "pc-storage",
+        "name": "Equipo",
+        "x": 4.42,
+        "z": 1.8,
+        "w": 0.6,
+        "d": 1.1,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "plant",
+        "name": "Planta",
+        "x": 0.6,
+        "z": 3.42,
+        "w": 0.42,
+        "d": 0.42,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          2.85,
+          2.88
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 4.88,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5,
+        "d": 4.6
+      }
+    ]
+  },
+  {
+    "id": "pavilion",
+    "name": "Pabellón del parque",
+    "tagline": "Aire nuevo para pensar.",
+    "width": 5.8,
+    "depth": 5.5,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/pavilion-hero.png",
+    "alternate": "images/pavilion-alternate.png",
+    "detail": "images/pavilion-detail.png",
+    "catalog": [
+      "roof-module",
+      "study-table",
+      "wood-chair",
+      "bench",
+      "planter-large",
+      "ambient-lantern"
+    ],
+    "spawn": [
+      2.9,
+      5.14
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 3.65,
+        "z": 2.9,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 3.65,
+        "z": 3.655,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "back-garden",
+        "name": "Jardín",
+        "x": 2.9,
+        "z": 0.34,
+        "w": 5.8,
+        "d": 0.68,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "left-garden",
+        "name": "Jardín",
+        "x": 0.38,
+        "z": 2.7,
+        "w": 0.76,
+        "d": 4,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "right-garden",
+        "name": "Jardín",
+        "x": 5.4,
+        "z": 2.7,
+        "w": 0.76,
+        "d": 4,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "bench",
+        "name": "Banco",
+        "x": 1.83,
+        "z": 1.5,
+        "w": 2,
+        "d": 0.7,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "pillar",
+        "name": "Columna",
+        "x": 1.1,
+        "z": 3.6,
+        "w": 0.38,
+        "d": 0.38,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          3.65,
+          4.23
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 5.68,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5.8,
+        "d": 5.5
+      }
+    ]
+  },
+  {
+    "id": "loft",
+    "name": "Ático acogedor",
+    "tagline": "Un rincón con tu forma de ser.",
+    "width": 5.2,
+    "depth": 4.8,
+    "kind": "solo-study",
+    "pets": false,
+    "units": "meters",
+    "geometryStatus": "proposed-functional-layout-not-measured-from-raster",
+    "hero": "images/loft-hero.png",
+    "alternate": "images/loft-alternate.png",
+    "detail": "images/loft-detail.png",
+    "catalog": [
+      "desk",
+      "wood-chair",
+      "bookshelf-large",
+      "bench",
+      "knit-pouf",
+      "blankets",
+      "window",
+      "string-lights"
+    ],
+    "spawn": [
+      2.6,
+      4.4399999999999995
+    ],
+    "items": [
+      {
+        "id": "desk",
+        "definitionId": "desk",
+        "name": "Superficie de estudio",
+        "x": 2.12,
+        "z": 2.6,
+        "w": 1.6,
+        "d": 0.75,
+        "h": 0.76,
+        "yaw": 0,
+        "role": "work-surface"
+      },
+      {
+        "id": "chair",
+        "definitionId": "wood-chair",
+        "name": "Asiento de estudio",
+        "x": 2.12,
+        "z": 3.355,
+        "w": 0.56,
+        "d": 0.56,
+        "h": 0.46,
+        "yaw": 0,
+        "role": "study-seat"
+      },
+      {
+        "id": "shelves-left",
+        "name": "Biblioteca",
+        "x": 0.18,
+        "z": 1.65,
+        "w": 0.36,
+        "d": 3.3,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "bench",
+        "name": "Ventana y banco",
+        "x": 2.9,
+        "z": 0.7,
+        "w": 2.2,
+        "d": 0.68,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "storage",
+        "name": "Biblioteca",
+        "x": 4.8,
+        "z": 1.6,
+        "w": 0.55,
+        "d": 2.2,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "pouf",
+        "name": "Puff",
+        "x": 4.16,
+        "z": 3.58,
+        "w": 0.9,
+        "d": 0.9,
+        "h": 0.8,
+        "yaw": 0,
+        "role": "furniture"
+      },
+      {
+        "id": "notebook",
+        "definitionId": "notebooks",
+        "name": "Cuaderno",
+        "parentId": "desk",
+        "x": -0.3,
+        "z": 0,
+        "w": 0.21,
+        "d": 0.15,
+        "h": 0.035,
+        "yaw": 0,
+        "role": "surface-prop"
+      },
+      {
+        "id": "lamp",
+        "definitionId": "desk-lamp",
+        "name": "Lámpara",
+        "parentId": "desk",
+        "x": 0.58,
+        "z": -0.16,
+        "w": 0.22,
+        "d": 0.22,
+        "h": 0.5,
+        "yaw": 0,
+        "role": "surface-prop"
+      }
+    ],
+    "studyZones": [
+      {
+        "id": "primary-study",
+        "surfaceId": "desk",
+        "seatId": "chair",
+        "approach": [
+          2.12,
+          3.93
+        ],
+        "workArea": {
+          "x": 0,
+          "z": 0,
+          "w": 0.65,
+          "d": 0.4
+        },
+        "interaction": "study"
+      }
+    ],
+    "wallZones": [
+      {
+        "id": "wall-art",
+        "label": "Pared · arte y luz",
+        "x": 5.08,
+        "z": 0.9,
+        "w": 0.15,
+        "d": 1.5
+      }
+    ],
+    "shelfZones": [
+      {
+        "id": "shelf-display",
+        "label": "Estantes · libros y objetos",
+        "x": 0.18,
+        "z": 1.1,
+        "w": 0.28,
+        "d": 1.5
+      }
+    ],
+    "moduleZones": [
+      {
+        "id": "shell",
+        "label": "Estructura y módulos compatibles",
+        "x": 0,
+        "z": 0,
+        "w": 5.2,
+        "d": 4.8
+      }
+    ]
+  }
+]

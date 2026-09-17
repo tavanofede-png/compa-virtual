@@ -1,0 +1,10 @@
+{
+  "id": "ragdoll",
+  "schema": "compa-pet-v2",
+  "revision": "anatomy-v2",
+  "rig": "feline",
+  "meshCount": 41,
+  "vertices": 35514,
+  "noFurSystem": true,
+  "noEyebrows": true
+}

@@ -1,0 +1,26 @@
+{
+  "group": "bolsos",
+  "items": [
+    "backpack-black-heart",
+    "backpack-red-plain",
+    "backpack-green-smile",
+    "backpack-ivory-plain",
+    "backpack-black-smile",
+    "backpack-olive-plain",
+    "backpack-purple-plain",
+    "backpack-pink-plain",
+    "backpack-navy-flower",
+    "crossbody-black-cat",
+    "crossbody-ivory-label",
+    "crossbody-green-smile",
+    "crossbody-blue-cat",
+    "crossbody-pink-label",
+    "crossbody-black-checker",
+    "crossbody-black-stickers"
+  ],
+  "pixels": [
+    2400,
+    1240
+  ],
+  "engine": "BLENDER_EEVEE"
+}

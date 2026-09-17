@@ -1,0 +1,106 @@
+{
+  "id": "terrace",
+  "name": "Terraza al atardecer",
+  "width": 4.5,
+  "depth": 3.8,
+  "kind": "solo-study",
+  "pets": false,
+  "units": "meters",
+  "spawn": [
+    2.25,
+    3.54
+  ],
+  "geometryStatus": "authored-model-layout-needs-route-validation",
+  "items": [
+    {
+      "id": "rust-knitted-puff",
+      "definitionId": "knit-pouf",
+      "name": "rust-knitted-puff",
+      "x": 1.52,
+      "z": 2.95,
+      "w": 0.9,
+      "d": 0.9,
+      "h": 0.48,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "desk",
+      "definitionId": "desk",
+      "name": "desk",
+      "x": 2.9899999999999998,
+      "z": 2.0,
+      "w": 1.8,
+      "d": 0.85,
+      "h": 0.76,
+      "yaw": -0.0,
+      "role": "work-surface"
+    },
+    {
+      "id": "chair",
+      "definitionId": "wood-chair",
+      "name": "chair",
+      "x": 2.935,
+      "z": 2.79,
+      "w": 0.65,
+      "d": 0.6,
+      "h": 0.51,
+      "yaw": -0.0,
+      "role": "study-seat"
+    },
+    {
+      "id": "Terrace planter 0",
+      "definitionId": "planter-large",
+      "name": "Terrace planter 0",
+      "x": 0.82,
+      "z": 0.5,
+      "w": 1.26,
+      "d": 0.45,
+      "h": 0.8,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "Terrace planter 1",
+      "definitionId": "planter-large",
+      "name": "Terrace planter 1",
+      "x": 2.45,
+      "z": 0.38,
+      "w": 1.2,
+      "d": 0.45,
+      "h": 0.8,
+      "yaw": 0,
+      "role": "furniture"
+    },
+    {
+      "id": "Terrace planter 2",
+      "definitionId": "planter-large",
+      "name": "Terrace planter 2",
+      "x": 4.16,
+      "z": 1.38,
+      "w": 0.43,
+      "d": 1.17,
+      "h": 0.8,
+      "yaw": 0,
+      "role": "furniture"
+    }
+  ],
+  "studyZones": [
+    {
+      "id": "primary-study",
+      "surfaceId": "desk",
+      "seatId": "chair",
+      "approach": [
+        2.935,
+        3.3899999999999997
+      ],
+      "workArea": {
+        "x": 0,
+        "z": 0.0,
+        "w": 0.65,
+        "d": 0.4
+      },
+      "interaction": "study"
+    }
+  ]
+}

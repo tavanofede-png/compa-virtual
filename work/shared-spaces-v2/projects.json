@@ -1,0 +1,128 @@
+{
+  "id": "projects",
+  "name": "Sala de proyectos",
+  "version": 2,
+  "units": "metres",
+  "capacity": 6,
+  "bounds": [
+    -3.9,
+    -2.9,
+    3.9,
+    2.9
+  ],
+  "anchors": [
+    {
+      "id": "SEAT_01",
+      "position": [
+        -1.58,
+        0.46,
+        1.72
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        -1.58,
+        0.015,
+        0.8
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    },
+    {
+      "id": "SEAT_02",
+      "position": [
+        0,
+        0.46,
+        1.72
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        0.0,
+        0.015,
+        0.8
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    },
+    {
+      "id": "SEAT_03",
+      "position": [
+        1.58,
+        0.46,
+        1.72
+      ],
+      "yaw": 3.141592653589793,
+      "approach": [
+        1.58,
+        0.015,
+        0.8
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    },
+    {
+      "id": "SEAT_04",
+      "position": [
+        -1.58,
+        0.46,
+        -1.0
+      ],
+      "yaw": 0,
+      "approach": [
+        -1.58,
+        0.015,
+        -0.08
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    },
+    {
+      "id": "SEAT_05",
+      "position": [
+        0,
+        0.46,
+        -1.0
+      ],
+      "yaw": 0,
+      "approach": [
+        0.0,
+        0.015,
+        -0.08
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    },
+    {
+      "id": "SEAT_06",
+      "position": [
+        1.58,
+        0.46,
+        -1.0
+      ],
+      "yaw": 0,
+      "approach": [
+        1.58,
+        0.015,
+        -0.08
+      ],
+      "height": 0.46,
+      "posture": "seated",
+      "kind": "workshop-stool"
+    }
+  ],
+  "triangles": 390820,
+  "reducedTriangles": 242307,
+  "source": "packages\\assets\\3d\\source\\shared-spaces\\v2\\projects-master.blend",
+  "inventory": {
+    "FURNITURE": 1328,
+    "MAKER_DETAILS": 799,
+    "WALL_STORY": 20,
+    "DECOR": 196,
+    "BOTANICALS": 468,
+    "ARCHITECTURE": 3
+  }
+}

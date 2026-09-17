@@ -1,0 +1,239 @@
+{
+  "room": "library",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\library-master.blend",
+  "editableItems": [
+    {
+      "id": "architecture",
+      "triangles": 38348,
+      "materials": 15
+    },
+    {
+      "id": "bookcase-left",
+      "triangles": 255404,
+      "materials": 25
+    },
+    {
+      "id": "bookcase-rear",
+      "triangles": 245192,
+      "materials": 25
+    },
+    {
+      "id": "front-left-fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "reading-side-table",
+      "triangles": 4904,
+      "materials": 3
+    },
+    {
+      "id": "reading-book-stack",
+      "triangles": 2112,
+      "materials": 7
+    },
+    {
+      "id": "checker-woven-rug",
+      "triangles": 254716,
+      "materials": 3
+    },
+    {
+      "id": "desk",
+      "triangles": 14000,
+      "materials": 4
+    },
+    {
+      "id": "chair",
+      "triangles": 10524,
+      "materials": 6
+    },
+    {
+      "id": "study-laptop",
+      "triangles": 5160,
+      "materials": 7
+    },
+    {
+      "id": "study-notebook",
+      "triangles": 2468,
+      "materials": 5
+    },
+    {
+      "id": "study-books",
+      "triangles": 1584,
+      "materials": 6
+    },
+    {
+      "id": "study-lamp",
+      "triangles": 396,
+      "materials": 3
+    },
+    {
+      "id": "study-plant",
+      "triangles": 6400,
+      "materials": 5
+    },
+    {
+      "id": "rolling-book-cart",
+      "triangles": 21848,
+      "materials": 12
+    },
+    {
+      "id": "right-floor-fern",
+      "triangles": 10996,
+      "materials": 6
+    },
+    {
+      "id": "Trailing pot 0",
+      "triangles": 5728,
+      "materials": 5
+    },
+    {
+      "id": "Trailing ivy 0",
+      "triangles": 25232,
+      "materials": 3
+    },
+    {
+      "id": "Trailing pot 1",
+      "triangles": 5728,
+      "materials": 5
+    },
+    {
+      "id": "Trailing ivy 1",
+      "triangles": 25232,
+      "materials": 3
+    },
+    {
+      "id": "Trailing pot 2",
+      "triangles": 5728,
+      "materials": 5
+    },
+    {
+      "id": "Trailing ivy 2",
+      "triangles": 25232,
+      "materials": 3
+    },
+    {
+      "id": "Trailing pot 3",
+      "triangles": 5728,
+      "materials": 5
+    },
+    {
+      "id": "Trailing ivy 3",
+      "triangles": 25232,
+      "materials": 3
+    },
+    {
+      "id": "Desk folded textile",
+      "triangles": 5644,
+      "materials": 3
+    },
+    {
+      "id": "Shelf vintage camera",
+      "triangles": 2372,
+      "materials": 5
+    },
+    {
+      "id": "Shelf letter archive",
+      "triangles": 1160,
+      "materials": 4
+    },
+    {
+      "id": "Library upper lush plant 0",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Library upper lush plant 1",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "Library upper lush plant 2",
+      "triangles": 9592,
+      "materials": 3
+    },
+    {
+      "id": "standing-reading-lamp",
+      "triangles": 2200,
+      "materials": 5
+    },
+    {
+      "id": "Library postcard beside lamp",
+      "triangles": 432,
+      "materials": 4
+    },
+    {
+      "id": "Library correspondence box",
+      "triangles": 432,
+      "materials": 4
+    },
+    {
+      "id": "Library statement",
+      "triangles": 36108,
+      "materials": 5
+    },
+    {
+      "id": "reading-armchair",
+      "triangles": 33384,
+      "materials": 6
+    },
+    {
+      "id": "study-mug",
+      "triangles": 480,
+      "materials": 2
+    },
+    {
+      "id": "side-cabinet-lamp",
+      "triangles": 1680,
+      "materials": 5
+    },
+    {
+      "id": "rear-side-cabinet",
+      "triangles": 6496,
+      "materials": 6
+    },
+    {
+      "id": "Reading globe",
+      "triangles": 1746,
+      "materials": 3
+    },
+    {
+      "id": "Library bay fern 0",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Library bay fern 1",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Library bay fern 2",
+      "triangles": 9988,
+      "materials": 5
+    },
+    {
+      "id": "Library reading table lamp",
+      "triangles": 1680,
+      "materials": 5
+    },
+    {
+      "id": "Botanical shelf image 0",
+      "triangles": 732,
+      "materials": 4
+    },
+    {
+      "id": "Botanical shelf image 1",
+      "triangles": 732,
+      "materials": 4
+    },
+    {
+      "id": "study-pencils",
+      "triangles": 380,
+      "materials": 7
+    }
+  ],
+  "triangles": 1163286,
+  "bytes": 80792248,
+  "status": "authored-model-not-native-performance-approved"
+}

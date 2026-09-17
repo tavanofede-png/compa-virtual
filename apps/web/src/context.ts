@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import type { Repository, Envelope } from "@compa/client";
 export interface AppContextValue {
+  modal: string | null;
   repo: Repository;
   env: Envelope;
   busy: boolean;
@@ -10,6 +11,7 @@ export interface AppContextValue {
   command: (type: string, payload: unknown, close?: boolean) => Promise<void>;
   update: (env: Envelope) => void;
   close: () => void;
+  leave: () => void;
   notice: (text: string) => void;
 }
 export const AppContext = createContext<AppContextValue>(null!);

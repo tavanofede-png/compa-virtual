@@ -1,0 +1,27 @@
+{
+  "pet": "pet-golden-retriever.glb",
+  "clips": [
+    "pet_idle",
+    "pet_look",
+    "pet_walk",
+    "pet_run",
+    "pet_sit_down",
+    "pet_seated",
+    "pet_stand_up",
+    "pet_lie_down",
+    "pet_rest",
+    "pet_get_up",
+    "pet_sniff",
+    "pet_react",
+    "pet_play",
+    "pet_carry",
+    "pet_celebrate"
+  ],
+  "props": [
+    "pet-bed-cozy",
+    "pet-bowl-cozy",
+    "pet-toy-basket-cozy",
+    "pet-ball-cozy",
+    "pet-rope-cozy"
+  ]
+}

@@ -7,6 +7,9 @@
     "node": ">=24.0.0"
   },
   "scripts": {
+    "postinstall": "node scripts/restore-large-assets.mjs",
+    "assets:restore": "node scripts/restore-large-assets.mjs",
+    "assets:pack-large": "node scripts/pack-large-assets.mjs",
     "dev": "pnpm --filter @compa/web dev",
     "mobile": "pnpm --filter @compa/mobile start",
     "worker": "pnpm --filter @compa/worker dev",

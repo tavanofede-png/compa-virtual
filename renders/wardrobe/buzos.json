@@ -1,0 +1,29 @@
+{
+  "group": "buzos",
+  "items": [
+    "hoodie-gray-plain",
+    "hoodie-blue-wave",
+    "hoodie-purple-butterfly",
+    "hoodie-black-red-butterfly",
+    "hoodie-ivory-nyc",
+    "hoodie-green-focus",
+    "sweatshirt-ivory-calm",
+    "sweatshirt-navy-better-days",
+    "sweatshirt-green-mountain",
+    "sweatshirt-pink-heart",
+    "sweatshirt-sky-double-stripe",
+    "sweatshirt-charcoal-study",
+    "hoodie-gray-focus",
+    "hoodie-blue-cloud",
+    "hoodie-purple-cloud",
+    "hoodie-black-orange-butterfly",
+    "hoodie-green-plain",
+    "hoodie-ivory-better-days",
+    "hoodie-ivory-smile"
+  ],
+  "pixels": [
+    2400,
+    1654
+  ],
+  "engine": "BLENDER_EEVEE"
+}

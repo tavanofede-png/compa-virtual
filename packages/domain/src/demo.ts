@@ -1,5 +1,7 @@
 import { emptySnapshot, type Snapshot } from "./types";
 import { today, addDays } from "./time";
+import { selectCharacter } from "./companions";
+import { chooseFirstPet } from "./pet-state";
 export function demoSnapshot(): Snapshot {
   const s = emptySnapshot(),
     date = today(),
@@ -85,5 +87,7 @@ export function demoSnapshot(): Snapshot {
       ],
     },
   ];
+  s.companion = selectCharacter("milo", s.companion);
+  chooseFirstPet(s, "Miel", new Date().toISOString(), "demo-golden");
   return s;
 }

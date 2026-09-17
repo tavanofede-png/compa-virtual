@@ -1,0 +1,471 @@
+{
+  "date": "2026-09-17T21:25:45.607Z",
+  "scope": "Static source, render, glTF and authored furniture-map checks. Not a native or full geometry collision certification.",
+  "rooms": [
+    {
+      "id": "library",
+      "sourceBytes": 7970030,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.2,
+                3.54
+              ],
+              [
+                2.845,
+                3.45
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2628631,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3248989,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 4073814,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 80792248,
+        "version": "2.0",
+        "meshes": 46,
+        "materials": 58,
+        "images": 0,
+        "editableNodes": 45,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "terrace",
+      "sourceBytes": 7643051,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.25,
+                3.54
+              ],
+              [
+                2.935,
+                3.3899999999999997
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2657711,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3067483,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3989187,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 49888428,
+        "version": "2.0",
+        "meshes": 33,
+        "materials": 62,
+        "images": 1,
+        "editableNodes": 32,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "pergola",
+      "sourceBytes": 8647374,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.3,
+                3.9400000000000004
+              ],
+              [
+                2.7449999999999997,
+                3.75
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2767717,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3334729,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3758040,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 140422252,
+        "version": "2.0",
+        "meshes": 66,
+        "materials": 60,
+        "images": 0,
+        "editableNodes": 65,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "cafe",
+      "sourceBytes": 4355920,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.1,
+                3.54
+              ],
+              [
+                2.395,
+                3.445
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2431477,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3037461,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3473390,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 26342892,
+        "version": "2.0",
+        "meshes": 47,
+        "materials": 59,
+        "images": 1,
+        "editableNodes": 46,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "minimal",
+      "sourceBytes": 4852127,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.05,
+                3.4400000000000004
+              ],
+              [
+                2.1149999999999998,
+                1.8050000000000002
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2320639,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 2793484,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3221910,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 45885672,
+        "version": "2.0",
+        "meshes": 37,
+        "materials": 51,
+        "images": 0,
+        "editableNodes": 36,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "tech",
+      "sourceBytes": 2382010,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.15,
+                3.6399999999999997
+              ],
+              [
+                2.175,
+                2.04
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2415364,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 2727734,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3063480,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 20637176,
+        "version": "2.0",
+        "meshes": 41,
+        "materials": 55,
+        "images": 0,
+        "editableNodes": 40,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "pavilion",
+      "sourceBytes": 7312762,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.5,
+                4.24
+              ],
+              [
+                2.995,
+                3.8449999999999998
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2722626,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3075919,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3978111,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 56660128,
+        "version": "2.0",
+        "meshes": 34,
+        "materials": 69,
+        "images": 1,
+        "editableNodes": 33,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    },
+    {
+      "id": "loft",
+      "sourceBytes": 9179466,
+      "layout": {
+        "valid": true,
+        "errors": [],
+        "studyZones": [
+          {
+            "id": "primary-study",
+            "valid": true,
+            "errors": [],
+            "route": [
+              [
+                2.2,
+                3.6399999999999997
+              ],
+              [
+                2.0650000000000004,
+                3.535
+              ]
+            ]
+          }
+        ],
+        "validStudyZones": 1,
+        "obstacleCoverage": "Registered major furniture only; exhaustive mesh intersections and runtime pathfinding remain to validate."
+      },
+      "lastStudyZoneProtected": true,
+      "images": {
+        "hero": {
+          "bytes": 2712676,
+          "width": 1536,
+          "height": 1024,
+          "validSignature": true
+        },
+        "model-hero": {
+          "bytes": 3097697,
+          "width": 1800,
+          "height": 1200,
+          "validSignature": true
+        },
+        "detail": {
+          "bytes": 3978152,
+          "width": 1500,
+          "height": 1500,
+          "validSignature": true
+        }
+      },
+      "model": {
+        "bytes": 65140680,
+        "version": "2.0",
+        "meshes": 36,
+        "materials": 60,
+        "images": 1,
+        "editableNodes": 35,
+        "finiteBounds": true,
+        "validDeclaredLength": true
+      }
+    }
+  ],
+  "passed": true
+}
