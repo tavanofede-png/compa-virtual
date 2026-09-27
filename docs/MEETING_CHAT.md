@@ -1,0 +1,17 @@
+# Chat privado de encuentros — estado técnico
+
+El chat pertenece a un encuentro, no a una amistad ni a un grupo permanente. Solo integrantes registrados del encuentro pueden leer, enviar y reportar mensajes. La API vuelve a comprobar identidad, perfil, edad y permiso social en cada operación. Las tablas privadas no tienen acceso directo de los clientes.
+
+`20260926173000_private_meeting_chat.sql` añade mensajes paginados, recibos de envío idempotentes, límite de 1.000 caracteres, límites de frecuencia, bloqueo de enlaces y correos, reportes, bloqueo de personas y decisiones de moderación. Un filtro conservador retiene ciertos mensajes hasta revisión; **no es un sistema completo de detección de abuso**. Los mensajes retenidos solo los ve su autor y el operador. Bloquear oculta mensajes de la persona bloqueada, revoca invitaciones pendientes y evita nuevos ingresos simultáneos a la sala. La persona que bloquea sale de la sala si ambos ya estaban presentes; su trabajo individual permanece.
+
+Si el servidor libera un asiento por bloqueo u otra medida mientras la vista está abierta, el controlador deja de mostrar a la cuenta como presente al recibir la actualización. El contenido del chat se vuelve a consultar al actualizar para que una decisión de moderación no deje copias antiguas visibles en la interfaz.
+
+Web y Android muestran el mismo chat, acciones de reportar y bloquear, y estado de solo lectura. El panel `/admin`, protegido por allowlist y MFA, muestra los reportes abiertos y registra decisiones con motivo. El operador debe revisar la cola y puede mantener el chat en solo lectura durante su ausencia. El cliente no puede reactivar el envío por sí mismo.
+
+El control operativo del panel empieza en **solo lectura**. Para habilitar envíos, el operador registra un motivo y el servidor exige que el chat y la moderación estén configurados; al pausar, se guarda una entrada de auditoría. La función de inserción comprueba ese control bajo bloqueo de fila, de modo que una pausa confirmada impide nuevas escrituras aunque un cliente conserve una pantalla vieja. Los flags de entorno siguen siendo un segundo gate independiente.
+
+El envío exige `COLLABORATION_ENABLED=true`, `SOCIAL_CHAT_ENABLED=true` y `SOCIAL_CHAT_MODERATION_READY=true`. Para menores exige además los gates sociales existentes, permiso familiar social y `SOCIAL_CHAT_MINOR_APPROVED=true`. Todos los flags nuevos están apagados por defecto. Si la moderación no está lista, la lectura de mensajes existentes y los reportes siguen disponibles para cuentas que aún tienen acceso social.
+
+La exportación de privacidad incluye mensajes propios y reportes iniciados por la cuenta. Al eliminar la cuenta se eliminan sus mensajes; la evidencia de reportes se conserva solo bajo su plazo y justificación de moderación. Los mensajes caducan a los 30 días y los reportes resueltos a los 90 días mediante `cleanup_group_chat`, si `pg_cron` está disponible. El operador debe comprobar el cron real después de aplicar la migración; la prueba local solo valida PostgreSQL embebido.
+
+Pendiente antes de habilitar el chat a menores: procedimiento de revisión y respuesta de incidentes, configuración y prueba del operador real con MFA, prueba de reportes/bloqueos entre cuentas reales, evaluación de seguridad del contenido, supervisión de la cola, revisión legal y pruebas Android. La migración y el código de esta iteración permanecen locales hasta el despliegue coordinado pendiente de E4.

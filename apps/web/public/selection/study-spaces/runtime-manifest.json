@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "spaces": [
+    {
+      "id": "library",
+      "url": "/selection/study-spaces/library-mobile.glb",
+      "bytes": 35903584,
+      "sha256": "c5cdd00d4e63038d07a95dc2356e9677420a0872d3af7f8c71ed585146e85991",
+      "geometry": {
+        "objects": 46,
+        "vertices": 527365,
+        "triangles": 835022,
+        "materials": 58
+      },
+      "compact": {
+        "inputBytes": 53482868,
+        "outputBytes": 35903584,
+        "quantizedNormals": 1474461,
+        "quantizedUvs": 1449044,
+        "skippedUvs": 0,
+        "maxNormalError": 0.0039369900395551105,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "66b0dfb6a4f8473ca46d8457b9af9d18724a1675f065c92835d08cb407f9ff07",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "terrace",
+      "url": "/selection/study-spaces/terrace-mobile.glb",
+      "bytes": 20392640,
+      "sha256": "cd4c0a2e651124e5378928e6d742918051be3552fe70fcb87e7949643dfe64ff",
+      "geometry": {
+        "objects": 33,
+        "vertices": 294687,
+        "triangles": 471117,
+        "materials": 62
+      },
+      "compact": {
+        "inputBytes": 29218496,
+        "outputBytes": 20392640,
+        "quantizedNormals": 756488,
+        "quantizedUvs": 695751,
+        "skippedUvs": 0,
+        "maxNormalError": 0.003937004588720372,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "26e1f4185632630c43b62743687314e3fe3ff2fce65cfb3cfd02e58003171ee1",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "pergola",
+      "url": "/selection/study-spaces/pergola-mobile.glb",
+      "bytes": 57459548,
+      "sha256": "7cf2e5f3e918e8008fcafefb8180ecb60ed4afa94e3b8fb09dcda34e6f5e70d0",
+      "geometry": {
+        "objects": 66,
+        "vertices": 755991,
+        "triangles": 1351894,
+        "materials": 60
+      },
+      "compact": {
+        "inputBytes": 86845384,
+        "outputBytes": 57459548,
+        "quantizedNormals": 2457702,
+        "quantizedUvs": 2435059,
+        "skippedUvs": 0,
+        "maxNormalError": 0.003937006290034045,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "610fb8b24b1094f1132ee156ad450906d7bdea0756508647ad4c6e0a2595f809",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "cafe",
+      "url": "/selection/study-spaces/cafe-mobile.glb",
+      "bytes": 13014620,
+      "sha256": "592b2a5e6f29525b69195c232a9747f53c207277a785d57c59ae66d0309efc72",
+      "geometry": {
+        "objects": 47,
+        "vertices": 179226,
+        "triangles": 265584,
+        "materials": 59
+      },
+      "compact": {
+        "inputBytes": 18159252,
+        "outputBytes": 13014620,
+        "quantizedNormals": 447733,
+        "quantizedUvs": 393053,
+        "skippedUvs": 0,
+        "maxNormalError": 0.003936992855522625,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "55eba7ac01c1789407134ca7dd4e1e90951f233354e2e0dc13b605f360aeb500",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "minimal",
+      "url": "/selection/study-spaces/minimal-mobile.glb",
+      "bytes": 17081556,
+      "sha256": "4a10fcc96009cf4dd4a6c8c65ddebe7aad38dfb8622c2ded65feeb0e4322f94b",
+      "geometry": {
+        "objects": 37,
+        "vertices": 230424,
+        "triangles": 430058,
+        "materials": 51
+      },
+      "compact": {
+        "inputBytes": 24965948,
+        "outputBytes": 17081556,
+        "quantizedNormals": 682347,
+        "quantizedUvs": 608445,
+        "skippedUvs": 0,
+        "maxNormalError": 0.003937007639351786,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "58a95e662096a3b4aa43d2d0515b203b68daffabdaeac9f9f5a24ed0ba29bd27",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "tech",
+      "url": "/selection/study-spaces/tech-mobile.glb",
+      "bytes": 8672944,
+      "sha256": "8cdc55940cf78c48434b55c3edbea11e5f2bbd3b87ffe5d5dfb79ff8c20ed4bf",
+      "geometry": {
+        "objects": 41,
+        "vertices": 125638,
+        "triangles": 212442,
+        "materials": 55
+      },
+      "compact": {
+        "inputBytes": 12547324,
+        "outputBytes": 8672944,
+        "quantizedNormals": 384792,
+        "quantizedUvs": 201041,
+        "skippedUvs": 0,
+        "maxNormalError": 0.0039369902742190654,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "8fe943b0aff5da4fbe31fee3482fa0f85422f0a823dd5858b4bed56533be738f",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "pavilion",
+      "url": "/selection/study-spaces/pavilion-mobile.glb",
+      "bytes": 25901768,
+      "sha256": "3499ba6fad83894b3af5f8451579f8d14b4746441df59a94e3b63141ba222b93",
+      "geometry": {
+        "objects": 34,
+        "vertices": 330218,
+        "triangles": 546164,
+        "materials": 69
+      },
+      "compact": {
+        "inputBytes": 37457764,
+        "outputBytes": 25901768,
+        "quantizedNormals": 971340,
+        "quantizedUvs": 948697,
+        "skippedUvs": 0,
+        "maxNormalError": 0.003937007639351786,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "c0ee57c04825ebaae6583f783117359812be790724bbff69954d4f70c988d1e0",
+      "status": "web-staged-android-performance-pending"
+    },
+    {
+      "id": "loft",
+      "url": "/selection/study-spaces/loft-mobile.glb",
+      "bytes": 26904948,
+      "sha256": "9c1b655ed26bedcad756f62c2f74ca758130817e0a8a699aa60e5483faa924f6",
+      "geometry": {
+        "objects": 36,
+        "vertices": 402089,
+        "triangles": 632790,
+        "materials": 60
+      },
+      "compact": {
+        "inputBytes": 38763028,
+        "outputBytes": 26904948,
+        "quantizedNormals": 1017349,
+        "quantizedUvs": 932389,
+        "skippedUvs": 19824,
+        "maxNormalError": 0.003937005175380259,
+        "maxUvError": 0.000007629510948348184,
+        "positionsUnchanged": true,
+        "indicesUnchanged": true,
+        "nodesUnchanged": true,
+        "materialsUnchanged": true
+      },
+      "sourceSha256": "cde58c7d2cff418a107ed42c8e8b1dea1002465078e8036b504a5fcb5738708d",
+      "status": "web-staged-android-performance-pending"
+    }
+  ]
+}

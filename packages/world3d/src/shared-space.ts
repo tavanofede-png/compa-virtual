@@ -73,16 +73,35 @@ export async function createSharedSpaceWorld(
   >();
   const seats = sharedSeats(id);
   let desired: SharedRoomPresence[] = [];
-  let loading = false;
-  async function loadActors() {
-    if (loading || disposed) return;
-    loading = true;
-    try {
+  let loadingPromise: Promise<void> | null = null;
+  let animationClips: T.AnimationClip[] | null = null;
+  async function clips() {
+    if (animationClips) return animationClips;
+    const library = await new GLTFLoader().parseAsync(
+      await read("/selection/models/rig-animations.glb"),
+      "",
+    );
+    animationClips = library.animations;
+    disposeModel(library.scene);
+    check();
+    return animationClips;
+  }
+  function loadActors(): Promise<void> {
+    if (disposed) return Promise.resolve();
+    if (loadingPromise) return loadingPromise;
+    const task = Promise.resolve().then(async () => {
       while (!disposed) {
         const row = desired.find(
           (p) => p.appearance.character_id && !actors.has(p.user_id),
         );
         if (!row) break;
+        const fingerprint = JSON.stringify(row.appearance);
+        const stillWanted = () =>
+          desired.some(
+            (p) =>
+              p.user_id === row.user_id &&
+              JSON.stringify(p.appearance) === fingerprint,
+          );
         const character = characterById(row.appearance.character_id);
         const companion = {
           ...selectCharacter(character.id),
@@ -101,7 +120,7 @@ export async function createSharedSpaceWorld(
           model.removeFromParent();
           disposeModel(world.scene);
           check();
-          if (!desired.some((p) => p.user_id === row.user_id)) {
+          if (!stillWanted()) {
             disposeModel(model);
             continue;
           }
@@ -115,20 +134,18 @@ export async function createSharedSpaceWorld(
             )
               o.visible = false;
           });
-          const library = await new GLTFLoader().parseAsync(
-            await read("/selection/models/rig-animations.glb"),
-            "",
-          );
-          if (disposed || signal?.aborted) disposeModel(library.scene);
-          check();
           const mixer = new T.AnimationMixer(model);
-          model.animations = library.animations;
-          disposeModel(library.scene);
+          model.animations = await clips();
+          check();
+          if (!stillWanted()) {
+            disposeModel(model);
+            continue;
+          }
           scene.add(model);
           actors.set(row.user_id, {
             model,
             mixer,
-            fingerprint: JSON.stringify(row.appearance),
+            fingerprint,
             activity: "",
           });
           place();
@@ -137,9 +154,11 @@ export async function createSharedSpaceWorld(
           if (!disposed) throw error;
         }
       }
-    } finally {
-      loading = false;
-    }
+    });
+    loadingPromise = task.finally(() => {
+      loadingPromise = null;
+    });
+    return loadingPromise;
   }
   function place() {
     for (const row of desired) {

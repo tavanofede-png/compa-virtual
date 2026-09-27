@@ -93,12 +93,33 @@ export interface StudyPlan {
 }
 export interface StudySession {
   id: string;
-  slot_id: string;
-  academic_item_id: string;
+  slot_id?: string;
+  academic_item_id?: string;
+  subject_id?: string;
+  objective?: string;
+  source?: "FREE" | "PLAN";
   method_id: string;
   duration_minutes: number;
   reflection: string;
   completed_at: string;
+  started_at?: string;
+  actual_seconds?: number;
+  planned_minutes?: number;
+  feedback?: "EASY" | "GOOD" | "HARD" | "VERY_HARD";
+}
+export interface ActiveStudySession {
+  id: string;
+  controller_device_id?: string;
+  source: "FREE" | "PLAN";
+  slot_id?: string;
+  academic_item_id?: string;
+  subject_id?: string;
+  objective: string;
+  method_id: string;
+  planned_minutes: number;
+  started_at: string;
+  running_since: string | null;
+  elapsed_seconds: number;
 }
 export interface Checkin {
   id: string;
@@ -116,9 +137,18 @@ export interface Material {
   path: string;
   mime_type: string;
   size: number;
-  status: "QUEUED" | "PROCESSING" | "READY" | "FAILED";
+  status: "UPLOADING" | "QUEUED" | "PROCESSING" | "READY" | "FAILED" | "CANCELLED";
   error_message?: string | null;
   page_count?: number;
+  text_ready?: boolean;
+  text_complete?: boolean;
+  indexing_status?: "PENDING" | "PROCESSING" | "READY" | "FAILED" | "UNAVAILABLE" | "CANCELLED";
+  processing?: {
+    phase: "WAITING" | "EXTRACTING" | "OCR" | "INDEXING" | "COMPLETE" | "FAILED" | "CANCELLED";
+    completed: number;
+    total: number | null;
+    updated_at: string;
+  };
 }
 export interface Citation {
   material_id: string;
@@ -161,13 +191,37 @@ export interface Memory {
   id: string;
   content: string;
   category: "PREFERENCE" | "TOPIC" | "PROGRESS";
+  origin?: "MANUAL" | "COMPANION";
+  source_message_id?: string;
+  created_at?: string;
+  updated_at?: string;
+  updated_by?: "USER" | "COMPANION";
 }
 export interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
   citations?: Citation[];
+  actions?: AgentActionReceipt[];
+  effects?: AgentEffect[];
   created_at: string;
+}
+export interface AgentActionReceipt {
+  id: string;
+  label: string;
+  status: "COMPLETED" | "NEEDS_INPUT";
+}
+export interface AgentEffect {
+  type: "NAVIGATE";
+  target:
+    | "room"
+    | "today"
+    | "agenda"
+    | "study"
+    | "progress"
+    | "compa"
+    | "spaces"
+    | "together";
 }
 export interface Notification {
   id: string;
@@ -180,9 +234,23 @@ export interface Notification {
 export interface NotificationPreferences {
   checkin_enabled: boolean;
   checkin_minute: number;
+  daily_study_enabled?: boolean;
+  daily_study_minute?: number;
   quiet_start: number;
   quiet_end: number;
   weekends: boolean;
+}
+export interface StudyReminder {
+  id: string;
+  title: string;
+  body: string;
+  date: string | null;
+  day_of_week: number | null;
+  minute: number;
+  route: AgentEffect["target"];
+  enabled: boolean;
+  created_at: string;
+  snoozed_from?: string;
 }
 export interface Snapshot {
   onboarding?: { step: number; updated_at: string };
@@ -195,12 +263,14 @@ export interface Snapshot {
     due_date: string;
   }[];
   profile: Profile | null;
+  activeStudySpaceId?: import("./study-spaces").StudySpaceId;
   companion: Companion;
   subjects: Subject[];
   blocks: WeeklyBlock[];
   items: AcademicItem[];
   plans: StudyPlan[];
   sessions: StudySession[];
+  activeSession?: ActiveStudySession | null;
   checkins: Checkin[];
   materials: Material[];
   quizzes: Quiz[];
@@ -208,6 +278,7 @@ export interface Snapshot {
   memories: Memory[];
   messages: Message[];
   notifications: Notification[];
+  studyReminders: StudyReminder[];
   inventory: string[];
   ownedPets: import("./pets").OwnedPet[];
   activePetId: string | null;
@@ -348,12 +419,14 @@ export const defaultCompanion: Companion = {
 };
 export const emptySnapshot = (): Snapshot => ({
   profile: null,
+  activeStudySpaceId: "library",
   companion: { ...defaultCompanion },
   subjects: [],
   blocks: [],
   items: [],
   plans: [],
   sessions: [],
+  activeSession: null,
   checkins: [],
   materials: [],
   quizzes: [],
@@ -361,17 +434,30 @@ export const emptySnapshot = (): Snapshot => ({
   memories: [],
   messages: [],
   notifications: [],
+  studyReminders: [],
   inventory: [],
   ownedPets: [],
   activePetId: null,
-  equippedPetSetup: { activePetId: null, bedId: "pet-bed-cozy", toyIds: ["pet-ball-cozy", "pet-rope-cozy"], accessoryId: "pet-bandana-blue" },
-  petPreferences: { visible: true, automaticMovement: true, activityLevel: "normal", reducedMotion: false },
+  equippedPetSetup: {
+    activePetId: null,
+    bedId: "pet-bed-cozy",
+    toyIds: ["pet-ball-cozy", "pet-rope-cozy"],
+    accessoryId: "pet-bandana-blue",
+  },
+  petPreferences: {
+    visible: true,
+    automaticMovement: true,
+    activityLevel: "normal",
+    reducedMotion: false,
+  },
   coins: 0,
   xp: 0,
   streak: 0,
   preferences: {
-    checkin_enabled: true,
+    checkin_enabled: false,
     checkin_minute: 1080,
+    daily_study_enabled: false,
+    daily_study_minute: 1020,
     quiet_start: 1320,
     quiet_end: 420,
     weekends: false,

@@ -28,6 +28,7 @@ import {
   clock,
   minuteOf,
   today,
+  consentRequirement,
   type Companion,
   type Profile,
 } from "@compa/domain";
@@ -89,6 +90,8 @@ export function CompanionSetup({
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [petName, setPetName] = useState("Miel");
+  const [guardianName, setGuardianName] = useState("");
+  const [guardianAttested, setGuardianAttested] = useState(false);
   const pending = useRef(false),
     scroll = useRef<ScrollView>(null);
   const character = characterById(companion.character_id),
@@ -197,6 +200,13 @@ export function CompanionSetup({
           throw Error("Revisá tu fecha de nacimiento.");
       }
       const complete = step === 5;
+      if (complete) {
+        const need = consentRequirement(profile.birth_date);
+        if (need.required && (!env.consent?.recorded || !env.consent.capabilities?.service))
+          throw Error(
+            "Falta el consentimiento de un adulto responsable para continuar.",
+          );
+      }
       const result = await repo.command(
         {
           type: complete ? "onboarding.complete" : "onboarding.save",
@@ -239,9 +249,14 @@ export function CompanionSetup({
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View style={css.header}>
-          <Text style={css.brand}>
-            c. <Text style={{ fontSize: 16 }}>compa virtual</Text>
-          </Text>
+          <View style={css.brand}>
+            <Image
+              source={require("../assets/kusiy-logo.png")}
+              style={css.brandLogo}
+              accessibilityIgnoresInvertColors
+            />
+            <Text style={css.brandName}>Kusiy</Text>
+          </View>
           <Pressable
             accessibilityRole="button"
             disabled={busy}
@@ -501,6 +516,84 @@ export function CompanionSetup({
                     Esta es una demostración local. Usá datos ficticios.
                   </Text>
                 )}
+                {consentRequirement(profile.birth_date).required && (
+                  <View style={{ gap: 10, paddingTop: 8 }}>
+                    <Text style={css.body}>
+                      Kusiy es para adolescentes. Un adulto responsable tiene
+                      que registrar el consentimiento. Esto no reemplaza la
+                      revisión jurídica del titular.
+                    </Text>
+                    {env.consent?.recorded ? (
+                      <Text style={css.body}>
+                        {env.consent.capabilities?.service ? "Servicio aceptado por el adulto verificado." : "Familia verificada. Falta que el adulto acepte el servicio desde su enlace privado."}
+                      </Text>
+                    ) : env.consent?.pending ? (
+                      <Text style={css.body}>
+                        Solicitud enviada. Un adulto responsable debe completar
+                        la verificación por el canal independiente de la beta.
+                      </Text>
+                    ) : (
+                      <>
+                        <Field
+                          label="Nombre de quien consiente"
+                          value={guardianName}
+                          onChangeText={setGuardianName}
+                          maxLength={80}
+                        />
+                        <Pressable
+                          accessibilityRole="checkbox"
+                          accessibilityState={{ checked: guardianAttested }}
+                          onPress={() => setGuardianAttested(!guardianAttested)}
+                        >
+                          <Text style={css.body}>
+                            {guardianAttested ? "☑" : "☐"} Soy un adulto
+                            responsable y consiento el uso de Kusiy por esta
+                            cuenta.
+                          </Text>
+                        </Pressable>
+                        <Button
+                          disabled={
+                            busy ||
+                            !guardianAttested ||
+                            guardianName.trim().length < 2
+                          }
+                          onPress={() =>
+                            perform(async () => {
+                              profileSchema.parse(profile);
+                              if (
+                                profile.birth_date > today() ||
+                                profile.birth_date < "1926-01-01"
+                              )
+                                throw Error("Revisá tu fecha de nacimiento.");
+                              const saved = await repo.command(
+                                {
+                                  type: "onboarding.save",
+                                  payload: {
+                                    step: 3,
+                                    companion,
+                                    profile,
+                                    petName,
+                                  },
+                                },
+                                env.version,
+                              );
+                              update(saved);
+                              update(
+                                await repo.recordConsent({
+                                  guardian_name: guardianName.trim(),
+                                  attestation: true,
+                                  basis: "parental-guardian",
+                                }),
+                              );
+                            })
+                          }
+                        >
+                          Enviar solicitud de consentimiento
+                        </Button>
+                      </>
+                    )}
+                  </View>
+                )}
               </>
             )}
             {step === 4 && (
@@ -674,7 +767,9 @@ const css = StyleSheet.create({
     paddingHorizontal: 22,
     paddingVertical: 12,
   },
-  brand: { fontSize: 27, fontWeight: "600", color: colors.ink },
+  brand: { flexDirection: "row", alignItems: "center", gap: 8 },
+  brandLogo: { width: 40, height: 40, resizeMode: "contain" },
+  brandName: { fontSize: 17, fontWeight: "600", color: colors.ink },
   exit: { color: colors.green, fontSize: 14, paddingVertical: 10 },
   progress: {
     flexDirection: "row",

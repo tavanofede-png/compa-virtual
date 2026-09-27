@@ -7,6 +7,7 @@ import {
   type Profile,
 } from "@compa/domain";
 import { z } from "zod";
+import { hasFamilyCapability } from "./family-permissions";
 
 const errors: Record<string, [number, string]> = {
   ROOM_CONTROLLED: [
@@ -16,6 +17,10 @@ const errors: Record<string, [number, string]> = {
   ROOM_SEAT_BUSY: [
     409,
     "Alguien acaba de ocupar ese lugar. Elegí otro asiento.",
+  ],
+  ROOM_OTHER_SESSION: [
+    409,
+    "Ya estás en otra sala. Salí de ella antes de entrar a este encuentro.",
   ],
   ROOM_COOLDOWN: [429, "Esperá un momento antes de enviar otra reacción."],
   COLLAB_TOO_FEW: [
@@ -70,6 +75,11 @@ const errors: Record<string, [number, string]> = {
     "Esta invitación venció o ya fue respondida o revocada.",
   ],
   COLLAB_INVALID: [400, "Revisá los datos e intentá de nuevo."],
+  CHAT_INVALID: [400, "Revisá el mensaje e intentá de nuevo."],
+  CHAT_LINK: [400, "El chat del encuentro no permite enlaces ni correos."],
+  CHAT_RATE: [429, "Esperá un momento antes de enviar otro mensaje."],
+  CHAT_READ_ONLY: [403, "El chat está en solo lectura por decisión del equipo de moderación."],
+  CHAT_BLOCKED_PEER: [403, "No podés compartir el encuentro con una persona bloqueada."],
 };
 export async function handleCollaboration(
   db: SupabaseClient,
@@ -109,13 +119,23 @@ export async function handleCollaboration(
   const profile = data?.state?.profile as Profile | undefined;
   if (!profile?.onboarding_complete)
     return unavailable("Completá tu perfil para estudiar con otros.");
-  // Social eligibility is independent of AI consent. The initial rollout is adult-only.
+  // Social permission is separate from AI and service permission. The family
+  // grant is checked on every read, command and room heartbeat, so revocation
+  // stops new operations even for an already-open client.
   const birth = z.iso.date().safeParse(profile.birth_date);
   const age = birth.success ? ageAt(birth.data) : NaN;
-  if (!Number.isFinite(age) || age < 18 || age > 120)
-    return unavailable(
-      "Las sesiones compartidas de esta primera beta están disponibles para mayores de 18 años.",
-    );
+  if (!Number.isFinite(age) || age < 13 || age > 120)
+    return unavailable("Este perfil no puede ingresar a encuentros compartidos.");
+  if (age < 18) {
+    if (env.MINOR_BETA_APPROVED !== "true" || env.SOCIAL_MINOR_BETA_APPROVED !== "true")
+      return unavailable("Los encuentros para menores todavía no están habilitados en este entorno.");
+    try {
+      if (!await hasFamilyCapability(db, userId, "social"))
+        return unavailable("Tu familia todavía no habilitó los encuentros compartidos.");
+    } catch {
+      return json({ error: "No pudimos comprobar el permiso social. Reintentá." }, 503);
+    }
+  }
   const identity = await db.rpc("collaboration_identity", {
     p_user: userId,
     p_nickname: profile.nickname.trim() || "Compañero",
@@ -126,15 +146,66 @@ export async function handleCollaboration(
       503,
     );
   let result;
+  let chatWriteEnabled = env.SOCIAL_CHAT_ENABLED === "true"
+    && env.SOCIAL_CHAT_MODERATION_READY === "true"
+    && (age >= 18 || env.SOCIAL_CHAT_MINOR_APPROVED === "true");
+  if (chatWriteEnabled && ["collaboration.chat.page", "collaboration.chat.send"].includes(body.type)) {
+    const control = await db.rpc("social_chat_writable");
+    chatWriteEnabled = !control.error && control.data === true;
+  }
   if (body.type === "collaboration.overview") {
     z.object({}).strict().parse(body.payload);
     result = await db.rpc("collaboration_read", { p_user: userId });
+    if (!result.error) {
+      const joinable = await db.rpc("collaboration_group_sessions", { p_user: userId });
+      if (joinable.error) result = joinable;
+      else result = { ...result, data: {
+        ...result.data,
+        sessions: [...(result.data?.sessions ?? []), ...(joinable.data ?? [])]
+          .sort((a, b) => Date.parse(b.scheduled_start_at) - Date.parse(a.scheduled_start_at)),
+      } };
+    }
   } else if (body.type === "collaboration.session") {
     const p = z.object({ session_id: z.uuid() }).strict().parse(body.payload);
     result = await db.rpc("collaboration_read", {
       p_user: userId,
       p_session: p.session_id,
     });
+    // Legacy records may contain external call links. Kusiy's student
+    // encounters only expose the in-app room; do not disclose those links.
+    if (!result.error && result.data)
+      result = { ...result, data: { ...result.data, meeting_url: null } };
+  } else if (body.type === "collaboration.chat.page") {
+    const p = z.object({ session_id: z.uuid(), before: z.object({
+      created_at: z.iso.datetime({ offset: true }), id: z.uuid(),
+    }).strict().optional() }).strict().parse(body.payload);
+    result = await db.rpc("collaboration_chat_read", {
+      p_user: userId, p_session: p.session_id,
+      p_before_time: p.before?.created_at ?? null, p_before_id: p.before?.id ?? null,
+    });
+    if (!result.error) result = { ...result, data: {
+      ...result.data, enabled: chatWriteEnabled,
+    } };
+  } else if (body.type === "collaboration.chat.send") {
+    if (!chatWriteEnabled) return json({ error: "El chat está en solo lectura hasta que la moderación esté disponible." }, 403);
+    const p = z.object({ session_id: z.uuid(), body: z.string().trim().min(1).max(1000) })
+      .strict().parse(body.payload);
+    result = await db.rpc("collaboration_chat_send", {
+      p_user: userId, p_operation: z.uuid().parse(body.operationId),
+      p_session: p.session_id, p_body: p.body,
+    });
+  } else if (body.type === "collaboration.chat.report") {
+    const p = z.object({ session_id: z.uuid(), message_id: z.uuid(),
+      category: z.enum(["harassment", "personal-data", "sexual", "violence", "other"]),
+      detail: z.string().trim().max(500).optional(),
+    }).strict().parse(body.payload);
+    result = await db.rpc("collaboration_chat_report", {
+      p_user: userId, p_session: p.session_id, p_message: p.message_id,
+      p_category: p.category, p_detail: p.detail ?? null,
+    });
+  } else if (body.type === "collaboration.chat.block") {
+    const p = z.object({ target_id: z.uuid() }).strict().parse(body.payload);
+    result = await db.rpc("collaboration_chat_block", { p_user: userId, p_target: p.target_id });
   } else if (body.type === "collaboration.command") {
     const command = collaborationCommandSchema.parse(body.payload);
     const operation = z.uuid().parse(body.operationId);
@@ -146,14 +217,19 @@ export async function handleCollaboration(
         .filter((id: string) => Boolean(wardrobeItem(id)))
         .slice(0, 12),
     };
+    // Keep the older command shape compatible while preventing new external
+    // calls even from a client that still sends a Meet URL.
+    const safeCommand = command.action === "session.create" || command.action === "session.update"
+      ? { ...command, meeting_url: null }
+      : command;
     result = await db.rpc(
-      command.action.startsWith("room.")
-        ? "shared_room_command"
+      command.action.startsWith("room.") ? "shared_room_command"
+        : command.action === "session.join" ? "collaboration_join_group_session"
         : "collaboration_command",
       {
         p_user: userId,
         p_operation: operation,
-        p_command: command,
+        p_command: safeCommand,
         ...(command.action.startsWith("room.")
           ? { p_appearance: appearance }
           : {}),

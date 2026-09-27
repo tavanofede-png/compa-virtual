@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import {
   ArrowUpRight,
   BookOpen,
@@ -18,8 +19,11 @@ import {
   methodById,
   today,
   dateLabel,
-  clock,
   addDays,
+  materialIsProcessing,
+  materialCanRetry,
+  materialStatusLabel,
+  memoryOriginLabel,
   type AcademicItem,
 } from "@compa/domain";
 import { useApp } from "./context";
@@ -27,6 +31,10 @@ import { Equipment } from "./Room";
 import { Empty, Tag, kinds } from "./ui";
 import { HomeScreen, CompaScreen } from "./HomeScreen";
 import { Together } from "./Together";
+import { AgendaCalendar } from "./AgendaCalendar";
+import { StudyHubNav } from "./StudyHubNav";
+import { StudySpaces } from "./StudySpaces";
+import { openMaterialOriginal } from "./openMaterialOriginal";
 export function ItemRows({ items }: { items: AcademicItem[] }) {
   const { env, open, run, command, busy, notice } = useApp(),
     s = env.state;
@@ -79,15 +87,26 @@ export function ItemRows({ items }: { items: AcademicItem[] }) {
   );
 }
 export function Pages({ view }: { view: string }) {
-  const { env, repo, busy, open, run, command, update, go } = useApp(),
+  const { env, repo, busy, open, run, command, update } = useApp(),
     s = env.state,
     date = today(s.profile?.timezone);
   const active = s.plans.find((x) => x.status === "ACCEPTED"),
     proposed = s.plans.find((x) => x.status === "PROPOSED"),
     pending = s.items
       .filter((x) => x.status === "PENDING")
-      .sort((a, b) => a.due_date.localeCompare(b.due_date)),
-    slots = active?.slots.filter((x) => x.date === date) ?? [];
+      .sort((a, b) => a.due_date.localeCompare(b.due_date));
+  const processingMaterial = s.materials.some(
+    materialIsProcessing,
+  );
+  useEffect(() => {
+    if (view !== "study" || repo.mode !== "live" || busy || !processingMaterial)
+      return;
+    const timer = setInterval(() => {
+      if (document.visibilityState === "visible")
+        void repo.load().then(update).catch(() => {});
+    }, 10000);
+    return () => clearInterval(timer);
+  }, [view, repo, busy, processingMaterial, update]);
   const plan = () =>
     run(async () => {
       await command("plan.propose", {}, false);
@@ -95,7 +114,14 @@ export function Pages({ view }: { view: string }) {
     });
   if (view === "room") return <HomeScreen />;
   if (view === "compa") return <CompaScreen />;
-  if (view === "together") return <Together key={s.profile?.id ?? "demo"} repo={repo.collaboration} back={() => go("study")} />;
+  if (view === "spaces") return <StudySpaces />;
+  if (view === "together")
+    return (
+      <>
+        <StudyHubNav active="together" />
+        <Together key={s.profile?.id ?? "demo"} repo={repo.collaboration} />
+      </>
+    );
   if (view === "today")
     return (
       <>
@@ -109,50 +135,7 @@ export function Pages({ view }: { view: string }) {
             Mi check-in <ArrowUpRight size={16} />
           </button>
         </div>
-        <section className="surface">
-          {slots.length ? (
-            slots.map((slot) => (
-              <div className="session-row" key={slot.id}>
-                <span className="session-time">
-                  {clock(slot.start_minute)}
-                  <small>{slot.duration_minutes} min</small>
-                </span>
-                <div>
-                  <Tag>{methodById(slot.method_id).name}</Tag>
-                  <h3>
-                    {s.items.find((x) => x.id === slot.academic_item_id)?.title}
-                  </h3>
-                  <p>{slot.objective}</p>
-                </div>
-                {slot.status === "PENDING" ? (
-                  <button
-                    className="primary"
-                    onClick={() => open("focus", slot)}
-                  >
-                    Estudiar →
-                  </button>
-                ) : (
-                  <Tag>
-                    {slot.status === "COMPLETE"
-                      ? "Completada"
-                      : slot.status === "EXCUSED"
-                        ? "Con excepción"
-                        : "Revisada"}
-                  </Tag>
-                )}
-              </div>
-            ))
-          ) : (
-            <Empty>
-              No hay sesiones aceptadas para hoy. Revisá tus horarios y prepará
-              un plan desde la agenda.
-            </Empty>
-          )}
-        </section>
-        <section className="upcoming">
-          <h2>Obligaciones para hoy</h2>
-          <ItemRows items={pending.filter((x) => x.due_date <= date)} />
-        </section>
+        <AgendaCalendar initialDate={date} />
       </>
     );
   if (view === "agenda")
@@ -209,62 +192,42 @@ export function Pages({ view }: { view: string }) {
             </button>
           </div>
         )}
-        <section className="surface">
-          <div className="section-heading">
-            <h2>Tareas y exámenes</h2>
-            <span>{pending.length} pendientes</span>
-          </div>
-          <ItemRows
-            items={[...pending, ...s.items.filter((x) => x.status === "DONE")]}
-          />
-        </section>
-        {active && (
-          <section className="surface">
-            <h2>Próximas sesiones</h2>
-            {active.slots
-              .filter((x) => x.date >= date)
-              .map((slot) => (
-                <div className="list-row" key={slot.id}>
-                  <div>
-                    <strong>
-                      {dateLabel(slot.date)} · {clock(slot.start_minute)}
-                    </strong>
-                    <p>
-                      {
-                        s.items.find((x) => x.id === slot.academic_item_id)
-                          ?.title
-                      }{" "}
-                      · {slot.duration_minutes} min
-                    </p>
-                  </div>
-                  <Tag>
-                    {slot.status === "COMPLETE"
-                      ? "Completada"
-                      : methodById(slot.method_id).name}
-                  </Tag>
-                </div>
-              ))}
-          </section>
-        )}
+        <AgendaCalendar />
       </>
     );
   if (view === "study")
     return (
       <>
+        <StudyHubNav active="study" />
         <div className="page-heading">
           <div>
             <p className="eyebrow">ENTENDER. PROBAR. VOLVER A INTENTAR.</p>
             <h1>Aprender se practica.</h1>
-            <p>Elegí una herramienta para el tema que tenés entre manos.</p>
+            <p>
+              Podés empezar a estudiar aunque todavía no hayas cargado una
+              tarea.
+            </p>
           </div>
-          <button className="primary" onClick={() => open("generate")}>
-            <Plus size={18} />
-            Crear práctica
+          <button className="primary" onClick={() => open("focus")}>
+            <BookOpen size={18} />
+            {s.activeSession ? "Continuar sesión" : "Estudiar libre"}
           </button>
         </div>
-        <div className="study-intro">
-          <div><h2>Estudiar juntos.</h2><p>Grupos privados y sesiones con las personas que conocés.</p></div>
-          <button className="secondary" onClick={() => go("together")}>Preparar un encuentro <ArrowUpRight size={17} /></button>
+        <div className="action-strip">
+          <button className="secondary" onClick={() => open("generate")}>
+            <Plus size={18} /> Crear práctica
+          </button>
+          {active?.slots
+            .filter((slot) => slot.status === "PENDING" && slot.date <= date)
+            .map((slot) => (
+              <button
+                className="secondary"
+                key={slot.id}
+                onClick={() => open("focus", slot)}
+              >
+                {slot.objective} · {slot.duration_minutes} min
+              </button>
+            ))}
         </div>
         <div className="study-intro">
           <BookOpen size={32} />
@@ -295,38 +258,32 @@ export function Pages({ view }: { view: string }) {
               <div className="list-row" key={m.id}>
                 <div>
                   <strong>{m.title}</strong>
-                  <p>
-                    {m.status === "READY"
-                      ? "Listo para estudiar"
-                      : m.status === "FAILED"
-                        ? m.error_message
-                        : "Procesamiento pendiente"}
-                  </p>
+                  <p role="status">{materialStatusLabel(m)}</p>
+                  {m.error_message && <p>{m.error_message}</p>}
                 </div>
                 <button
                   className="text-button"
                   onClick={() =>
                     run(async () => {
-                      window.open(
-                        await repo.signedUrl(m.path),
-                        "_blank",
-                        "noopener,noreferrer",
-                      );
+                      await openMaterialOriginal(repo, m.path);
                     })
                   }
                 >
-                  Abrir ↗
+                  Original ↗
                 </button>
-                {m.status === "FAILED" && (
+                {(m.text_ready || m.status === "READY") && <button className="text-button" onClick={() => open("material-text", m.id)}>Leer texto</button>}
+                {materialIsProcessing(m) && <button className="text-button" disabled={busy} onClick={() => run(() => command("material.cancel", { id: m.id }, false))}>Cancelar lectura</button>}
+                {materialCanRetry(m) && (
                   <button
                     className="text-button"
                     disabled={busy}
                     onClick={() =>
-                      run(() =>
-                        command("material.enqueue", { id: m.id }, false),
-                      )
+                      run(async () => {
+                        update(await repo.processMaterial(m.id));
+                      })
                     }
                   >
+                    <RefreshCw size={14} />
                     Reintentar
                   </button>
                 )}
@@ -445,6 +402,54 @@ export function Pages({ view }: { view: string }) {
           ))}
         </div>
         <section className="surface">
+          <h2>Mis sesiones</h2>
+          {s.sessions.length ? (
+            [...s.sessions]
+              .reverse()
+              .slice(0, 20)
+              .map((session) => {
+                const subject = s.subjects.find(
+                  (entry) =>
+                    entry.id === session.subject_id ||
+                    entry.id ===
+                      s.items.find(
+                        (item) => item.id === session.academic_item_id,
+                      )?.subject_id,
+                );
+                return (
+                  <div className="list-row" key={session.id}>
+                    <div>
+                      <strong>
+                        {session.objective ||
+                          s.items.find(
+                            (item) => item.id === session.academic_item_id,
+                          )?.title ||
+                          "Sesión de estudio"}
+                      </strong>
+                      <p>
+                        {dateLabel(
+                          today(s.profile?.timezone, session.completed_at),
+                        )}{" "}
+                        · {subject?.name || "Estudio general"} ·{" "}
+                        {methodById(session.method_id).name}
+                      </p>
+                      <small>
+                        {session.actual_seconds !== undefined
+                      ? session.actual_seconds < 60
+                        ? `${session.actual_seconds} s registrados`
+                        : `${Math.floor(session.actual_seconds / 60)} min registrados`
+                          : `${session.duration_minutes} min planificados (historial anterior)`}
+                      </small>
+                    </div>
+                    <Tag>{session.source === "FREE" ? "Libre" : "Plan"}</Tag>
+                  </div>
+                );
+              })
+          ) : (
+            <Empty>Tu primera sesión aparecerá acá cuando la cierres.</Empty>
+          )}
+        </section>
+        <section className="surface">
           <h2>Pequeños grandes logros</h2>
           {[
             [
@@ -533,6 +538,13 @@ export function Pages({ view }: { view: string }) {
               <div>
                 <Tag>{m.category}</Tag>
                 <p>{m.content}</p>
+                <p className="fine-print">{memoryOriginLabel(m)}</p>
+                {m.source_message_id && s.messages.some((message) => message.id === m.source_message_id && message.role === "user") && (
+                  <details>
+                    <summary>Ver tu pedido original</summary>
+                    <p>{s.messages.find((message) => message.id === m.source_message_id && message.role === "user")?.content}</p>
+                  </details>
+                )}
               </div>
               <button className="text-button" onClick={() => open("memory", m)}>
                 Editar
@@ -555,6 +567,7 @@ export function Pages({ view }: { view: string }) {
           </Empty>
         )}
       </section>
+      <p className="fine-print">Eliminar un recuerdo lo retira de la memoria del compañero. El historial reciente de conversación se conserva por separado durante 30 días.</p>
     </>
   );
 }

@@ -211,6 +211,13 @@ fieldset {
     serif;
   padding-bottom: 7px;
 }
+.brand-logo {
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  object-fit: contain;
+}
 .sidebar-label {
   font-size: 10px;
   letter-spacing: 1.6px;
@@ -703,22 +710,6 @@ fieldset {
   padding: 0;
   color: #929985;
 }
-.chat-launcher {
-  position: fixed;
-  right: 26px;
-  bottom: 23px;
-  background: var(--green);
-  color: #f4efdf;
-  border: 0;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 12px 17px;
-  border-radius: 40px;
-  font-size: 12px;
-  box-shadow: 0 6px 20px #29352220;
-  z-index: 35;
-}
 .action-strip {
   display: flex;
   flex-wrap: wrap;
@@ -830,6 +821,514 @@ fieldset {
 }
 .study-intro > svg {
   color: #92805b;
+}
+.study-hub-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  width: min(620px, 100%);
+  padding: 5px;
+  margin: 0 0 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #eee9e2;
+}
+.study-hub-nav button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--muted);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.study-hub-nav button.active {
+  color: var(--ink);
+  background: #fffefa;
+  box-shadow: 0 5px 15px #27334d12;
+}
+.study-spaces-page {
+  max-width: 1260px;
+  margin: auto;
+}
+.study-space-feature {
+  --space-accent: #6f7d57;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.7fr);
+  min-height: 430px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: #e9e2d8;
+  border: 1px solid color-mix(in srgb, var(--space-accent) 24%, #e8e1db);
+}
+.study-space-feature > img {
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  object-fit: cover;
+}
+.personal-study-view { position: relative; min-height: 430px; overflow: hidden; background: #e9e2d8; }
+.personal-study-canvas { position: absolute; inset: 0; z-index: 1; }
+.personal-study-canvas canvas { display: block; width: 100%; height: 100%; }
+.personal-study-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.personal-study-fallback.hidden { display: none; }
+.personal-study-status { position: absolute; z-index: 2; left: 16px; bottom: 16px; max-width: calc(100% - 32px); margin: 0; padding: 9px 12px; border-radius: 10px; background: #fffef0e8; color: var(--ink); font-size: 13px; }
+.study-view-toggle { display: flex; gap: 8px; margin: 18px 0 12px; }
+.study-view-toggle button { min-height: 48px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fffdfa; color: var(--ink); font: inherit; cursor: pointer; }
+.study-view-toggle button.selected { border-color: #d4a33a; background: #fff0c9; font-weight: 700; }
+.modal .personal-study-view { min-height: 280px; border-radius: 16px; }
+.study-space-feature > .study-space-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 38px;
+  border-left: 5px solid var(--space-accent);
+  background: #fffdf9;
+}
+.study-space-kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--space-accent);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  font-weight: 700;
+}
+.study-space-feature h2 {
+  margin: 18px 0 12px;
+  font-size: clamp(27px, 3vw, 42px);
+  line-height: 1.05;
+}
+.study-space-feature p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+.study-space-feature strong {
+  margin-top: 24px;
+  color: var(--space-accent);
+  font-size: 12px;
+}
+.study-space-actions { display: grid; gap: 8px; margin-top: 12px; }
+.study-space-actions button { min-height: 48px; }
+.study-space-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.study-space-card {
+  --space-accent: #6f7d57;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: #fffefa;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.study-space-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px #25314712;
+}
+.study-space-card.selected {
+  border: 2px solid var(--space-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--space-accent) 13%, transparent);
+}
+.study-space-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.28;
+  background: #eee7df;
+}
+.study-space-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.active-space-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: #173b35e8;
+  color: #fff;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.study-space-copy {
+  display: block;
+  padding: 15px;
+}
+.study-space-copy strong,
+.study-space-copy small {
+  display: block;
+}
+.study-space-copy strong {
+  font-size: 14px;
+}
+.study-space-copy small {
+  min-height: 45px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.study-space-note {
+  max-width: 760px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.agenda-calendar {
+  overflow: hidden;
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fffefa;
+}
+.calendar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 26px 19px;
+  border-bottom: 1px solid var(--line);
+}
+.calendar-toolbar h2 {
+  text-transform: capitalize;
+  font-size: 24px;
+}
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.calendar-weekdays {
+  border-bottom: 1px solid var(--line);
+  background: #faf7f2;
+}
+.calendar-weekdays span {
+  padding: 10px 8px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.calendar-grid > button {
+  position: relative;
+  min-width: 0;
+  min-height: 82px;
+  padding: 10px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #fffefa;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.calendar-grid > button:nth-child(7n) {
+  border-right: 0;
+}
+.calendar-grid > button:hover {
+  background: #f8f5ef;
+}
+.calendar-grid > button.outside {
+  color: #b7b8b1;
+  background: #fbf9f5;
+}
+.calendar-grid > button.selected {
+  background: #eef3e8;
+  box-shadow: inset 0 0 0 2px #71875d;
+}
+.calendar-grid > button.today .calendar-number {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: #173246;
+  color: #fff;
+}
+.calendar-grid > button > small {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  color: var(--muted);
+  font-size: 9px;
+}
+.calendar-number {
+  font-size: 12px;
+}
+.calendar-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 14px;
+}
+.calendar-marks i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #71875d;
+}
+.calendar-marks i.session-mark {
+  width: 17px;
+  border-radius: 4px;
+  background: #5672c8;
+}
+.calendar-day-detail {
+  padding: 26px;
+}
+.calendar-event {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 13px 4px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+.calendar-event > i {
+  width: 8px;
+  height: 38px;
+  border-radius: 6px;
+  background: #71875d;
+}
+.calendar-event > span:not(.tag) {
+  flex: 1;
+}
+.calendar-event strong,
+.calendar-event small {
+  display: block;
+}
+.calendar-event small {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.calendar-event-time {
+  flex: 0 0 96px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  color: #5672c8;
+  font-size: 13px;
+  font-weight: 700;
+}
+.calendar-event.meeting .calendar-event-time {
+  color: #8960c7;
+}
+.home-next-summary {
+  padding: 20px;
+  border: 1px solid #e2ddd2;
+  border-radius: 17px;
+  background: #fffdf8;
+}
+.home-next-summary span {
+  display: block;
+  color: #8b8e7e;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+.home-next-summary strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 18px;
+}
+.home-next-summary p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.personal-room-library {
+  margin-top: 34px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 25px;
+  background: #f3eee8;
+}
+.personal-room-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+.personal-room-grid > button {
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid #ded7ce;
+  border-radius: 17px;
+  background: #fffefa;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.personal-room-grid > button.active {
+  border: 2px solid #617a58;
+  box-shadow: 0 0 0 3px #617a581c;
+}
+.personal-room-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.42;
+  background: #e9e3dc;
+}
+.personal-room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.personal-room-image > small {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: #173b35e8;
+  color: white;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.personal-room-grid > button > span:last-child {
+  display: block;
+  padding: 14px;
+}
+.personal-room-grid strong,
+.personal-room-grid > button > span:last-child small {
+  display: block;
+}
+.personal-room-grid > button > span:last-child small {
+  min-height: 32px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+@media (max-width: 1080px) {
+  .study-space-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .study-space-feature {
+    grid-template-columns: 1.45fr 0.8fr;
+  }
+  .personal-room-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .study-hub-nav {
+    width: 100%;
+    margin-bottom: 22px;
+  }
+  .study-hub-nav button {
+    gap: 6px;
+    font-size: 11px;
+  }
+  .study-space-feature {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .study-space-feature > img {
+    min-height: 0;
+    aspect-ratio: 1.18;
+  }
+  .study-space-feature > .study-space-detail {
+    padding: 24px;
+    border-left: 0;
+    border-top: 5px solid var(--space-accent);
+  }
+  .study-space-grid {
+    grid-template-columns: 1fr;
+  }
+  .study-space-copy small {
+    min-height: 0;
+  }
+  .calendar-toolbar {
+    padding: 18px 14px;
+  }
+  .calendar-toolbar h2 {
+    font-size: 18px;
+  }
+  .calendar-controls .secondary {
+    padding: 8px 10px;
+    min-height: 42px;
+  }
+  .calendar-grid > button {
+    min-height: 57px;
+    padding: 7px 5px;
+  }
+  .calendar-marks {
+    gap: 3px;
+    margin-top: 9px;
+  }
+  .calendar-marks i {
+    width: 5px;
+    height: 5px;
+  }
+  .calendar-marks i.session-mark {
+    width: 10px;
+  }
+  .calendar-grid > button > small {
+    display: none;
+  }
+  .calendar-weekdays span {
+    padding: 9px 2px;
+    font-size: 8px;
+  }
+  .calendar-day-detail {
+    padding: 19px 15px;
+  }
+  .calendar-event {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .calendar-event-time {
+    flex-basis: 78px !important;
+  }
+  .calendar-event .tag {
+    margin-left: auto;
+  }
+  .personal-room-library {
+    padding: 18px;
+  }
+  .personal-room-grid {
+    grid-template-columns: 1fr;
+  }
+  .personal-room-grid > button > span:last-child small {
+    min-height: 0;
+  }
 }
 .practice-row {
   display: flex;
@@ -1102,6 +1601,255 @@ fieldset {
   max-height: 340px;
   overflow-y: auto;
 }
+.chat-companion {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 18px;
+  min-height: 178px;
+  padding: 10px 16px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #f5ede4;
+}
+.chat-companion .avatar-view {
+  position: relative;
+  min-height: 170px;
+}
+.chat-companion.thinking .avatar-view {
+  animation: companion-thinking 1.8s ease-in-out infinite;
+}
+.chat-companion.thinking {
+  box-shadow: inset 0 0 0 1px rgba(44, 92, 82, 0.12);
+}
+.chat-companion p {
+  color: var(--muted);
+  margin: 6px 0;
+}
+.chat-companion small {
+  color: var(--muted);
+}
+.live-call-panel {
+  margin: 14px 0 18px;
+  padding: 18px;
+  color: #f9f6ed;
+  background:
+    radial-gradient(
+      circle at 92% 4%,
+      rgba(255, 194, 70, 0.24),
+      transparent 32%
+    ),
+    #123f43;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(20, 57, 58, 0.16);
+}
+.live-call-panel.active {
+  background:
+    radial-gradient(
+      circle at 92% 4%,
+      rgba(255, 194, 70, 0.32),
+      transparent 34%
+    ),
+    #0d4d50;
+}
+.live-call-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.live-call-heading strong {
+  display: block;
+  font-size: 16px;
+}
+.live-call-heading p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.live-call-signal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.live-call-signal i {
+  display: block;
+  width: 3px;
+  height: 10px;
+  background: #ffc34d;
+  border-radius: 99px;
+}
+.live-call-panel.active .live-call-signal i {
+  animation: live-call-wave 0.85s ease-in-out infinite alternate;
+}
+.live-call-panel.active .live-call-signal i:nth-child(2) {
+  animation-delay: 0.16s;
+  height: 19px;
+}
+.live-call-panel.active .live-call-signal i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.live-call-transcript {
+  margin: 14px 0 0;
+  padding: 11px 13px;
+  color: #fff7dd;
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 13px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.live-call-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 15px;
+}
+.live-call-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 17px;
+  border-radius: 15px;
+  font-weight: 700;
+}
+.live-call-start {
+  width: 100%;
+  color: #102f35;
+  background: #ffc34d;
+  border: 1px solid #ffc34d;
+}
+.live-call-interrupt {
+  flex: 1;
+  color: #123f43;
+  background: #fff8e9;
+  border: 1px solid #fff8e9;
+}
+.live-call-end {
+  flex: 1;
+  color: #fff;
+  background: #a43a3a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+@keyframes live-call-wave {
+  from {
+    transform: scaleY(0.55);
+    opacity: 0.65;
+  }
+  to {
+    transform: scaleY(1.35);
+    opacity: 1;
+  }
+}
+@keyframes companion-thinking {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.35deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0.35deg);
+  }
+}
+.voice-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: #4c6380;
+  min-height: 36px;
+  padding: 4px 0;
+}
+.agent-action-receipts {
+  display: grid;
+  gap: 7px;
+  margin-top: 9px;
+}
+.agent-action-receipts span {
+  display: block;
+  padding: 9px 11px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.agent-action-complete {
+  color: #245a43;
+  background: #e9f5ec;
+  border: 1px solid #c5e2cc;
+}
+.agent-action-needs-input {
+  color: #7b431e;
+  background: #fff2df;
+  border: 1px solid #efd0a7;
+}
+.scheduled-reminders {
+  display: grid;
+  gap: 9px;
+  margin-top: 20px;
+}
+.scheduled-reminder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fffdf8;
+}
+.scheduled-reminder strong,
+.scheduled-reminder small {
+  display: block;
+}
+.scheduled-reminder small {
+  margin-top: 4px;
+  color: var(--muted);
+}
+.chat-actions {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.chat-actions > button {
+  flex: 1;
+  min-width: 150px;
+}
+.voice-setting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+@media (max-width: 520px) {
+  .chat-companion {
+    grid-template-columns: 112px 1fr;
+    padding: 8px;
+  }
+  .chat-companion .avatar-view {
+    min-height: 150px;
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+  .live-call-panel {
+    padding: 15px;
+  }
+  .live-call-actions {
+    flex-direction: column;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-call-panel.active .live-call-signal i {
+    animation: none;
+  }
+}
 .message {
   padding: 13px 16px;
   background: #ecf0e3;
@@ -1120,6 +1868,59 @@ fieldset {
 .message p {
   font-size: 13px;
   margin-top: 5px;
+}
+.pending-user-message {
+  animation: pending-message-in 0.22s ease-out both;
+}
+.thinking-message {
+  border: 1px solid rgba(74, 101, 77, 0.12);
+  background: #edf2e6;
+}
+.thinking-message p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #53634e;
+  font-weight: 600;
+}
+.thinking-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-width: 27px;
+}
+.thinking-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #58715c;
+  animation: thinking-dot 0.9s ease-in-out infinite alternate;
+}
+.thinking-dots i:nth-child(2) {
+  animation-delay: 0.14s;
+}
+.thinking-dots i:nth-child(3) {
+  animation-delay: 0.28s;
+}
+@keyframes pending-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes thinking-dot {
+  from {
+    opacity: 0.35;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
 }
 .citation {
   display: inline-flex;
@@ -1182,6 +1983,24 @@ fieldset {
 .settings-row p {
   font-size: 12px;
   color: var(--muted);
+}
+.notification-entry {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+.notification-entry > p {
+  margin: 0 14px 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.notification-snooze {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 14px;
+}
+.notification-snooze button {
+  min-height: 48px;
 }
 .checkbox {
   display: flex;
@@ -1699,10 +2518,6 @@ fieldset {
     font-size: 11px;
     padding: 20px 8px;
   }
-  .chat-launcher {
-    right: 18px;
-    bottom: 17px;
-  }
   .stats-grid {
     gap: 10px;
   }
@@ -1968,3 +2783,19 @@ fieldset {
     gap: 7px;
   }
 }
+.material-text article { border-top: 1px solid var(--line, #ded8cd); padding: 12px 0; }
+.material-text article p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; }
+.support-center { display: grid; gap: 16px; max-height: min(70vh, 700px); overflow-y: auto; padding-right: 6px; }
+.support-center form { display: grid; gap: 12px; }
+.support-center label { display: grid; gap: 5px; font-weight: 600; }
+.support-center input, .support-center select, .support-center textarea { width: 100%; min-height: 48px; border: 1px solid #c6c1b5; border-radius: 12px; padding: 10px 12px; background: #fff; color: #17273d; font: inherit; }
+.support-center textarea { min-height: 100px; resize: vertical; }
+.support-ticket { border: 1px solid #ded6c9; border-radius: 14px; padding: 12px; }
+.support-ticket .settings-row { width: 100%; text-align: left; }
+.support-message { display: grid; gap: 4px; white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px; background: #f5f1e9; border-radius: 12px; }
+.public-help { min-height: 100vh; max-width: 760px; margin: auto; padding: 48px 24px 96px; color: #17273d; }
+.public-help h1 { font-size: clamp(2.3rem, 8vw, 4.5rem); line-height: 1.02; margin: 18px 0 24px; }
+.public-help section { padding: 24px 0; border-top: 1px solid #d9d2c6; }
+.public-help section h2 { margin: 0 0 10px; }
+.public-help a { color: #245d62; }
+.public-help-action { display: inline-block; padding: 14px 22px; background: #ffc957; border-radius: 12px; font-weight: 700; }

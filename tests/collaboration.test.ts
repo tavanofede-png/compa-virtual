@@ -69,12 +69,18 @@ describe("collaboration boundaries", () => {
       eq: () => chain,
       maybeSingle: async () => ({ data: { state: { profile } }, error: null }),
     };
-    const rpc = vi.fn(async () => ({ data: { enabled: true }, error: null }));
+    let granted = false;
+    const rpc = vi.fn(async (name: string) => ({
+      data: name === "family_capability_allowed" ? granted
+        : name === "collaboration_group_sessions" ? []
+        : { enabled: true, sessions: [] },
+      error: null,
+    }));
     const db = { from: () => chain, rpc } as unknown as SupabaseClient;
     const flags = {
       COLLABORATION_ENABLED: "true",
       MINOR_BETA_APPROVED: "true",
-      SOCIAL_MINOR_BETA_APPROVED: "true",
+      SOCIAL_MINOR_BETA_APPROVED: "false",
     };
     const blocked = await handleCollaboration(
       db,
@@ -85,6 +91,40 @@ describe("collaboration boundaries", () => {
     );
     expect((await blocked.json()).enabled).toBe(false);
     expect(rpc).not.toHaveBeenCalled();
+    flags.SOCIAL_MINOR_BETA_APPROVED = "true";
+    const awaitingFamily = await handleCollaboration(
+      db,
+      flags,
+      "verified-user",
+      { type: "collaboration.overview", payload: {} },
+      json,
+    );
+    expect((await awaitingFamily.json()).enabled).toBe(false);
+    expect(rpc).toHaveBeenLastCalledWith("family_capability_allowed", {
+      p_user: "verified-user",
+      p_policy: "kusiy-beta-nov-2026",
+      p_capability: "social",
+    });
+    granted = true;
+    const permitted = await handleCollaboration(
+      db,
+      flags,
+      "verified-user",
+      { type: "collaboration.overview", payload: {} },
+      json,
+    );
+    expect((await permitted.json()).enabled).toBe(true);
+    expect(rpc).toHaveBeenLastCalledWith("collaboration_group_sessions", { p_user: "verified-user" });
+    granted = false;
+    const revoked = await handleCollaboration(
+      db, flags, "verified-user",
+      { type: "collaboration.command", operationId: crypto.randomUUID(), payload: { action: "group.create", name: "Equipo" } },
+      json,
+    );
+    expect(revoked.status).toBe(403);
+    expect(rpc).toHaveBeenLastCalledWith("family_capability_allowed", {
+      p_user: "verified-user", p_policy: "kusiy-beta-nov-2026", p_capability: "social",
+    });
     profile.birth_date = "1990-01-01";
     await handleCollaboration(
       db,
@@ -93,7 +133,7 @@ describe("collaboration boundaries", () => {
       { type: "collaboration.overview", payload: {} },
       json,
     );
-    expect(rpc).toHaveBeenLastCalledWith("collaboration_read", {
+    expect(rpc).toHaveBeenLastCalledWith("collaboration_group_sessions", {
       p_user: "verified-user",
     });
     await expect(
@@ -132,6 +172,89 @@ describe("collaboration boundaries", () => {
     expect(bodies[2].operationId).not.toBe(bodies[0].operationId);
     expect(await cache.getItem("compa-collaboration:a:pending")).toBe("[]");
     expect(createDemo(cache).collaboration).toBeUndefined();
+  });
+  it("reuses a chat operation after a lost response without storing conversation content after confirmation", async () => {
+    const cache = memory(), calls: Record<string, unknown>[] = [];
+    const request = async (input: Record<string, unknown>) => {
+      calls.push(input);
+      if (calls.length === 1) throw Error("offline");
+      return { message_id: crypto.randomUUID(), status: "visible" };
+    };
+    const session = crypto.randomUUID();
+    await expect(createCollaborationRepository(request, cache, "chat-user")
+      .chatSend(session, "¿Repasamos?")).rejects.toThrow("offline");
+    await createCollaborationRepository(request, cache, "chat-user")
+      .chatSend(session, "¿Repasamos?");
+    expect(calls[0].operationId).toBe(calls[1].operationId);
+    expect(await cache.getItem("compa-collaboration:chat-user:pending")).toBe("[]");
+  });
+  it("keeps chat read-only until moderation and minor approval are enabled", async () => {
+    const json = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status });
+    const chain = { select: () => chain, eq: () => chain,
+      maybeSingle: async () => ({ data: { state: { profile: {
+        onboarding_complete: true, nickname: "Ana", birth_date: "1990-01-01",
+      } } }, error: null }),
+    };
+    const rpc = vi.fn(async (name: string) => ({ data: name === "collaboration_chat_read"
+      ? { messages: [], next_cursor: null } : name === "social_chat_writable" ? true : {}, error: null }));
+    const db = { from: () => chain, rpc } as unknown as SupabaseClient;
+    const session = crypto.randomUUID();
+    const env = { COLLABORATION_ENABLED: "true", SOCIAL_CHAT_ENABLED: "true",
+      SOCIAL_CHAT_MODERATION_READY: "false" };
+    const page = await handleCollaboration(db, env, "adult", {
+      type: "collaboration.chat.page", payload: { session_id: session },
+    }, json);
+    expect((await page.json()).enabled).toBe(false);
+    const blocked = await handleCollaboration(db, env, "adult", {
+      type: "collaboration.chat.send", payload: { session_id: session, body: "Hola" },
+      operationId: crypto.randomUUID(),
+    }, json);
+    expect(blocked.status).toBe(403);
+    expect(rpc).not.toHaveBeenCalledWith("collaboration_chat_send", expect.anything());
+    env.SOCIAL_CHAT_MODERATION_READY = "true";
+    await handleCollaboration(db, env, "adult", {
+      type: "collaboration.chat.send", payload: { session_id: session, body: "Hola" },
+      operationId: crypto.randomUUID(),
+    }, json);
+    expect(rpc).toHaveBeenCalledWith("collaboration_chat_send", expect.objectContaining({
+      p_session: session, p_body: "Hola", p_user: "adult",
+    }));
+  });
+  it("keeps legacy call links out of student session responses and commands", async () => {
+    const json = (value: unknown, status = 200) =>
+      new Response(JSON.stringify(value), { status });
+    const chain = {
+      select: () => chain,
+      eq: () => chain,
+      maybeSingle: async () => ({ data: { state: { profile: {
+        onboarding_complete: true, nickname: "Ana", birth_date: "1990-01-01",
+      } } }, error: null }),
+    };
+    const rpc = vi.fn(async (name: string) => ({
+      data: name === "collaboration_read"
+        ? { meeting_url: "https://meet.google.com/abc-defg-hij", session: { id: "one" } }
+        : { session_id: "one" },
+      error: null,
+    }));
+    const db = { from: () => chain, rpc } as unknown as SupabaseClient;
+    const env = { COLLABORATION_ENABLED: "true" };
+    const read = await handleCollaboration(db, env, "adult", {
+      type: "collaboration.session", payload: { session_id: crypto.randomUUID() },
+    }, json);
+    expect((await read.json()).meeting_url).toBeNull();
+    await handleCollaboration(db, env, "adult", {
+      type: "collaboration.command", operationId: crypto.randomUUID(),
+      payload: {
+        action: "session.create", group_id: null, title: "Repaso", objective: "Practicar",
+        session_type: "review", space_template_id: "study",
+        scheduled_start_at: new Date(Date.now() + 60_000).toISOString(),
+        timezone: "America/Argentina/Buenos_Aires", planned_duration: 45,
+        meeting_url: "https://meet.google.com/abc-defg-hij",
+      },
+    }, json);
+    expect(rpc).toHaveBeenLastCalledWith("collaboration_command", expect.objectContaining({
+      p_command: expect.objectContaining({ meeting_url: null }),
+    }));
   });
   it("fails closed without contacting the database when the flag is off", async () => {
     const json = (value: unknown, status = 200) =>

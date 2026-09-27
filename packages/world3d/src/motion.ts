@@ -9,6 +9,7 @@ export type MotionContext = {
   resting?: boolean;
   studying?: boolean;
   talking?: boolean;
+  speaking?: boolean;
   celebration?: number;
 };
 type Point = number[];

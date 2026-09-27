@@ -9,17 +9,11 @@ import {
   Check,
   Trophy,
 } from "lucide-react";
-import { characterIds, selectCharacter } from "@compa/domain";
+import { characterIds, selectCharacter, rooms as catalogRooms, type RoomId } from "@compa/domain";
 import { WorldCanvas } from "./Room";
+import { BrandLogo } from "./BrandLogo";
 const people = characterIds;
-const rooms = [
-  ["cozy", "Cozy moderno"],
-  ["minimalista", "Minimalista"],
-  ["tecnologia", "Tecnología"],
-  ["naturaleza", "Naturaleza"],
-  ["urbano", "Urbano"],
-  ["biblioteca-moderna", "Biblioteca moderna"],
-];
+const rooms = catalogRooms.map(({ id, name }) => [id, name] as const);
 export function Landing({
   register,
   login,
@@ -34,17 +28,17 @@ export function Landing({
   children: ReactNode;
 }) {
   const [person, setPerson] = useState("milo"),
-    [room, setRoom] = useState("cozy"),
+    [room, setRoom] = useState<RoomId>("cozy"),
     [interactive, setInteractive] = useState(false);
   const c = {
     ...selectCharacter(person as Parameters<typeof selectCharacter>[0]),
-    room_style: room as "cozy",
+    room_style: room,
   };
   return (
     <main className="landing">
       <header className="landing-nav">
         <a href="#welcome" className="brand">
-          <span className="brand-mark">c.</span>compa virtual
+          <BrandLogo />Kusiy
         </a>
         <button className="text-button" onClick={login}>
           Ingresar <ArrowUpRight size={18} />
@@ -354,7 +348,7 @@ export function Landing({
         </button>
       </section>
       <footer className="landing-footer">
-        <strong>compa virtual</strong>
+        <strong>Kusiy</strong>
         <p>
           Beta en desarrollo. Validación pedagógica y revisión jurídica
           pendientes antes de la entrega a alumnos.
@@ -362,6 +356,7 @@ export function Landing({
         <button className="text-button" onClick={login}>
           Acceder a mi cuenta y mis datos
         </button>
+        <a href="/help">Ayuda y soporte</a>
       </footer>
       {children}
     </main>

@@ -17,6 +17,7 @@ import {
 } from "@compa/domain";
 import { Box, Hand, Users, Pause, Play, RefreshCw } from "lucide-react";
 import "./shared-room.css";
+import { SharedRoomChat } from "./SharedRoomChat";
 
 type Runtime = ReturnType<typeof createSharedRoomSession>;
 export function SharedSpaceCanvas({
@@ -28,6 +29,7 @@ export function SharedSpaceCanvas({
   people: SharedRoomPresence[];
   onError: (error: string) => void;
 }) {
+  const [loading, setLoading] = useState(true);
   const host = useRef<HTMLDivElement>(null),
     peopleRef = useRef(people),
     errorRef = useRef(onError);
@@ -73,6 +75,7 @@ export function SharedSpaceCanvas({
         return;
       }
       worldRef.current = world;
+      setLoading(false);
       const controls = new OrbitControls(world.camera, renderer.domElement);
       controls.target.copy(world.target);
       controls.enablePan = false;
@@ -141,7 +144,14 @@ export function SharedSpaceCanvas({
       ref={host}
       role="img"
       aria-label="Sala 3D compartida. Los nombres y asientos están disponibles debajo."
-    />
+    >
+      {loading && (
+        <div className="shared-loading" role="status">
+          <span className="shared-loading-mark" aria-hidden="true" />
+          Preparando la sala 3D…
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -172,11 +182,15 @@ export function SharedRoom({
     [assetError, setAssetError] = useState(""),
     [goal, setGoal] = useState("");
   useEffect(() => {
+    setThree(state.entered);
+    if (state.entered) setAssetError("");
+  }, [state.entered]);
+  useEffect(() => {
     const session = createSharedRoomSession(repo, initial, (next) => {
       setState(next);
       if (next.detail) callback.current(next.detail);
       else if (next.accessRevoked) callback.current(null);
-    });
+    }, userId);
     runtime.current = session;
     const visible = () => session.visible(!document.hidden);
     document.addEventListener("visibilitychange", visible);
@@ -188,7 +202,7 @@ export function SharedRoom({
       runtime.current = null;
       session.dispose();
     };
-  }, [repo, initial.session.id]);
+  }, [repo, initial.session.id, userId]);
   useEffect(() => {
     void runtime.current?.refresh();
   }, [initial.session.revision]);
@@ -246,13 +260,15 @@ export function SharedRoom({
         <button
           className="shared-view"
           onClick={() => {
-            setAssetError("");
-            setThree(!three);
+            if (assetError) {
+              setAssetError("");
+              setThree(true);
+            } else setThree(!three);
           }}
           aria-pressed={three}
         >
           <Box size={18} />
-          {three ? "Vista liviana" : "Explorar en 3D"}
+          {assetError ? "Reintentar 3D" : three ? "Vista liviana" : "Explorar en 3D"}
         </button>
       </div>
       {assetError && (
@@ -546,6 +562,7 @@ export function SharedRoom({
           </section>
         </div>
       )}
+      {detail && <SharedRoomChat repo={repo} sessionId={id} userId={userId} />}
     </section>
   );
 }

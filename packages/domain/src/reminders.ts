@@ -6,7 +6,7 @@ export function dueReminders(s: Snapshot, instant: string) {
     date = now.toPlainDate().toString(),
     minute = now.hour * 60 + now.minute,
     p = s.preferences;
-  if (!p.weekends && [0, 6].includes(weekday(date))) return [];
+  const routineDay = p.weekends || ![0, 6].includes(weekday(date));
   if (
     isQuiet(minute, p.quiet_start, p.quiet_end) ||
     isQuiet(minute, s.profile.sleep_start, s.profile.sleep_end)
@@ -31,8 +31,33 @@ export function dueReminders(s: Snapshot, instant: string) {
     body: string;
     route: string;
   }[] = [];
+  const studiedToday =
+    Boolean(s.activeSession) ||
+    s.sessions.some(
+      (session) =>
+        localNow(s.profile!.timezone, session.completed_at)
+          .toPlainDate()
+          .toString() === date,
+    );
+  const dailyMinute = p.daily_study_minute ?? 1020;
   if (
+    routineDay &&
+    p.daily_study_enabled &&
+    !studiedToday &&
+    minute >= dailyMinute &&
+    minute <= dailyMinute + 30
+  )
+    drafts.push({
+      id: "daily-study",
+      date,
+      title: "Tu momento de estudio",
+      body: "Si te viene bien, podés retomar tu plan o empezar un repaso libre.",
+      route: "study",
+    });
+  if (
+    routineDay &&
     p.checkin_enabled &&
+    !p.daily_study_enabled &&
     !s.checkins.some((c) => c.date === date && c.outcome !== "UNCONFIRMED") &&
     minute >= p.checkin_minute &&
     minute <= p.checkin_minute + 180
@@ -72,5 +97,23 @@ export function dueReminders(s: Snapshot, instant: string) {
           route: "agenda",
         });
     }
+  for (const reminder of s.studyReminders ?? []) {
+    const appliesToday = reminder.date
+      ? reminder.date === date
+      : reminder.day_of_week === weekday(date);
+    if (
+      reminder.enabled &&
+      appliesToday &&
+      minute >= reminder.minute &&
+      minute <= reminder.minute + 30
+    )
+      drafts.push({
+        id: "custom:" + reminder.id,
+        date,
+        title: reminder.title,
+        body: reminder.body,
+        route: reminder.route,
+      });
+  }
   return drafts;
 }

@@ -1,0 +1,38 @@
+.page { min-height: 100vh; background: #f7f3ea; color: #17273d; font: 16px/1.5 Outfit, sans-serif; }
+.shell { width: min(1180px, calc(100% - 32px)); margin: auto; padding: 36px 0 80px; }
+.header { display: flex; align-items: start; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+.header h1 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.1; margin: 8px 0 12px; }
+.header p { max-width: 680px; margin: 0; }
+.header a { color: #173c44; white-space: nowrap; }
+.eyebrow { color: #476b62; font-size: .78rem; font-weight: 700; letter-spacing: .15em; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 18px 0 30px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.card { background: #fffdfa; border: 1px solid #dfd8c9; border-radius: 20px; box-shadow: 0 14px 32px #1a2b3610; padding: 24px; }
+.card h2, .card h3 { margin: 0 0 12px; }
+.card p { overflow-wrap: anywhere; }
+.card label { display: block; margin: 12px 0; font-weight: 600; }
+.card input:not([type="checkbox"]), .card select { display: block; width: 100%; min-height: 48px; margin-top: 6px; padding: 10px 12px; border: 1px solid #a9aea7; border-radius: 11px; background: #fff; color: #17273d; font: inherit; }
+.card button, .toolbar button { min-height: 48px; padding: 10px 20px; border: 0; border-radius: 11px; background: #ffc957; color: #17273d; font: inherit; font-weight: 700; cursor: pointer; }
+.card button:disabled, .toolbar button:disabled { cursor: not-allowed; opacity: .55; }
+.card button.secondary, .toolbar button.secondary { background: #e5eee9; }
+.card button.danger { background: #f7dcd5; }
+.review { border-top: 1px solid #dfd8c9; margin-top: 18px; padding-top: 8px; }
+.review button { width: 100%; margin-top: 8px; }
+.card .check { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+.check input { width: 22px; height: 22px; flex: none; }
+.error, .notice { padding: 14px 18px; border-radius: 12px; margin: 20px 0; }
+.error { background: #fde7dd; color: #7b2d1d; }
+.notice { background: #dceee2; color: #194633; }
+.enrollment img { display: block; max-width: 240px; width: 100%; margin: 16px 0; }
+.enrollment code { overflow-wrap: anywhere; }
+.audit { margin-top: 38px; border-top: 1px solid #d6d0c3; padding-top: 20px; }
+.audit p { margin: 8px 0; font-size: .88rem; }
+.audit > label { display: block; margin: 18px 0; }
+.audit > label input { display: block; width: 100%; min-height: 48px; margin-top: 8px; padding: 12px; border: 1px solid #a9aea7; border-radius: 11px; font: inherit; }
+.familyShell { max-width: 760px; }
+.permissions { border: 0; margin: 24px 0; padding: 0; }
+.permissions legend { font-size: 1.25rem; font-weight: 700; }
+.permissions .check { min-height: 48px; margin: 20px 0; }
+.permissionActions { display: flex; flex-wrap: wrap; gap: 12px; }
+.card textarea { width: 100%; min-height: 100px; font: inherit; overflow-wrap: anywhere; padding: 12px; }
+@media (max-width: 600px) { .header, .toolbar { flex-direction: column; align-items: stretch; } }

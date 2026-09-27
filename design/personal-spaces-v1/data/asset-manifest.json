@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "units": "meters",
+  "scope": "Fuentes 3D individuales; no certifica rendimiento, interacción ni publicación Android.",
+  "spaces": [
+    {
+      "id": "library",
+      "source": "design/personal-spaces-v1/models/library.glb",
+      "preview": "/selection/study-spaces/library.jpg",
+      "layout": "design/personal-spaces-v1/data/library-model-layout.json",
+      "sha256": "66b0dfb6a4f8473ca46d8457b9af9d18724a1675f065c92835d08cb407f9ff07",
+      "bytes": 80792248,
+      "geometry": {
+        "meshes": 46,
+        "primitives": 266,
+        "vertices": 2231151,
+        "triangles": 1163286,
+        "materials": 58,
+        "images": 0
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "terrace",
+      "source": "design/personal-spaces-v1/models/terrace.glb",
+      "preview": "/selection/study-spaces/terrace.jpg",
+      "layout": "design/personal-spaces-v1/data/terrace-model-layout.json",
+      "sha256": "26e1f4185632630c43b62743687314e3fe3ff2fce65cfb3cfd02e58003171ee1",
+      "bytes": 49888428,
+      "geometry": {
+        "meshes": 33,
+        "primitives": 187,
+        "vertices": 1375446,
+        "triangles": 698086,
+        "materials": 62,
+        "images": 1
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "pergola",
+      "source": "design/personal-spaces-v1/models/pergola.glb",
+      "preview": "/selection/study-spaces/pergola.jpg",
+      "layout": "design/personal-spaces-v1/data/pergola-model-layout.json",
+      "sha256": "610fb8b24b1094f1132ee156ad450906d7bdea0756508647ad4c6e0a2595f809",
+      "bytes": 140422252,
+      "geometry": {
+        "meshes": 66,
+        "primitives": 324,
+        "vertices": 4066421,
+        "triangles": 2056692,
+        "materials": 60,
+        "images": 0
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "cafe",
+      "source": "design/personal-spaces-v1/models/cafe.glb",
+      "preview": "/selection/study-spaces/cafe.jpg",
+      "layout": "design/personal-spaces-v1/data/cafe-model-layout.json",
+      "sha256": "55eba7ac01c1789407134ca7dd4e1e90951f233354e2e0dc13b605f360aeb500",
+      "bytes": 26342892,
+      "geometry": {
+        "meshes": 47,
+        "primitives": 215,
+        "vertices": 690162,
+        "triangles": 370630,
+        "materials": 59,
+        "images": 1
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "minimal",
+      "source": "design/personal-spaces-v1/models/minimal.glb",
+      "preview": "/selection/study-spaces/minimal.jpg",
+      "layout": "design/personal-spaces-v1/data/minimal-model-layout.json",
+      "sha256": "58a95e662096a3b4aa43d2d0515b203b68daffabdaeac9f9f5a24ed0ba29bd27",
+      "bytes": 45885672,
+      "geometry": {
+        "meshes": 37,
+        "primitives": 179,
+        "vertices": 1294443,
+        "triangles": 660484,
+        "materials": 51,
+        "images": 0
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "tech",
+      "source": "design/personal-spaces-v1/models/tech.glb",
+      "preview": "/selection/study-spaces/tech.jpg",
+      "layout": "design/personal-spaces-v1/data/tech-model-layout.json",
+      "sha256": "8fe943b0aff5da4fbe31fee3482fa0f85422f0a823dd5858b4bed56533be738f",
+      "bytes": 20637176,
+      "geometry": {
+        "meshes": 41,
+        "primitives": 192,
+        "vertices": 637454,
+        "triangles": 331430,
+        "materials": 55,
+        "images": 0
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "pavilion",
+      "source": "design/personal-spaces-v1/models/pavilion.glb",
+      "preview": "/selection/study-spaces/pavilion.jpg",
+      "layout": "design/personal-spaces-v1/data/pavilion-model-layout.json",
+      "sha256": "c0ee57c04825ebaae6583f783117359812be790724bbff69954d4f70c988d1e0",
+      "bytes": 56660128,
+      "geometry": {
+        "meshes": 34,
+        "primitives": 195,
+        "vertices": 1541583,
+        "triangles": 790392,
+        "materials": 69,
+        "images": 1
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    },
+    {
+      "id": "loft",
+      "source": "design/personal-spaces-v1/models/loft.glb",
+      "preview": "/selection/study-spaces/loft.jpg",
+      "layout": "design/personal-spaces-v1/data/loft-model-layout.json",
+      "sha256": "cde58c7d2cff418a107ed42c8e8b1dea1002465078e8036b504a5fcb5738708d",
+      "bytes": 65140680,
+      "geometry": {
+        "meshes": 36,
+        "primitives": 215,
+        "vertices": 1781661,
+        "triangles": 934226,
+        "materials": 60,
+        "images": 1
+      },
+      "studyZoneIds": [
+        "primary-study"
+      ],
+      "status": "source-validated-runtime-and-android-pending"
+    }
+  ]
+}

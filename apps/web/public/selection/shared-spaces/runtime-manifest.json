@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "spaces": [
+    {
+      "id": "living",
+      "url": "/selection/shared-spaces/living-reduced.glb",
+      "bytes": 12712024,
+      "sha256": "825256df8d2cfe3a57ef91834a86a0913c7888fc04d5df46c59144c45f77b08d"
+    },
+    {
+      "id": "study",
+      "url": "/selection/shared-spaces/study-reduced.glb",
+      "bytes": 12051444,
+      "sha256": "f51a14c05b494d1583a45dcab303ef7ccb033daf7fd579ccfea680f6033e2ff1"
+    },
+    {
+      "id": "library",
+      "url": "/selection/shared-spaces/library-reduced.glb",
+      "bytes": 35960264,
+      "sha256": "afdbe5be0bfbb1a72726a8afaba8e6dcb1bcc2acf464d1a7a8e8fc238b3e0c5e"
+    },
+    {
+      "id": "projects",
+      "url": "/selection/shared-spaces/projects-reduced.glb",
+      "bytes": 15943404,
+      "sha256": "ce2310694132a7e2be5c9fa3d84fcf0836669a61d8f5097c08f2831bf2d81fe6"
+    },
+    {
+      "id": "patio",
+      "url": "/selection/shared-spaces/patio-reduced.glb",
+      "bytes": 39127280,
+      "sha256": "65dc03459b0aa76e7bab7225f2d57e5d65d2a242dbcd571f69b57de3d8415b78"
+    },
+    {
+      "id": "terrace",
+      "url": "/selection/shared-spaces/terrace-reduced.glb",
+      "bytes": 18625508,
+      "sha256": "cb2159e35912ac4038907ed76362709cc98e341676b356e012c822c84fe3e12c"
+    }
+  ]
+}

@@ -45,7 +45,7 @@ const sourceFiles = {
   },
 };
 
-for (const name of ["api", "reminders"]) {
+for (const name of ["api", "reminders", "material-process", "family-consent", "voice"]) {
   const directory = resolve(root, "supabase/functions", name);
   await mkdir(directory, { recursive: true });
   await build({

@@ -37,7 +37,16 @@ for (const asset of manifest.files) {
       throw new Error(`Local model differs: ${asset.path}. Preserved your file; run pnpm assets:pack-large if the change is intentional.`);
     }
   }
-  const bytes = await promisify(gunzip)(await readFile(archive), { maxOutputLength: asset.bytes });
+  const packed = await readFile(archive).catch((error) => {
+    if (error.code === 'ENOENT' && process.env.VERCEL) return null;
+    throw error;
+  });
+  if (!packed) {
+    // Vercel does not need editable personal-space masters to build the web app.
+    console.log(`Skipped deployment-only master: ${asset.path}`);
+    continue;
+  }
+  const bytes = await promisify(gunzip)(packed, { maxOutputLength: asset.bytes });
   if (bytes.length !== asset.bytes || sha256(bytes) !== asset.sha256) throw new Error(`Asset checksum failed: ${asset.path}`);
   if (verifyOnly) {
     console.log(`Archive verified: ${asset.path} (${bytes.length} bytes)`);

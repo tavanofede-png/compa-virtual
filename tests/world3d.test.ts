@@ -17,7 +17,16 @@ import {
   equipmentModel,
   disposeModel,
   modelMetrics,
+  studyObjectAction,
 } from "../packages/world3d/src/index";
+it("routes authored study props to real academic actions", () => {
+  expect(studyObjectAction(["asset-study-laptop", "asset-desk"])).toBe("materials");
+  expect(studyObjectAction(["asset-reading-book-stack"])).toBe("learning");
+  expect(studyObjectAction(["asset-chair"])).toBe("session");
+  expect(studyObjectAction(["asset-Cafe clock"])).toBe("session");
+  expect(studyObjectAction(["HeadMesh", "teen-avatar"])).toBe("chat");
+  expect(studyObjectAction(["asset-flower-pot"])).toBeNull();
+});
 it("migrates previous creatures to human appearances without altering study data", () => {
   const s = demoSnapshot(),
     old = structuredClone(s),

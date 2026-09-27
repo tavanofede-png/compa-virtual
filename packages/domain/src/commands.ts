@@ -7,12 +7,20 @@ import {
   companionSchema,
 } from "./validation";
 import { generatePlan } from "./planner";
-import { today, addDays } from "./time";
+import { methods } from "./methods";
+import { today, addDays, localNow, isQuiet, weekday } from "./time";
 import { chooseFirstPet, normalizePetState } from "./pet-state";
 import { petDefinitions, petHabitats, petToys } from "./pets";
+import { studySpaces } from "./study-spaces";
 export interface Command {
   type: string;
   payload: unknown;
+}
+export class SessionControlConflict extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "SessionControlConflict";
+  }
 }
 const obj = z.record(z.string(), z.unknown());
 const text = z.string().trim().min(1).max(4000);
@@ -25,6 +33,7 @@ export function transition(
   const s = normalizePetState(structuredClone(previous)),
     p = obj.parse(command.payload),
     uid = () => crypto.randomUUID();
+  s.studyReminders ??= [];
   const current = today(s.profile?.timezone, now);
   const requireProfile = () => {
     if (!s.profile) throw Error("Completá tu perfil primero.");
@@ -35,6 +44,13 @@ export function transition(
     s.xp += amount;
   };
   switch (command.type) {
+    case "studySpace.select": {
+      const value = z
+        .object({ id: z.enum(studySpaces.map((space) => space.id)) })
+        .parse(p);
+      s.activeStudySpaceId = value.id;
+      break;
+    }
     case "onboarding.save":
     case "onboarding.complete": {
       const value = z
@@ -92,18 +108,34 @@ export function transition(
       break;
     }
     case "pet.chooseFirst": {
-      const value = z.object({ name: z.string().trim().min(1).max(30) }).parse(p);
+      const value = z
+        .object({ name: z.string().trim().min(1).max(30) })
+        .parse(p);
       chooseFirstPet(s, value.name, now);
       break;
     }
     case "pet.unlock": {
-      const value = z.object({ definitionId: id, name: z.string().trim().min(1).max(30).optional() }).parse(p);
-      const definition = petDefinitions.find((entry) => entry.id === value.definitionId);
-      if (!definition || definition.unlock.kind !== "coins" || typeof definition.unlock.value !== "number")
+      const value = z
+        .object({
+          definitionId: id,
+          name: z.string().trim().min(1).max(30).optional(),
+        })
+        .parse(p);
+      const definition = petDefinitions.find(
+        (entry) => entry.id === value.definitionId,
+      );
+      if (
+        !definition ||
+        definition.unlock.kind !== "coins" ||
+        typeof definition.unlock.value !== "number"
+      )
         throw Error("Esa mascota todavía no se puede desbloquear.");
-      const existing = s.ownedPets.find((entry) => entry.petDefinitionId === definition.id);
+      const existing = s.ownedPets.find(
+        (entry) => entry.petDefinitionId === definition.id,
+      );
       if (existing) break;
-      if (s.coins < definition.unlock.value) throw Error("Todavía no alcanzan las monedas.");
+      if (s.coins < definition.unlock.value)
+        throw Error("Todavía no alcanzan las monedas.");
       s.coins -= definition.unlock.value;
       const pet = {
         id: uid(),
@@ -121,7 +153,9 @@ export function transition(
       break;
     }
     case "pet.rename": {
-      const value = z.object({ id, name: z.string().trim().min(1).max(30) }).parse(p);
+      const value = z
+        .object({ id, name: z.string().trim().min(1).max(30) })
+        .parse(p);
       const pet = s.ownedPets.find((entry) => entry.id === value.id);
       if (!pet) throw Error("Mascota no encontrada.");
       pet.name = value.name;
@@ -137,11 +171,19 @@ export function transition(
       break;
     }
     case "pet.equipAccessory": {
-      const value = z.object({ id, accessoryId: z.string().max(80).nullable() }).parse(p);
+      const value = z
+        .object({ id, accessoryId: z.string().max(80).nullable() })
+        .parse(p);
       const pet = s.ownedPets.find((entry) => entry.id === value.id);
       if (!pet) throw Error("Mascota no encontrada.");
-      const definition = petDefinitions.find((entry) => entry.id === pet.petDefinitionId);
-      if (value.accessoryId && (!s.inventory.includes(value.accessoryId) || !definition?.compatibleAccessories.includes(value.accessoryId)))
+      const definition = petDefinitions.find(
+        (entry) => entry.id === pet.petDefinitionId,
+      );
+      if (
+        value.accessoryId &&
+        (!s.inventory.includes(value.accessoryId) ||
+          !definition?.compatibleAccessories.includes(value.accessoryId))
+      )
         throw Error("Ese accesorio no está disponible para esta mascota.");
       pet.accessories = value.accessoryId ? [value.accessoryId] : [];
       pet.updatedAt = now;
@@ -149,29 +191,48 @@ export function transition(
       break;
     }
     case "pet.placeHabitat": {
-      const value = z.object({ bedId: id, toyIds: z.array(id).max(2) }).parse(p);
-      if (!petHabitats.some((item) => item.id === value.bedId) || value.toyIds.some((toy) => !petToys.some((item) => item.id === toy)))
+      const value = z
+        .object({ bedId: id, toyIds: z.array(id).max(2) })
+        .parse(p);
+      if (
+        !petHabitats.some((item) => item.id === value.bedId) ||
+        value.toyIds.some((toy) => !petToys.some((item) => item.id === toy))
+      )
         throw Error("Objeto de mascota desconocido.");
-      if (![value.bedId, ...value.toyIds].every((item) => s.inventory.includes(item)))
+      if (
+        ![value.bedId, ...value.toyIds].every((item) =>
+          s.inventory.includes(item),
+        )
+      )
         throw Error("Ese objeto todavía no está desbloqueado.");
-      s.equippedPetSetup = { ...s.equippedPetSetup, bedId: value.bedId, toyIds: value.toyIds };
+      s.equippedPetSetup = {
+        ...s.equippedPetSetup,
+        bedId: value.bedId,
+        toyIds: value.toyIds,
+      };
       break;
     }
     case "pet.setPreferences":
-      s.petPreferences = z.object({
-        visible: z.boolean(), automaticMovement: z.boolean(),
-        activityLevel: z.enum(["calm", "normal", "active"]), reducedMotion: z.boolean(),
-      }).parse(p);
+      s.petPreferences = z
+        .object({
+          visible: z.boolean(),
+          automaticMovement: z.boolean(),
+          activityLevel: z.enum(["calm", "normal", "active"]),
+          reducedMotion: z.boolean(),
+        })
+        .parse(p);
       break;
     case "pet.configure": {
-      const value = z.object({
-        id,
-        name: z.string().trim().min(1).max(30),
-        visible: z.boolean(),
-        automaticMovement: z.boolean(),
-        activityLevel: z.enum(["calm", "normal", "active"]),
-        reducedMotion: z.boolean(),
-      }).parse(p);
+      const value = z
+        .object({
+          id,
+          name: z.string().trim().min(1).max(30),
+          visible: z.boolean(),
+          automaticMovement: z.boolean(),
+          activityLevel: z.enum(["calm", "normal", "active"]),
+          reducedMotion: z.boolean(),
+        })
+        .parse(p);
       const pet = s.ownedPets.find((entry) => entry.id === value.id);
       if (!pet) throw Error("Mascota no encontrada.");
       pet.name = value.name;
@@ -272,8 +333,192 @@ export function transition(
       plan.status = "ACCEPTED";
       break;
     }
+    case "session.start": {
+      const v = z
+        .object({
+          device_id: z.uuid().optional(),
+          slot_id: id.optional(),
+          academic_item_id: id.optional(),
+          subject_id: id.optional(),
+          objective: z.string().trim().min(1).max(240).optional(),
+          method_id: id.default("retrieval"),
+          planned_minutes: z.number().int().min(5).max(180).default(25),
+        })
+        .parse(p);
+      requireProfile();
+      if (s.activeSession)
+        throw Error(
+          "Ya hay una sesión en curso. Continuála o cerrala primero.",
+        );
+      let slot = undefined;
+      if (v.slot_id) {
+        slot = s.plans
+          .find((plan) => plan.status === "ACCEPTED")
+          ?.slots.find((entry) => entry.id === v.slot_id);
+        if (!slot || slot.status !== "PENDING" || slot.date > current)
+          throw Error("Este bloque no está disponible en el plan aceptado.");
+      }
+      if (slot && v.academic_item_id && v.academic_item_id !== slot.academic_item_id)
+        throw Error("La actividad no corresponde a este bloque.");
+      const item = slot
+        ? s.items.find((entry) => entry.id === slot.academic_item_id)
+        : v.academic_item_id
+          ? s.items.find((entry) => entry.id === v.academic_item_id)
+          : undefined;
+      if (v.academic_item_id && (!item || item.status !== "PENDING"))
+        throw Error("La actividad cambió. Actualizá antes de estudiar.");
+      if (item && v.subject_id && item.subject_id !== v.subject_id)
+        throw Error("La materia no corresponde a esta actividad.");
+      if (
+        v.subject_id &&
+        !s.subjects.some((subject) => subject.id === v.subject_id)
+      )
+        throw Error("Materia no encontrada.");
+      const methodId = slot?.method_id ?? v.method_id;
+      if (!methods.some((method) => method.id === methodId))
+        throw Error("Método de estudio no encontrado.");
+      s.activeSession = {
+        id: uid(),
+        ...(v.device_id ? { controller_device_id: v.device_id } : {}),
+        source: slot ? "PLAN" : "FREE",
+        ...(slot
+          ? { slot_id: slot.id, academic_item_id: slot.academic_item_id }
+          : item
+            ? { academic_item_id: item.id }
+            : {}),
+        ...(item?.subject_id || v.subject_id
+          ? { subject_id: item?.subject_id ?? v.subject_id }
+          : {}),
+        objective: slot?.objective ?? v.objective ?? "",
+        method_id: methodId,
+        planned_minutes: slot?.duration_minutes ?? v.planned_minutes,
+        started_at: now,
+        running_since: now,
+        elapsed_seconds: 0,
+      };
+      if (!s.activeSession.objective)
+        throw Error("Contanos qué querés estudiar.");
+      break;
+    }
+    case "session.takeControl": {
+      const v = z.object({ id, device_id: z.uuid() }).parse(p);
+      const active = s.activeSession;
+      if (!active || active.id !== v.id)
+        throw new SessionControlConflict("La sesión cambió. Actualizá para continuar.");
+      if (active.controller_device_id !== v.device_id) {
+        if (active.running_since) {
+          active.elapsed_seconds += Math.max(
+            0,
+            Math.floor((Date.parse(now) - Date.parse(active.running_since)) / 1000),
+          );
+          active.running_since = null;
+        }
+        active.controller_device_id = v.device_id;
+      }
+      break;
+    }
+    case "session.pause":
+    case "session.resume":
+    case "session.finish":
+    case "session.discard": {
+      const v = z
+        .object({
+          id,
+          device_id: z.uuid().optional(),
+          feedback: z.enum(["EASY", "GOOD", "HARD", "VERY_HARD"]).optional(),
+          reflection: z.string().trim().max(4000).optional(),
+          finished_at: z.iso.datetime().optional(),
+        })
+        .parse(p);
+      const active = s.activeSession;
+      if (!active || active.id !== v.id) {
+        if (
+          command.type === "session.finish" &&
+          s.sessions.some((session) => session.id === v.id)
+        )
+          break;
+        throw new SessionControlConflict("La sesión cambió. Actualizá para continuar.");
+      }
+      if (
+        active.controller_device_id &&
+        active.controller_device_id !== v.device_id
+      )
+        throw new SessionControlConflict("Esta sesión se controla desde otro dispositivo. Tomá el control para continuar.");
+      if (!active.controller_device_id && v.device_id)
+        active.controller_device_id = v.device_id;
+      let finishedAt = now;
+      if (command.type === "session.finish" && v.finished_at) {
+        const candidate = Date.parse(v.finished_at);
+        if (
+          candidate > Date.parse(now) + 60_000 ||
+          candidate < Date.parse(active.started_at) - 60_000
+        )
+          throw Error("La hora del dispositivo no coincide con la sesión. Revisá la fecha y reintentá.");
+        finishedAt = new Date(Math.min(candidate, Date.parse(now))).toISOString();
+      }
+      const segment = active.running_since
+        ? Math.max(
+            0,
+            Math.floor(
+              (Date.parse(command.type === "session.finish" ? finishedAt : now) -
+                Date.parse(active.running_since)) / 1000,
+            ),
+          )
+        : 0;
+      if (command.type === "session.pause") {
+        if (active.running_since) {
+          active.elapsed_seconds += segment;
+          active.running_since = null;
+        }
+        break;
+      }
+      if (command.type === "session.resume") {
+        if (!active.running_since) active.running_since = now;
+        break;
+      }
+      if (command.type === "session.discard") {
+        s.activeSession = null;
+        break;
+      }
+      const actualSeconds = active.elapsed_seconds + segment;
+      const slot = active.slot_id
+        ? s.plans
+            .flatMap((plan) => plan.slots)
+            .find((entry) => entry.id === active.slot_id)
+        : undefined;
+      if (active.source === "PLAN" && (!slot || slot.status !== "PENDING"))
+        throw Error("El bloque cambió. Actualizá antes de cerrar la sesión.");
+      if (slot) slot.status = "COMPLETE";
+      s.sessions.push({
+        id: active.id,
+        ...(active.slot_id ? { slot_id: active.slot_id } : {}),
+        ...(active.academic_item_id
+          ? { academic_item_id: active.academic_item_id }
+          : {}),
+        ...(active.subject_id ? { subject_id: active.subject_id } : {}),
+        objective: active.objective,
+        source: active.source,
+        method_id: active.method_id,
+        duration_minutes: Math.floor(actualSeconds / 60),
+        actual_seconds: actualSeconds,
+        planned_minutes: active.planned_minutes,
+        reflection: v.reflection ?? "",
+        ...(v.feedback ? { feedback: v.feedback } : {}),
+        started_at: active.started_at,
+        completed_at: finishedAt,
+      });
+      s.activeSession = null;
+      if (actualSeconds >= 300) reward(10);
+      break;
+    }
     case "session.complete": {
-      const v = z.object({ slot_id: id, reflection: text }).parse(p);
+      const v = z
+        .object({
+          slot_id: id,
+          reflection: z.string().trim().max(4000).default(""),
+        })
+        .parse(p);
+      if (s.activeSession) throw Error("Cerrá la sesión en curso primero.");
       const plan = s.plans.find((x) => x.status === "ACCEPTED"),
         slot = plan?.slots.find((x) => x.id === v.slot_id);
       if (!slot)
@@ -292,7 +537,8 @@ export function transition(
         reflection: v.reflection,
         completed_at: now,
       });
-      reward(10);
+      // Older clients can still close a planned block, but this command has
+      // no start timestamp. Only the measured session.finish path earns coins.
       break;
     }
     case "checkin.save": {
@@ -333,8 +579,13 @@ export function transition(
         .parse(p);
       const existing = s.memories.find((x) => x.id === p.id);
       if (p.id && !existing) throw Error("Recuerdo no encontrado.");
-      if (existing) Object.assign(existing, v);
-      else s.memories.push({ id: uid(), ...v });
+      if (existing) Object.assign(existing, v, { updated_at: now, updated_by: "USER" });
+      else {
+        if (s.memories.length >= 100)
+          throw Error("Tu memoria llegó a 100 recuerdos. Editá o eliminá uno antes de agregar otro.");
+        s.memories.push({ id: uid(), ...v, origin: "MANUAL", created_at: now,
+          updated_at: now, updated_by: "USER" });
+      }
       break;
     }
     case "memory.delete":
@@ -354,12 +605,57 @@ export function transition(
         .object({
           checkin_enabled: z.boolean(),
           checkin_minute: z.number().int().min(0).max(1439),
+          daily_study_enabled: z.boolean().default(false),
+          daily_study_minute: z.number().int().min(0).max(1439).default(1020),
           quiet_start: z.number().int().min(0).max(1439),
           quiet_end: z.number().int().min(0).max(1439),
           weekends: z.boolean(),
         })
         .parse(p);
       break;
+    case "reminder.save": {
+      const value = z
+        .object({
+          id: id.optional(),
+          title: z.string().trim().min(1).max(120),
+          body: z.string().trim().min(1).max(300),
+          date: z.iso.date().nullable(),
+          day_of_week: z.number().int().min(0).max(6).nullable(),
+          minute: z.number().int().min(0).max(1439),
+          route: z.enum([
+            "room",
+            "today",
+            "agenda",
+            "study",
+            "progress",
+            "compa",
+            "spaces",
+            "together",
+          ]),
+          enabled: z.boolean().default(true),
+        })
+        .parse(p);
+      if ((value.date === null) === (value.day_of_week === null))
+        throw Error(
+          "Elegí una fecha puntual o un día semanal para el recordatorio.",
+        );
+      const existing = s.studyReminders.find((x) => x.id === value.id);
+      if (value.id && !existing) throw Error("Recordatorio no encontrado.");
+      if (existing) Object.assign(existing, value);
+      else
+        s.studyReminders.push({
+          ...value,
+          id: uid(),
+          created_at: now,
+        });
+      break;
+    }
+    case "reminder.disable": {
+      const reminder = s.studyReminders.find((x) => x.id === id.parse(p.id));
+      if (!reminder) throw Error("Recordatorio no encontrado.");
+      reminder.enabled = false;
+      break;
+    }
     case "quiz.submit": {
       const v = z
         .object({ id: id, answers: z.record(z.string(), z.string().max(4000)) })
@@ -437,6 +733,58 @@ export function transition(
       if (n) n.read_at = now;
       break;
     }
+    case "notification.snooze": {
+      const value = z
+        .object({ id, minutes: z.union([z.literal(15), z.literal(30), z.literal(60)]) })
+        .parse(p);
+      const notification = s.notifications.find((x) => x.id === value.id);
+      if (!notification) throw Error("Aviso no encontrado.");
+      const route = z.enum([
+        "room", "today", "agenda", "study", "progress", "compa",
+        "spaces", "together",
+      ]).parse(notification.route);
+      const profile = requireProfile();
+      let target = localNow(profile.timezone, now).add({ minutes: value.minutes });
+      let available = false;
+      for (let i = 0; i < 576; i++) {
+        const date = target.toPlainDate().toString();
+        const minute = target.hour * 60 + target.minute;
+        const occupied = s.blocks.some((block) =>
+          block.kind !== "AVAILABLE" &&
+          (block.exception_date ? block.exception_date === date : block.day_of_week === weekday(date)) &&
+          minute >= block.start_minute && minute < block.end_minute,
+        );
+        if (
+          !isQuiet(minute, s.preferences.quiet_start, s.preferences.quiet_end) &&
+          !isQuiet(minute, profile.sleep_start, profile.sleep_end) &&
+          !occupied
+        ) {
+          available = true;
+          break;
+        }
+        target = target.add({ minutes: 5 });
+      }
+      if (!available) throw Error("No encontramos un horario libre para posponer este aviso.");
+      const reminder = s.studyReminders.find((x) => x.snoozed_from === notification.id);
+      const fields = {
+        title: notification.title,
+        body: notification.body,
+        date: target.toPlainDate().toString(),
+        day_of_week: null,
+        minute: target.hour * 60 + target.minute,
+        route,
+        enabled: true,
+      };
+      if (reminder) Object.assign(reminder, fields);
+      else s.studyReminders.push({
+        ...fields,
+        id: uid(),
+        created_at: now,
+        snoozed_from: notification.id,
+      });
+      notification.read_at = now;
+      break;
+    }
     default:
       throw Error("Operación no reconocida.");
   }
@@ -455,6 +803,7 @@ export function transition(
 }
 export function publicSnapshot(state: Snapshot): Snapshot {
   const s = normalizePetState(structuredClone(state));
+  s.studyReminders ??= [];
   s.quizzes.forEach((q) =>
     q.questions.forEach((question) => {
       delete question.answer;

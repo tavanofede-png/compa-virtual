@@ -1,11 +1,8 @@
 "use client";
 import {
   ArrowRight,
-  ChevronRight,
   Clock3,
-  Plus,
-  CalendarDays,
-  BookOpen,
+  ChevronRight,
   MessageCircle,
   Shirt,
   House,
@@ -14,12 +11,14 @@ import {
 } from "lucide-react";
 import {
   homeSummary,
-  dateLabel,
+  nextStudyAction,
   methodById,
   localNow,
   isQuiet,
   activePet,
   petDefinition,
+  rooms,
+  roomById,
 } from "@compa/domain";
 import { useApp } from "./context";
 import { Room, WorldCanvas } from "./Room";
@@ -28,6 +27,7 @@ export function HomeScreen() {
   const { env, open, go, run, command, busy, modal } = useApp();
   const s = env.state,
     day = homeSummary(s),
+    action = nextStudyAction(s),
     now = localNow(s.profile?.timezone);
   const pet = activePet(s);
   const petState = pet
@@ -42,9 +42,16 @@ export function HomeScreen() {
       }
     : undefined;
   const start = () => {
-    if (day.next) open("focus", day.next);
-    else if (!day.pending.length) open(s.subjects.length ? "item" : "subjects");
-    else if (day.plan) go("agenda");
+    if (action.kind === "resume-session") open("focus");
+    else if (action.kind === "start-session" && action.slot)
+      open("focus", action.slot);
+    else if (action.kind === "free-study") open("focus");
+    else if (action.kind === "review-plan") open("plan");
+    else if (action.kind === "practice") {
+      const quiz = s.quizzes.find((item) => item.id === action.quizId);
+      if (quiz) open("quiz", quiz);
+      else open("generate");
+    } else if (action.kind === "see-agenda") go("agenda");
     else
       void run(async () => {
         await command("plan.propose", {}, false);
@@ -54,10 +61,7 @@ export function HomeScreen() {
   return (
     <div className="home-screen">
       <header className="home-greeting">
-        <h1>
-          Hola, {s.profile?.nickname || "bienvenido"}{" "}
-          <span aria-hidden="true">👋</span>
-        </h1>
+        <h1>Hola, {s.profile?.nickname || "bienvenido"}</h1>
         <p>Tu mundo. Tu manera de aprender.</p>
       </header>
       <div className="home-composition">
@@ -96,41 +100,19 @@ export function HomeScreen() {
               </span>
             </div>
           </div>
-          <div className="home-activities">
-            {day.pending.slice(0, 2).map((item, i) => (
-              <button
-                key={item.id}
-                className="home-activity"
-                onClick={() => open("item", item)}
-              >
-                <span className={"subject-tile tone-" + i}>
-                  {item.kind === "EXAM" ? <BookOpen /> : <CalendarDays />}
-                </span>
-                <span>
-                  <strong>
-                    {s.subjects.find((x) => x.id === item.subject_id)?.name ||
-                      item.title}
-                  </strong>
-                  <small>{item.title}</small>
-                  <span>{dateLabel(item.due_date)}</span>
-                </span>
-                <ChevronRight aria-hidden="true" />
-              </button>
-            ))}
-            {!day.pending.length && (
-              <div className="home-empty">
-                <span className="subject-tile tone-0">
-                  <Plus />
-                </span>
-                <h3>Hagamos lugar a tu primer paso.</h3>
-                <p>
-                  Sumá una materia y lo que tenés que hacer. Tu compa te ayuda a
-                  organizarlo.
-                </p>
-              </div>
+          <div className="home-day-snapshot" aria-label="Resumen académico de hoy">
+            <p>{day.progressSummary}</p>
+            <p>{day.deadlineSummary}</p>
+            {day.routineTime && (
+              <p>Tu horario habitual de estudio: {day.routineTime}</p>
             )}
           </div>
-          {day.next && (
+          <div className="home-next-summary">
+            <span>PRÓXIMO PASO</span>
+            <strong>{action.cta}</strong>
+            <p>{action.detail}</p>
+          </div>
+          {action.kind === "start-session" && day.next && (
             <p className="next-method">
               Siguiente paso · {methodById(day.next.method_id).name}
             </p>
@@ -140,18 +122,14 @@ export function HomeScreen() {
             disabled={busy}
             onClick={start}
           >
-            {day.next
-              ? "Empezar sesión"
-              : !day.pending.length
-                ? "Agregar mi primera actividad"
-                : day.plan
-                  ? "Ver mi agenda"
-                  : "Preparar mi plan"}
+            {action.cta}
             <ArrowRight />
           </button>
-          <button className="home-day-link" onClick={() => go("today")}>
-            Ver mi día completo <ChevronRight size={18} />
-          </button>
+          {action.kind !== "see-agenda" && (
+            <button className="home-day-link" onClick={() => go("agenda")}>
+              Abrir calendario <ChevronRight size={18} />
+            </button>
+          )}
         </section>
       </div>
       <section className="home-checkin">
@@ -174,6 +152,7 @@ export function CompaScreen() {
   const c = env.state.companion;
   const pet = activePet(env.state);
   const definition = petDefinition(pet?.petDefinitionId);
+  const activeRoom = roomById(c.room_style);
   return (
     <div className="compa-screen">
       <header className="page-heading">
@@ -192,11 +171,13 @@ export function CompaScreen() {
             <MessageCircle />
             Conversar con {c.name}
           </button>
-          {[ 
+          {[
             {
               icon: House,
               label: pet ? `Mi mascota: ${pet.name}` : "Elegir mi mascota",
-              hint: pet ? definition.description : "Tu golden inicial es gratuito",
+              hint: pet
+                ? definition.description
+                : "Tu golden inicial es gratuito",
               action: () => open("pet"),
             },
             {
@@ -208,7 +189,7 @@ export function CompaScreen() {
             {
               icon: House,
               label: "Mi habitación",
-              hint: "Seis espacios para hacer tuyos",
+              hint: `${rooms.length} espacios para hacer tuyos`,
               action: () => open("companion"),
             },
             {
@@ -235,6 +216,36 @@ export function CompaScreen() {
           ))}
         </div>
       </div>
+      <section className="personal-room-library">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">TU LUGAR TAMBIÉN CUENTA TU HISTORIA</p>
+            <h2>Habitaciones personales.</h2>
+          </div>
+          <span>{rooms.length} ambientes</span>
+        </div>
+        <div className="personal-room-grid">
+          {rooms.map((room) => (
+            <button
+              key={room.id}
+              className={activeRoom.id === room.id ? "active" : ""}
+              onClick={() => open("companion")}
+            >
+              <span className="personal-room-image">
+                <img
+                  src={`/selection/rooms/${room.id}.webp`}
+                  alt={`Vista de ${room.name}`}
+                />
+                {activeRoom.id === room.id && <small>ACTIVA</small>}
+              </span>
+              <span>
+                <strong>{room.name}</strong>
+                <small>{room.description}</small>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

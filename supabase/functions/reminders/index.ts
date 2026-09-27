@@ -1142,7 +1142,7 @@ var require_dist = __commonJS({
     var Z = "ym";
     var F = "md";
     var H = "time";
-    var z4 = "datetime";
+    var z5 = "datetime";
     var A = "instant";
     var q = "original";
     var W = "timezone-canonical";
@@ -3897,7 +3897,7 @@ var require_dist = __commonJS({
             for (const e4 in t4) Object.prototype.hasOwnProperty.call(o2, e4) || delete t4[e4];
             t4.hour12 = o2.hour12, t4.hourCycle = o2.hourCycle, oe(e3, K, t4);
           } else oe(e3, K, o2);
-          oe(e3, G, a2.locale), oe(e3, q, i2), oe(e3, W, a2.timeZone), oe(e3, J, a2.calendar), oe(e3, B, vi), oe(e3, Z, gi), oe(e3, F, wi), oe(e3, H, pi), oe(e3, z4, bi), oe(e3, A, Di);
+          oe(e3, G, a2.locale), oe(e3, q, i2), oe(e3, W, a2.timeZone), oe(e3, J, a2.calendar), oe(e3, B, vi), oe(e3, Z, gi), oe(e3, F, wi), oe(e3, H, pi), oe(e3, z5, bi), oe(e3, A, Di);
           const s2 = r2 ? o2.timeZone : void 0;
           if (void 0 === s2) oe(e3, _, a2.timeZone);
           else {
@@ -4074,7 +4074,7 @@ var require_dist = __commonJS({
         const n2 = re(e2, E), r2 = re(t2, J);
         if ("iso8601" !== n2 && n2 !== r2) throw new RangeError(`cannot format PlainDateTime with calendar ${n2} in locale with calendar ${r2}`);
         const o2 = re(e2, T);
-        return { epochNs: An(re(t2, W), o2, "compatible"), formatter: si(t2, z4) };
+        return { epochNs: An(re(t2, W), o2, "compatible"), formatter: si(t2, z5) };
       }
       if (wt(e2)) throw new TypeError("Temporal.ZonedDateTime not supported in DateTimeFormat methods. Use toLocaleString() instead.");
       return ut(e2) ? { epochNs: re(e2, b), formatter: si(t2, A) } : {};
@@ -25846,7 +25846,7 @@ var require_from_json_schema = __commonJS({
     var _checks = __importStar(require_checks2());
     var _iso = __importStar(require_iso());
     var _schemas = __importStar(require_schemas2());
-    var z4 = {
+    var z5 = {
       ..._schemas,
       ..._checks,
       iso: _iso
@@ -25960,7 +25960,7 @@ var require_from_json_schema = __commonJS({
       throw new Error(`Reference not found: ${ref}`);
     }
     function checkPropertyNames(objectSchema, keySchema) {
-      const guard = z4.transform((value) => value).check((payload) => {
+      const guard = z5.transform((value) => value).check((payload) => {
         const value = payload.value;
         if (typeof value !== "object" || value === null || Array.isArray(value))
           return;
@@ -25985,7 +25985,7 @@ var require_from_json_schema = __commonJS({
         return void 0;
       }
       if (restSchema === void 0 || restSchema === true) {
-        return z4.any();
+        return z5.any();
       }
       return convertSchema(restSchema, ctx);
     }
@@ -25993,7 +25993,7 @@ var require_from_json_schema = __commonJS({
     function convertBaseSchema(schema, ctx) {
       if (schema.not !== void 0) {
         if (typeof schema.not === "object" && Object.keys(schema.not).length === 0) {
-          return z4.never();
+          return z5.never();
         }
         throw new Error("not is not supported in Zod (except { not: {} } for never)");
       }
@@ -26015,7 +26015,7 @@ var require_from_json_schema = __commonJS({
           return ctx.refs.get(refPath);
         }
         if (ctx.processing.has(refPath)) {
-          return z4.lazy(() => {
+          return z5.lazy(() => {
             if (!ctx.refs.has(refPath)) {
               throw new Error(`Circular reference not resolved: ${refPath}`);
             }
@@ -26032,25 +26032,25 @@ var require_from_json_schema = __commonJS({
       if (schema.enum !== void 0) {
         const enumValues = schema.enum;
         if (ctx.version === "openapi-3.0" && schema.nullable === true && enumValues.length === 1 && enumValues[0] === null) {
-          return z4.null();
+          return z5.null();
         }
         if (enumValues.length === 0) {
-          return z4.never();
+          return z5.never();
         }
         if (enumValues.length === 1) {
-          return z4.literal(enumValues[0]);
+          return z5.literal(enumValues[0]);
         }
         if (enumValues.every((v) => typeof v === "string")) {
-          return z4.enum(enumValues);
+          return z5.enum(enumValues);
         }
-        const literalSchemas = enumValues.map((v) => z4.literal(v));
+        const literalSchemas = enumValues.map((v) => z5.literal(v));
         if (literalSchemas.length < 2) {
           return literalSchemas[0];
         }
-        return z4.union([literalSchemas[0], literalSchemas[1], ...literalSchemas.slice(2)]);
+        return z5.union([literalSchemas[0], literalSchemas[1], ...literalSchemas.slice(2)]);
       }
       if (schema.const !== void 0) {
-        return z4.literal(schema.const);
+        return z5.literal(schema.const);
       }
       const type = schema.type;
       if (Array.isArray(type)) {
@@ -26059,72 +26059,72 @@ var require_from_json_schema = __commonJS({
           return convertBaseSchema(typeSchema, ctx);
         });
         if (typeSchemas.length === 0) {
-          return z4.never();
+          return z5.never();
         }
         if (typeSchemas.length === 1) {
           return typeSchemas[0];
         }
-        return z4.union(typeSchemas);
+        return z5.union(typeSchemas);
       }
       if (!type) {
-        return z4.any();
+        return z5.any();
       }
       let zodSchema;
       switch (type) {
         case "string": {
-          let stringSchema = z4.string();
+          let stringSchema = z5.string();
           if (schema.format) {
             const format = schema.format;
             if (format === "email") {
-              stringSchema = stringSchema.check(z4.email());
+              stringSchema = stringSchema.check(z5.email());
             } else if (format === "uri" || format === "uri-reference") {
-              stringSchema = stringSchema.check(z4.url());
+              stringSchema = stringSchema.check(z5.url());
             } else if (format === "uuid" || format === "guid") {
-              stringSchema = stringSchema.check(z4.uuid());
+              stringSchema = stringSchema.check(z5.uuid());
             } else if (format === "date-time") {
-              stringSchema = stringSchema.check(z4.iso.datetime({ offset: true }));
+              stringSchema = stringSchema.check(z5.iso.datetime({ offset: true }));
             } else if (format === "date") {
-              stringSchema = stringSchema.check(z4.iso.date());
+              stringSchema = stringSchema.check(z5.iso.date());
             } else if (format === "time") {
-              stringSchema = stringSchema.check(z4.regex(fullTime));
+              stringSchema = stringSchema.check(z5.regex(fullTime));
             } else if (format === "duration") {
-              stringSchema = stringSchema.check(z4.iso.duration());
+              stringSchema = stringSchema.check(z5.iso.duration());
             } else if (format === "hostname") {
-              stringSchema = stringSchema.check(z4.hostname());
+              stringSchema = stringSchema.check(z5.hostname());
             } else if (format === "ipv4") {
-              stringSchema = stringSchema.check(z4.ipv4());
+              stringSchema = stringSchema.check(z5.ipv4());
             } else if (format === "ipv6") {
-              stringSchema = stringSchema.check(z4.ipv6());
+              stringSchema = stringSchema.check(z5.ipv6());
             } else if (format === "mac") {
-              stringSchema = stringSchema.check(z4.mac());
+              stringSchema = stringSchema.check(z5.mac());
             } else if (format === "cidr") {
-              stringSchema = stringSchema.check(z4.cidrv4());
+              stringSchema = stringSchema.check(z5.cidrv4());
             } else if (format === "cidr-v6") {
-              stringSchema = stringSchema.check(z4.cidrv6());
+              stringSchema = stringSchema.check(z5.cidrv6());
             } else if (format === "base64") {
-              stringSchema = stringSchema.check(z4.base64());
+              stringSchema = stringSchema.check(z5.base64());
             } else if (format === "base64url") {
-              stringSchema = stringSchema.check(z4.base64url());
+              stringSchema = stringSchema.check(z5.base64url());
             } else if (format === "e164") {
-              stringSchema = stringSchema.check(z4.e164());
+              stringSchema = stringSchema.check(z5.e164());
             } else if (format === "credit_card") {
-              stringSchema = stringSchema.check(z4.creditCard());
+              stringSchema = stringSchema.check(z5.creditCard());
             } else if (format === "jwt") {
-              stringSchema = stringSchema.check(z4.jwt());
+              stringSchema = stringSchema.check(z5.jwt());
             } else if (format === "emoji") {
-              stringSchema = stringSchema.check(z4.emoji());
+              stringSchema = stringSchema.check(z5.emoji());
             } else if (format === "nanoid") {
-              stringSchema = stringSchema.check(z4.nanoid());
+              stringSchema = stringSchema.check(z5.nanoid());
             } else if (format === "cuid") {
-              stringSchema = stringSchema.check(z4.cuid());
+              stringSchema = stringSchema.check(z5.cuid());
             } else if (format === "cuid2") {
-              stringSchema = stringSchema.check(z4.cuid2());
+              stringSchema = stringSchema.check(z5.cuid2());
             } else if (format === "ulid") {
-              stringSchema = stringSchema.check(z4.ulid());
+              stringSchema = stringSchema.check(z5.ulid());
             } else if (format === "xid") {
-              stringSchema = stringSchema.check(z4.xid());
+              stringSchema = stringSchema.check(z5.xid());
             } else if (format === "ksuid") {
-              stringSchema = stringSchema.check(z4.ksuid());
+              stringSchema = stringSchema.check(z5.ksuid());
             }
           }
           if (typeof schema.minLength === "number") {
@@ -26141,7 +26141,7 @@ var require_from_json_schema = __commonJS({
         }
         case "number":
         case "integer": {
-          let numberSchema = type === "integer" ? z4.number().int() : z4.number();
+          let numberSchema = type === "integer" ? z5.number().int() : z5.number();
           if (typeof schema.minimum === "number" && schema.exclusiveMinimum !== true) {
             numberSchema = numberSchema.min(schema.minimum);
           }
@@ -26165,11 +26165,11 @@ var require_from_json_schema = __commonJS({
           break;
         }
         case "boolean": {
-          zodSchema = z4.boolean();
+          zodSchema = z5.boolean();
           break;
         }
         case "null": {
-          zodSchema = z4.null();
+          zodSchema = z5.null();
           break;
         }
         case "object": {
@@ -26187,22 +26187,22 @@ var require_from_json_schema = __commonJS({
             const looseRecords = [];
             for (const pattern of patternKeys) {
               const patternValue = convertSchema(patternProps[pattern], ctx);
-              const keySchema = z4.string().regex(new RegExp(pattern));
-              looseRecords.push(z4.looseRecord(keySchema, patternValue));
+              const keySchema = z5.string().regex(new RegExp(pattern));
+              looseRecords.push(z5.looseRecord(keySchema, patternValue));
             }
             const schemasToIntersect = [];
             if (Object.keys(shape).length > 0) {
-              schemasToIntersect.push(z4.object(shape).passthrough());
+              schemasToIntersect.push(z5.object(shape).passthrough());
             }
             schemasToIntersect.push(...looseRecords);
             if (schemasToIntersect.length === 0) {
-              zodSchema = z4.object({}).passthrough();
+              zodSchema = z5.object({}).passthrough();
             } else if (schemasToIntersect.length === 1) {
               zodSchema = schemasToIntersect[0];
             } else {
-              let result = z4.intersection(schemasToIntersect[0], schemasToIntersect[1]);
+              let result = z5.intersection(schemasToIntersect[0], schemasToIntersect[1]);
               for (let i = 2; i < schemasToIntersect.length; i++) {
-                result = z4.intersection(result, schemasToIntersect[i]);
+                result = z5.intersection(result, schemasToIntersect[i]);
               }
               zodSchema = result;
             }
@@ -26232,7 +26232,7 @@ var require_from_json_schema = __commonJS({
               });
             }
           } else {
-            const objectSchema = z4.object(shape);
+            const objectSchema = z5.object(shape);
             if (schema.additionalProperties === false) {
               zodSchema = objectSchema.strict();
             } else if (additionalSchema) {
@@ -26255,30 +26255,30 @@ var require_from_json_schema = __commonJS({
             const tupleItems = prefixItems.map((item) => convertSchema(item, ctx));
             const positionalItems = applyMinItems(tupleItems, minItems);
             const rest = !Array.isArray(items) ? getTupleRest(items, ctx) : void 0;
-            const tupleSchema = z4.tuple(positionalItems);
+            const tupleSchema = z5.tuple(positionalItems);
             zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
             if (typeof schema.minItems === "number") {
-              zodSchema = zodSchema.check(z4.minLength(schema.minItems));
+              zodSchema = zodSchema.check(z5.minLength(schema.minItems));
             }
             if (typeof schema.maxItems === "number") {
-              zodSchema = zodSchema.check(z4.maxLength(schema.maxItems));
+              zodSchema = zodSchema.check(z5.maxLength(schema.maxItems));
             }
           } else if (Array.isArray(items)) {
             const minItems = typeof schema.minItems === "number" ? schema.minItems : 0;
             const tupleItems = items.map((item) => convertSchema(item, ctx));
             const positionalItems = applyMinItems(tupleItems, minItems);
             const rest = getTupleRest(schema.additionalItems, ctx);
-            const tupleSchema = z4.tuple(positionalItems);
+            const tupleSchema = z5.tuple(positionalItems);
             zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
             if (typeof schema.minItems === "number") {
-              zodSchema = zodSchema.check(z4.minLength(schema.minItems));
+              zodSchema = zodSchema.check(z5.minLength(schema.minItems));
             }
             if (typeof schema.maxItems === "number") {
-              zodSchema = zodSchema.check(z4.maxLength(schema.maxItems));
+              zodSchema = zodSchema.check(z5.maxLength(schema.maxItems));
             }
           } else if (items !== void 0) {
             const element = convertSchema(items, ctx);
-            let arraySchema = z4.array(element);
+            let arraySchema = z5.array(element);
             if (typeof schema.minItems === "number") {
               arraySchema = arraySchema.min(schema.minItems);
             }
@@ -26287,7 +26287,7 @@ var require_from_json_schema = __commonJS({
             }
             zodSchema = arraySchema;
           } else {
-            zodSchema = z4.array(z4.any());
+            zodSchema = z5.array(z5.any());
           }
           break;
         }
@@ -26298,37 +26298,37 @@ var require_from_json_schema = __commonJS({
     }
     function convertSchema(schema, ctx) {
       if (typeof schema === "boolean") {
-        return schema ? z4.any() : z4.never();
+        return schema ? z5.any() : z5.never();
       }
       let baseSchema = convertBaseSchema(schema, ctx);
       const hasExplicitType = schema.type || schema.enum !== void 0 || schema.const !== void 0;
       if (schema.anyOf && Array.isArray(schema.anyOf)) {
         const options = schema.anyOf.map((s) => convertSchema(s, ctx));
-        const anyOfUnion = z4.union(options);
-        baseSchema = hasExplicitType ? z4.intersection(baseSchema, anyOfUnion) : anyOfUnion;
+        const anyOfUnion = z5.union(options);
+        baseSchema = hasExplicitType ? z5.intersection(baseSchema, anyOfUnion) : anyOfUnion;
       }
       if (schema.oneOf && Array.isArray(schema.oneOf)) {
         const options = schema.oneOf.map((s) => convertSchema(s, ctx));
-        const oneOfUnion = z4.xor(options);
-        baseSchema = hasExplicitType ? z4.intersection(baseSchema, oneOfUnion) : oneOfUnion;
+        const oneOfUnion = z5.xor(options);
+        baseSchema = hasExplicitType ? z5.intersection(baseSchema, oneOfUnion) : oneOfUnion;
       }
       if (schema.allOf && Array.isArray(schema.allOf)) {
         if (schema.allOf.length === 0) {
-          baseSchema = hasExplicitType ? baseSchema : z4.any();
+          baseSchema = hasExplicitType ? baseSchema : z5.any();
         } else {
           let result = hasExplicitType ? baseSchema : convertSchema(schema.allOf[0], ctx);
           const startIdx = hasExplicitType ? 0 : 1;
           for (let i = startIdx; i < schema.allOf.length; i++) {
-            result = z4.intersection(result, convertSchema(schema.allOf[i], ctx));
+            result = z5.intersection(result, convertSchema(schema.allOf[i], ctx));
           }
           baseSchema = result;
         }
       }
       if (schema.nullable === true && ctx.version === "openapi-3.0") {
-        baseSchema = z4.nullable(baseSchema);
+        baseSchema = z5.nullable(baseSchema);
       }
       if (schema.readOnly === true) {
-        baseSchema = z4.readonly(baseSchema);
+        baseSchema = z5.readonly(baseSchema);
       }
       if (schema.default !== void 0) {
         baseSchema = baseSchema.default(schema.default);
@@ -26364,7 +26364,7 @@ var require_from_json_schema = __commonJS({
     }
     function fromJSONSchema(schema, params) {
       if (typeof schema === "boolean") {
-        return schema ? z4.any() : z4.never();
+        return schema ? z5.any() : z5.never();
       }
       let normalized;
       try {
@@ -26931,9 +26931,9 @@ var require_zod = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = exports.z = void 0;
-    var z4 = __importStar(require_external());
-    exports.z = z4;
-    exports.default = z4;
+    var z5 = __importStar(require_external());
+    exports.z = z5;
+    exports.default = z5;
     __exportStar(require_external(), exports);
   }
 });
@@ -26947,11 +26947,19 @@ var defaultTimezone = "America/Argentina/Buenos_Aires";
 function localNow(timezone = defaultTimezone, instant) {
   return (instant ? import_polyfill.Temporal.Instant.from(instant) : import_polyfill.Temporal.Now.instant()).toZonedDateTimeISO(timezone);
 }
+function today(timezone = defaultTimezone, instant) {
+  return localNow(timezone, instant).toPlainDate().toString();
+}
 function weekday(date2) {
   return import_polyfill.Temporal.PlainDate.from(date2).dayOfWeek % 7;
 }
 function isQuiet(minute, start, end) {
   return start === end ? false : start < end ? minute >= start && minute < end : minute >= start || minute < end;
+}
+function ageAt(birth, date2 = today()) {
+  return import_polyfill.Temporal.PlainDate.from(birth).until(import_polyfill.Temporal.PlainDate.from(date2), {
+    largestUnit: "years"
+  }).years;
 }
 
 // source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\validation.ts
@@ -26982,7 +26990,13 @@ var roomIds = [
   "tecnologia",
   "naturaleza",
   "urbano",
-  "biblioteca-moderna"
+  "biblioteca-moderna",
+  "atico-creativo",
+  "rincon-urbano",
+  "sala-control-gamer",
+  "habitacion-invernadero",
+  "estudio-musical",
+  "rincon-explorador"
 ];
 
 // source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\wardrobe-catalog.ts
@@ -28490,7 +28504,7 @@ var import_zod2 = __toESM(require_zod());
 
 // source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\pets.ts
 var petSpecies = ["dog", "cat", "rabbit", "hamster", "guinea-pig", "ferret", "hedgehog", "turtle", "gecko", "bird"];
-var petAssetRevision = "20260912d";
+var petAssetRevision = "20260918a";
 var dog = (id2, name2, breed, rigFamily, profile, price, description, scale = 1, colliderRadius = 0.32) => ({
   id: id2,
   name: name2,
@@ -28650,7 +28664,7 @@ var mouthNames = facial_metadata_default.mouthNames;
 function dueReminders(s, instant) {
   if (!s.profile) return [];
   const now = localNow(s.profile.timezone, instant), date2 = now.toPlainDate().toString(), minute = now.hour * 60 + now.minute, p = s.preferences;
-  if (!p.weekends && [0, 6].includes(weekday(date2))) return [];
+  const routineDay = p.weekends || ![0, 6].includes(weekday(date2));
   if (isQuiet(minute, p.quiet_start, p.quiet_end) || isQuiet(minute, s.profile.sleep_start, s.profile.sleep_end))
     return [];
   if (s.blocks.some(
@@ -28658,7 +28672,19 @@ function dueReminders(s, instant) {
   ))
     return [];
   const drafts = [];
-  if (p.checkin_enabled && !s.checkins.some((c) => c.date === date2 && c.outcome !== "UNCONFIRMED") && minute >= p.checkin_minute && minute <= p.checkin_minute + 180)
+  const studiedToday = Boolean(s.activeSession) || s.sessions.some(
+    (session) => localNow(s.profile.timezone, session.completed_at).toPlainDate().toString() === date2
+  );
+  const dailyMinute = p.daily_study_minute ?? 1020;
+  if (routineDay && p.daily_study_enabled && !studiedToday && minute >= dailyMinute && minute <= dailyMinute + 30)
+    drafts.push({
+      id: "daily-study",
+      date: date2,
+      title: "Tu momento de estudio",
+      body: "Si te viene bien, pod\xE9s retomar tu plan o empezar un repaso libre.",
+      route: "study"
+    });
+  if (routineDay && p.checkin_enabled && !p.daily_study_enabled && !s.checkins.some((c) => c.date === date2 && c.outcome !== "UNCONFIRMED") && minute >= p.checkin_minute && minute <= p.checkin_minute + 180)
     drafts.push({
       id: "checkin",
       date: date2,
@@ -28688,15 +28714,68 @@ function dueReminders(s, instant) {
           route: "agenda"
         });
     }
+  for (const reminder of s.studyReminders ?? []) {
+    const appliesToday = reminder.date ? reminder.date === date2 : reminder.day_of_week === weekday(date2);
+    if (reminder.enabled && appliesToday && minute >= reminder.minute && minute <= reminder.minute + 30)
+      drafts.push({
+        id: "custom:" + reminder.id,
+        date: date2,
+        title: reminder.title,
+        body: reminder.body,
+        route: reminder.route
+      });
+  }
   return drafts;
 }
 
-// source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\collaboration.ts
+// source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\voice.ts
+var calm = {
+  language: "es-AR",
+  rate: 0.9,
+  pitch: 1,
+  voiceOffset: 0
+};
+var companionVoiceProfiles = {
+  nova: { ...calm, rate: 0.88, pitch: 1.08, voiceOffset: 0 },
+  jay: { ...calm, rate: 1.03, pitch: 0.96, voiceOffset: 1 },
+  milo: { ...calm, rate: 0.98, pitch: 1.02, voiceOffset: 2 },
+  zoe: { ...calm, rate: 0.94, pitch: 1.11, voiceOffset: 3 },
+  sky: { ...calm, rate: 0.96, pitch: 1.07, voiceOffset: 4 },
+  harper: { ...calm, rate: 0.9, pitch: 0.94, voiceOffset: 5 },
+  river: { ...calm, rate: 0.87, pitch: 0.98, voiceOffset: 6 },
+  aria: { ...calm, rate: 1.05, pitch: 1.06, voiceOffset: 7 },
+  lux: { ...calm, rate: 1, pitch: 1.12, voiceOffset: 8 },
+  finn: { ...calm, rate: 1.06, pitch: 0.93, voiceOffset: 9 },
+  elise: { ...calm, rate: 0.89, pitch: 1.09, voiceOffset: 10 },
+  kai: { ...calm, rate: 1.01, pitch: 0.91, voiceOffset: 11 },
+  noa: { ...calm, rate: 0.88, pitch: 0.97, voiceOffset: 12 },
+  rem: { ...calm, rate: 0.97, pitch: 1.05, voiceOffset: 13 },
+  sage: { ...calm, rate: 0.86, pitch: 0.92, voiceOffset: 14 },
+  orion: { ...calm, rate: 1.02, pitch: 0.99, voiceOffset: 15 }
+};
+
+// source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\consent.ts
 var import_zod3 = __toESM(require_zod());
+var CONSENT_POLICY_VERSION = "kusiy-beta-nov-2026";
+var consentBases = ["parental-guardian", "self-adult"];
+var familyAcceptanceSchema = import_zod3.z.object({
+  policy_version: import_zod3.z.literal(CONSENT_POLICY_VERSION),
+  attestation: import_zod3.z.literal(true),
+  permissions: import_zod3.z.object({ service: import_zod3.z.literal(true), ai: import_zod3.z.boolean(), social: import_zod3.z.boolean() }).strict()
+}).strict();
+var consentRecordSchema = import_zod3.z.object({
+  policy_version: import_zod3.z.literal(CONSENT_POLICY_VERSION),
+  basis: import_zod3.z.enum(consentBases),
+  guardian_name: import_zod3.z.string().trim().min(2).max(80).optional(),
+  attestation: import_zod3.z.literal(true)
+});
+
+// source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\domain\src\collaboration.ts
+var import_zod4 = __toESM(require_zod());
 var import_polyfill2 = __toESM(require_dist());
-var uuid = import_zod3.z.uuid();
-var name = import_zod3.z.string().trim().min(1, "Escrib\xED un nombre.").max(100);
-var revision = import_zod3.z.number().int().nonnegative();
+var uuid = import_zod4.z.uuid();
+var name = import_zod4.z.string().trim().min(1, "Escrib\xED un nombre.").max(100);
+var revision = import_zod4.z.number().int().nonnegative();
 function normalizeMeetUrl(value) {
   if (!value?.trim()) return null;
   let url;
@@ -28709,15 +28788,15 @@ function normalizeMeetUrl(value) {
     throw Error("Us\xE1 un enlace https://meet.google.com/abc-defg-hij.");
   return "https://meet.google.com" + url.pathname.replace(/\/$/, "");
 }
-var meetUrl = import_zod3.z.string().max(300).nullable().optional().transform((v, ctx) => {
+var meetUrl = import_zod4.z.string().max(300).nullable().optional().transform((v, ctx) => {
   try {
     return normalizeMeetUrl(v);
   } catch (error) {
     ctx.addIssue({ code: "custom", message: error.message });
-    return import_zod3.z.NEVER;
+    return import_zod4.z.NEVER;
   }
 });
-var zone = import_zod3.z.string().max(80).refine((value) => {
+var zone = import_zod4.z.string().max(80).refine((value) => {
   try {
     new Intl.DateTimeFormat("es", { timeZone: value });
     return true;
@@ -28727,9 +28806,9 @@ var zone = import_zod3.z.string().max(80).refine((value) => {
 }, "Revis\xE1 la zona horaria.");
 var fields = {
   title: name,
-  objective: import_zod3.z.string().trim().min(1, "Eleg\xED un objetivo.").max(500),
-  session_type: import_zod3.z.enum(["silent", "review", "project"]),
-  space_template_id: import_zod3.z.enum([
+  objective: import_zod4.z.string().trim().min(1, "Eleg\xED un objetivo.").max(500),
+  session_type: import_zod4.z.enum(["silent", "review", "project"]),
+  space_template_id: import_zod4.z.enum([
     "living",
     "study",
     "library",
@@ -28737,51 +28816,51 @@ var fields = {
     "patio",
     "terrace"
   ]),
-  scheduled_start_at: import_zod3.z.iso.datetime({ offset: true }),
+  scheduled_start_at: import_zod4.z.iso.datetime({ offset: true }),
   timezone: zone,
-  planned_duration: import_zod3.z.number().int().min(15).max(180),
+  planned_duration: import_zod4.z.number().int().min(15).max(180),
   meeting_url: meetUrl
 };
-var collaborationCommandSchema = import_zod3.z.discriminatedUnion("action", [
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.enter"),
+var collaborationCommandSchema = import_zod4.z.discriminatedUnion("action", [
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.enter"),
     session_id: uuid,
     connection_id: uuid,
-    takeover: import_zod3.z.boolean().optional()
+    takeover: import_zod4.z.boolean().optional()
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.heartbeat"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.heartbeat"),
     session_id: uuid,
     connection_id: uuid
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.leave"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.leave"),
     session_id: uuid,
     connection_id: uuid
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.seat"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.seat"),
     session_id: uuid,
     connection_id: uuid,
-    seat_id: import_zod3.z.string().regex(/^SEAT_0[1-6]$/)
+    seat_id: import_zod4.z.string().regex(/^SEAT_0[1-6]$/)
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.activity"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.activity"),
     session_id: uuid,
     connection_id: uuid,
-    activity: import_zod3.z.enum(["available", "focused", "break"])
+    activity: import_zod4.z.enum(["available", "focused", "break"])
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.hand"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.hand"),
     session_id: uuid,
     connection_id: uuid,
-    raised: import_zod3.z.boolean()
+    raised: import_zod4.z.boolean()
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.react"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.react"),
     session_id: uuid,
     connection_id: uuid,
-    reaction: import_zod3.z.enum([
+    reaction: import_zod4.z.enum([
       "hello",
       "thanks",
       "idea",
@@ -28790,86 +28869,98 @@ var collaborationCommandSchema = import_zod3.z.discriminatedUnion("action", [
       "question"
     ])
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.timer"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.timer"),
     session_id: uuid,
     revision,
-    operation: import_zod3.z.enum(["focus", "break", "pause", "resume"])
+    operation: import_zod4.z.enum(["focus", "break", "pause", "resume"])
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.goal.add"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.goal.add"),
     session_id: uuid,
-    title: import_zod3.z.string().trim().min(1).max(160)
+    title: import_zod4.z.string().trim().min(1).max(160)
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("room.goal.toggle"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("room.goal.toggle"),
     session_id: uuid,
     goal_id: uuid,
     revision,
-    done: import_zod3.z.boolean()
+    done: import_zod4.z.boolean()
   }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("group.create"), name }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("group.archive"), group_id: uuid, revision }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("group.leave"), group_id: uuid, revision }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("group.remove"),
+  import_zod4.z.object({ action: import_zod4.z.literal("group.create"), name }).strict(),
+  import_zod4.z.object({ action: import_zod4.z.literal("group.archive"), group_id: uuid, revision }).strict(),
+  import_zod4.z.object({ action: import_zod4.z.literal("group.leave"), group_id: uuid, revision }).strict(),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("group.remove"),
     group_id: uuid,
     user_id: uuid,
     revision
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("group.transfer"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("group.transfer"),
     group_id: uuid,
     user_id: uuid,
     revision
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("session.create"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("session.create"),
     group_id: uuid.nullable(),
     ...fields
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("session.update"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("session.update"),
     session_id: uuid,
     revision,
     ...fields
   }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("session.start"), session_id: uuid, revision }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("session.complete"),
+  import_zod4.z.object({ action: import_zod4.z.literal("session.join"), session_id: uuid, revision }).strict(),
+  import_zod4.z.object({ action: import_zod4.z.literal("session.start"), session_id: uuid, revision }).strict(),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("session.complete"),
     session_id: uuid,
     revision
   }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("session.cancel"), session_id: uuid, revision }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("session.remove"),
-    session_id: uuid,
-    user_id: uuid,
-    revision
-  }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("session.leave"), session_id: uuid, revision }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("session.transfer"),
+  import_zod4.z.object({ action: import_zod4.z.literal("session.cancel"), session_id: uuid, revision }).strict(),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("session.remove"),
     session_id: uuid,
     user_id: uuid,
     revision
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("invite.create"),
-    scope: import_zod3.z.enum(["group", "session"]),
+  import_zod4.z.object({ action: import_zod4.z.literal("session.leave"), session_id: uuid, revision }).strict(),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("session.transfer"),
+    session_id: uuid,
+    user_id: uuid,
+    revision
+  }).strict(),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("invite.create"),
+    scope: import_zod4.z.enum(["group", "session"]),
     target_id: uuid,
-    contact_code: import_zod3.z.string().trim().toLowerCase().regex(
+    contact_code: import_zod4.z.string().trim().toLowerCase().regex(
       /^[a-f0-9]{64}$/,
       "Pedile su c\xF3digo de compa\xF1ero a la persona que quer\xE9s invitar."
     )
   }).strict(),
-  import_zod3.z.object({
-    action: import_zod3.z.literal("invite.respond"),
+  import_zod4.z.object({
+    action: import_zod4.z.literal("invite.respond"),
     invite_id: uuid,
-    accept: import_zod3.z.boolean()
+    accept: import_zod4.z.boolean()
   }).strict(),
-  import_zod3.z.object({ action: import_zod3.z.literal("invite.revoke"), invite_id: uuid }).strict()
+  import_zod4.z.object({ action: import_zod4.z.literal("invite.revoke"), invite_id: uuid }).strict()
 ]);
+
+// source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\server\src\family-permissions.ts
+async function hasFamilyCapability(db, userId, capability) {
+  const { data, error } = await db.rpc("family_capability_allowed", {
+    p_user: userId,
+    p_policy: CONSENT_POLICY_VERSION,
+    p_capability: capability
+  });
+  if (error) throw error;
+  return data === true;
+}
 
 // source-files:C:\Users\tavan\Documents\Codex\2026-09-05\haz\outputs\compa-virtual\packages\server\src\reminders.ts
 function createReminderHandler(env) {
@@ -28915,11 +29006,17 @@ function createReminderHandler(env) {
       if (error) throw error;
       for (const row of users ?? []) {
         const s = row.state;
-        const { data: control } = await db.from("account_controls").select("deleting").eq("user_id", row.user_id).maybeSingle();
+        if (!s.profile?.birth_date) continue;
+        const { data: control, error: controlError } = await db.from("account_controls").select("deleting").eq("user_id", row.user_id).maybeSingle();
+        if (controlError) throw controlError;
         if (control?.deleting) continue;
+        if (ageAt(s.profile.birth_date) < 18) {
+          if (env.MINOR_BETA_APPROVED !== "true") continue;
+          if (!await hasFamilyCapability(db, row.user_id, "service")) continue;
+        }
         for (const draft of dueReminders(s, (/* @__PURE__ */ new Date()).toISOString())) {
           const date2 = draft.date;
-          await db.rpc("append_notification", {
+          const { error: notificationError } = await db.rpc("append_notification", {
             p_user: row.user_id,
             p_notification: {
               id: draft.id + ":" + date2,
@@ -28929,6 +29026,7 @@ function createReminderHandler(env) {
               created_at: (/* @__PURE__ */ new Date()).toISOString()
             }
           });
+          if (notificationError) throw notificationError;
           const { data: devices, error: deviceError } = await db.from("devices").select("token").eq("user_id", row.user_id).eq("enabled", true);
           if (deviceError) throw deviceError;
           for (const device of devices ?? []) {
@@ -28955,7 +29053,10 @@ function createReminderHandler(env) {
                     to: device.token,
                     title: draft.title,
                     body: draft.body,
-                    data: { url: "compavirtual://?view=" + draft.route },
+                    data: {
+                      url: "compavirtual://?view=" + draft.route,
+                      notificationId: draft.id + ":" + date2
+                    },
                     sound: "default",
                     channelId: "study-reminders"
                   }),
@@ -28980,6 +29081,8 @@ function createReminderHandler(env) {
         }
       }
       await db.rpc("purge_chat_history");
+      const voiceCleanup = await db.rpc("purge_voice_history");
+      if (voiceCleanup.error) throw voiceCleanup.error;
       return Response.json({ sent, disabled });
     } catch {
       return Response.json({ error: "REMINDER_RUN_FAILED" }, { status: 500 });

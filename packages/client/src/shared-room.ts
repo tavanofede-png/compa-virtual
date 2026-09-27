@@ -15,6 +15,7 @@ export function createSharedRoomSession(
   repo: CollaborationRepository,
   initial: GroupSessionDetail,
   changed: (state: SharedRoomConnection) => void,
+  userId?: string,
 ) {
   const id = initial.session.id,
     connection = crypto.randomUUID();
@@ -55,6 +56,10 @@ export function createSharedRoomSession(
         accessRevoked: false,
         serverOffset: Date.parse(detail.server_time) - (start + Date.now()) / 2,
       });
+      if (state.entered && userId && detail.room &&
+        !detail.room.presence.some((person) => person.user_id === userId &&
+          Date.parse(person.expires_at) > Date.parse(detail.server_time)))
+        emit({ entered: false, error: "Tu lugar en la sala se liberó. Podés volver a entrar si está disponible." });
       if (!["scheduled", "active"].includes(detail.session.status))
         emit({ entered: false });
     } catch (error) {

@@ -24,7 +24,7 @@ export interface EquippedPetSetup { activePetId: string | null; bedId: string; t
 export interface PetPreferences { visible: boolean; automaticMovement: boolean; activityLevel: PetActivityLevel; reducedMotion: boolean }
 export interface PetHabitatItem { id: string; label: string; kind: "bed" | "bowl" | "basket" | "shelter" | "perch"; model: string; compatibleSpecies: PetSpecies[] }
 export interface PetToyDefinition { id: string; label: string; kind: "ball" | "rope" | "mouse" | "tunnel" | "hanging"; model: string; compatibleSpecies: PetSpecies[] }
-const petAssetRevision = "20260912d";
+const petAssetRevision = "20260918a";
 
 export const petBehaviorProfiles: PetBehaviorProfile[] = [
   { id: "loyal-playful", curiosity: 0.72, sociability: 0.92, activity: 0.62, walkSpeed: 0.42, runSpeed: 0.82, idleSeconds: [22, 42], focusRestSeconds: [75, 150] },

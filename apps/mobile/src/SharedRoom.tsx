@@ -20,11 +20,14 @@ import {
 import { Text, Button, Field, styles as st } from "./ui";
 import { selectionImages } from "./selection-images";
 import { selectionModels } from "./selection-models";
-import { sharedSpaceModels } from "./shared-space-models";
+import sharedManifest from "../../web/public/selection/shared-spaces/runtime-manifest.json";
+import { readCachedScene } from "./scene-cache";
 import { useMotionPreference } from "./MotionPreference";
+import { ScenePixelRatio, useSceneQuality } from "./SceneQuality";
+import { NativeSharedRoomChat } from "./SharedRoomChat";
 type World = Awaited<ReturnType<typeof createSharedSpaceWorld>>;
 class RoomBoundary extends Component<
-  { children: ReactNode },
+  { children: ReactNode; onRetry: () => void },
   { failed: boolean }
 > {
   state = { failed: false };
@@ -33,34 +36,52 @@ class RoomBoundary extends Component<
   }
   render() {
     return this.state.failed ? (
-      <Text>
-        No pudimos abrir el 3D. Los controles de la sala siguen disponibles.
-      </Text>
+      <View style={{ padding: 18, gap: 12 }}>
+        <Text>
+          No pudimos abrir el 3D. Los controles de la sala siguen disponibles.
+        </Text>
+        <Button secondary onPress={this.props.onRetry}>
+          Reintentar 3D
+        </Button>
+      </View>
     ) : (
       this.props.children
     );
   }
 }
-function Scene({ world }: { world: World }) {
+function Scene({
+  world,
+  visualRevision,
+}: {
+  world: World;
+  visualRevision: number;
+}) {
   const { invalidate } = useThree(),
     { reduced, enabled } = useMotionPreference();
   useEffect(() => {
     let active = AppState.currentState === "active";
-    const sub = AppState.addEventListener(
-      "change",
-      (s) => (active = s === "active"),
-    );
-    const timer = setInterval(() => {
-      if (active) {
-        world.update(1 / 30, reduced || !enabled);
-        invalidate();
-      }
-    }, 1000 / 30);
+    const animated = enabled && !reduced;
+    invalidate();
+    const sub = AppState.addEventListener("change", (s) => {
+      active = s === "active";
+      if (active) invalidate();
+    });
+    const timer = animated
+      ? setInterval(() => {
+          if (active) {
+            world.update(1 / 30);
+            invalidate();
+          }
+        }, 1000 / 30)
+      : null;
     return () => {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
       sub.remove();
     };
   }, [world, invalidate, reduced, enabled]);
+  useEffect(() => {
+    invalidate();
+  }, [invalidate, visualRevision]);
   return <primitive object={world.scene} dispose={null} />;
 }
 function NativeSpace({
@@ -70,23 +91,42 @@ function NativeSpace({
   id: SharedSpaceId;
   people: SharedRoomPresence[];
 }) {
+  const { pixelRatio } = useSceneQuality();
   const [world, setWorld] = useState<World | null>(null),
-    [error, setError] = useState("");
-  const latest = useRef(people);
-  latest.current = people;
+    [error, setError] = useState(""),
+    [retry, setRetry] = useState(0),
+    [progress, setProgress] = useState(0),
+    [visualRevision, setVisualRevision] = useState(0);
+  const appearanceSignature = JSON.stringify(
+    people.map((person) => ({
+      id: person.user_id,
+      seat: person.seat_id,
+      appearance: person.appearance,
+      activity: person.activity,
+    })),
+  );
   useEffect(() => {
     const abort = new AbortController();
     let alive = true,
       loaded: World | undefined;
     setWorld(null);
     setError("");
+    setProgress(0);
     void createSharedSpaceWorld(
       id,
       async (url) => {
-        const name = url.split("/").pop()!.split("?")[0],
-          module = url.includes("/shared-spaces/")
-            ? sharedSpaceModels[name]
-            : selectionModels[name];
+        const name = url.split("/").pop()!.split("?")[0];
+        if (url.includes("/shared-spaces/")) {
+          const entry = sharedManifest.spaces.find(
+            (space) => `${space.id}-reduced.glb` === name,
+          );
+          if (!entry)
+            throw Error("La sala no figura en el manifiesto de recursos.");
+          return readCachedScene(entry, abort.signal, (fraction) => {
+            if (alive) setProgress(Math.round(fraction * 100));
+          });
+        }
+        const module = selectionModels[name];
         if (!module) throw Error("Asset no disponible.");
         const asset = await Asset.fromModule(module).downloadAsync();
         if (!asset.localUri) throw Error("No se pudo cargar la sala.");
@@ -94,14 +134,13 @@ function NativeSpace({
       },
       abort.signal,
     )
-      .then(async (value) => {
+      .then((value) => {
         loaded = value;
         if (!alive) {
           value.dispose();
           return;
         }
         setWorld(value);
-        await value.setParticipants(latest.current);
       })
       .catch((e) => {
         if (alive) setError(e.message);
@@ -111,24 +150,47 @@ function NativeSpace({
       abort.abort();
       loaded?.dispose();
     };
-  }, [id]);
+  }, [id, retry]);
   useEffect(() => {
-    void world?.setParticipants(people).catch((e) => setError(e.message));
-  }, [world, people]);
+    if (!world) return;
+    let current = true;
+    void world
+      .setParticipants(people)
+      .then(() => {
+        if (current) setVisualRevision((value) => value + 1);
+      })
+      .catch((e) => {
+        if (current) setError(e.message);
+      });
+    return () => {
+      current = false;
+    };
+  }, [world, appearanceSignature]);
   return (
     <View style={{ height: 340, borderRadius: 22, overflow: "hidden" }}>
       {error ? (
-        <Text>
-          La vista 3D no pudo cargarse. Podés seguir con los controles de abajo.
-        </Text>
+        <View style={{ padding: 18, gap: 12 }}>
+          <Text>{error} Podés seguir con los controles de abajo.</Text>
+          <Button secondary onPress={() => setRetry((value) => value + 1)}>
+            Reintentar 3D
+          </Button>
+        </View>
       ) : world ? (
-        <RoomBoundary>
+        <RoomBoundary
+          key={`${id}-${retry}`}
+          onRetry={() => setRetry((value) => value + 1)}
+        >
           <Canvas camera={world.camera} frameloop="demand">
-            <Scene world={world} />
+            <ScenePixelRatio ratio={pixelRatio} />
+            <Scene world={world} visualRevision={visualRevision} />
           </Canvas>
         </RoomBoundary>
       ) : (
-        <Text>Preparando la sala…</Text>
+        <Text style={{ padding: 18 }}>
+          {progress > 0 && progress < 100
+            ? `Descargando la sala · ${progress}%`
+            : "Preparando la sala…"}
+        </Text>
       )}
     </View>
   );
@@ -165,7 +227,7 @@ export function NativeSharedRoom({
       setState(next);
       if (next.detail) callback.current(next.detail);
       else if (next.accessRevoked) callback.current(null);
-    });
+    }, userId);
     runtime.current = session;
     const sub = AppState.addEventListener("change", (s) =>
       session.visible(s === "active"),
@@ -178,10 +240,13 @@ export function NativeSharedRoom({
       runtime.current = null;
       session.dispose();
     };
-  }, [repo, initial.session.id]);
+  }, [repo, initial.session.id, userId]);
   useEffect(() => {
     void runtime.current?.refresh();
   }, [initial.session.revision]);
+  useEffect(() => {
+    setThree(state.entered);
+  }, [state.entered]);
   const detail = state.detail,
     room = detail?.room,
     id = initial.session.id,
@@ -484,6 +549,7 @@ export function NativeSharedRoom({
               </Button>
             </>
           )}
+          <NativeSharedRoomChat repo={repo} sessionId={id} userId={userId} />
         </>
       )}
     </View>

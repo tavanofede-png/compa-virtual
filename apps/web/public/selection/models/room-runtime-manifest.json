@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "rooms": [
+    {
+      "id": "cozy",
+      "url": "/selection/models/cozy-room.glb",
+      "bytes": 18815068,
+      "sha256": "379bd0ffc5e444687c606ec6692730e6af0664bb3820fcf047878edd4ac02457"
+    },
+    {
+      "id": "minimalista",
+      "url": "/selection/models/minimalista-room.glb",
+      "bytes": 19188168,
+      "sha256": "524684bc93921061997f55b046715a4ac885d4155f83c547c35b7407459f4abf"
+    },
+    {
+      "id": "tecnologia",
+      "url": "/selection/models/tecnologia-room.glb",
+      "bytes": 19544380,
+      "sha256": "ea0307aa86344bac978e1ea1aaed032d0c210458e1c83629a819e4fae3d91b25"
+    },
+    {
+      "id": "naturaleza",
+      "url": "/selection/models/naturaleza-room.glb",
+      "bytes": 21328448,
+      "sha256": "666a83a710d0ff999a30d8c1932fed9c465c16437a4ce622217cabaf6d1fb706"
+    },
+    {
+      "id": "urbano",
+      "url": "/selection/models/urbano-room.glb",
+      "bytes": 19763636,
+      "sha256": "517ea744e9bfb4527e4e8bdcba2918eb81d2ba56a54bd34bbf5a47b4759d667d"
+    },
+    {
+      "id": "biblioteca-moderna",
+      "url": "/selection/models/biblioteca-moderna-room.glb",
+      "bytes": 25439408,
+      "sha256": "e5ae6cdb9e0a324650115c56d976bbd32f13ffbf8a14168b95b2c9687d44f93c"
+    },
+    {
+      "id": "atico-creativo",
+      "url": "/selection/models/atico-creativo-room.glb",
+      "bytes": 58233224,
+      "sha256": "e1816aceb8db063c8cecf485ceb6a6af16ea003905dc9ea82b745b3fa7573e6c"
+    },
+    {
+      "id": "rincon-urbano",
+      "url": "/selection/models/rincon-urbano-room.glb",
+      "bytes": 35120908,
+      "sha256": "0325f4d5615ca3763c3cc21eb7555ea943c8fd86c77a9dfefe7864064663b49e"
+    },
+    {
+      "id": "sala-control-gamer",
+      "url": "/selection/models/sala-control-gamer-room.glb",
+      "bytes": 32344548,
+      "sha256": "d833be1e58c23e006a2e2a2e01f424e53bdb61569b2c2a48435250ac7005daf1"
+    },
+    {
+      "id": "habitacion-invernadero",
+      "url": "/selection/models/habitacion-invernadero-room.glb",
+      "bytes": 73063380,
+      "sha256": "04472ebd3ca008aee7aa5e9f133627c2b3a986598f60e8f0f62b892c0dd8c7e4"
+    },
+    {
+      "id": "estudio-musical",
+      "url": "/selection/models/estudio-musical-room.glb",
+      "bytes": 27793820,
+      "sha256": "ed3794abfe9895ece1615cf295691045a73cfd522112d373e19928e71c8d989f"
+    },
+    {
+      "id": "rincon-explorador",
+      "url": "/selection/models/rincon-explorador-room.glb",
+      "bytes": 47304924,
+      "sha256": "724b81030ba19fa42267acd1b7134b4a75d61130bdd5f3c4fe7b9877f3201eb8"
+    }
+  ]
+}

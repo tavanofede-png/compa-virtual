@@ -171,9 +171,14 @@ input[type="radio"] {
   font-size: 30px;
   border-radius: 16px;
 }
+.sidebar .brand-logo {
+  width: 52px;
+  height: 52px;
+  flex-basis: 52px;
+}
 .sidebar .sidebar-label,
 .sidebar-bottom,
-.sidebar .brand > span + span {
+.sidebar .brand > .brand-logo + span {
   display: none;
 }
 .sidebar nav {
@@ -271,13 +276,6 @@ input[type="radio"] {
 }
 .demo-banner button {
   min-height: 40px;
-}
-.chat-launcher {
-  bottom: 24px;
-  background: #17253b;
-  color: white;
-  border-radius: 20px;
-  min-height: 52px;
 }
 .bottom-nav {
   display: none;
@@ -384,6 +382,18 @@ input[type="radio"] {
   font-size: 1.125rem;
   color: var(--ink);
   white-space: nowrap;
+}
+.home-day-snapshot {
+  display: grid;
+  gap: 4px;
+  margin: -4px 0 16px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.home-day-snapshot p {
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 .home-activities {
   display: grid;
@@ -494,6 +504,7 @@ input[type="radio"] {
   align-items: center;
 }
 .compa-showcase {
+  position: relative;
   height: 540px;
   border-radius: 32px;
   overflow: hidden;
@@ -732,18 +743,6 @@ input[type="radio"] {
     background: #f7b82e;
   }
   .footer {
-    display: none;
-  }
-  .chat-launcher {
-    bottom: 100px;
-    right: 16px;
-    min-width: 48px;
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    border-radius: 18px;
-  }
-  .chat-launcher span {
     display: none;
   }
   .home-greeting {
@@ -1120,6 +1119,11 @@ input[type="radio"] {
   color: var(--ink);
   border-radius: 16px;
 }
+.landing .brand-logo {
+  width: 46px;
+  height: 46px;
+  flex-basis: 46px;
+}
 .landing-hero {
   max-width: 1380px;
   margin: auto;
@@ -1296,6 +1300,7 @@ input[type="radio"] {
   border-color: #ecc66e;
 }
 .landing-room-preview {
+  position: relative;
   width: 100%;
   aspect-ratio: 1.55;
   margin: 24px 0;

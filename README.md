@@ -1,4 +1,4 @@
-# Compa Virtual
+# Kusiy
 
 Compañero de estudio para secundaria argentina. Monorepo con web Next.js, apps nativas Expo, backend Supabase y worker de documentos.
 
@@ -33,7 +33,7 @@ Después de modificar ese modelo, ejecutar `pnpm assets:pack-large` para actuali
 | packages/domain  | Tipos, validaciones, planificador, pedagogía, gamificación y catálogo de apariencias |
 | packages/world3d | Geometría, materiales y escenas compartidas de adolescentes y habitación             |
 | packages/client  | Repositorio Supabase, control de versión, subida privada y demo explícita            |
-| packages/server  | API autenticada, adaptador OpenAI y recordatorios                                    |
+| packages/server  | API autenticada, adaptadores Cloudflare/OpenAI y recordatorios                       |
 | packages/assets  | Atlas originales y metadatos compartidos                                             |
 | supabase         | Migraciones, semillas, funciones empaquetadas y programador                          |
 | tests            | Reglas de dominio, PostgreSQL/RLS, documentos y contrato del proveedor               |
@@ -42,7 +42,7 @@ Después de modificar ese modelo, ejecutar `pnpm assets:pack-large` para actuali
 
 1. Crear un proyecto Supabase dedicado; no reutilizar un proyecto ajeno.
 2. Aplicar las migraciones con Supabase CLI y ejecutar `supabase/seed.sql`.
-3. Copiar los ejemplos de entorno a archivos locales ignorados por Git. La clave pública de Supabase puede ir en web/móvil. **La service role y OpenAI solo van en el servidor/worker.**
+3. Copiar los ejemplos de entorno a archivos locales ignorados por Git. La clave pública de Supabase puede ir en web/móvil. **La service role y la credencial del proveedor de IA solo van en el servidor/worker.**
 4. Ejecutar `pnpm --filter @compa/server bundle` y desplegar las funciones `api` y `reminders`. `verify_jwt=false` evita depender del verificador legado: la API verifica cada JWT mediante `auth.getUser`; los recordatorios exigen `CRON_SECRET`.
 5. Configurar los secretos de las funciones y el worker. Ajustar las URLs de redirección de Auth para web y `compavirtual://`. Configurar correo transaccional antes del registro público.
 6. Desplegar `render.yaml`. El worker procesa un documento por vez. Verificar el tamaño real de instancia en Render antes de aceptar el despliegue.

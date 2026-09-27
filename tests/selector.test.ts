@@ -124,13 +124,17 @@ it("ships a model and a real preview for every selectable item, character and ro
       (await stat(resolve(assetRoot, "wardrobe", item.id + ".webp"))).size,
     ).toBeGreaterThan(100);
   }
-  for (const name of [
-    ...characters.map((c) => c.id + "-body"),
-    ...rooms.map((r) => r.id + "-room"),
-  ]) {
+  for (const name of characters.map((c) => c.id + "-body")) {
     expect(
       (await stat(resolve(assetRoot, "models", name + ".glb"))).size,
     ).toBeLessThan(25 * 1024 * 1024);
+  }
+  const manifest = JSON.parse(await readFile(resolve(assetRoot, "models", "room-runtime-manifest.json"), "utf8"));
+  expect(manifest.rooms.map((room: { id: string }) => room.id).sort()).toEqual(rooms.map((room) => room.id).sort());
+  for (const room of manifest.rooms as { id: string; bytes: number; sha256: string }[]) {
+    expect((await stat(resolve(assetRoot, "models", `${room.id}-room.glb`))).size).toBe(room.bytes);
+    expect((await stat(resolve(assetRoot, "rooms", `${room.id}.webp`))).size).toBeGreaterThan(100);
+    expect(room.sha256).toMatch(/^[a-f0-9]{64}$/);
   }
 });
 const read = async (url: string) => {

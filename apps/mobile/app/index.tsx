@@ -1,8 +1,18 @@
 import { MotionPreference } from "../src/MotionPreference";
+import { SceneQualityPreference } from "../src/SceneQuality";
+import { NativeMaterialText } from "../src/MaterialText";
+import { NativeVoiceCall } from "../src/NativeVoiceCall";
+import { NativeSupportCenter } from "../src/SupportCenter";
 import { NativeHome, NativeCompa, TabIcon } from "../src/HomeScreen";
 import { Text } from "../src/ui";
 import { NativeTogether } from "../src/Together";
-import { Creature, Equipment, NativeRoom } from "../src/Creature";
+import { NativeAgendaCalendar } from "../src/AgendaCalendar";
+import {
+  NativeStudyHubNav,
+  NativeStudySpaces,
+  NativeStudyView,
+} from "../src/StudySpaces";
+import { Creature, Equipment, NativeRoom, NativeWorld } from "../src/Creature";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CompanionSetup } from "../src/CompanionSetup";
 import {
@@ -17,6 +27,7 @@ import {
   AppState,
   BackHandler,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams } from "expo-router";
@@ -24,10 +35,12 @@ import * as Notifications from "expo-notifications";
 import * as DocumentPicker from "expo-document-picker";
 import { File, Paths } from "expo-file-system";
 import * as Sharing from "expo-sharing";
+import * as Speech from "expo-speech";
 import {
   createBackend,
   createDemo,
   createRepository,
+  StateConflictError,
   type Repository,
   type Envelope,
 } from "@compa/client";
@@ -37,6 +50,8 @@ import {
   selectCharacter,
   methods,
   methodById,
+  prepareDailyStudy,
+  freeStudyDurations,
   today,
   dateLabel,
   clock,
@@ -51,13 +66,19 @@ import {
   clothingStyles,
   clothingColors,
   personalities,
-  type AcademicItem,
   type Quiz,
   type PlanSlot,
   type Companion,
   activePet,
   petDefinition,
   petDefinitions,
+  companionVoiceProfile,
+  studySpaceById,
+  resolveNotificationLaunch,
+  memoryOriginLabel,
+  materialIsProcessing,
+  materialCanRetry,
+  materialStatusLabel,
 } from "@compa/domain";
 import { cache, secureStorage } from "../src/storage";
 import { registerPush } from "../src/push";
@@ -100,6 +121,15 @@ const welcomeCompanion = {
   room_theme: "evening" as const,
 };
 const tabs = destinations.map((d) => [d.id, d.label]);
+const days = [
+  "Domingo",
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+];
 const kindOptions = [
   { value: "TASK", label: "Tarea" },
   { value: "EXAM", label: "Examen" },
@@ -120,11 +150,16 @@ export default function App() {
     [authMode, setAuthMode] = useState("register"),
     [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
-    [seconds, setSeconds] = useState(1500),
-    [end, setEnd] = useState<number | null>(null);
+    [voiceEnabled, setVoiceEnabled] = useState(true),
+    [speaking, setSpeaking] = useState(false),
+    [callActive, setCallActive] = useState(false),
+    [pendingChat, setPendingChat] = useState(""),
+    [sessionClock, setSessionClock] = useState(Date.now());
   const [loaded, setLoaded] = useState(false),
     [authReady, setAuthReady] = useState(!backend);
   const account = useRef<string | undefined>(undefined);
+  const latestEnvelope = useRef(env);
+  latestEnvelope.current = env;
   useEffect(() => {
     const subscription = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -145,9 +180,19 @@ export default function App() {
   const s = env.state,
     date = today(s.profile?.timezone),
     active = s.plans.find((p) => p.status === "ACCEPTED"),
-    proposed = s.plans.find((p) => p.status === "PROPOSED"),
-    pending = s.items.filter((i) => i.status === "PENDING"),
-    todaySlots = active?.slots.filter((x) => x.date === date) ?? [];
+    proposed = s.plans.find((p) => p.status === "PROPOSED");
+  const spokenAgentReply = (message: (typeof s.messages)[number]) =>
+    [message.content, ...(message.actions?.map((action) => action.label) ?? [])]
+      .filter(Boolean)
+      .join(" ");
+  useEffect(() => {
+    cache.getItem("kusiy:companion-voice").then((value) => {
+      if (value !== null) setVoiceEnabled(value === "1");
+    });
+    return () => {
+      void Speech.stop();
+    };
+  }, []);
   useEffect(() => {
     if (params.view) setView(params.view);
   }, [params.view]);
@@ -223,30 +268,195 @@ export default function App() {
     };
   }, [repo]);
   useEffect(() => {
-    const receive = (response: Notifications.NotificationResponse) => {
-      const url = response.notification.request.content.data?.url;
-      if (typeof url === "string" && url.startsWith("compavirtual://"))
-        setView(new URL(url).searchParams.get("view") ?? "today");
+    if (repo?.mode !== "live") return;
+    let alive = true;
+    let previous = AppState.currentState;
+    const listener = AppState.addEventListener("change", (state) => {
+      if (previous !== "active" && state === "active" && !busy) {
+        void repo
+          .load()
+          .then((latest) => {
+            if (alive)
+              setEnv((current) =>
+                latest.version >= current.version ? latest : current,
+              );
+          })
+          .catch(() => {});
+      }
+      previous = state;
+    });
+    return () => {
+      alive = false;
+      listener.remove();
     };
-    const listener =
-      Notifications.addNotificationResponseReceivedListener(receive);
-    Notifications.getLastNotificationResponseAsync().then((r) => {
-      if (r) receive(r);
+  }, [repo, busy]);
+  useEffect(() => {
+    if (repo?.mode !== "live" || modal !== "focus" || !env.state.activeSession)
+      return;
+    let alive = true;
+    const timer = setInterval(() => {
+      if (AppState.currentState !== "active" || busy) return;
+      void repo
+        .load()
+        .then((latest) => {
+          if (alive)
+            setEnv((current) =>
+              latest.version > current.version ? latest : current,
+            );
+        })
+        .catch(() => {});
+    }, 15000);
+    return () => {
+      alive = false;
+      clearInterval(timer);
+    };
+  }, [repo, busy, modal, env.state.activeSession?.id]);
+  useEffect(() => {
+    if (
+      !repo ||
+      repo.mode !== "live" ||
+      view !== "study" ||
+      busy ||
+      !env.state.materials.some(materialIsProcessing)
+    )
+      return;
+    const timer = setInterval(() => {
+      if (AppState.currentState === "active")
+        void repo
+          .load()
+          .then(setEnv)
+          .catch(() => {});
+    }, 10000);
+    return () => clearInterval(timer);
+  }, [repo, view, busy, env.state.materials]);
+  useEffect(() => {
+    if (!backend || !repo || repo.mode !== "live") return;
+    let alive = true;
+    const receive = async (response: Notifications.NotificationResponse) => {
+      if (response.actionIdentifier !== Notifications.DEFAULT_ACTION_IDENTIFIER)
+        return;
+      const payload = response.notification.request.content.data;
+      const url = payload?.url;
+      const notificationId = payload?.notificationId;
+      if (
+        typeof url !== "string" ||
+        !url.startsWith("compavirtual://?view=") ||
+        typeof notificationId !== "string"
+      )
+        return;
+      try {
+        const { data, error: authError } = await backend.auth.getUser();
+        if (authError || !data.user || data.user.id !== account.current) {
+          if (alive) setError("Ingresá con tu cuenta para abrir este aviso.");
+          return;
+        }
+        const latest = await repo.load();
+        if (latest.offline) {
+          if (alive)
+            setError("Conectate para comprobar si este aviso sigue vigente.");
+          return;
+        }
+        if (
+          latest.consent?.required &&
+          (!latest.consent.recorded ||
+            !latest.consent.minor_beta ||
+            !latest.consent.capabilities?.service)
+        ) {
+          if (alive)
+            setError(
+              "Falta la autorización familiar verificada para abrir este aviso.",
+            );
+          return;
+        }
+        const launch = resolveNotificationLaunch(
+          latest.state,
+          notificationId,
+          new URL(url).searchParams.get("view") ?? "",
+          new Date().toISOString(),
+        );
+        if (!launch) {
+          if (alive)
+            setError("Este aviso ya no está vigente. Revisá tu agenda.");
+          return;
+        }
+        if (
+          launch.target === "together" &&
+          !(await repo.collaboration?.overview())?.enabled
+        ) {
+          if (alive) setError("El encuentro ya no está disponible.");
+          return;
+        }
+        if (alive) {
+          setEnv(latest);
+          setView(launch.target);
+          if (launch.focus) {
+            setSelected(launch.slot);
+            setModal("focus");
+          }
+        }
+      } catch {
+        if (alive)
+          setError("No pudimos comprobar el aviso. Reintentá desde tu agenda.");
+      } finally {
+        await Notifications.clearLastNotificationResponseAsync().catch(
+          () => {},
+        );
+      }
+    };
+    const listener = Notifications.addNotificationResponseReceivedListener(
+      (response) => void receive(response),
+    );
+    Notifications.getLastNotificationResponseAsync()
+      .then((r) => {
+        if (r) void receive(r);
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+      listener.remove();
+    };
+  }, [repo]);
+  useEffect(() => {
+    if (modal !== "focus" || !env.state.activeSession?.running_since) return;
+    const timer = setInterval(() => setSessionClock(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [modal, env.state.activeSession?.running_since]);
+  useEffect(() => {
+    const activeSession = env.state.activeSession;
+    if (
+      !repo ||
+      !activeSession?.running_since ||
+      env.pendingSessionFinish ||
+      (activeSession.controller_device_id &&
+        activeSession.controller_device_id !== env.deviceId)
+    )
+      return;
+    let pauseRequested = false;
+    const listener = AppState.addEventListener("change", (state) => {
+      if (state === "active" || pauseRequested) return;
+      pauseRequested = true;
+      void repo
+        .command(
+          { type: "session.pause", payload: { id: activeSession.id } },
+          env.version,
+        )
+        .then(setEnv)
+        .catch((error) => {
+          if (error instanceof StateConflictError && error.latest)
+            setEnv(error.latest);
+          // A failed pause remains visible on the next load; do not claim it was saved.
+        });
     });
     return () => listener.remove();
-  }, []);
-  useEffect(() => {
-    if (!end) return;
-    const timer = setInterval(() => {
-      const remaining = Math.max(0, Math.ceil((end - Date.now()) / 1000));
-      setSeconds(remaining);
-      if (!remaining) {
-        setEnd(null);
-        Alert.alert("Terminó el bloque", "Tomate un descanso antes de seguir.");
-      }
-    }, 300);
-    return () => clearInterval(timer);
-  }, [end]);
+  }, [
+    repo,
+    env.version,
+    env.state.activeSession?.id,
+    env.state.activeSession?.running_since,
+    env.state.activeSession?.controller_device_id,
+    env.deviceId,
+    env.pendingSessionFinish,
+  ]);
   useEffect(() => {
     if (!repo || repo.mode !== "live") return;
     const refresh = () => {
@@ -269,6 +479,7 @@ export default function App() {
     try {
       await action();
     } catch (e) {
+      if (e instanceof StateConflictError && e.latest) setEnv(e.latest);
       setError(
         e instanceof Error ? e.message : "No se pudo completar la acción.",
       );
@@ -289,10 +500,6 @@ export default function App() {
         ]),
       ),
     );
-    if (name === "focus") {
-      setSeconds((value as PlanSlot).duration_minutes * 60);
-      setEnd(null);
-    }
   };
   const change = (key: string, value: string) =>
     setValues((v) => ({
@@ -300,6 +507,40 @@ export default function App() {
       [key]: value,
       ...(key === "clothing_style" ? { outfit: "none" } : {}),
     }));
+  const setVoice = (value: boolean) => {
+    setVoiceEnabled(value);
+    void cache.setItem("kusiy:companion-voice", value ? "1" : "0");
+    if (!value) {
+      void Speech.stop();
+      setSpeaking(false);
+    }
+  };
+  const speakCompanion = async (text: string, force = false) => {
+    if ((!voiceEnabled && !force) || !text.trim()) return;
+    const profile = companionVoiceProfile(s.companion.character_id);
+    const voices = (await Speech.getAvailableVoicesAsync())
+      .filter((voice) => voice.language.toLowerCase().startsWith("es"))
+      .sort(
+        (a, b) =>
+          Number(b.quality === "Enhanced") - Number(a.quality === "Enhanced") ||
+          a.name.localeCompare(b.name),
+      );
+    const voice = voices[profile.voiceOffset % Math.max(voices.length, 1)];
+    await Speech.stop();
+    Speech.speak(text.slice(0, Speech.maxSpeechInputLength), {
+      language: voice?.language ?? profile.language,
+      voice: voice?.identifier,
+      rate: profile.rate,
+      pitch: profile.pitch,
+      onStart: () => setSpeaking(true),
+      onDone: () => setSpeaking(false),
+      onStopped: () => setSpeaking(false),
+      onError: () => {
+        setSpeaking(false);
+        setError("La voz del dispositivo no pudo reproducirse.");
+      },
+    });
+  };
   const command = async (type: string, payload: unknown, close = true) => {
     if (!repo) return;
     setEnv(await repo.command({ type, payload }, env.version));
@@ -347,34 +588,6 @@ export default function App() {
     value: x.id,
     label: x.name,
   }));
-  const itemList = (items: AcademicItem[]) =>
-    items.length ? (
-      items.map((i) => (
-        <View style={st.row} key={i.id}>
-          <Pressable onPress={() => open("item", i)}>
-            <Text style={st.h3}>{i.title}</Text>
-            <Text style={st.p}>
-              {s.subjects.find((x) => x.id === i.subject_id)?.name} ·{" "}
-              {dateLabel(i.due_date)}
-              {i.due_time ? " · " + i.due_time : ""}
-            </Text>
-          </Pressable>
-          {i.status === "PENDING" && (
-            <Button
-              secondary
-              disabled={busy}
-              onPress={() =>
-                run(() => command("item.complete", { id: i.id }, false))
-              }
-            >
-              Confirmar que la completé
-            </Button>
-          )}
-        </View>
-      ))
-    ) : (
-      <Text style={st.p}>Agregá una materia y una actividad para empezar.</Text>
-    );
   const showPlan = () =>
     run(async () => {
       await command("plan.propose", {}, false);
@@ -386,12 +599,13 @@ export default function App() {
       today: "Hoy, con calma.",
       agenda: "Tu semana, en orden.",
       study: "Aprender se practica.",
+      spaces: "Tus espacios de estudio.",
       more: "Tu progreso y tus decisiones",
       progress: "Cada intento cuenta.",
       compa: "Tu compa",
       memory: "Memoria académica",
       notifications: "Tus avisos",
-    }[view] ?? "Compa Virtual";
+    }[view] ?? "Kusiy";
   const upload = () =>
     run(async () => {
       if (!repo) return;
@@ -497,7 +711,17 @@ export default function App() {
           contentContainerStyle={{ padding: 25, gap: 20 }}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={st.eyebrow}>COMPA VIRTUAL · BETA</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 11 }}>
+            <Image
+              source={require("../assets/kusiy-logo.png")}
+              style={{ width: 54, height: 54, resizeMode: "contain" }}
+              accessibilityIgnoresInvertColors
+            />
+            <View>
+              <Text style={st.h3}>Kusiy</Text>
+              <Text style={st.eyebrow}>UN PASO A LA VEZ</Text>
+            </View>
+          </View>
           <Text style={[st.h1, { fontSize: 43, lineHeight: 48 }]}>
             Tu mundo.{"\n"}Tu manera de aprender.
           </Text>
@@ -612,76 +836,202 @@ export default function App() {
     );
   const renderModal = (): ReactNode => {
     if (modal === "pet") {
-      const pet = activePet(s), definition = petDefinition(pet?.petDefinitionId);
+      const pet = activePet(s),
+        definition = petDefinition(pet?.petDefinitionId);
       return (
         <>
           <View style={{ alignItems: "center", gap: 8 }}>
-            <Image source={petPortraits[definition.id]} style={{ width: 210, height: 210, borderRadius: 28 }} />
-            <Text style={st.eyebrow}>TU MASCOTA · {definition.breed.toUpperCase()}</Text>
+            <Image
+              source={petPortraits[definition.id]}
+              style={{ width: 210, height: 210, borderRadius: 28 }}
+            />
+            <Text style={st.eyebrow}>
+              TU MASCOTA · {definition.breed.toUpperCase()}
+            </Text>
             <Text style={st.p}>{definition.description}</Text>
           </View>
-          {input("pet_name", "¿Cómo se va a llamar?", pet?.name ?? definition.name)}
+          {input(
+            "pet_name",
+            "¿Cómo se va a llamar?",
+            pet?.name ?? definition.name,
+          )}
           {!pet ? (
-            <Button disabled={busy} onPress={() => run(() => command("pet.chooseFirst", { name: v("pet_name", definition.name) }))}>
+            <Button
+              disabled={busy}
+              onPress={() =>
+                run(() =>
+                  command("pet.chooseFirst", {
+                    name: v("pet_name", definition.name),
+                  }),
+                )
+              }
+            >
               Conocer a {v("pet_name", definition.name)}
             </Button>
           ) : (
             <>
               <Text style={st.h3}>Tu colección</Text>
-              {choices("pet_family", "Familia", [
-                { value: "dogs", label: "Perros" },
-                { value: "cats", label: "Gatos" },
-                { value: "others", label: "Otros amigos" },
-              ], definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others")}
+              {choices(
+                "pet_family",
+                "Familia",
+                [
+                  { value: "dogs", label: "Perros" },
+                  { value: "cats", label: "Gatos" },
+                  { value: "others", label: "Otros amigos" },
+                ],
+                definition.species === "dog"
+                  ? "dogs"
+                  : definition.species === "cat"
+                    ? "cats"
+                    : "others",
+              )}
               <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-                {petDefinitions.filter((candidate) => {
-                  const family = v("pet_family", definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others");
-                  return family === "dogs" ? candidate.species === "dog" : family === "cats" ? candidate.species === "cat" : !["dog", "cat"].includes(candidate.species);
-                }).map((candidate) => {
-                  const owned = s.ownedPets.find((entry) => entry.petDefinitionId === candidate.id);
-                  const selected = owned?.id === pet.id;
-                  const price = candidate.unlock.kind === "coins" ? Number(candidate.unlock.value) : 0;
-                  return (
-                    <Pressable
-                      accessibilityRole="button"
-                      accessibilityState={{ selected, disabled: busy || selected }}
-                      key={candidate.id}
-                      disabled={busy || selected}
-                      onPress={() => run(() => owned
-                        ? command("pet.setActive", { id: owned.id })
-                        : command("pet.unlock", { definitionId: candidate.id }))}
-                      style={{
-                        width: "48%", padding: 10, borderRadius: 18, borderWidth: selected ? 2 : 1,
-                        borderColor: selected ? "#d9a62e" : colors.line,
-                        backgroundColor: selected ? "#fff2c9" : "#fffaf2", gap: 5,
-                      }}
-                    >
-                      <Image source={petPortraits[candidate.id]} style={{ width: "100%", aspectRatio: 1, borderRadius: 14 }} />
-                      <Text style={[st.p, { fontWeight: "700" }]}>{candidate.breed}</Text>
-                      <Text style={{ color: colors.muted, fontSize: 12 }}>
-                        {selected ? "Está con vos" : owned ? "Elegir" : `${price} monedas`}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
+                {petDefinitions
+                  .filter((candidate) => {
+                    const family = v(
+                      "pet_family",
+                      definition.species === "dog"
+                        ? "dogs"
+                        : definition.species === "cat"
+                          ? "cats"
+                          : "others",
+                    );
+                    return family === "dogs"
+                      ? candidate.species === "dog"
+                      : family === "cats"
+                        ? candidate.species === "cat"
+                        : !["dog", "cat"].includes(candidate.species);
+                  })
+                  .map((candidate) => {
+                    const owned = s.ownedPets.find(
+                      (entry) => entry.petDefinitionId === candidate.id,
+                    );
+                    const selected = owned?.id === pet.id;
+                    const price =
+                      candidate.unlock.kind === "coins"
+                        ? Number(candidate.unlock.value)
+                        : 0;
+                    return (
+                      <Pressable
+                        accessibilityRole="button"
+                        accessibilityState={{
+                          selected,
+                          disabled: busy || selected,
+                        }}
+                        key={candidate.id}
+                        disabled={busy || selected}
+                        onPress={() =>
+                          run(() =>
+                            owned
+                              ? command("pet.setActive", { id: owned.id })
+                              : command("pet.unlock", {
+                                  definitionId: candidate.id,
+                                }),
+                          )
+                        }
+                        style={{
+                          width: "48%",
+                          padding: 10,
+                          borderRadius: 18,
+                          borderWidth: selected ? 2 : 1,
+                          borderColor: selected ? "#d9a62e" : colors.line,
+                          backgroundColor: selected ? "#fff2c9" : "#fffaf2",
+                          gap: 5,
+                        }}
+                      >
+                        <Image
+                          source={petPortraits[candidate.id]}
+                          style={{
+                            width: "100%",
+                            aspectRatio: 1,
+                            borderRadius: 14,
+                          }}
+                        />
+                        <Text style={[st.p, { fontWeight: "700" }]}>
+                          {candidate.breed}
+                        </Text>
+                        <Text style={{ color: colors.muted, fontSize: 12 }}>
+                          {selected
+                            ? "Está con vos"
+                            : owned
+                              ? "Elegir"
+                              : `${price} monedas`}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
               </View>
-              {choices("pet_activity", "Nivel de actividad", [
-                { value: "calm", label: "Tranquilo" },
-                { value: "normal", label: "Normal" },
-                { value: "active", label: "Activo" },
-              ], s.petPreferences.activityLevel)}
-              {choices("pet_visible", "Mostrar en la habitación", [{ value: "true", label: "Sí" }, { value: "false", label: "No" }], String(s.petPreferences.visible))}
-              {choices("pet_auto", "Movimiento automático", [{ value: "true", label: "Activado" }, { value: "false", label: "Desactivado" }], String(s.petPreferences.automaticMovement))}
-              {choices("pet_reduced", "Movimiento reducido", [{ value: "false", label: "No" }, { value: "true", label: "Sí" }], String(s.petPreferences.reducedMotion))}
-              <Text style={st.p}>Su lugar de descanso y sus objetos compatibles quedan preparados dentro del cuarto.</Text>
-              <Button disabled={busy} onPress={() => run(() => command("pet.configure", {
-                id: pet.id,
-                name: v("pet_name", pet.name),
-                visible: v("pet_visible", String(s.petPreferences.visible)) === "true",
-                automaticMovement: v("pet_auto", String(s.petPreferences.automaticMovement)) === "true",
-                activityLevel: v("pet_activity", s.petPreferences.activityLevel),
-                reducedMotion: v("pet_reduced", String(s.petPreferences.reducedMotion)) === "true",
-              }))}>Guardar mascota</Button>
+              {choices(
+                "pet_activity",
+                "Nivel de actividad",
+                [
+                  { value: "calm", label: "Tranquilo" },
+                  { value: "normal", label: "Normal" },
+                  { value: "active", label: "Activo" },
+                ],
+                s.petPreferences.activityLevel,
+              )}
+              {choices(
+                "pet_visible",
+                "Mostrar en la habitación",
+                [
+                  { value: "true", label: "Sí" },
+                  { value: "false", label: "No" },
+                ],
+                String(s.petPreferences.visible),
+              )}
+              {choices(
+                "pet_auto",
+                "Movimiento automático",
+                [
+                  { value: "true", label: "Activado" },
+                  { value: "false", label: "Desactivado" },
+                ],
+                String(s.petPreferences.automaticMovement),
+              )}
+              {choices(
+                "pet_reduced",
+                "Movimiento reducido",
+                [
+                  { value: "false", label: "No" },
+                  { value: "true", label: "Sí" },
+                ],
+                String(s.petPreferences.reducedMotion),
+              )}
+              <Text style={st.p}>
+                Su lugar de descanso y sus objetos compatibles quedan preparados
+                dentro del cuarto.
+              </Text>
+              <Button
+                disabled={busy}
+                onPress={() =>
+                  run(() =>
+                    command("pet.configure", {
+                      id: pet.id,
+                      name: v("pet_name", pet.name),
+                      visible:
+                        v("pet_visible", String(s.petPreferences.visible)) ===
+                        "true",
+                      automaticMovement:
+                        v(
+                          "pet_auto",
+                          String(s.petPreferences.automaticMovement),
+                        ) === "true",
+                      activityLevel: v(
+                        "pet_activity",
+                        s.petPreferences.activityLevel,
+                      ),
+                      reducedMotion:
+                        v(
+                          "pet_reduced",
+                          String(s.petPreferences.reducedMotion),
+                        ) === "true",
+                    }),
+                  )
+                }
+              >
+                Guardar mascota
+              </Button>
             </>
           )}
         </>
@@ -959,43 +1309,319 @@ export default function App() {
       );
     }
     if (modal === "focus") {
-      const slot = selected as PlanSlot,
-        m = methodById(slot.method_id);
+      const slot = selected as PlanSlot | undefined;
+      const activeSession = s.activeSession;
+      const pendingFinish =
+        env.pendingSessionFinish?.sessionId === activeSession?.id
+          ? env.pendingSessionFinish
+          : undefined;
+      const remoteControl = Boolean(
+        activeSession?.controller_device_id &&
+        activeSession.controller_device_id !== env.deviceId,
+      );
+      const prepared = prepareDailyStudy(s);
+      const method = methodById(
+        activeSession?.method_id ?? slot?.method_id ?? "retrieval",
+      );
+      const item = s.items.find(
+        (entry) =>
+          entry.id ===
+          (activeSession?.academic_item_id ?? slot?.academic_item_id),
+      );
+      const subjectId = activeSession?.subject_id ?? item?.subject_id;
+      const subject = s.subjects.find((entry) => entry.id === subjectId);
+      const practice = s.quizzes.find((quiz) => quiz.subject_id === subjectId);
+      const elapsed = activeSession
+        ? activeSession.elapsed_seconds +
+          (activeSession.running_since
+            ? Math.max(
+                0,
+                Math.floor(
+                  ((pendingFinish
+                    ? Date.parse(pendingFinish.finishedAt)
+                    : sessionClock) -
+                    Date.parse(activeSession.running_since)) /
+                    1000,
+                ),
+              )
+            : 0)
+        : 0;
       return (
         <>
-          <Text style={st.h3}>{slot.objective}</Text>
-          <Text style={st.tag}>{m.name}</Text>
-          {m.steps.map((x, i) => (
-            <Text style={st.p} key={x}>
-              {i + 1}. {x}
-            </Text>
-          ))}
-          <Text
-            style={[st.h1, { fontSize: 58, textAlign: "center", margin: 25 }]}
-          >
-            {clock(Math.floor(seconds / 60)).slice(-2)}:
-            {String(seconds % 60).padStart(2, "0")}
+          <Text style={st.tag}>
+            {activeSession
+              ? pendingFinish
+                ? "CIERRE PENDIENTE"
+                : "SESIÓN EN CURSO"
+              : slot
+                ? "BLOQUE DEL PLAN"
+                : "ESTUDIO LIBRE"}
           </Text>
-          <Button
-            secondary
-            onPress={() => setEnd(end ? null : Date.now() + seconds * 1000)}
-          >
-            {end ? "Pausar" : "Comenzar / continuar"}
-          </Button>
-          {input(
-            "reflection",
-            "¿Qué pudiste explicar y qué queda por revisar?",
-            "",
-            true,
+          {activeSession ? (
+            <>
+              <NativeStudyView
+                id={studySpaceById(s.activeStudySpaceId).id}
+                companion={s.companion}
+              />
+              <Text style={st.h3}>{activeSession.objective}</Text>
+              <Text style={st.p}>
+                {subject?.name ? `${subject.name} · ` : ""}
+                {method.name} · objetivo de {activeSession.planned_minutes}{" "}
+                minutos
+              </Text>
+              {remoteControl && (
+                <View style={{ gap: 10 }} accessibilityRole="summary">
+                  <Text style={st.h3}>
+                    Esta sesión está abierta en otro dispositivo.
+                  </Text>
+                  <Text style={st.p}>
+                    Podés verla acá. Si tomás el control, el tiempo se pausará
+                    hasta que elijas Continuar.
+                  </Text>
+                  <Button
+                    disabled={busy || env.offline}
+                    onPress={() =>
+                      run(() =>
+                        command(
+                          "session.takeControl",
+                          { id: activeSession.id },
+                          false,
+                        ),
+                      )
+                    }
+                  >
+                    Tomar control
+                  </Button>
+                </View>
+              )}
+              {pendingFinish && (
+                <View style={{ gap: 10 }} accessibilityRole="summary">
+                  <Text style={st.h3}>
+                    {pendingFinish.status === "conflict"
+                      ? "Revisá este cierre"
+                      : "Cierre pendiente de sincronizar"}
+                  </Text>
+                  <Text style={st.p}>
+                    {pendingFinish.status === "conflict"
+                      ? "La sesión cambió en otro dispositivo. No confirmamos el cierre ni las monedas."
+                      : "Detuvimos el tiempo acá. El historial y las monedas se actualizarán cuando el servidor confirme el cierre."}
+                  </Text>
+                  <Button
+                    secondary
+                    disabled={
+                      busy ||
+                      (!!env.offline && pendingFinish.status !== "conflict")
+                    }
+                    onPress={() =>
+                      run(async () => {
+                        const latest =
+                          pendingFinish.status === "conflict"
+                            ? await repo?.dismissPendingSessionFinish()
+                            : await repo?.syncPendingSessionFinish();
+                        if (latest) setEnv(latest);
+                      })
+                    }
+                  >
+                    {pendingFinish.status === "conflict"
+                      ? "Revisar sesión actual"
+                      : "Reintentar ahora"}
+                  </Button>
+                </View>
+              )}
+              <Text
+                style={[
+                  st.h1,
+                  { fontSize: 58, textAlign: "center", margin: 25 },
+                ]}
+                accessibilityLabel={`${Math.floor(elapsed / 60)} minutos y ${elapsed % 60} segundos ${pendingFinish ? "pendientes de confirmar" : "registrados"}`}
+              >
+                {String(Math.floor(elapsed / 60)).padStart(2, "0")}:
+                {String(elapsed % 60).padStart(2, "0")}
+              </Text>
+              <Button
+                secondary
+                disabled={busy || remoteControl || !!pendingFinish}
+                onPress={() =>
+                  run(() =>
+                    command(
+                      activeSession.running_since
+                        ? "session.pause"
+                        : "session.resume",
+                      { id: activeSession.id },
+                      false,
+                    ),
+                  )
+                }
+              >
+                {activeSession.running_since ? "Pausar" : "Continuar"}
+              </Button>
+              {method.steps.map((step, index) => (
+                <Text style={st.p} key={step}>
+                  {index + 1}. {step}
+                </Text>
+              ))}
+            </>
+          ) : slot ? (
+            <>
+              <Text style={st.h3}>{slot.objective}</Text>
+              <Text style={st.p}>
+                {method.name} · {slot.duration_minutes} minutos orientativos
+              </Text>
+              <Button
+                disabled={busy}
+                onPress={() =>
+                  run(() =>
+                    command("session.start", { slot_id: slot.id }, false),
+                  )
+                }
+              >
+                Empezar sesión
+              </Button>
+            </>
+          ) : (
+            <>
+              <Text style={st.h3}>¿Qué querés estudiar?</Text>
+              {prepared.origin === "ACTIVITY" ? (
+                <Text style={st.p}>
+                  Sugerimos una actividad cercana de tu agenda. Podés cambiarla;
+                  estudiar no la marca como hecha.
+                </Text>
+              ) : prepared.remembered ? (
+                <Text style={st.p}>
+                  Preparamos tus últimas preferencias. Podés cambiarlas antes de
+                  empezar.
+                </Text>
+              ) : null}
+              {input(
+                "objective",
+                "Objetivo, por ejemplo repasar Biología",
+                prepared.objective,
+              )}
+              {choices(
+                "subject_id",
+                "Materia, si corresponde",
+                [{ value: "", label: "Sin materia" }, ...subjectOptions],
+                prepared.subjectId,
+              )}
+              {choices(
+                "method_id",
+                "Método",
+                methods.map((entry) => ({
+                  value: entry.id,
+                  label: entry.name,
+                })),
+                prepared.methodId,
+              )}
+              {choices(
+                "planned_minutes",
+                "Duración orientativa",
+                freeStudyDurations.map((minutes) => ({
+                  value: String(minutes),
+                  label: `${minutes} minutos`,
+                })),
+                String(prepared.plannedMinutes),
+              )}
+              <Button
+                disabled={busy || !v("objective", prepared.objective).trim()}
+                onPress={() =>
+                  run(() =>
+                    command(
+                      "session.start",
+                      {
+                        objective: v("objective", prepared.objective),
+                        subject_id:
+                          v("subject_id", prepared.subjectId) || undefined,
+                        method_id: v("method_id", prepared.methodId),
+                        planned_minutes: Number(
+                          v("planned_minutes", String(prepared.plannedMinutes)),
+                        ),
+                        ...(prepared.academicItemId &&
+                        v("objective", prepared.objective).trim() ===
+                          prepared.objective &&
+                        v("subject_id", prepared.subjectId) ===
+                          prepared.subjectId
+                          ? { academic_item_id: prepared.academicItemId }
+                          : {}),
+                      },
+                      false,
+                    ),
+                  )
+                }
+              >
+                Empezar a estudiar
+              </Button>
+            </>
           )}
-          <Text style={st.p}>
-            El tiempo es orientativo. Registrá la sesión cuando hayas trabajado
-            el objetivo.
-          </Text>
-          {save(
-            "session.complete",
-            { slot_id: slot.id, reflection: v("reflection") },
-            "Registrar sesión",
+          {practice && (
+            <Button secondary onPress={() => open("quiz", practice)}>
+              Abrir una práctica de esta materia
+            </Button>
+          )}
+          {activeSession && !remoteControl && !pendingFinish && (
+            <>
+              {choices(
+                "feedback",
+                "¿Cómo te fue? (opcional)",
+                [
+                  { value: "", label: "Prefiero omitirlo" },
+                  { value: "EASY", label: "Fácil" },
+                  { value: "GOOD", label: "Bien" },
+                  { value: "HARD", label: "Me costó" },
+                  { value: "VERY_HARD", label: "Muy difícil" },
+                ],
+                "",
+              )}
+              {input("reflection", "Comentario (opcional)", "", true)}
+              <Text style={st.p}>
+                Podés cerrar sin responder. Las monedas se acreditan después de
+                cinco minutos reales, sin depender de esta valoración.
+              </Text>
+              <Button
+                disabled={busy}
+                onPress={() =>
+                  run(async () => {
+                    if (!repo) return;
+                    const result = await repo.finishSession(
+                      {
+                        id: activeSession.id,
+                        feedback: v("feedback") || undefined,
+                        reflection: v("reflection") || undefined,
+                      },
+                      env.version,
+                    );
+                    setEnv(result);
+                    if (!result.pendingSessionFinish) setModal(null);
+                  })
+                }
+              >
+                Cerrar sesión
+              </Button>
+              <Button
+                secondary
+                disabled={busy}
+                onPress={() =>
+                  Alert.alert(
+                    "Descartar sesión",
+                    "Esta sesión no aparecerá en tu historial.",
+                    [
+                      { text: "Seguir estudiando", style: "cancel" },
+                      {
+                        text: "Descartar",
+                        style: "destructive",
+                        onPress: () =>
+                          void run(() =>
+                            command("session.discard", {
+                              id: activeSession.id,
+                            }),
+                          ),
+                      },
+                    ],
+                  )
+                }
+              >
+                Descartar sesión
+              </Button>
+            </>
           )}
         </>
       );
@@ -1020,9 +1646,8 @@ export default function App() {
           ])}
           {input("exception_reason", "Si hubo un imprevisto, ¿qué cambió?")}
           <Text style={st.p}>
-            El incumplimiento reconocido de un plan aceptado puede descontar 5
-            monedas disponibles, hasta 15 en siete días. Las excepciones y no
-            confirmar no descuentan.
+            El check-in no descuenta monedas. Si algo cambió, se conserva el
+            resultado para ayudarte a reorganizar el plan sin penalizaciones.
           </Text>
           {save("checkin.save", {
             learned: v("learned"),
@@ -1190,12 +1815,104 @@ export default function App() {
     if (modal === "chat")
       return (
         <>
+          <View
+            style={{
+              height: 220,
+              borderRadius: 24,
+              overflow: "hidden",
+              backgroundColor: "#f0e8df",
+            }}
+          >
+            <NativeWorld
+              companion={s.companion}
+              kind="avatar"
+              active
+              motionContext={{ talking: true, speaking }}
+            />
+          </View>
+          <Text style={st.p}>
+            {speaking
+              ? `${s.companion.name} está hablando.`
+              : "La voz usa gratis las voces instaladas en este dispositivo."}
+          </Text>
+          <NativeVoiceCall
+            key={s.profile?.id ?? "demo"}
+            repo={repo}
+            characterId={s.companion.character_id}
+            disabled={busy}
+            onActiveChange={setCallActive}
+            onSpeakingChange={setSpeaking}
+            onUnsent={(text) => change("message", text)}
+            onTurn={async (message) => {
+              const userId = account.current;
+              setPendingChat(message);
+              setBusy(true);
+              try {
+                const next = await repo.ai(
+                  "chat",
+                  { message },
+                  latestEnvelope.current.version,
+                );
+                if (account.current !== userId)
+                  throw Error("La cuenta cambió. La llamada se cerró.");
+                latestEnvelope.current = next;
+                setEnv(next);
+                const answer = [...next.state.messages]
+                  .reverse()
+                  .find((item) => item.role === "assistant");
+                const navigation = answer?.effects?.find(
+                  (effect) => effect.type === "NAVIGATE",
+                );
+                return {
+                  text: answer ? spokenAgentReply(answer) : "",
+                  afterSpeech: navigation
+                    ? () => {
+                        setModal(null);
+                        setView(navigation.target);
+                      }
+                    : undefined,
+                };
+              } finally {
+                if (account.current === userId) {
+                  setPendingChat("");
+                  setBusy(false);
+                }
+              }
+            }}
+          />
           {s.messages.map((m) => (
             <Card key={m.id}>
               <Text style={st.tag}>
                 {m.role === "user" ? "Vos" : s.companion.name}
               </Text>
               <Text style={st.p}>{m.content}</Text>
+              {m.actions?.map((action) => (
+                <Text
+                  key={action.id}
+                  style={[
+                    st.p,
+                    {
+                      color:
+                        action.status === "COMPLETED" ? "#245a43" : "#7b431e",
+                      backgroundColor:
+                        action.status === "COMPLETED" ? "#e9f5ec" : "#fff2df",
+                      padding: 10,
+                      borderRadius: 12,
+                    },
+                  ]}
+                >
+                  {action.status === "COMPLETED" ? "✓" : "!"} {action.label}
+                </Text>
+              ))}
+              {m.role === "assistant" && (
+                <Button
+                  secondary
+                  disabled={callActive}
+                  onPress={() => void speakCompanion(spokenAgentReply(m), true)}
+                >
+                  Escuchar respuesta
+                </Button>
+              )}
               {m.citations?.map((c) => (
                 <Button
                   key={c.chunk_id}
@@ -1215,22 +1932,84 @@ export default function App() {
               ))}
             </Card>
           ))}
+          {!!pendingChat && (
+            <>
+              <Card>
+                <Text style={st.tag}>Vos</Text>
+                <Text style={st.p}>{pendingChat}</Text>
+              </Card>
+              <Card>
+                <Text style={st.tag}>{s.companion.name}</Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                  accessibilityLiveRegion="polite"
+                >
+                  <ActivityIndicator color="#315f55" />
+                  <Text style={st.p}>Está pensando…</Text>
+                </View>
+              </Card>
+            </>
+          )}
           {input("message", "Tu pregunta o intento", "", true)}
           <Button
-            disabled={busy}
-            onPress={() =>
-              run(async () => {
-                setEnv(
-                  await repo.ai("chat", { message: v("message") }, env.version),
-                );
-                change("message", "");
-              })
-            }
+            disabled={busy || callActive || !v("message").trim()}
+            onPress={() => {
+              const message = v("message").trim();
+              if (!message || busy) return;
+              setPendingChat(message);
+              change("message", "");
+              void run(async () => {
+                try {
+                  const next = await repo.ai("chat", { message }, env.version);
+                  setEnv(next);
+                  const answer = [...next.state.messages]
+                    .reverse()
+                    .find((messageItem) => messageItem.role === "assistant");
+                  if (answer) {
+                    await speakCompanion(spokenAgentReply(answer));
+                    const navigation = answer.effects?.find(
+                      (effect) => effect.type === "NAVIGATE",
+                    );
+                    if (navigation) {
+                      setModal(null);
+                      setView(navigation.target);
+                    }
+                  }
+                } finally {
+                  setPendingChat("");
+                }
+              });
+            }}
           >
             Enviar
           </Button>
+          <Button
+            secondary
+            disabled={callActive}
+            onPress={() => setVoice(!voiceEnabled)}
+          >
+            {voiceEnabled
+              ? "Desactivar lectura automática"
+              : "Activar lectura automática"}
+          </Button>
+          {speaking && !callActive && (
+            <Button
+              secondary
+              onPress={() => {
+                void Speech.stop();
+                setSpeaking(false);
+              }}
+            >
+              Detener voz
+            </Button>
+          )}
           <Text style={st.label}>
-            Puede equivocarse. El chat reciente se guarda 30 días.
+            Puede equivocarse. El chat reciente se guarda 30 días. La voz es
+            sintética y puede variar según el dispositivo.
           </Text>
         </>
       );
@@ -1251,13 +2030,22 @@ export default function App() {
         </>
       );
     }
+    if (modal === "material-text")
+      return (
+        <NativeMaterialText
+          key={String(selected)}
+          id={String(selected)}
+          repo={repo}
+        />
+      );
     if (modal === "upload")
       return (
         <>
           {choices("subject_id", "Materia", subjectOptions)}
           <Text style={st.p}>
-            PDF, DOCX, texto o fotografía, hasta 25 MB. Los archivos son
-            privados.
+            PDF, DOCX, texto o fotografía, hasta 25 MB; PDF de hasta 100
+            páginas. Los archivos son privados y el original se conserva si
+            falla la lectura.
           </Text>
           <Button disabled={busy || !s.subjects.length} onPress={upload}>
             Elegir archivo y subir
@@ -1462,6 +2250,7 @@ export default function App() {
       return (
         <>
           <MotionPreference />
+          <SceneQualityPreference />
           <Button secondary onPress={() => open("profile")}>
             Perfil, descanso y autonomía
           </Button>
@@ -1482,6 +2271,11 @@ export default function App() {
             Habilitar notificaciones
           </Button>
           {input(
+            "daily_study_minute",
+            "Horario habitual de estudio (HH:MM)",
+            clock(s.preferences.daily_study_minute ?? 1020),
+          )}
+          {input(
             "checkin_minute",
             "Horario del check-in (HH:MM)",
             clock(s.preferences.checkin_minute),
@@ -1493,8 +2287,17 @@ export default function App() {
           )}
           {input("quiet_end", "Hasta (HH:MM)", clock(s.preferences.quiet_end))}
           {choices(
+            "daily_study_enabled",
+            "Recordatorio diario de estudio",
+            [
+              { value: "false", label: "Desactivado" },
+              { value: "true", label: "Activado" },
+            ],
+            String(s.preferences.daily_study_enabled ?? false),
+          )}
+          {choices(
             "checkin_enabled",
-            "Check-in",
+            "Check-in si no uso el aviso diario",
             [
               { value: "true", label: "Activado" },
               { value: "false", label: "Desactivado" },
@@ -1514,6 +2317,17 @@ export default function App() {
             checkin_enabled:
               v("checkin_enabled", String(s.preferences.checkin_enabled)) ===
               "true",
+            daily_study_enabled:
+              v(
+                "daily_study_enabled",
+                String(s.preferences.daily_study_enabled ?? false),
+              ) === "true",
+            daily_study_minute: minuteOf(
+              v(
+                "daily_study_minute",
+                clock(s.preferences.daily_study_minute ?? 1020),
+              ),
+            ),
             weekends: v("weekends", String(s.preferences.weekends)) === "true",
             checkin_minute: minuteOf(
               v("checkin_minute", clock(s.preferences.checkin_minute)),
@@ -1523,8 +2337,48 @@ export default function App() {
             ),
             quiet_end: minuteOf(v("quiet_end", clock(s.preferences.quiet_end))),
           })}
+          {!!(s.studyReminders ?? []).length && (
+            <>
+              <Text style={st.h3}>Recordatorios creados con tu compa</Text>
+              {(s.studyReminders ?? []).map((reminder) => (
+                <Card key={reminder.id}>
+                  <Text style={st.h3}>{reminder.title}</Text>
+                  <Text style={st.p}>
+                    {reminder.date
+                      ? `${reminder.date} · ${clock(reminder.minute)}`
+                      : `${days[reminder.day_of_week ?? 0]} · ${clock(reminder.minute)}`}
+                    {!reminder.enabled ? " · desactivado" : ""}
+                  </Text>
+                  {reminder.enabled && (
+                    <Button
+                      secondary
+                      disabled={busy}
+                      onPress={() =>
+                        run(async () => {
+                          setEnv(
+                            await repo.command(
+                              {
+                                type: "reminder.disable",
+                                payload: { id: reminder.id },
+                              },
+                              env.version,
+                            ),
+                          );
+                        })
+                      }
+                    >
+                      Desactivar
+                    </Button>
+                  )}
+                </Card>
+              ))}
+            </>
+          )}
           <Button secondary onPress={shareExport}>
             Exportar mis datos
+          </Button>
+          <Button secondary onPress={() => open("support")}>
+            Ayuda y soporte
           </Button>
           <Text style={st.p}>
             El chat se conserva 30 días. La memoria académica es editable. La
@@ -1548,6 +2402,7 @@ export default function App() {
           </Button>
         </>
       );
+    if (modal === "support") return <NativeSupportCenter repo={repo} />;
     if (modal === "delete-account")
       return (
         <>
@@ -1586,7 +2441,14 @@ export default function App() {
           borderColor: colors.line,
         }}
       >
-        <Text style={st.h3}>compa virtual</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Image
+            source={require("../assets/kusiy-logo.png")}
+            style={{ width: 34, height: 34, resizeMode: "contain" }}
+            accessibilityIgnoresInvertColors
+          />
+          <Text style={st.h3}>Kusiy</Text>
+        </View>
         <Pressable accessibilityRole="button" onPress={() => open("settings")}>
           <Text style={st.p}>{s.coins} monedas · Ajustes</Text>
         </Pressable>
@@ -1605,18 +2467,24 @@ export default function App() {
         </Text>
       )}
       {env.offline && (
-        <Text style={st.tag}>Sin conexión · Copia para consulta</Text>
+        <Text style={st.tag}>
+          Sin conexión o servidor no disponible · El cierre de sesión puede
+          quedar pendiente
+        </Text>
       )}
       <ScrollView
         contentContainerStyle={{ padding: 20, paddingBottom: 35 }}
         keyboardShouldPersistTaps="handled"
       >
-        {view !== "room" && view !== "compa" && view !== "together" && (
-          <>
-            <Text style={st.eyebrow}>{dateLabel(date).toUpperCase()}</Text>
-            <Text style={st.h1}>{title}</Text>
-          </>
-        )}
+        {view !== "room" &&
+          view !== "compa" &&
+          view !== "together" &&
+          view !== "spaces" && (
+            <>
+              <Text style={st.eyebrow}>{dateLabel(date).toUpperCase()}</Text>
+              <Text style={st.h1}>{title}</Text>
+            </>
+          )}
         {error && !modal && (
           <Text accessibilityRole="alert" style={st.error}>
             {error}
@@ -1634,40 +2502,13 @@ export default function App() {
         )}
         {view === "compa" && <NativeCompa s={s} open={open} go={setView} />}
         {view === "today" && (
-          <>
-            {todaySlots.length ? (
-              todaySlots.map((slot) => (
-                <Card key={slot.id}>
-                  <Text style={st.tag}>
-                    {clock(slot.start_minute)} · {slot.duration_minutes} min
-                  </Text>
-                  <Text style={st.h3}>
-                    {s.items.find((x) => x.id === slot.academic_item_id)?.title}
-                  </Text>
-                  <Text style={st.p}>{methodById(slot.method_id).name}</Text>
-                  {slot.status === "PENDING" ? (
-                    <Button onPress={() => open("focus", slot)}>
-                      Estudiar
-                    </Button>
-                  ) : (
-                    <Text style={st.tag}>
-                      {slot.status === "COMPLETE" ? "Completada" : "Revisada"}
-                    </Text>
-                  )}
-                </Card>
-              ))
-            ) : (
-              <Card>
-                <Text style={st.p}>
-                  No hay sesiones aceptadas para hoy. Prepará un plan en Agenda.
-                </Text>
-              </Card>
-            )}
-            <Button secondary onPress={() => open("checkin")}>
-              Registrar check-in
-            </Button>
-            {itemList(pending.filter((x) => x.due_date <= date))}
-          </>
+          <NativeAgendaCalendar
+            state={s}
+            open={open}
+            initialDate={date}
+            collaboration={repo.collaboration}
+            go={setView}
+          />
         )}
         {view === "agenda" && (
           <>
@@ -1695,16 +2536,52 @@ export default function App() {
                 Revisar plan
               </Button>
             )}
-            {itemList([
-              ...pending,
-              ...s.items.filter((x) => x.status === "DONE"),
-            ])}
+            <NativeAgendaCalendar
+              state={s}
+              open={open}
+              collaboration={repo.collaboration}
+              go={setView}
+            />
           </>
         )}
-        {view === "together" && <NativeTogether key={s.profile?.id ?? "demo"} repo={repo.collaboration} back={() => setView("study")} />}
+        {view === "together" && (
+          <>
+            <NativeStudyHubNav active="together" go={setView} />
+            <NativeTogether
+              key={s.profile?.id ?? "demo"}
+              repo={repo.collaboration}
+            />
+          </>
+        )}
+        {view === "spaces" && (
+          <NativeStudySpaces
+            go={setView}
+            open={open}
+            activeId={studySpaceById(s.activeStudySpaceId).id}
+            companion={s.companion}
+            busy={busy}
+            selectSpace={(id) =>
+              run(() => command("studySpace.select", { id }, false))
+            }
+          />
+        )}
         {view === "study" && (
           <>
-            <Button secondary onPress={() => setView("together")}>Estudiar juntos</Button>
+            <NativeStudyHubNav active="study" go={setView} />
+            <Button onPress={() => open("focus")}>
+              {s.activeSession ? "Continuar sesión" : "Estudiar libre"}
+            </Button>
+            {active?.slots
+              .filter((slot) => slot.status === "PENDING" && slot.date <= date)
+              .map((slot) => (
+                <Button
+                  secondary
+                  key={slot.id}
+                  onPress={() => open("focus", slot)}
+                >
+                  {slot.objective} · {slot.duration_minutes} min
+                </Button>
+              ))}
             <Button onPress={() => open("generate")}>Crear práctica</Button>
             <Button secondary onPress={() => open("upload")}>
               Subir material
@@ -1718,11 +2595,10 @@ export default function App() {
             {s.materials.map((m) => (
               <Card key={m.id}>
                 <Text style={st.h3}>{m.title}</Text>
-                <Text style={st.p}>
-                  {m.status === "READY"
-                    ? "Listo para estudiar"
-                    : (m.error_message ?? "Procesamiento pendiente")}
-                </Text>
+                <Text style={st.p}>{materialStatusLabel(m)}</Text>
+                {!!m.error_message && (
+                  <Text style={st.p}>{m.error_message}</Text>
+                )}
                 <Button
                   secondary
                   onPress={() =>
@@ -1731,19 +2607,35 @@ export default function App() {
                     })
                   }
                 >
-                  Abrir archivo
+                  Abrir original
                 </Button>
-                {m.status === "FAILED" && (
+                {(m.text_ready || m.status === "READY") && (
+                  <Button secondary onPress={() => open("material-text", m.id)}>
+                    Leer texto
+                  </Button>
+                )}
+                {materialIsProcessing(m) && (
                   <Button
                     secondary
                     disabled={busy}
                     onPress={() =>
-                      run(() =>
-                        command("material.enqueue", { id: m.id }, false),
-                      )
+                      run(() => command("material.cancel", { id: m.id }, false))
                     }
                   >
-                    Reintentar procesamiento
+                    Cancelar lectura
+                  </Button>
+                )}
+                {materialCanRetry(m) && (
+                  <Button
+                    secondary
+                    disabled={busy}
+                    onPress={() =>
+                      run(async () => {
+                        setEnv(await repo.processMaterial(m.id));
+                      })
+                    }
+                  >
+                    Reintentar
                   </Button>
                 )}
                 <Button
@@ -1808,6 +2700,48 @@ export default function App() {
                 <Text style={st.tag}>🏆 Hábito en marcha</Text>
               )}
             </Card>
+            <Text style={[st.h2, st.section]}>Mis sesiones</Text>
+            {s.sessions.length ? (
+              [...s.sessions]
+                .reverse()
+                .slice(0, 20)
+                .map((session) => {
+                  const item = s.items.find(
+                    (entry) => entry.id === session.academic_item_id,
+                  );
+                  const subject = s.subjects.find(
+                    (entry) =>
+                      entry.id === (session.subject_id ?? item?.subject_id),
+                  );
+                  return (
+                    <Card key={session.id}>
+                      <Text style={st.h3}>
+                        {session.objective ||
+                          item?.title ||
+                          "Sesión de estudio"}
+                      </Text>
+                      <Text style={st.p}>
+                        {dateLabel(
+                          today(s.profile?.timezone, session.completed_at),
+                        )}{" "}
+                        · {subject?.name ?? "Estudio general"} ·{" "}
+                        {methodById(session.method_id).name}
+                      </Text>
+                      <Text style={st.tag}>
+                        {session.actual_seconds !== undefined
+                          ? session.actual_seconds < 60
+                            ? `${session.actual_seconds} s registrados`
+                            : `${Math.floor(session.actual_seconds / 60)} min registrados`
+                          : `${session.duration_minutes} min planificados (historial anterior)`}
+                      </Text>
+                    </Card>
+                  );
+                })
+            ) : (
+              <Text style={st.p}>
+                Tu primera sesión aparecerá acá cuando la cierres.
+              </Text>
+            )}
             <Button secondary onPress={() => open("settings")}>
               Privacidad y ajustes
             </Button>
@@ -1861,13 +2795,69 @@ export default function App() {
                     secondary
                     onPress={() =>
                       run(async () => {
-                        await command("notification.read", { id: n.id }, false);
-                        setView(n.route);
+                        if (!repo) throw Error("Ingresá para abrir este aviso.");
+                        const latest = repo.mode === "live" ? await repo.load() : env;
+                        if (latest.offline) throw Error("Conectate para comprobar si este aviso sigue vigente.");
+                        const launch = resolveNotificationLaunch(latest.state, n.id, n.route, new Date().toISOString());
+                        if (!launch) throw Error("Este aviso ya no está vigente. Revisá tu agenda.");
+                        if (launch.target === "together" && !(await repo.collaboration?.overview())?.enabled)
+                          throw Error("El encuentro ya no está disponible.");
+                        const updated = await repo.command({ type: "notification.read", payload: { id: n.id } }, latest.version);
+                        setEnv(updated);
+                        setView(launch.target);
+                        if (launch.focus) { setSelected(launch.slot); setModal("focus"); }
                       })
                     }
                   >
-                    Ver en mi agenda
+                    Abrir aviso
                   </Button>
+                  {(() => {
+                    const snoozed = s.studyReminders.find(
+                      (r) => r.snoozed_from === n.id && r.enabled,
+                    );
+                    return snoozed ? (
+                      <Text style={st.p}>
+                        Pospuesto para {snoozed.date} a las{" "}
+                        {clock(snoozed.minute)}.
+                      </Text>
+                    ) : null;
+                  })()}
+                  <Text style={st.p}>Posponer este aviso</Text>
+                  <View
+                    style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}
+                  >
+                    {!n.read_at && (
+                      <Button
+                        secondary
+                        disabled={busy}
+                        onPress={() =>
+                          run(() =>
+                            command("notification.read", { id: n.id }, false),
+                          )
+                        }
+                      >
+                        Ignorar
+                      </Button>
+                    )}
+                    {([15, 30, 60] as const).map((minutes) => (
+                      <Button
+                        key={minutes}
+                        secondary
+                        disabled={busy}
+                        onPress={() =>
+                          run(() =>
+                            command(
+                              "notification.snooze",
+                              { id: n.id, minutes },
+                              false,
+                            ),
+                          )
+                        }
+                      >
+                        {minutes} min
+                      </Button>
+                    ))}
+                  </View>
                 </Card>
               ))}
           </>
@@ -1876,9 +2866,31 @@ export default function App() {
           <>
             {" "}
             <Text style={[st.h2, st.section]}>Memoria académica</Text>
+            <Text style={st.p}>
+              Podés editar y borrar estos recuerdos. El historial reciente de
+              conversación se conserva por separado durante 30 días.
+            </Text>
             {s.memories.map((m) => (
               <Card key={m.id}>
                 <Text style={st.p}>{m.content}</Text>
+                <Text style={st.p}>{memoryOriginLabel(m)}</Text>
+                {m.source_message_id &&
+                  s.messages.some(
+                    (message) =>
+                      message.id === m.source_message_id &&
+                      message.role === "user",
+                  ) && (
+                    <Text style={st.p}>
+                      Tu pedido:{" "}
+                      {
+                        s.messages.find(
+                          (message) =>
+                            message.id === m.source_message_id &&
+                            message.role === "user",
+                        )?.content
+                      }
+                    </Text>
+                  )}
                 <Button secondary onPress={() => open("memory", m)}>
                   Editar
                 </Button>
@@ -1912,7 +2924,11 @@ export default function App() {
         {tabs.map(([id, label]) => (
           <Pressable
             accessibilityRole="tab"
-            accessibilityState={{ selected: view === id || (id === "study" && view === "together") }}
+            accessibilityState={{
+              selected:
+                view === id ||
+                (id === "study" && ["together", "spaces"].includes(view)),
+            }}
             key={id}
             onPress={() => setView(id)}
             style={{
@@ -1923,12 +2939,26 @@ export default function App() {
               minHeight: 60,
             }}
           >
-            <TabIcon id={id} active={view === id || (id === "study" && view === "together")} />
+            <TabIcon
+              id={id}
+              active={
+                view === id ||
+                (id === "study" && ["together", "spaces"].includes(view))
+              }
+            />
             <Text
               style={{
                 fontSize: 12,
-                color: view === id || (id === "study" && view === "together") ? colors.ink : colors.muted,
-                fontWeight: view === id || (id === "study" && view === "together") ? "700" : "400",
+                color:
+                  view === id ||
+                  (id === "study" && ["together", "spaces"].includes(view))
+                    ? colors.ink
+                    : colors.muted,
+                fontWeight:
+                  view === id ||
+                  (id === "study" && ["together", "spaces"].includes(view))
+                    ? "700"
+                    : "400",
               }}
             >
               {label}
@@ -1961,7 +2991,6 @@ export default function App() {
               disabled={busy}
               onPress={() => {
                 setModal(null);
-                setEnd(null);
               }}
             >
               Cerrar

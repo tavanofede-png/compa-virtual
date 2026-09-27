@@ -27,6 +27,9 @@ __pycache__/
 work/collaboration-mobile-export/
 work/collaboration-ios-export/
 work/pw-daemon/
+work/study-runtime-candidates/
+work/npm-cache/
+work/restore-fixture-manual/
 
 # Blender automatic recovery files
 *.blend1

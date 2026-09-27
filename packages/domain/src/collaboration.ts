@@ -48,6 +48,21 @@ export const sessionModes = [
 ] as const;
 export type GroupSessionState =
   "scheduled" | "active" | "completed" | "cancelled";
+export interface GroupChatMessage {
+  id: string;
+  author_id: string | null;
+  author_name: string;
+  body: string;
+  status: "visible" | "held";
+  created_at: string;
+}
+export interface GroupChatPage {
+  enabled: boolean;
+  messages: GroupChatMessage[];
+  next_cursor: { created_at: string; id: string } | null;
+}
+export type GroupChatReportCategory =
+  | "harassment" | "personal-data" | "sexual" | "violence" | "other";
 export interface StudyGroupMember {
   user_id: string;
   nickname: string;
@@ -77,6 +92,7 @@ export interface GroupStudySession {
   started_at: string | null;
   ended_at: string | null;
   participant_count: number;
+  joinable?: boolean;
 }
 export interface CollaborationInvite {
   id: string;
@@ -347,6 +363,7 @@ export const collaborationCommandSchema = z.discriminatedUnion("action", [
       ...fields,
     })
     .strict(),
+  z.object({ action: z.literal("session.join"), session_id: uuid, revision }).strict(),
   z
     .object({ action: z.literal("session.start"), session_id: uuid, revision })
     .strict(),

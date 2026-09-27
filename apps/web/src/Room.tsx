@@ -25,8 +25,6 @@ import {
   RotateCcw,
   ChevronLeft,
   ChevronRight,
-  Plus,
-  Minus,
   MessageCircle,
 } from "lucide-react";
 
@@ -106,9 +104,11 @@ export function Equipment({ id, width = 55 }: { id: string; width?: number }) {
 export function Creature({
   companion,
   size = 160,
+  speaking = false,
 }: {
   companion: Companion;
   size?: number;
+  speaking?: boolean;
 }) {
   if (size <= 90)
     return companion.character_id ? (
@@ -127,7 +127,11 @@ export function Creature({
       className="avatar-view"
       style={{ width: Math.max(size, 200), height: size * 1.5 }}
     >
-      <WorldCanvas companion={companion} kind="avatar" />
+      <WorldCanvas
+        companion={companion}
+        kind="avatar"
+        motionContext={{ speaking }}
+      />
     </div>
   );
 }
@@ -169,7 +173,8 @@ export function WorldCanvas({
   const [failed, setFailed] = useState(false),
     [loading, setLoading] = useState(true),
     [revision, setRevision] = useState(0);
-  const fingerprint = appearanceKey(companion, kind) + JSON.stringify(petState ?? null);
+  const fingerprint =
+    appearanceKey(companion, kind) + JSON.stringify(petState ?? null);
   talk.current = onTalk;
   useEffect(() => {
     const node = host.current;
@@ -324,8 +329,10 @@ export function WorldCanvas({
               if (target === "pet") {
                 world.petController?.request("react");
                 setPetMenu(true);
-              } else if (target === "floor") world.controller?.walkTo(hit.point.toArray());
-              else if (target.startsWith("object:")) world.controller?.inspect(target.slice(7));
+              } else if (target === "floor")
+                world.controller?.walkTo(hit.point.toArray());
+              else if (target.startsWith("object:"))
+                world.controller?.inspect(target.slice(7));
               else if (target === "pouf") world.controller?.request("pouf");
               else if (target === "chair" || target === "bed")
                 setFurniture(target);
@@ -354,13 +361,20 @@ export function WorldCanvas({
             dirty = true;
             return;
           }
-          if (["sit", "study", "rest", "stand", "walk", "pouf"].includes(type)) {
+          if (
+            ["sit", "study", "rest", "stand", "walk", "pouf"].includes(type)
+          ) {
             world.controller?.request(type as CompanionAction);
             setFurniture(null);
             dirty = true;
             return;
           }
-          if (type.startsWith("object:")) { world.controller?.inspect(type.slice(7)); setFurniture(null); dirty = true; return; }
+          if (type.startsWith("object:")) {
+            world.controller?.inspect(type.slice(7));
+            setFurniture(null);
+            dirty = true;
+            return;
+          }
           if (type === "reset") {
             world.camera.position.copy(original);
             controls.target.copy(target);
@@ -402,13 +416,15 @@ export function WorldCanvas({
           last = time;
           world?.controller?.pause(!ambient);
           world?.controller?.context(movement.current);
+          world?.speech?.setSpeaking(!!movement.current.speaking);
           world?.petController?.pause(!ambient);
           world?.petController?.context({
             visible: activeRef.current,
             studying: movement.current.studying,
             talking: movement.current.talking,
             celebration: movement.current.celebration,
-            companionPosition: world.avatar?.position.toArray() as [number, number, number] | undefined,
+            companionPosition: world.avatar?.position.toArray() as
+              [number, number, number] | undefined,
           });
           if (world?.controller?.update(delta)) {
             dirty = true;
@@ -418,6 +434,7 @@ export function WorldCanvas({
             dirty = true;
             renderer!.shadowMap.needsUpdate = true;
           }
+          if (world?.speech?.update(delta)) dirty = true;
           const changed = controls!.update();
           if (!reduced && world?.avatar && !companion.character_id) {
             const head = world.avatar.getObjectByName("head");
@@ -451,6 +468,7 @@ export function WorldCanvas({
       controls?.dispose();
       composer?.dispose();
       world?.controller?.dispose();
+      world?.speech?.dispose();
       world?.petController?.dispose();
       if (world) disposeModel(world.scene);
       if (renderer) {
@@ -491,7 +509,7 @@ export function WorldCanvas({
           </button>
         </div>
       )}
-      {!failed && (
+      {!failed && kind !== "room" && (
         <div className="world-controls" aria-label="Cámara">
           <button
             aria-label="Girar a la izquierda"
@@ -505,22 +523,6 @@ export function WorldCanvas({
           >
             <ChevronRight size={17} />
           </button>
-          {kind === "room" && (
-            <>
-              <button
-                aria-label="Acercar habitación"
-                onClick={() => action.current("in")}
-              >
-                <Plus size={16} />
-              </button>
-              <button
-                aria-label="Alejar habitación"
-                onClick={() => action.current("out")}
-              >
-                <Minus size={16} />
-              </button>
-            </>
-          )}
           <button
             aria-label="Restablecer cámara"
             onClick={() => action.current("reset")}
@@ -548,9 +550,24 @@ export function WorldCanvas({
                 Ir al escritorio
               </button>
               <button onClick={() => action.current("rest")}>Descansar</button>
-              <button onClick={() => action.current("walk")}>Caminar por la habitación</button>
-              {roomInteractions[companion.room_style ?? "cozy"]?.pouf && <button onClick={() => action.current("pouf")}>Sentarse en el puff</button>}
-              {roomInteractions[companion.room_style ?? "cozy"]?.objects?.map(o => <button key={o.id} onClick={() => action.current("object:" + o.id)}>{o.label}</button>)}
+              <button onClick={() => action.current("walk")}>
+                Caminar por la habitación
+              </button>
+              {roomInteractions[companion.room_style ?? "cozy"]?.pouf && (
+                <button onClick={() => action.current("pouf")}>
+                  Sentarse en el puff
+                </button>
+              )}
+              {roomInteractions[companion.room_style ?? "cozy"]?.objects?.map(
+                (o) => (
+                  <button
+                    key={o.id}
+                    onClick={() => action.current("object:" + o.id)}
+                  >
+                    {o.label}
+                  </button>
+                ),
+              )}
               <button onClick={() => action.current("stand")}>
                 Levantarse
               </button>
@@ -561,15 +578,26 @@ export function WorldCanvas({
       )}
       {kind === "room" && ambient && petState && !loading && !failed && (
         <div className="pet-actions">
-          <button onClick={() => setPetMenu((open) => !open)} aria-expanded={petMenu}>
+          <button
+            onClick={() => setPetMenu((open) => !open)}
+            aria-expanded={petMenu}
+          >
             {petState.name}
           </button>
           {petMenu && (
-            <div className="pet-action-menu" role="group" aria-label={`Acciones de ${petState.name}`}>
+            <div
+              className="pet-action-menu"
+              role="group"
+              aria-label={`Acciones de ${petState.name}`}
+            >
               <button onClick={() => action.current("pet:come")}>Venir</button>
               <button onClick={() => action.current("pet:play")}>Jugar</button>
-              <button onClick={() => action.current("pet:rest")}>Descansar</button>
-              <button onClick={() => action.current("pet:returnHome")}>Volver a su camita</button>
+              <button onClick={() => action.current("pet:rest")}>
+                Descansar
+              </button>
+              <button onClick={() => action.current("pet:returnHome")}>
+                Volver a su camita
+              </button>
               <button onClick={() => setPetMenu(false)}>Cerrar</button>
             </div>
           )}

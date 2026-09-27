@@ -5,7 +5,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID?.trim();
   return {
     ...config,
-    name: config.name ?? "Compa Virtual",
+    name: config.name ?? "Kusiy",
     slug: config.slug ?? "compa-virtual",
     ios: {
       ...config.ios,

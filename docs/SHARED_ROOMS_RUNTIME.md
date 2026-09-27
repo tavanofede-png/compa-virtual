@@ -1,0 +1,13 @@
+# Salas compartidas 3D en Android
+
+Las seis salas (`living`, `study`, `library`, `projects`, `patio`, `terrace`) conservan sus maestros y GLB detallados. Android muestra una vista previa liviana antes de entrar; al ingresar a un encuentro autorizado carga la escena 3D reducida. La opción **Vista liviana** permite volver a la imagen si el dispositivo lo necesita. Cada sala tiene seis asientos definidos en su metadata y los avatares provienen de la presencia autorizada por el servidor.
+
+`node scripts/stage-shared-spaces.mjs --v2` toma los GLB reducidos de `work/shared-spaces-v2`, compacta normales y UV válidos sin alterar posiciones, índices, nodos ni materiales y genera un manifiesto nuevo con tamaño y SHA-256. `pnpm assets:shared-verify` comprueba seis GLB íntegros y seis asientos por sala; también se ejecuta antes del build web. El lote reducido pasó de 167,3 a 134,4 MB (19,6 % menos). Un render Blender de Patio antes y después difirió en promedio 0,011 niveles por canal sobre 255. La geometría y los objetos siguen presentes; esta compactación no certifica FPS ni memoria en teléfonos.
+
+La caché nativa de `apps/mobile/src/scene-cache.ts` se comparte con los ocho espacios individuales, tiene un límite de 250 MiB y usa el hash en el nombre del archivo. Verifica longitud y cabecera GLB tras la descarga. La URL base se configura con `EXPO_PUBLIC_SCENE_ASSET_BASE_URL`; sigue aceptando la variable antigua `EXPO_PUBLIC_STUDY_ASSET_BASE_URL`. Si falla la carga, el encuentro y sus controles continúan disponibles y el alumno puede reintentar o volver a la vista liviana.
+
+La biblioteca de animaciones humanas se analiza una vez por sala y se comparte entre los avatares presentes. Si la presencia o el atuendo de un participante cambia mientras su modelo se carga, se descarta esa versión anterior antes de añadirla a la escena. En Android, la sala estática redibuja al terminar la carga o al cambiar participantes; el render continuo queda reservado para el movimiento activado. El alumno puede elegir nitidez automática, liviana o detallada en Ajustes sin quitar objetos de la sala.
+
+En web y Android, entrar en un encuentro cambia automáticamente de la imagen previa al 3D. La web indica que está preparando la escena mientras la descarga; ambos clientes conservan el cambio manual a la vista liviana.
+
+La exportación JS Android demuestra que el paquete ya no incluye los seis GLB de salas. **No certifica la descarga, memoria, FPS ni presencia de seis avatares en teléfonos reales.** Antes de aprobar E10 falta entrar en cada sala desde un encuentro autorizado, medir tres gamas Android, probar conexión intermitente, reconexión y liberación tras cambios de sala.

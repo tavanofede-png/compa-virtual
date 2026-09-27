@@ -1,3 +1,5 @@
+# Blueprint for the materials worker. Do not set MINOR_BETA_APPROVED=true here.
+# Region stays Virginia (US East) to match the documented data path.
 services:
   - type: worker
     name: compa-materials
@@ -8,20 +10,31 @@ services:
     dockerContext: .
     numInstances: 1
     envVars:
+      - key: NODE_ENV
+        value: production
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-      - key: OPENAI_API_KEY
+      - key: AI_PROVIDER
+        value: cloudflare
+      - key: CLOUDFLARE_ACCOUNT_ID
         sync: false
-      - key: OPENAI_MODEL
-        value: gpt-6-astra
-      - key: OPENAI_EMBEDDING_MODEL
-        value: text-embedding-3-small
+      - key: CLOUDFLARE_API_TOKEN
+        sync: false
+      - key: CLOUDFLARE_AI_MODEL
+        value: "@cf/zai-org/glm-4.7-flash"
+      - key: CLOUDFLARE_AI_EMBEDDING_MODEL
+        value: "@cf/baai/bge-m3"
+      - key: CLOUDFLARE_AI_VISION_MODEL
+        value: "@cf/meta/llama-3.2-11b-vision-instruct"
+      - key: AI_VECTOR_DIMENSIONS
+        value: "1536"
       - key: MINOR_BETA_APPROVED
         value: "false"
       - key: OPENAI_ZDR_VERIFIED
         value: "false"
+      - key: AI_MINOR_DATA_APPROVED
+        value: "false"
       - key: DIGITAL_CONSENT_AGE
         value: "18"
-

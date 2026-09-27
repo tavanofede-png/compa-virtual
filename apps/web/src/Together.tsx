@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -44,7 +44,7 @@ export function Together({
   back,
 }: {
   repo?: CollaborationRepository;
-  back: () => void;
+  back?: () => void;
 }) {
   const [data, setData] = useState<CollaborationOverview | null>(null),
     [detail, setDetail] = useState<GroupSessionDetail | null>(null);
@@ -54,7 +54,8 @@ export function Together({
   const [editor, setEditor] = useState<"group" | "session" | "edit" | null>(
       null,
     ),
-    [selectedGroup, setSelectedGroup] = useState("");
+    [selectedGroup, setSelectedGroup] = useState(""),
+    [startNow, setStartNow] = useState(false);
   const editorRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (editor) {
@@ -276,8 +277,10 @@ export function Together({
         space_template_id: f.space as (typeof sharedSpaces)[number]["id"],
         planned_duration: Number(f.duration),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        scheduled_start_at: sessionLocalStart(f.date, f.time),
-        meeting_url: f.meeting,
+        scheduled_start_at: editor !== "edit" && startNow
+          ? new Date().toISOString()
+          : sessionLocalStart(f.date, f.time),
+        meeting_url: null,
       };
       await send(
         editor === "edit" && detail
@@ -296,15 +299,37 @@ export function Together({
   const local = sessionLocalFields(
     editing ? new Date(editing.scheduled_start_at) : undefined,
   );
+  const friends = data
+    ? Array.from(
+        new Map(
+          data.groups
+            .flatMap((group) =>
+              group.members
+                .filter((member) => member.user_id !== data.user_id)
+                .map((member) => [
+                  member.user_id,
+                  {
+                    ...member,
+                    groups: data.groups
+                      .filter((entry) => entry.members.some((person) => person.user_id === member.user_id))
+                      .map((entry) => entry.name),
+                  },
+                ] as const),
+            ),
+        ).values(),
+      )
+    : [];
   return (
     <div className="together">
-      <button
-        className="together-back"
-        onClick={() => (detail ? setDetail(null) : back())}
-      >
-        <ArrowLeft size={17} />
-        {detail ? "Todas las sesiones" : "Volver a Estudiar"}
-      </button>
+      {(detail || back) && (
+        <button
+          className="together-back"
+          onClick={() => (detail ? setDetail(null) : back?.())}
+        >
+          <ArrowLeft size={17} />
+          {detail ? "Todas las sesiones" : "Volver a Estudiar"}
+        </button>
+      )}
       <div className="page-heading">
         <div>
           <p className="eyebrow">UN OBJETIVO. BUENA COMPAÑÍA.</p>
@@ -336,6 +361,28 @@ export function Together({
           <Check size={16} />
           {notice}
         </div>
+      )}
+      {!detail && (
+        <section className="shared-space-showcase">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">SEIS LUGARES PARA ENCONTRARSE</p>
+              <h2>Salas compartidas.</h2>
+            </div>
+            <span>Hasta 6 personas</span>
+          </div>
+          <div className="shared-space-grid">
+            {sharedSpaces.map((space) => (
+              <article key={space.id} style={{ "--room-accent": space.color } as CSSProperties}>
+                <img src={sharedSpacePreview(space.id)} alt={`Vista de ${space.name}`} loading="lazy" />
+                <div>
+                  <strong>{space.name}</strong>
+                  <small>{space.description}</small>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       )}
       {!repo ? (
         <section className="surface">
@@ -491,23 +538,28 @@ export function Together({
                         placeholder="Un objetivo concreto para este encuentro"
                       />
                     </Field>
+                    {!editing && (
+                      <Field label="Inicio">
+                        <select
+                          value={startNow ? "now" : "later"}
+                          onChange={(event) => setStartNow(event.target.value === "now")}
+                        >
+                          <option value="now">Abrir la sala ahora</option>
+                          <option value="later">Programar para otro momento</option>
+                        </select>
+                      </Field>
+                    )}
                     <div className="together-fields">
-                      <Field label="Día">
-                        <input
-                          type="date"
-                          name="date"
-                          required
-                          defaultValue={local.date}
-                        />
-                      </Field>
-                      <Field label="Hora">
-                        <input
-                          type="time"
-                          name="time"
-                          required
-                          defaultValue={local.time}
-                        />
-                      </Field>
+                      {(!startNow || editing) && (
+                        <>
+                          <Field label="Día">
+                            <input type="date" name="date" required defaultValue={local.date} />
+                          </Field>
+                          <Field label="Hora">
+                            <input type="time" name="time" required defaultValue={local.time} />
+                          </Field>
+                        </>
+                      )}
                       <Field label="Minutos">
                         <input
                           type="number"
@@ -520,8 +572,9 @@ export function Together({
                       </Field>
                     </div>
                     <p className="together-hint">
-                      Horario en{" "}
-                      {Intl.DateTimeFormat().resolvedOptions().timeZone}.
+                      {startNow && !editing
+                        ? "La sala se abre al crearla. Podés invitar a tus compañeros y empezar juntos cuando entren."
+                        : `Horario en ${Intl.DateTimeFormat().resolvedOptions().timeZone}.`}
                     </p>
                     <Field label="Tipo de sesión">
                       <select
@@ -556,23 +609,8 @@ export function Together({
                         </label>
                       ))}
                     </fieldset>
-                    <Field label="Enlace de Google Meet (opcional)">
-                      <input
-                        name="meeting"
-                        type="url"
-                        maxLength={300}
-                        defaultValue={
-                          editor === "edit" ? (detail?.meeting_url ?? "") : ""
-                        }
-                        placeholder="https://meet.google.com/abc-defg-hij"
-                      />
-                    </Field>
-                    <p className="together-hint">
-                      Creá la reunión en Google Meet y pegá su enlace. Solo lo
-                      ven quienes aceptaron participar.
-                    </p>
                     <button className="primary" type="submit">
-                      {editing ? "Guardar cambios" : "Crear sesión privada"}
+                      {editing ? "Guardar cambios" : startNow ? "Abrir sala ahora" : "Programar sesión privada"}
                     </button>
                   </fieldset>
                 </form>
@@ -609,18 +647,6 @@ export function Together({
                   }
                 </p>
                 <div className="together-actions">
-                  {detail.meeting_url &&
-                    ["scheduled", "active"].includes(detail.session.status) && (
-                      <a
-                        className="primary"
-                        href={detail.meeting_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Abrir Google Meet
-                        <ArrowUpRight size={17} />
-                      </a>
-                    )}
                   {detail.session.host_id === data.user_id ? (
                     <>
                       {detail.session.status === "scheduled" && (
@@ -714,12 +740,6 @@ export function Together({
                     </button>
                   )}
                 </div>
-                {detail.meeting_url && (
-                  <p className="together-hint">
-                    Meet se abre en otra pestaña. Finalizar esta sesión no
-                    cierra la llamada de Meet.
-                  </p>
-                )}
               </section>
               <section className="surface">
                 <h2>Participantes · {detail.participants.length}/6</h2>
@@ -806,13 +826,14 @@ export function Together({
                       disabled={busy}
                       onClick={() =>
                         void run(async () => {
-                          setDetail(await repo.session(s.id));
+                          if (s.joinable) await send({ action: "session.join", session_id: s.id, revision: s.revision });
+                          else setDetail(await repo.session(s.id));
                           setEditor(null);
                         })
                       }
                     >
                       <span>
-                        <Tag>{sessionStateLabel(s.status)}</Tag>
+                        <Tag>{s.joinable ? "De tu grupo · Unirme" : sessionStateLabel(s.status)}</Tag>
                         <strong>{s.title}</strong>
                         <small>
                           {when(s.scheduled_start_at, s.timezone)} ·{" "}
@@ -837,6 +858,27 @@ export function Together({
                   <Empty>
                     Un grupo guarda a tu equipo para próximos encuentros.
                   </Empty>
+                )}
+              </section>
+              <section className="surface together-friends">
+                <div className="section-heading">
+                  <h2>Tus compañeros</h2>
+                  <span>{friends.length}</span>
+                </div>
+                {friends.length ? (
+                  <ul className="friend-list">
+                    {friends.map((friend) => (
+                      <li key={friend.user_id}>
+                        <span className="friend-avatar" aria-hidden="true">{friend.nickname.slice(0, 1).toUpperCase()}</span>
+                        <span>
+                          <strong>{friend.nickname}</strong>
+                          <small>{friend.groups.join(" · ")}</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <Empty>Las personas de tus grupos van a aparecer acá.</Empty>
                 )}
               </section>
             </div>

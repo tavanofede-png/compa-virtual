@@ -12,7 +12,6 @@ import {
   Menu,
   X,
   Coins,
-  MessageCircle,
   LogOut,
 } from "lucide-react";
 import {
@@ -25,6 +24,7 @@ import {
   createBackend,
   createDemo,
   createRepository,
+  StateConflictError,
   type Repository,
   type Envelope,
 } from "@compa/client";
@@ -36,6 +36,8 @@ import { Creature } from "./Room";
 import { Field, formData } from "./ui";
 import { Landing } from "./Landing";
 import { CompanionSetup } from "./CompanionSetup";
+import { BrandLogo } from "./BrandLogo";
+import { SupportCenter } from "./SupportCenter";
 const storage = {
   getItem: async (k: string) => localStorage.getItem(k),
   setItem: async (k: string, v: string) => {
@@ -135,11 +137,48 @@ export default function StudyApp() {
     };
   }, [repo]);
   useEffect(() => {
+    if (repo?.mode !== "live") return;
+    let alive = true;
+    const refresh = () => {
+      if (document.visibilityState !== "visible" || busy) return;
+      void repo.load().then((latest) => {
+        if (alive)
+          setEnv((current) =>
+            latest.version >= current.version ? latest : current,
+          );
+      }).catch(() => {});
+    };
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("online", refresh);
+    return () => {
+      alive = false;
+      document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener("online", refresh);
+    };
+  }, [repo, busy]);
+  useEffect(() => {
+    if (repo?.mode !== "live" || modal !== "focus" || !s.activeSession) return;
+    let alive = true;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== "visible" || busy) return;
+      void repo.load().then((latest) => {
+        if (alive)
+          setEnv((current) =>
+            latest.version > current.version ? latest : current,
+          );
+      }).catch(() => {});
+    }, 15000);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+    };
+  }, [repo, busy, modal, s.activeSession?.id]);
+  useEffect(() => {
     const restoreView = () => {
       const v = new URLSearchParams(location.search).get("view");
       if (
         v &&
-        [...navigation.map((x) => x.id), "today", "memory", "together"].includes(v as never)
+        [...navigation.map((x) => x.id), "today", "memory", "together", "spaces"].includes(v as never)
       )
         setView(v);
       setModal(null);
@@ -162,6 +201,7 @@ export default function StudyApp() {
     try {
       await action();
     } catch (e) {
+      if (e instanceof StateConflictError && e.latest) setEnv(e.latest);
       setError(
         e instanceof Error ? e.message : "No se pudo completar la acción.",
       );
@@ -364,6 +404,7 @@ export default function StudyApp() {
                   >
                     Olvidé mi contraseña
                   </button>
+                  <a href="/help">Ayuda</a>
                 </div>
               </form>
             )}
@@ -402,11 +443,9 @@ export default function StudyApp() {
               go("room");
             }}
           >
-            <span className="brand-mark">c.</span>
+            <BrandLogo />
             <span>
-              compa
-              <br />
-              virtual
+              Kusiy
             </span>
           </a>
           <span className="sidebar-label">MI ESPACIO</span>
@@ -414,7 +453,7 @@ export default function StudyApp() {
             {navigation.map(({ icon: Icon, id, label }, i) => (
               <button
                 className={
-                  (view === id || (id === "study" && view === "together") ? "active " : "") + (i === 4 ? "separated" : "")
+                  (view === id || (id === "study" && ["together", "spaces"].includes(view)) ? "active " : "") + (i === 4 ? "separated" : "")
                 }
                 key={id}
                 onClick={() => go(id)}
@@ -459,7 +498,7 @@ export default function StudyApp() {
             </button>
             <span className="breadcrumb">
               Mi espacio <ChevronRight size={13} />{" "}
-              <strong>{view === "together" ? "Estudiar juntos" : navigation.find((x) => x.id === view)?.label}</strong>
+               <strong>{view === "together" ? "Estudiar juntos" : view === "spaces" ? "Espacios de estudio" : view === "today" ? "Agenda" : navigation.find((x) => x.id === view)?.label}</strong>
             </span>
             <div className="topbar-actions">
               <span className="coin-pill">
@@ -496,8 +535,7 @@ export default function StudyApp() {
           )}
           {env.offline && (
             <div className="demo-banner">
-              Sin conexión. Consultá la última copia guardada; las acciones
-              requieren internet.
+              Sin conexión o servidor no disponible. Podés consultar la última copia y cerrar una sesión en curso; su cierre quedará pendiente.
             </div>
           )}
           {!modal && feedback}
@@ -525,7 +563,7 @@ export default function StudyApp() {
             )}
           </div>
           <footer className="footer">
-            <span>compa virtual · hecho para aprender a tu ritmo</span>
+            <span>Kusiy · hecho para aprender a tu ritmo</span>
             <button className="text-button" onClick={() => open("privacy")}>
               Privacidad y tus datos ↗
             </button>
@@ -537,16 +575,16 @@ export default function StudyApp() {
               key={id}
               className={
                 view === id ||
-                (id === "study" && view === "together") ||
-                (id === "room" && view === "today") ||
+                (id === "study" && ["together", "spaces"].includes(view)) ||
+                (id === "agenda" && view === "today") ||
                 (id === "compa" && view === "memory")
                   ? "active"
                   : ""
               }
               aria-current={
                 view === id ||
-                (id === "study" && view === "together") ||
-                (id === "room" && view === "today") ||
+                (id === "study" && ["together", "spaces"].includes(view)) ||
+                (id === "agenda" && view === "today") ||
                 (id === "compa" && view === "memory")
                   ? "page"
                   : undefined
@@ -558,14 +596,6 @@ export default function StudyApp() {
             </button>
           ))}
         </nav>
-        <button
-          className="chat-launcher"
-          onClick={() => open("chat")}
-          aria-label="Hablar con mi compañero"
-        >
-          <MessageCircle size={21} />
-          <span>Hablemos</span>
-        </button>
         <Dialog
           open={!!modal}
           onOpenChange={(v) => {
@@ -583,7 +613,7 @@ export default function StudyApp() {
             <DialogTitle>
               {modal === "password"
                 ? "Elegí una nueva contraseña"
-                : (titles[modal ?? ""] ?? "Compa Virtual")}
+                : (titles[modal ?? ""] ?? "Kusiy")}
             </DialogTitle>
             <DialogDescription>
               {modal === "plan"
@@ -620,6 +650,8 @@ export default function StudyApp() {
                   Guardar contraseña
                 </button>
               </form>
+            ) : modal === "support" ? (
+              <SupportCenter repo={repo} />
             ) : (
               modal && (
                 <Forms

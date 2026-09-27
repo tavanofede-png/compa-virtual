@@ -36,4 +36,19 @@ describe("shared room lifecycle", () => {
     expect(changes).toHaveBeenLastCalledWith(expect.objectContaining({detail:null,entered:false,accessRevoked:true}));
     runtime.dispose();
   });
+  it("leaves the visual room when a block removes its server-side seat", async () => {
+    const userId = "10000000-0000-4000-8000-000000000002", changes = vi.fn();
+    const withSeat = { ...initial, room: { presence: [{ user_id: userId,
+      expires_at: new Date(Date.now() + 60000).toISOString() }] } } as GroupSessionDetail;
+    let current = withSeat;
+    const repo = { session: vi.fn(async () => current), command: vi.fn(async () => ({})) };
+    const runtime = createSharedRoomSession(repo as unknown as CollaborationRepository,
+      initial, changes, userId);
+    await runtime.enter();
+    expect(changes).toHaveBeenLastCalledWith(expect.objectContaining({ entered: true }));
+    current = { ...withSeat, room: { ...withSeat.room!, presence: [] } };
+    await runtime.refresh();
+    expect(changes).toHaveBeenLastCalledWith(expect.objectContaining({ entered: false }));
+    runtime.dispose();
+  });
 });

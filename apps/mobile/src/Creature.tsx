@@ -16,10 +16,13 @@ import {
   AppState,
 } from "react-native";
 import { useMotionPreference } from "./MotionPreference";
+import { ScenePixelRatio, useSceneQuality } from "./SceneQuality";
 import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { selectionImages } from "./selection-images";
 import { selectionModels } from "./selection-models";
+import roomManifest from "../../web/public/selection/models/room-runtime-manifest.json";
+import { readCachedScene } from "./scene-cache";
 import { Canvas, useThree, type ThreeEvent } from "@react-three/fiber/native";
 import * as T from "three";
 import {
@@ -103,13 +106,15 @@ function Scene({
       last = now;
       world.controller?.pause(!foreground || !active || !ambient);
       world.controller?.context(context.current);
+      world.speech?.setSpeaking(!!context.current.speaking);
       world.petController?.pause(!foreground || !active || !ambient);
       world.petController?.context({
         visible: active,
         studying: context.current.studying,
         talking: context.current.talking,
         celebration: context.current.celebration,
-        companionPosition: world.avatar?.position.toArray() as [number, number, number] | undefined,
+        companionPosition: world.avatar?.position.toArray() as
+          [number, number, number] | undefined,
       });
       if (world.controller?.update(delta)) {
         gl.shadowMap.needsUpdate = true;
@@ -119,6 +124,7 @@ function Scene({
         gl.shadowMap.needsUpdate = true;
         invalidate();
       }
+      if (world.speech?.update(delta)) invalidate();
     }, 1000 / 30);
     return () => {
       clearInterval(timer);
@@ -142,9 +148,11 @@ function Scene({
       if (target === "pet") {
         world.petController?.request("react");
         onPet();
-      } else if (target === "floor") world.controller?.walkTo(event.point.toArray());
+      } else if (target === "floor")
+        world.controller?.walkTo(event.point.toArray());
       else if (target === "pouf") world.controller?.request("pouf");
-      else if (target.startsWith("object:")) world.controller?.inspect(target.slice(7));
+      else if (target.startsWith("object:"))
+        world.controller?.inspect(target.slice(7));
       else onFurniture();
       return;
     }
@@ -180,9 +188,11 @@ export function NativeWorld({
   motionContext?: MotionContext;
   petState?: PetSceneSetup;
 }) {
-  const fingerprint = appearanceKey(companion, kind, item) + JSON.stringify(petState ?? null);
+  const fingerprint =
+    appearanceKey(companion, kind, item) + JSON.stringify(petState ?? null);
   const [world, setWorld] = useState<World | null>(null),
     [error, setError] = useState(false),
+    [progress, setProgress] = useState<number | null>(null),
     [retry, setRetry] = useState(0);
   useEffect(() => {
     let alive = true,
@@ -190,6 +200,7 @@ export function NativeWorld({
     const cancellation = new AbortController();
     setWorld(null);
     setError(false);
+    setProgress(null);
     const load = async () => {
       try {
         loaded =
@@ -199,7 +210,19 @@ export function NativeWorld({
                 kind,
                 "models",
                 async (url) => {
-                  const module = selectionModels[url.split("/").pop()!.split("?")[0]!];
+                  const name = url.split("/").pop()!.split("?")[0]!;
+                  const room = roomManifest.rooms.find((entry) =>
+                    entry.url.endsWith(`/${name}`),
+                  );
+                  if (room)
+                    return readCachedScene(
+                      room,
+                      cancellation.signal,
+                      (fraction) => {
+                        if (alive) setProgress(fraction);
+                      },
+                    );
+                  const module = selectionModels[name];
                   if (!module)
                     throw Error("Modelo no incluido en esta versión.");
                   const asset = await Asset.fromModule(module).downloadAsync();
@@ -222,6 +245,7 @@ export function NativeWorld({
       alive = false;
       cancellation.abort();
       loaded?.controller?.dispose();
+      loaded?.speech?.dispose();
       loaded?.petController?.dispose();
       if (loaded) disposeModel(loaded.scene);
     };
@@ -260,7 +284,9 @@ export function NativeWorld({
           <Text style={{ color: "#435840", textAlign: "center" }}>
             {error
               ? "No pudimos cargar la vista 3D. Revisá la conexión."
-              : "Preparando tu vista 3D…"}
+              : progress === null
+                ? "Preparando tu vista 3D…"
+                : `Descargando tu habitación: ${Math.round(progress * 100)} %`}
           </Text>
           {error && (
             <Pressable
@@ -319,6 +345,7 @@ function WorldView({
   petState?: PetSceneSetup;
 }) {
   const preference = useMotionPreference(),
+    quality = useSceneQuality(),
     [furniture, setFurniture] = useState(false),
     [petMenu, setPetMenu] = useState(false);
   const invalidate = useRef(() => {}),
@@ -380,6 +407,7 @@ function WorldView({
             gl.shadowMap.needsUpdate = true;
           }}
         >
+          <ScenePixelRatio ratio={quality.pixelRatio} />
           <Scene
             world={world}
             invalidateRef={invalidate}
@@ -452,8 +480,13 @@ function WorldView({
                   ["study", "Ir al escritorio"],
                   ["rest", "Descansar"],
                   ["walk", "Caminar por la habitación"],
-                  ...(roomInteractions[companion.room_style ?? "cozy"]?.pouf ? [["pouf", "Sentarse en el puff"]] : []),
-                  ...(roomInteractions[companion.room_style ?? "cozy"]?.objects ?? []).map(o => ["object:" + o.id, o.label]),
+                  ...(roomInteractions[companion.room_style ?? "cozy"]?.pouf
+                    ? [["pouf", "Sentarse en el puff"]]
+                    : []),
+                  ...(
+                    roomInteractions[companion.room_style ?? "cozy"]?.objects ??
+                    []
+                  ).map((o) => ["object:" + o.id, o.label]),
                   ["stand", "Levantarse"],
                 ] as const
               ).map(([action, label]) => (
@@ -461,7 +494,8 @@ function WorldView({
                   key={action}
                   accessibilityRole="button"
                   onPress={() => {
-                    if (action.startsWith("object:")) world.controller?.inspect(action.slice(7));
+                    if (action.startsWith("object:"))
+                      world.controller?.inspect(action.slice(7));
                     else world.controller?.request(action as CompanionAction);
                     setFurniture(false);
                   }}
@@ -476,13 +510,43 @@ function WorldView({
       )}
       {ambient && petState && (
         <View style={{ position: "absolute", right: 12, top: 12, gap: 5 }}>
-          <Pressable accessibilityRole="button" onPress={() => setPetMenu(!petMenu)} style={{ backgroundColor: "#fffaf3", borderRadius: 14, padding: 13, minHeight: 48 }}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setPetMenu(!petMenu)}
+            style={{
+              backgroundColor: "#fffaf3",
+              borderRadius: 14,
+              padding: 13,
+              minHeight: 48,
+            }}
+          >
             <Text>{petState.name}</Text>
           </Pressable>
           {petMenu && (
-            <View style={{ backgroundColor: "#fffaf7", padding: 8, borderRadius: 16 }}>
-              {([['come','Venir'],['play','Jugar'],['rest','Descansar'],['returnHome','Volver a su camita']] as [PetAction,string][]).map(([petAction, label]) => (
-                <Pressable key={petAction} accessibilityRole="button" onPress={() => { world.petController?.request(petAction); setPetMenu(false); }} style={{ minHeight: 48, padding: 12 }}>
+            <View
+              style={{
+                backgroundColor: "#fffaf7",
+                padding: 8,
+                borderRadius: 16,
+              }}
+            >
+              {(
+                [
+                  ["come", "Venir"],
+                  ["play", "Jugar"],
+                  ["rest", "Descansar"],
+                  ["returnHome", "Volver a su camita"],
+                ] as [PetAction, string][]
+              ).map(([petAction, label]) => (
+                <Pressable
+                  key={petAction}
+                  accessibilityRole="button"
+                  onPress={() => {
+                    world.petController?.request(petAction);
+                    setPetMenu(false);
+                  }}
+                  style={{ minHeight: 48, padding: 12 }}
+                >
                   <Text>{label}</Text>
                 </Pressable>
               ))}

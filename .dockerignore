@@ -5,5 +5,13 @@
 **/.expo
 **/.env
 **/.env.*
+!**/.env.example
 **/*.tsbuildinfo
 .git
+**/*.glb
+**/*.blend
+packages/assets/3d
+docs
+work
+renders
+design

@@ -6,7 +6,7 @@
 - Expo 57 / React Native 0.86, una app nativa para Android e iOS con Expo Router.
 - Supabase Auth, Postgres, Storage privado, Edge Functions y pgmq.
 - Worker Node 24 en contenedor, procesamiento secuencial de documentos.
-- OpenAI Responses mediante AIProvider. OCR y embeddings se ejecutan fuera del cliente.
+- Cloudflare Workers AI u OpenAI mediante `AIProvider`. OCR y embeddings se ejecutan fuera del cliente con una credencial única del proyecto.
 - Expo Push y un programador de recordatorios separado del worker.
 
 ## Transacción por alumno

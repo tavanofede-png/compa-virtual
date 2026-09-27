@@ -9,6 +9,7 @@ import {
 } from "@compa/domain";
 import { disposeModel } from "./primitives";
 import { createCompanionController, roomInteractions } from "./motion";
+import { createSpeechAnimator } from "./speech";
 import {
   createPetController,
   roomPetMaps,
@@ -57,7 +58,7 @@ const fetchModel: ReadModel = async (url) => {
   }
 };
 async function load(name: string, base: string, read: ReadModel) {
-  const revision = name.startsWith("pet-") ? "?v=20260912d" : "";
+  const revision = name.startsWith("pet-") ? "?v=20260918a" : "";
   const data = await read(base.replace(/\/$/, "") + "/" + name + ".glb" + revision);
   if (
     data.byteLength < 12 ||
@@ -161,6 +162,7 @@ export async function createPremiumWorld(
     scene.add(avatar);
     avatar.name = "teen-avatar";
     fitBody(avatar, ids);
+    const speech = createSpeechAnimator(avatar);
     active();
     // Load sequentially to bound decoded memory on phones. Cached bytes make swaps quick.
     for (const id of ids) {
@@ -332,7 +334,7 @@ export async function createPremiumWorld(
     );
     camera.lookAt(target);
     scene.updateMatrixWorld(true);
-    return { scene, camera, target, avatar, controller, pet, petController };
+    return { scene, camera, target, avatar, controller, speech, pet, petController };
   } catch (error) {
     disposeModel(scene);
     throw error;

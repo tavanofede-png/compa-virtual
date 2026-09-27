@@ -280,6 +280,12 @@ export const roomIds = [
   "naturaleza",
   "urbano",
   "biblioteca-moderna",
+  "atico-creativo",
+  "rincon-urbano",
+  "sala-control-gamer",
+  "habitacion-invernadero",
+  "estudio-musical",
+  "rincon-explorador",
 ] as const;
 export type RoomId = (typeof roomIds)[number];
 export const rooms = [
@@ -318,6 +324,42 @@ export const rooms = [
     name: "Biblioteca moderna",
     description: "Libros a mano y un lugar para cada idea.",
     theme: "evening",
+  },
+  {
+    id: "atico-creativo",
+    name: "Ático creativo",
+    description: "Un caballete, proyectos y luz cálida para imaginar.",
+    theme: "evening",
+  },
+  {
+    id: "rincon-urbano",
+    name: "Rincón urbano",
+    description: "La ciudad entra por las ventanas de tu espacio.",
+    theme: "evening",
+  },
+  {
+    id: "sala-control-gamer",
+    name: "Sala de control gamer",
+    description: "Pantallas, luces y una pausa para cada nivel.",
+    theme: "night",
+  },
+  {
+    id: "habitacion-invernadero",
+    name: "Habitación invernadero",
+    description: "Plantas, agua y luz natural para crecer.",
+    theme: "day",
+  },
+  {
+    id: "estudio-musical",
+    name: "Estudio musical",
+    description: "Instrumentos e ideas en un cuarto con ritmo propio.",
+    theme: "evening",
+  },
+  {
+    id: "rincon-explorador",
+    name: "Rincón explorador",
+    description: "Mapas, viajes y curiosidad para aprender.",
+    theme: "day",
   },
 ] satisfies { id: RoomId; name: string; description: string; theme: string }[];
 export const autonomyOptions = [

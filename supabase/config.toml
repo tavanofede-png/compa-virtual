@@ -12,16 +12,22 @@ enabled = true
 sql_paths = ["./seed.sql"]
 [auth]
 enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = ["compavirtual://", "http://localhost:3000"]
+site_url = "https://kusiy.vercel.app"
+additional_redirect_urls = ["compavirtual://", "http://localhost:3000", "http://127.0.0.1:3000", "https://kusiy.vercel.app", "https://compa-virtual-estudio.vercel.app", "https://compa-virtual-estudio.tavanofede.chatgpt.site"]
 enable_signup = true
 [auth.email]
 enable_signup = true
 enable_confirmations = true
 [storage]
 enabled = true
-file_size_limit = "25MiB"
+file_size_limit = "50MiB"
 [functions.api]
-verify_jwt = false
+verify_jwt = true
 [functions.reminders]
 verify_jwt = false
+[functions.material-process]
+verify_jwt = true
+[functions.family-consent]
+verify_jwt = false
+[functions.voice]
+verify_jwt = true

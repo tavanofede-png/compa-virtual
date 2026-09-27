@@ -15,12 +15,12 @@ No hace falta una cuenta de Google Play para esta prueba. La cuenta de Expo y el
 
 ## Instalar y probar
 
-Abrir el enlace final de EAS desde Android, descargar el `.apk` y permitir la instalacion desde ese navegador cuando Android lo solicite. Abrir Compa Virtual, registrar una cuenta de prueba y verificar el correo antes de iniciar sesion. También se puede elegir **Explorar con datos ficticios** para comparar el recorrido sin sincronización.
+Abrir el enlace final de EAS desde Android, descargar el `.apk` y permitir la instalacion desde ese navegador cuando Android lo solicite. Abrir Kusiy, registrar una **cuenta adulta o interna** y verificar el correo antes de iniciar sesion. También se puede elegir **Explorar con datos ficticios** para comparar el recorrido sin sincronización. No registrar perfiles menores mientras `MINOR_BETA_APPROVED=false`.
 
 Comprobar habitacion y companero 3D, crear una obligacion, aceptar un plan, completar una sesion, cerrar/abrir la app y verificar la persistencia. Probar tambien sin conexion. Registrar modelo de telefono, version de Android y cualquier cierre o error grafico.
 
-Este APK utiliza los personajes actuales del proyecto. El modelo Harper de Meshy todavia no esta incorporado. El registro, la sincronización, las obligaciones, los planes y el progreso usan Supabase. La IA, el procesamiento de archivos y la entrega programada de notificaciones se habilitarán cuando estén configurados sus secretos y servicios pendientes.
+Este APK utiliza los personajes actuales del proyecto. El modelo Harper de Meshy todavia no esta incorporado. El registro, la sincronización, las obligaciones, los planes y el progreso usan Supabase. La IA, el procesamiento de archivos y la entrega programada de notificaciones se habilitarán cuando estén configurados sus secretos y servicios pendientes. Pasos operativos de Gate 0: `docs/GATE0.md`.
 
 ## Estado verificado
 
-El 6 de septiembre de 2026 paso la exportacion Android de Metro/Hermes. Esa comprobacion valida el bundle; no equivale a una compilacion nativa, un APK firmado ni una prueba en un telefono. La generacion de EAS y las comprobaciones fisicas siguen pendientes hasta obtener el artefacto.
+El 18 de septiembre de 2026 paso typecheck, lint, 91 tests y la exportacion Android de Metro/Hermes (`apps/mobile` → `dist-android`, bundle Hermes 8.6MB). Esa comprobacion valida el bundle; no equivale a una compilacion nativa, un APK firmado ni una prueba en un telefono. `eas whoami` en este entorno devolvio **Not logged in**. Docker Desktop no estaba corriendo, asi que no se construyo la imagen del worker en local. La generacion de EAS y las comprobaciones fisicas siguen pendientes de tu login de Expo.

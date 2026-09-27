@@ -3,6 +3,7 @@ import { avatarAppearance, type Companion } from "@compa/domain";
 import type { CompanionController } from './motion';
 export * from './motion';
 export * from './pet';
+export * from './speech';
 import { avatarModel } from "./avatar";
 import { roomModel } from "./room";
 import { equipmentModel } from "./equipment";
@@ -151,8 +152,10 @@ export function createWorld(
     target,
     avatar,
     controller: undefined as CompanionController | undefined,
+    speech: undefined as import("./speech").SpeechAnimator | undefined,
     pet: undefined as T.Group | undefined,
     petController: undefined as import("./pet").PetController | undefined,
   };
 }
 export * from "./shared-space";
+export * from "./personal-study";

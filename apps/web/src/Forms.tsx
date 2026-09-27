@@ -1,6 +1,8 @@
 "use client";
 import { MotionPreference } from "./MotionPreference";
-import { useState, useEffect, useRef } from "react";
+import { MaterialText } from "./MaterialText";
+import { openMaterialOriginal } from "./openMaterialOriginal";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Check,
   Plus,
@@ -9,10 +11,18 @@ import {
   Play,
   Pause,
   Sparkles,
+  Mic,
+  Volume2,
+  VolumeX,
+  Square,
+  PhoneCall,
+  PhoneOff,
 } from "lucide-react";
 import {
   methods,
   methodById,
+  prepareDailyStudy,
+  freeStudyDurations,
   catalog,
   avatarPresets,
   avatarAppearance,
@@ -27,6 +37,7 @@ import {
   clock,
   minuteOf,
   addDays,
+  consentRequirement,
   type AcademicItem,
   type Companion,
   type StudyMethod,
@@ -39,7 +50,11 @@ import {
   defaultPetPreferences,
 } from "@compa/domain";
 import { useApp } from "./context";
+import { StateConflictError } from "@compa/client";
 import { Creature } from "./Room";
+import { PersonalStudyCanvas } from "./PersonalStudyCanvas";
+import { studySpaceById } from "@compa/domain";
+import { useCompanionVoice } from "./useCompanionVoice";
 import { Field, Empty, Tag, formData, kinds, days } from "./ui";
 function SignOutButton() {
   const { leave, busy } = useApp();
@@ -59,13 +74,15 @@ export const titles: Record<string, string> = {
   pet: "Mi mascota",
   checkin: "Un minuto para mirar tu día",
   method: "Una herramienta para aprender",
-  focus: "Un bloque, una intención",
+  focus: "Sesión de estudio",
   generate: "Preparar una práctica",
   quiz: "Practicar y revisar",
   upload: "Sumar material",
+  "material-text": "Leer mi material",
   extract: "De un mensaje a tu agenda",
   profile: "Contanos un poco de vos",
   settings: "Tu espacio, tus decisiones",
+  support: "Ayuda y soporte",
   memory: "Memoria académica",
   privacy: "Privacidad y tus datos",
   notifications: "Tus avisos",
@@ -80,78 +97,180 @@ function PetForm() {
   const initial = env.state.petPreferences ?? defaultPetPreferences;
   const [name, setName] = useState(pet?.name ?? definition.name);
   const [visible, setVisible] = useState(initial.visible);
-  const [automaticMovement, setAutomaticMovement] = useState(initial.automaticMovement);
+  const [automaticMovement, setAutomaticMovement] = useState(
+    initial.automaticMovement,
+  );
   const [activityLevel, setActivityLevel] = useState(initial.activityLevel);
   const [reducedMotion, setReducedMotion] = useState(initial.reducedMotion);
   const [petFamily, setPetFamily] = useState<"dogs" | "cats" | "others">(
-    definition.species === "dog" ? "dogs" : definition.species === "cat" ? "cats" : "others",
+    definition.species === "dog"
+      ? "dogs"
+      : definition.species === "cat"
+        ? "cats"
+        : "others",
   );
   const visiblePetDefinitions = petDefinitions.filter((candidate) =>
-    petFamily === "dogs" ? candidate.species === "dog" : petFamily === "cats" ? candidate.species === "cat" : !["dog", "cat"].includes(candidate.species),
+    petFamily === "dogs"
+      ? candidate.species === "dog"
+      : petFamily === "cats"
+        ? candidate.species === "cat"
+        : !["dog", "cat"].includes(candidate.species),
   );
-  useEffect(() => setName(pet?.name ?? definition.name), [pet?.id, pet?.name, definition.name]);
+  useEffect(
+    () => setName(pet?.name ?? definition.name),
+    [pet?.id, pet?.name, definition.name],
+  );
   if (!pet)
     return (
       <div className="pet-config">
-        <img src={definition.variant.portrait} alt="Golden retriever voxel 3D" />
+        <img src={definition.variant.portrait} alt="Golden retriever 3D" />
         <p className="eyebrow">TU PRIMERA MASCOTA · GRATIS</p>
         <h3>{definition.breed}</h3>
         <p>{definition.description}</p>
         <Field label="¿Cómo se va a llamar?">
-          <input value={name} onChange={(e) => setName(e.target.value)} maxLength={30} />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={30}
+          />
         </Field>
-        <button className="primary" disabled={busy || !name.trim()} onClick={() => run(() => command("pet.chooseFirst", { name }))}>
+        <button
+          className="primary"
+          disabled={busy || !name.trim()}
+          onClick={() => run(() => command("pet.chooseFirst", { name }))}
+        >
           Conocer a {name.trim() || definition.name}
         </button>
       </div>
     );
   return (
-    <form className="pet-config" onSubmit={(event) => {
-      event.preventDefault();
-      void run(() => command("pet.configure", { id: pet.id, name, visible, automaticMovement, activityLevel, reducedMotion }));
-    }}>
-      <img src={definition.variant.portrait} alt={`${pet.name}, ${definition.breed} voxel 3D`} />
+    <form
+      className="pet-config"
+      onSubmit={(event) => {
+        event.preventDefault();
+        void run(() =>
+          command("pet.configure", {
+            id: pet.id,
+            name,
+            visible,
+            automaticMovement,
+            activityLevel,
+            reducedMotion,
+          }),
+        );
+      }}
+    >
+      <img
+        src={definition.variant.portrait}
+        alt={`${pet.name}, ${definition.breed} 3D`}
+      />
       <p className="eyebrow">MASCOTA ACTIVA</p>
       <div className="pet-family-tabs" aria-label="Familias de mascotas">
-        {([['dogs', 'Perros'], ['cats', 'Gatos'], ['others', 'Otros amigos']] as const).map(([id, label]) => (
-          <button type="button" key={id} aria-pressed={petFamily === id} onClick={() => setPetFamily(id)}>{label}</button>
+        {(
+          [
+            ["dogs", "Perros"],
+            ["cats", "Gatos"],
+            ["others", "Otros amigos"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            type="button"
+            key={id}
+            aria-pressed={petFamily === id}
+            onClick={() => setPetFamily(id)}
+          >
+            {label}
+          </button>
         ))}
       </div>
       <div className="pet-collection" aria-label="Colección de mascotas">
         {visiblePetDefinitions.map((candidate) => {
-          const owned = env.state.ownedPets.find((entry) => entry.petDefinitionId === candidate.id);
+          const owned = env.state.ownedPets.find(
+            (entry) => entry.petDefinitionId === candidate.id,
+          );
           const selected = owned?.id === pet.id;
-          const price = candidate.unlock.kind === "coins" ? Number(candidate.unlock.value) : 0;
+          const price =
+            candidate.unlock.kind === "coins"
+              ? Number(candidate.unlock.value)
+              : 0;
           return (
             <button
               type="button"
               className={selected ? "pet-card selected" : "pet-card"}
               key={candidate.id}
               disabled={busy || selected}
-              onClick={() => void run(() => owned
-                ? command("pet.setActive", { id: owned.id })
-                : command("pet.unlock", { definitionId: candidate.id }))}
+              onClick={() =>
+                void run(() =>
+                  owned
+                    ? command("pet.setActive", { id: owned.id })
+                    : command("pet.unlock", { definitionId: candidate.id }),
+                )
+              }
             >
               <img src={candidate.variant.portrait} alt={candidate.breed} />
               <strong>{candidate.breed}</strong>
-              <small>{selected ? "Está con vos" : owned ? "Elegir" : `${price} monedas`}</small>
+              <small>
+                {selected
+                  ? "Está con vos"
+                  : owned
+                    ? "Elegir"
+                    : `${price} monedas`}
+              </small>
             </button>
           );
         })}
       </div>
       <Field label="Nombre">
-        <input value={name} onChange={(e) => setName(e.target.value)} maxLength={30} required />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          maxLength={30}
+          required
+        />
       </Field>
       <Field label="Nivel de actividad">
-        <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value as typeof activityLevel)}>
-          <option value="calm">Tranquilo</option><option value="normal">Normal</option><option value="active">Activo</option>
+        <select
+          value={activityLevel}
+          onChange={(e) =>
+            setActivityLevel(e.target.value as typeof activityLevel)
+          }
+        >
+          <option value="calm">Tranquilo</option>
+          <option value="normal">Normal</option>
+          <option value="active">Activo</option>
         </select>
       </Field>
-      <label className="settings-check"><input type="checkbox" checked={visible} onChange={(e) => setVisible(e.target.checked)} /> Mostrar mascota en la habitación</label>
-      <label className="settings-check"><input type="checkbox" checked={automaticMovement} onChange={(e) => setAutomaticMovement(e.target.checked)} /> Movimiento automático</label>
-      <label className="settings-check"><input type="checkbox" checked={reducedMotion} onChange={(e) => setReducedMotion(e.target.checked)} /> Reducir movimiento</label>
-      <p className="callout">Su lugar de descanso y sus objetos compatibles quedan preparados dentro de la habitación.</p>
-      <button className="primary" disabled={busy}>Guardar mascota</button>
+      <label className="settings-check">
+        <input
+          type="checkbox"
+          checked={visible}
+          onChange={(e) => setVisible(e.target.checked)}
+        />{" "}
+        Mostrar mascota en la habitación
+      </label>
+      <label className="settings-check">
+        <input
+          type="checkbox"
+          checked={automaticMovement}
+          onChange={(e) => setAutomaticMovement(e.target.checked)}
+        />{" "}
+        Movimiento automático
+      </label>
+      <label className="settings-check">
+        <input
+          type="checkbox"
+          checked={reducedMotion}
+          onChange={(e) => setReducedMotion(e.target.checked)}
+        />{" "}
+        Reducir movimiento
+      </label>
+      <p className="callout">
+        Su lugar de descanso y sus objetos compatibles quedan preparados dentro
+        de la habitación.
+      </p>
+      <button className="primary" disabled={busy}>
+        Guardar mascota
+      </button>
     </form>
   );
 }
@@ -164,25 +283,212 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
       (selected as Companion) ?? s.companion,
     ),
     [chat, setChat] = useState(""),
+    [pendingChat, setPendingChat] = useState<{
+      id: string;
+      content: string;
+    } | null>(null),
     [answers, setAnswers] = useState<Record<string, string>>({}),
     [proposal, setProposal] = useState<Record<string, unknown>[] | null>(null),
-    [running, setRunning] = useState(false),
-    [remaining, setRemaining] = useState(
-      ((selected as PlanSlot)?.duration_minutes ?? 25) * 60,
-    ),
-    until = useRef(0);
+    [sessionClock, setSessionClock] = useState(Date.now()),
+    [roomVisible, setRoomVisible] = useState(false);
   useEffect(() => {
-    if (!running) return;
-    const t = setInterval(() => {
-      const left = Math.max(0, Math.ceil((until.current - Date.now()) / 1000));
-      setRemaining(left);
-      if (!left) {
-        setRunning(false);
-        notice("Terminó el bloque. Tomate un descanso antes de seguir.");
+    if (name === "focus")
+      setRoomVisible(localStorage.getItem("kusiy:study-view") === "room");
+  }, [name]);
+  const voice = useCompanionVoice(s.companion.character_id);
+  const [liveCall, setLiveCall] = useState(false);
+  const [liveCallPhase, setLiveCallPhase] = useState<
+    "idle" | "listening" | "thinking" | "speaking" | "error"
+  >("idle");
+  const [liveTranscript, setLiveTranscript] = useState("");
+  const chatHistoryRef = useRef<HTMLDivElement>(null);
+  const liveCallRef = useRef(false);
+  const liveCallTimerRef = useRef<number | null>(null);
+  const liveListenRef = useRef<() => void>(() => undefined);
+  const liveSendRef = useRef<(message: string) => Promise<void>>(
+    async () => undefined,
+  );
+  const applyAgentEffects = (message?: (typeof s.messages)[number]) => {
+    const navigation = message?.effects?.find(
+      (effect) => effect.type === "NAVIGATE",
+    );
+    if (!navigation) return;
+    close();
+    go(navigation.target);
+    notice("Tu compa abrió la sección que pediste.");
+  };
+  const spokenAgentReply = (message: (typeof s.messages)[number]) =>
+    [message.content, ...(message.actions?.map((action) => action.label) ?? [])]
+      .filter(Boolean)
+      .join(" ");
+  const clearLiveCallTimer = useCallback(() => {
+    if (liveCallTimerRef.current !== null) {
+      window.clearTimeout(liveCallTimerRef.current);
+      liveCallTimerRef.current = null;
+    }
+  }, []);
+  const queueLiveListen = useCallback(
+    (delay = 350) => {
+      clearLiveCallTimer();
+      liveCallTimerRef.current = window.setTimeout(() => {
+        liveCallTimerRef.current = null;
+        liveListenRef.current();
+      }, delay);
+    },
+    [clearLiveCallTimer],
+  );
+
+  useEffect(() => {
+    if (name !== "chat") return;
+    const frame = window.requestAnimationFrame(() => {
+      chatHistoryRef.current?.scrollTo({
+        top: chatHistoryRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [name, s.messages.length, pendingChat?.id]);
+
+  liveSendRef.current = async (message: string) => {
+    const cleanMessage = message.trim();
+    if (!liveCallRef.current || !cleanMessage) return;
+    setPendingChat({ id: crypto.randomUUID(), content: cleanMessage });
+    setChat("");
+    setLiveTranscript(cleanMessage);
+    setLiveCallPhase("thinking");
+    let response = "";
+    await run(async () => {
+      const next = await repo.ai(
+        "chat",
+        { message: cleanMessage },
+        env.version,
+      );
+      update(next);
+      const answer = [...next.state.messages]
+        .reverse()
+        .find((messageItem) => messageItem.role === "assistant");
+      response = answer ? spokenAgentReply(answer) : "";
+      applyAgentEffects(answer);
+    });
+    setPendingChat(null);
+    if (!liveCallRef.current) return;
+    if (!response) {
+      setLiveCallPhase("error");
+      queueLiveListen(1400);
+      return;
+    }
+    setLiveCallPhase("speaking");
+    const started = voice.speak(response, true, () => {
+      if (!liveCallRef.current) return;
+      setLiveTranscript("");
+      setLiveCallPhase("listening");
+      queueLiveListen(260);
+    });
+    if (!started) {
+      setLiveCallPhase("listening");
+      queueLiveListen(260);
+    }
+  };
+
+  liveListenRef.current = () => {
+    if (!liveCallRef.current) return;
+    if (busy || voice.speaking || voice.listening) {
+      queueLiveListen(300);
+      return;
+    }
+    setLiveCallPhase("listening");
+    setLiveTranscript("");
+    voice.listenTurn({
+      onInterim: setLiveTranscript,
+      onFinal: (transcript) => void liveSendRef.current(transcript),
+      onError: (code) => {
+        if (code === "not-allowed" || code === "service-not-allowed") {
+          liveCallRef.current = false;
+          setLiveCall(false);
+          setLiveCallPhase("error");
+        }
+      },
+      onEnd: (delivered) => {
+        if (!delivered && liveCallRef.current) queueLiveListen(450);
+      },
+    });
+  };
+
+  const startLiveCall = () => {
+    voice.stop();
+    clearLiveCallTimer();
+    liveCallRef.current = true;
+    setLiveCall(true);
+    setLiveTranscript("");
+    setLiveCallPhase("listening");
+    queueLiveListen(80);
+  };
+  const stopLiveCall = useCallback(() => {
+    liveCallRef.current = false;
+    clearLiveCallTimer();
+    voice.stop();
+    setLiveCall(false);
+    setLiveTranscript("");
+    setLiveCallPhase("idle");
+  }, [clearLiveCallTimer, voice.stop]);
+  const interruptLiveCall = () => {
+    voice.stop();
+    setLiveTranscript("");
+    setLiveCallPhase("listening");
+    queueLiveListen(120);
+  };
+  useEffect(
+    () => () => {
+      liveCallRef.current = false;
+      clearLiveCallTimer();
+      voice.stop();
+    },
+    [clearLiveCallTimer, voice.stop],
+  );
+  useEffect(() => {
+    if (name !== "chat" && liveCallRef.current) stopLiveCall();
+  }, [name, stopLiveCall]);
+  useEffect(() => {
+    if (name !== "focus" || !s.activeSession?.running_since) return;
+    const timer = window.setInterval(() => setSessionClock(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, [name, s.activeSession?.running_since]);
+  useEffect(() => {
+    if (
+      !s.activeSession?.running_since ||
+      (s.activeSession.controller_device_id &&
+        s.activeSession.controller_device_id !== env.deviceId)
+    ) return;
+    const activeId = s.activeSession.id;
+    let pauseRequested = false;
+    const pauseWhenHidden = () => {
+      if (document.visibilityState === "hidden" && !pauseRequested) {
+        pauseRequested = true;
+        void repo
+          .command(
+            { type: "session.pause", payload: { id: activeId } },
+            env.version,
+          )
+          .then(update)
+          .catch((error) => {
+            if (error instanceof StateConflictError && error.latest)
+              update(error.latest);
+            // A failed pause is not shown as saved; the server state wins on refresh.
+          });
       }
-    }, 250);
-    return () => clearInterval(t);
-  }, [running, notice]);
+    };
+    document.addEventListener("visibilitychange", pauseWhenHidden);
+    return () =>
+      document.removeEventListener("visibilitychange", pauseWhenHidden);
+  }, [
+    s.activeSession?.id,
+    s.activeSession?.running_since,
+    s.activeSession?.controller_device_id,
+    env.deviceId,
+    env.version,
+    repo,
+    update,
+  ]);
   if (name === "pet") return <PetForm />;
   const subjectOptions = s.subjects.map((x) => (
     <option value={x.id} key={x.id}>
@@ -488,58 +794,279 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
     );
   }
   if (name === "focus") {
-    const slot = selected as PlanSlot,
-      m = methodById(slot.method_id);
+    const slot = selected as PlanSlot | undefined;
+    const active = s.activeSession;
+    const pendingFinish = env.pendingSessionFinish?.sessionId === active?.id
+      ? env.pendingSessionFinish : undefined;
+    const remoteControl = Boolean(
+      active?.controller_device_id && active.controller_device_id !== env.deviceId,
+    );
+    const prepared = prepareDailyStudy(s);
+    const method = methodById(
+      active?.method_id ?? slot?.method_id ?? "retrieval",
+    );
+    const item = s.items.find(
+      (entry) =>
+        entry.id === (active?.academic_item_id ?? slot?.academic_item_id),
+    );
+    const subjectId = active?.subject_id ?? item?.subject_id;
+    const subject = s.subjects.find((entry) => entry.id === subjectId);
+    const practice = s.quizzes.find((quiz) => quiz.subject_id === subjectId);
+    const elapsed = active
+      ? active.elapsed_seconds +
+        (active.running_since
+          ? Math.max(
+              0,
+              Math.floor(
+              ((pendingFinish ? Date.parse(pendingFinish.finishedAt) : sessionClock) -
+                Date.parse(active.running_since)) / 1000,
+              ),
+            )
+          : 0)
+      : 0;
     return (
       <>
-        <Tag>{m.name}</Tag>
-        <h3>{slot.objective}</h3>
-        <ol className="steps">
-          {m.steps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-        <div className="timer">
-          {String(Math.floor(remaining / 60)).padStart(2, "0")}
-          <span>:</span>
-          {String(remaining % 60).padStart(2, "0")}
-        </div>
-        <button
-          className="secondary"
-          onClick={() => {
-            until.current = Date.now() + remaining * 1000;
-            setRunning(!running);
-          }}
-        >
-          {running ? <Pause size={17} /> : <Play size={17} />}{" "}
-          {running ? "Pausar" : "Comenzar / continuar"}
-        </button>
-        <form
-          onSubmit={(e) => {
-            const d = formData(e);
-            run(async () => {
-              await command("session.complete", {
-                slot_id: slot.id,
-                reflection: d.reflection,
-              });
-              setRunning(false);
-              notice(
-                "Sesión registrada: +10 monedas. Ahora podés descansar 5 minutos.",
+        <Tag>
+          {active
+            ? pendingFinish ? "CIERRE PENDIENTE" : "SESIÓN EN CURSO"
+            : slot
+              ? "BLOQUE DEL PLAN"
+              : "ESTUDIO LIBRE"}
+        </Tag>
+        {active ? (
+          <>
+            <h3>{active.objective}</h3>
+            <p className="fine-print">
+              {subject?.name ? `${subject.name} · ` : ""}
+              {method.name} · objetivo de {active.planned_minutes} minutos
+            </p>
+            {remoteControl && (
+              <div className="callout" role="status">
+                <strong>Esta sesión está abierta en otro dispositivo.</strong>
+                <p>Podés verla acá. Si tomás el control, el tiempo se pausará hasta que elijas Continuar.</p>
+                <button
+                  className="primary"
+                  type="button"
+                  disabled={busy || env.offline}
+                  onClick={() => run(() => command("session.takeControl", { id: active.id }, false))}
+                >
+                  Tomar control
+                </button>
+              </div>
+            )}
+            {pendingFinish && (
+              <div className="callout" role="status">
+                <strong>{pendingFinish.status === "conflict" ? "Revisá este cierre" : "Cierre pendiente de sincronizar"}</strong>
+                <p>{pendingFinish.status === "conflict"
+                  ? "La sesión cambió en otro dispositivo. No confirmamos el cierre ni las monedas. Revisá el estado actual antes de continuar."
+                  : "Detuvimos el tiempo en este dispositivo. La sesión aparecerá en el historial y las monedas se acreditarán solo cuando el servidor confirme el cierre."}</p>
+                {pendingFinish.status === "conflict" ? (
+                  <button className="secondary" type="button" disabled={busy} onClick={() => run(async () => {
+                    const latest = await repo.dismissPendingSessionFinish();
+                    if (latest) update(latest);
+                  })}>Revisar sesión actual</button>
+                ) : (
+                  <button className="secondary" type="button" disabled={busy || env.offline} onClick={() => run(async () => {
+                    const latest = await repo.syncPendingSessionFinish();
+                    if (latest) update(latest);
+                  })}>Reintentar ahora</button>
+                )}
+              </div>
+            )}
+            <div className="study-view-toggle" aria-label="Vista durante el estudio">
+              <button type="button" className={!roomVisible ? "selected" : ""} aria-pressed={!roomVisible} onClick={() => { setRoomVisible(false); localStorage.setItem("kusiy:study-view", "focus"); }}>Modo foco</button>
+              <button type="button" className={roomVisible ? "selected" : ""} aria-pressed={roomVisible} onClick={() => { setRoomVisible(true); localStorage.setItem("kusiy:study-view", "room"); }}>Ver habitación</button>
+            </div>
+            {roomVisible && (
+              <PersonalStudyCanvas id={studySpaceById(s.activeStudySpaceId).id} companion={s.companion} />
+            )}
+            <div
+              className="timer"
+              role="timer"
+              aria-label={pendingFinish ? "Tiempo de estudio pendiente de confirmar" : "Tiempo de estudio registrado"}
+            >
+              {String(Math.floor(elapsed / 60)).padStart(2, "0")}
+              <span>:</span>
+              {String(elapsed % 60).padStart(2, "0")}
+            </div>
+            <button
+              className="secondary"
+              disabled={busy || remoteControl || !!pendingFinish}
+              onClick={() =>
+                run(() =>
+                  command(
+                    active.running_since ? "session.pause" : "session.resume",
+                    { id: active.id },
+                    false,
+                  ),
+                )
+              }
+            >
+              {active.running_since ? <Pause size={17} /> : <Play size={17} />}{" "}
+              {active.running_since ? "Pausar" : "Continuar"}
+            </button>
+            <ol className="steps">
+              {method.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </>
+        ) : slot ? (
+          <>
+            <h3>{slot.objective}</h3>
+            <p className="fine-print">
+              {method.name} · {slot.duration_minutes} minutos orientativos
+            </p>
+            <button
+              className="primary"
+              disabled={busy}
+              onClick={() =>
+                run(() => command("session.start", { slot_id: slot.id }, false))
+              }
+            >
+              Empezar sesión <Play size={17} />
+            </button>
+          </>
+        ) : (
+          <form
+            onSubmit={(event) => {
+              const data = formData(event);
+              run(() =>
+                command(
+                  "session.start",
+                  {
+                    objective: data.objective,
+                    subject_id: data.subject_id || undefined,
+                    method_id: data.method_id,
+                    planned_minutes: Number(data.planned_minutes),
+                    ...(prepared.academicItemId &&
+                    data.objective.trim() === prepared.objective &&
+                    data.subject_id === prepared.subjectId
+                      ? { academic_item_id: prepared.academicItemId }
+                      : {}),
+                  },
+                  false,
+                ),
               );
-            });
-          }}
-        >
-          <Field label="¿Qué pudiste explicar o resolver? ¿Qué queda por revisar?">
-            <textarea name="reflection" required maxLength={4000} />
-          </Field>
-          <p className="fine-print">
-            El tiempo es orientativo. Registrá la sesión cuando hayas trabajado
-            el objetivo.
-          </p>
-          <button className="primary" disabled={busy}>
-            Registrar mi sesión <Check size={17} />
+            }}
+          >
+            <h3>¿Qué querés estudiar?</h3>
+            {prepared.origin === "ACTIVITY" ? (
+              <p className="fine-print">
+                Sugerimos una actividad cercana de tu agenda. Podés cambiarla;
+                estudiar no la marca como hecha.
+              </p>
+            ) : prepared.remembered ? (
+              <p className="fine-print">
+                Preparamos tus últimas preferencias. Podés cambiarlas antes de empezar.
+              </p>
+            ) : null}
+            <Field label="Objetivo">
+              <input
+                name="objective"
+                required
+                maxLength={240}
+                defaultValue={prepared.objective}
+                placeholder="Por ejemplo, repasar Biología"
+              />
+            </Field>
+            <Field label="Materia, si corresponde">
+              <select name="subject_id" defaultValue={prepared.subjectId}>
+                <option value="">Sin materia</option>
+                {s.subjects.map((entry) => (
+                  <option key={entry.id} value={entry.id}>
+                    {entry.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Método">
+              <select name="method_id" defaultValue={prepared.methodId}>
+                {methods.map((entry) => (
+                  <option key={entry.id} value={entry.id}>
+                    {entry.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Duración orientativa">
+              <select name="planned_minutes" defaultValue={String(prepared.plannedMinutes)}>
+                {freeStudyDurations.map((minutes) => (
+                  <option key={minutes} value={minutes}>
+                    {minutes} minutos
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <button className="primary" disabled={busy}>
+              Empezar a estudiar <Play size={17} />
+            </button>
+          </form>
+        )}
+        {practice && (
+          <button
+            className="text-button"
+            type="button"
+            onClick={() => open("quiz", practice)}
+          >
+            Abrir una práctica de esta materia
           </button>
-        </form>
+        )}
+        {active && !remoteControl && !pendingFinish && (
+          <form
+            onSubmit={(e) => {
+              const d = formData(e);
+              run(async () => {
+                const result = await repo.finishSession({
+                  id: active.id,
+                  feedback: d.feedback || undefined,
+                  reflection: d.reflection || undefined,
+                }, env.version);
+                update(result);
+                if (result.pendingSessionFinish)
+                  notice("El cierre quedó pendiente. Se sincronizará cuando vuelva la conexión.");
+                else {
+                  close();
+                  notice("Sesión registrada en tu historial. Podés seguir estudiando cuando quieras.");
+                }
+              });
+            }}
+          >
+            <Field label="¿Cómo te fue? (opcional)">
+              <select name="feedback" defaultValue="">
+                <option value="">Prefiero omitirlo</option>
+                <option value="EASY">Fácil</option>
+                <option value="GOOD">Bien</option>
+                <option value="HARD">Me costó</option>
+                <option value="VERY_HARD">Muy difícil</option>
+              </select>
+            </Field>
+            <Field label="Comentario (opcional)">
+              <textarea name="reflection" maxLength={4000} />
+            </Field>
+            <p className="fine-print">
+              Podés cerrar sin responder. Las monedas se acreditan después de
+              cinco minutos reales de estudio, sin depender de esta valoración.
+            </p>
+            <button className="primary" disabled={busy}>
+              Cerrar sesión <Check size={17} />
+            </button>
+          </form>
+        )}
+        {active && !remoteControl && !pendingFinish && (
+          <button
+            className="text-button"
+            type="button"
+            disabled={busy}
+            onClick={() => {
+              if (window.confirm("¿Descartar esta sesión sin registrarla?")) {
+                void run(() => command("session.discard", { id: active.id }));
+              }
+            }}
+          >
+            Descartar sesión
+          </button>
+        )}
       </>
     );
   }
@@ -604,9 +1131,8 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
           <input name="exception_reason" maxLength={1000} />
         </Field>
         <p className="fine-print">
-          Un incumplimiento reconocido de bloques pendientes del plan aceptado
-          descuenta hasta 5 monedas disponibles, hasta 15 en siete días. Un
-          imprevisto o no confirmar no descuenta.
+          El check-in no descuenta monedas. Si algo cambió, se conserva el
+          resultado para ayudarte a reorganizar el plan sin penalizaciones.
         </p>
         <button className="primary" disabled={busy}>
           Guardar check-in
@@ -820,48 +1346,196 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
   if (name === "chat")
     return (
       <>
-        <div className="chat-history">
-          {s.messages.length ? (
-            s.messages.map((m) => (
-              <div key={m.id} className={"message " + m.role}>
-                <small>{m.role === "user" ? "Vos" : s.companion.name}</small>
-                <p>{m.content}</p>
-                {m.citations?.map((c) => (
-                  <button
-                    className="citation"
-                    key={c.chunk_id}
-                    onClick={() => {
-                      const material = s.materials.find(
-                        (x) => x.id === c.material_id,
-                      );
-                      if (material)
-                        run(async () => {
-                          window.open(
-                            await repo.signedUrl(material.path),
-                            "_blank",
-                            "noopener,noreferrer",
-                          );
-                        });
-                    }}
-                  >
-                    {c.label} ↗
-                  </button>
-                ))}
+        <div className={`chat-companion${pendingChat ? " thinking" : ""}`}>
+          <Creature
+            companion={s.companion}
+            size={140}
+            speaking={voice.speaking}
+          />
+          <div>
+            <strong>
+              {voice.speaking
+                ? `${s.companion.name} está hablando`
+                : `Hablar con ${s.companion.name}`}
+            </strong>
+            <p>
+              La voz se genera gratis con las voces instaladas en tu
+              dispositivo.
+            </p>
+            {voice.voiceName && <small>Voz actual: {voice.voiceName}</small>}
+          </div>
+        </div>
+        {voice.recognitionSupported && (
+          <section
+            className={`live-call-panel${liveCall ? " active" : ""}`}
+            aria-live="polite"
+          >
+            <div className="live-call-heading">
+              <span className="live-call-signal" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <div>
+                <strong>
+                  {!liveCall
+                    ? "Llamada en tiempo real"
+                    : liveCallPhase === "listening"
+                      ? "Te escucho…"
+                      : liveCallPhase === "thinking"
+                        ? `${s.companion.name} está pensando…`
+                        : liveCallPhase === "speaking"
+                          ? `${s.companion.name} está respondiendo`
+                          : "Reconectando la llamada…"}
+                </strong>
+                <p>
+                  {liveCall
+                    ? "Hablá normalmente. Cuando hagas una pausa, tu mensaje se envía solo."
+                    : `Conversá con ${s.companion.name} sin tocar el botón para cada mensaje.`}
+                </p>
               </div>
-            ))
-          ) : (
-            <Empty>
-              Contame qué estás tratando de entender. Podemos comenzar con una
-              pista y tu primer intento.
-            </Empty>
+            </div>
+            {liveTranscript && (
+              <p className="live-call-transcript">“{liveTranscript}”</p>
+            )}
+            <div className="live-call-actions">
+              {!liveCall ? (
+                <button
+                  className="live-call-start"
+                  type="button"
+                  onClick={startLiveCall}
+                >
+                  <PhoneCall size={19} /> Iniciar llamada
+                </button>
+              ) : (
+                <>
+                  {liveCallPhase === "speaking" && (
+                    <button
+                      className="live-call-interrupt"
+                      type="button"
+                      onClick={interruptLiveCall}
+                    >
+                      <Mic size={18} /> Interrumpir y hablar
+                    </button>
+                  )}
+                  <button
+                    className="live-call-end"
+                    type="button"
+                    onClick={stopLiveCall}
+                  >
+                    <PhoneOff size={19} /> Cortar llamada
+                  </button>
+                </>
+              )}
+            </div>
+          </section>
+        )}
+        <div className="chat-history" ref={chatHistoryRef}>
+          {s.messages.length
+            ? s.messages.map((m) => (
+                <div key={m.id} className={"message " + m.role}>
+                  <small>{m.role === "user" ? "Vos" : s.companion.name}</small>
+                  <p>{m.content}</p>
+                  {m.role === "assistant" && (
+                    <button
+                      className="voice-replay"
+                      type="button"
+                      onClick={() => voice.speak(spokenAgentReply(m), true)}
+                      aria-label={`Escuchar la respuesta de ${s.companion.name}`}
+                    >
+                      <Volume2 size={16} /> Escuchar
+                    </button>
+                  )}
+                  {!!m.actions?.length && (
+                    <div
+                      className="agent-action-receipts"
+                      aria-label="Acciones realizadas"
+                    >
+                      {m.actions.map((action) => (
+                        <span
+                          key={action.id}
+                          className={
+                            action.status === "COMPLETED"
+                              ? "agent-action-complete"
+                              : "agent-action-needs-input"
+                          }
+                        >
+                          {action.status === "COMPLETED" ? "✓" : "!"}{" "}
+                          {action.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {m.citations?.map((c) => (
+                    <button
+                      className="citation"
+                      key={c.chunk_id}
+                      onClick={() => {
+                        const material = s.materials.find(
+                          (x) => x.id === c.material_id,
+                        );
+                        if (material)
+                          run(async () => {
+                            await openMaterialOriginal(repo, material.path);
+                          });
+                      }}
+                    >
+                      {c.label} ↗
+                    </button>
+                  ))}
+                </div>
+              ))
+            : !pendingChat && (
+                <Empty>
+                  Contame qué estás tratando de entender. Podemos comenzar con
+                  una pista y tu primer intento.
+                </Empty>
+              )}
+          {pendingChat && (
+            <>
+              <div className="message user pending-user-message">
+                <small>Vos</small>
+                <p>{pendingChat.content}</p>
+              </div>
+              <div
+                className="message assistant thinking-message"
+                role="status"
+                aria-live="polite"
+              >
+                <small>{s.companion.name}</small>
+                <p>
+                  Está pensando
+                  <span className="thinking-dots" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                </p>
+              </div>
+            </>
           )}
         </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            run(async () => {
-              update(await repo.ai("chat", { message: chat }, env.version));
-              setChat("");
+            const message = chat.trim();
+            if (!message || busy || liveCall) return;
+            setPendingChat({ id: crypto.randomUUID(), content: message });
+            setChat("");
+            void run(async () => {
+              try {
+                const next = await repo.ai("chat", { message }, env.version);
+                update(next);
+                const answer = [...next.state.messages]
+                  .reverse()
+                  .find((messageItem) => messageItem.role === "assistant");
+                if (answer) {
+                  voice.speak(spokenAgentReply(answer));
+                  applyAgentEffects(answer);
+                }
+              } finally {
+                setPendingChat(null);
+              }
             });
           }}
         >
@@ -869,21 +1543,54 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
             <textarea
               value={chat}
               onChange={(e) => setChat(e.target.value)}
+              disabled={liveCall}
               required
               maxLength={4000}
               placeholder="No entiendo cómo despejar x…"
             />
           </Field>
-          <button className="primary" disabled={busy}>
-            Enviar ↗
-          </button>
+          <div className="chat-actions">
+            {voice.recognitionSupported && (
+              <button
+                className="secondary"
+                type="button"
+                disabled={busy || liveCall}
+                onClick={() =>
+                  voice.listening
+                    ? voice.stop()
+                    : voice.listen((transcript) => setChat(transcript))
+                }
+              >
+                {voice.listening ? <Square size={17} /> : <Mic size={17} />}
+                {voice.listening ? "Detener dictado" : "Dictar mensaje"}
+              </button>
+            )}
+            <button
+              className="primary"
+              disabled={busy || liveCall || !chat.trim()}
+            >
+              Enviar ↗
+            </button>
+          </div>
         </form>
+        <label className="settings-check voice-setting">
+          <input
+            type="checkbox"
+            checked={voice.enabled}
+            onChange={(event) => voice.setEnabled(event.target.checked)}
+          />
+          {voice.enabled ? <Volume2 size={17} /> : <VolumeX size={17} />}
+          Leer en voz alta las nuevas respuestas
+        </label>
+        {voice.error && <p className="form-error">{voice.error}</p>}
         <p className="fine-print">
           Puede equivocarse. Verificá las explicaciones con tu material. El chat
-          reciente se guarda 30 días.
+          reciente se guarda 30 días. La voz es sintética y puede variar según
+          el dispositivo.
         </p>
       </>
     );
+  if (name === "material-text") return <MaterialText key={String(selected)} id={String(selected)} />;
   if (name === "upload")
     return (
       <form
@@ -918,8 +1625,8 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
           />
         </Field>
         <p className="fine-print">
-          Subí materiales que tengas permiso de usar. Si no se pueden leer, la
-          app lo indicará.
+          PDF de hasta 100 páginas. Subí materiales que tengas permiso de usar.
+          El original se conserva aunque falle la lectura o la búsqueda con IA.
         </p>
         <button className="primary" disabled={busy || !s.subjects.length}>
           Subir y procesar <Upload size={16} />
@@ -1333,6 +2040,8 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
             run(() =>
               command("preferences.save", {
                 checkin_enabled: d.checkin_enabled === "on",
+                daily_study_enabled: d.daily_study_enabled === "on",
+                daily_study_minute: minuteOf(d.daily_study_minute),
                 weekends: d.weekends === "on",
                 checkin_minute: minuteOf(d.checkin_minute),
                 quiet_start: minuteOf(d.quiet_start),
@@ -1345,10 +2054,26 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
           <label className="checkbox">
             <input
               type="checkbox"
+              name="daily_study_enabled"
+              defaultChecked={s.preferences.daily_study_enabled ?? false}
+            />
+            Un recordatorio diario para estudiar
+          </label>
+          <Field label="Horario habitual de estudio">
+            <input
+              type="time"
+              name="daily_study_minute"
+              defaultValue={clock(s.preferences.daily_study_minute ?? 1020)}
+              required
+            />
+          </Field>
+          <label className="checkbox">
+            <input
+              type="checkbox"
               name="checkin_enabled"
               defaultChecked={s.preferences.checkin_enabled}
             />
-            Recordarme el check-in
+            Recordarme el check-in si no uso el aviso diario
           </label>
           <Field label="Horario preferido">
             <input
@@ -1388,8 +2113,46 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
             Guardar preferencias
           </button>
         </form>
+        {!!(s.studyReminders ?? []).length && (
+          <section
+            className="scheduled-reminders"
+            aria-label="Recordatorios programados"
+          >
+            <h3>Recordatorios creados con tu compa</h3>
+            {(s.studyReminders ?? []).map((reminder) => (
+              <div className="scheduled-reminder" key={reminder.id}>
+                <div>
+                  <strong>{reminder.title}</strong>
+                  <small>
+                    {reminder.date
+                      ? `${reminder.date} · ${clock(reminder.minute)}`
+                      : `${days[reminder.day_of_week ?? 0]} · ${clock(reminder.minute)}`}
+                    {!reminder.enabled ? " · desactivado" : ""}
+                  </small>
+                </div>
+                {reminder.enabled && (
+                  <button
+                    type="button"
+                    className="text-button"
+                    disabled={busy}
+                    onClick={() =>
+                      run(() =>
+                        command("reminder.disable", { id: reminder.id }, false),
+                      )
+                    }
+                  >
+                    Desactivar
+                  </button>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
         <button className="settings-row" onClick={() => open("privacy")}>
           Privacidad y datos →
+        </button>
+        <button className="settings-row" onClick={() => open("support")}>
+          Ayuda y soporte →
         </button>
         <SignOutButton />
       </>
@@ -1405,8 +2168,26 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
         <p className="callout">
           Entorno de desarrollo. La identificación del responsable, el
           consentimiento y las transferencias internacionales requieren revisión
-          antes de incorporar alumnos.
+          jurídica antes de incorporar alumnos.
         </p>
+        {consentRequirement(s.profile?.birth_date).required && (
+          <div className="callout">
+            {env.consent?.recorded ? (
+              <p>Familia verificada. Servicio: {env.consent.capabilities?.service ? "aceptado" : "pendiente"}; IA: {env.consent.capabilities?.ai ? "autorizada" : "sin permiso"}; encuentros: {env.consent.capabilities?.social ? "autorizados" : "sin permiso"}.</p>
+            ) : env.consent?.pending ? (
+              <p>
+                La solicitud está pendiente de verificación por un adulto
+                responsable mediante un canal independiente.
+              </p>
+            ) : (
+              <p>
+                Un adulto responsable tiene que registrar el consentimiento
+                desde la bienvenida o acá, cuando la beta para menores esté
+                habilitada.
+              </p>
+            )}
+          </div>
+        )}
         <button
           className="secondary"
           disabled={busy}
@@ -1418,7 +2199,7 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
                 }),
                 a = document.createElement("a");
               a.href = URL.createObjectURL(blob);
-              a.download = "compa-virtual-datos.json";
+              a.download = "kusiy-datos.json";
               a.click();
               URL.revokeObjectURL(a.href);
             })
@@ -1480,24 +2261,50 @@ export function Forms({ name, selected }: { name: string; selected: unknown }) {
   if (name === "notifications")
     return s.notifications.length ? (
       <>
-        {s.notifications.map((n) => (
-          <button
-            className="settings-row"
-            key={n.id}
-            onClick={() =>
-              run(async () => {
-                await command("notification.read", { id: n.id });
-                go(n.route);
-              })
-            }
-          >
-            <div>
-              <strong>{n.title}</strong>
-              <p>{n.body}</p>
+        {s.notifications.map((n) => {
+          const snoozed = s.studyReminders.find((r) => r.snoozed_from === n.id && r.enabled);
+          return (
+            <div className="notification-entry" key={n.id}>
+              <button
+                className="settings-row"
+                onClick={() =>
+                  run(async () => {
+                    await command("notification.read", { id: n.id });
+                    go(n.route);
+                  })
+                }
+              >
+                <div>
+                  <strong>{n.title}</strong>
+                  <p>{n.body}</p>
+                </div>
+                ↗
+              </button>
+              {snoozed && <p role="status">Pospuesto para {snoozed.date} a las {clock(snoozed.minute)}.</p>}
+              <div className="notification-snooze" aria-label={`Posponer ${n.title}`}>
+                {!n.read_at && (
+                  <button
+                    className="secondary"
+                    disabled={busy}
+                    onClick={() => run(() => command("notification.read", { id: n.id }, false))}
+                  >
+                    Ignorar
+                  </button>
+                )}
+                {[15, 30, 60].map((minutes) => (
+                  <button
+                    className="secondary"
+                    key={minutes}
+                    disabled={busy}
+                    onClick={() => run(() => command("notification.snooze", { id: n.id, minutes }, false))}
+                  >
+                    {minutes} min
+                  </button>
+                ))}
+              </div>
             </div>
-            ↗
-          </button>
-        ))}
+          );
+        })}
       </>
     ) : (
       <Empty>

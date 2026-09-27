@@ -37,9 +37,37 @@
   display: block;
 }
 .shared-canvas {
+  position: relative;
   width: 100%;
   height: 100%;
   touch-action: none;
+}
+.shared-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #eee8db;
+  color: #14243b;
+  font-weight: 600;
+  pointer-events: none;
+}
+.shared-loading-mark {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #c9d1c3;
+  border-top-color: #315e5d;
+  border-radius: 50%;
+  animation: shared-loading-spin 0.9s linear infinite;
+}
+@keyframes shared-loading-spin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shared-loading-mark { animation: none; }
 }
 .shared-canvas canvas {
   display: block;
@@ -325,3 +353,20 @@
     gap: 10px;
   }
 }
+.shared-chat { margin-top: 24px; padding: 20px; border: 1px solid #d8d3c6; border-radius: 20px; background: #fffdf8; }
+.shared-chat h3 { margin: 0; }
+.shared-chat header p { margin: 6px 0 18px; color: #4d5b60; }
+.shared-chat-list { list-style: none; padding: 0; margin: 0; max-height: 340px; overflow-y: auto; }
+.shared-chat-list li { padding: 12px 0; border-top: 1px solid #e7e3d8; }
+.shared-chat-list time { margin-left: 10px; color: #697477; font-size: .8rem; }
+.shared-chat-list p { margin: 6px 0; overflow-wrap: anywhere; }
+.shared-chat-list small { color: #805d27; }
+.shared-chat-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.shared-chat button { min-height: 48px; padding: 8px 14px; border: 0; border-radius: 12px; background: #ffc957; color: #17273d; font: inherit; font-weight: 700; }
+.shared-chat button.secondary { background: #e5eee9; }
+.shared-chat button:disabled { opacity: .55; }
+.shared-chat-report, .shared-chat-compose { display: grid; gap: 8px; margin-top: 12px; }
+.shared-chat-report label, .shared-chat-compose label { display: grid; gap: 5px; }
+.shared-chat-report select, .shared-chat textarea { width: 100%; min-height: 48px; border: 1px solid #aaa; border-radius: 10px; padding: 10px; font: inherit; }
+.shared-chat textarea { min-height: 78px; }
+.shared-chat-error { padding: 10px; color: #7b2d1d; background: #fde7dd; }

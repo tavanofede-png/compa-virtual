@@ -26,9 +26,11 @@ import {
   clock,
   minuteOf,
   today,
+  consentRequirement,
   type Companion,
   type Profile,
 } from "@compa/domain";
+import { BrandLogo } from "./BrandLogo";
 import type { Envelope, Repository } from "@compa/client";
 import { WorldCanvas } from "./Room";
 import { Field } from "./ui";
@@ -103,6 +105,8 @@ export function CompanionSetup({
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [petName, setPetName] = useState("Miel");
+  const [guardianName, setGuardianName] = useState("");
+  const [guardianAttested, setGuardianAttested] = useState(false);
   const pending = useRef(false),
     heading = useRef<HTMLHeadingElement>(null);
   const character = characterById(companion.character_id),
@@ -172,6 +176,13 @@ export function CompanionSetup({
           throw Error("Elegí dos horarios distintos para dormir y despertar.");
       }
       const complete = step === 5;
+      if (complete) {
+        const need = consentRequirement(profile.birth_date);
+        if (need.required && (!env.consent?.recorded || !env.consent.capabilities?.service))
+          throw Error(
+            "Falta el consentimiento de un adulto responsable para continuar.",
+          );
+      }
       const result = await repo.command(
         {
           type: complete ? "onboarding.complete" : "onboarding.save",
@@ -201,7 +212,7 @@ export function CompanionSetup({
     <main className={"companion-setup " + (editing ? "setup-editing" : "")}>
       <header className="setup-header">
         <span className="brand">
-          <span className="brand-mark">c.</span> compa virtual
+          <BrandLogo /> Kusiy
         </span>
         <nav className="setup-steps" aria-label="Pasos de bienvenida">
           {steps.map((label, index) => (
@@ -523,6 +534,84 @@ export function CompanionSetup({
                     Estás probando una demostración local. Usá datos ficticios.
                   </p>
                 )}
+                {consentRequirement(profile.birth_date).required && (
+                  <div className="callout">
+                    <p>
+                      Kusiy es para adolescentes. Un adulto responsable tiene
+                      que registrar el consentimiento. El texto legal definitivo
+                      lo define el titular; esto no reemplaza esa revisión.
+                    </p>
+                    {env.consent?.recorded ? (
+                      <p>{env.consent.capabilities?.service ? "Servicio aceptado por el adulto verificado." : "Familia verificada. Falta que el adulto acepte el servicio desde su enlace privado."}</p>
+                    ) : env.consent?.pending ? (
+                      <p>
+                        Solicitud enviada. Un adulto responsable debe completar
+                        la verificación por el canal independiente de la beta.
+                      </p>
+                    ) : (
+                      <>
+                        <Field label="Nombre de quien consiente">
+                          <input
+                            value={guardianName}
+                            onChange={(e) => setGuardianName(e.target.value)}
+                            maxLength={80}
+                            autoComplete="name"
+                          />
+                        </Field>
+                        <label className="checkbox">
+                          <input
+                            type="checkbox"
+                            checked={guardianAttested}
+                            onChange={(e) =>
+                              setGuardianAttested(e.target.checked)
+                            }
+                          />
+                          Soy un adulto responsable y consiento el uso de Kusiy
+                          por esta cuenta.
+                        </label>
+                        <button
+                          type="button"
+                          className="secondary"
+                          disabled={
+                            busy || !guardianAttested || guardianName.trim().length < 2
+                          }
+                          onClick={() =>
+                            perform(async () => {
+                              profileSchema.parse(profile);
+                              if (
+                                profile.birth_date > today() ||
+                                profile.birth_date < "1926-01-01"
+                              )
+                                throw Error("Revisá tu fecha de nacimiento.");
+                              const saved = await repo.command(
+                                {
+                                  type: "onboarding.save",
+                                  payload: {
+                                    step: 3,
+                                    companion,
+                                    profile,
+                                    petName,
+                                  },
+                                },
+                                env.version,
+                              );
+                              update(saved);
+                              update(
+                                await repo.recordConsent({
+                                  guardian_name: guardianName.trim(),
+                                  attestation: true,
+                                  basis: "parental-guardian",
+                                }),
+                              );
+                            })
+                          }
+                        >
+                          Enviar solicitud de consentimiento
+                        </button>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
             )}
             {step === 4 && (
@@ -618,7 +707,7 @@ export function CompanionSetup({
             {step === 5 && (
               <>
                 <div className="setup-pet-intro">
-                  <img src="/selection/pets/golden-retriever.webp" alt="Golden retriever voxel 3D" />
+                  <img src="/selection/pets/golden-retriever.webp" alt="Golden retriever 3D" />
                   <div>
                     <p className="eyebrow">TU PRIMERA MASCOTA · GRATIS</p>
                     <h2>Una nueva amiga para el cuarto.</h2>

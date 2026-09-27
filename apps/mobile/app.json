@@ -1,18 +1,24 @@
 {
   "expo": {
-    "name": "Compa Virtual",
+    "name": "Kusiy",
     "slug": "compa-virtual",
     "scheme": "compavirtual",
     "version": "0.1.0",
+    "icon": "./assets/kusiy-logo.png",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "ios": {
+      "icon": "./assets/kusiy-logo.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.compavirtual.estudio",
       "infoPlist": { "ITSAppUsesNonExemptEncryption": false }
     },
     "android": {
       "package": "com.compavirtual.estudio",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/kusiy-logo.png",
+        "backgroundColor": "#fffaf5"
+      },
       "permissions": ["POST_NOTIFICATIONS"]
     },
     "web": { "bundler": "metro", "output": "static" },
@@ -20,6 +26,12 @@
       "expo-router",
       "expo-secure-store",
       "expo-sqlite",
+      ["expo-audio", {
+        "microphonePermission": "Kusiy usa el micrófono solamente durante tu conversación con el compañero.",
+        "recordAudioAndroid": true,
+        "enableBackgroundRecording": false,
+        "enableBackgroundPlayback": false
+      }],
       ["expo-notifications", { "defaultChannel": "study-reminders" }]
     ],
     "experiments": { "typedRoutes": true }

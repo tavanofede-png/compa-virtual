@@ -66,6 +66,9 @@ beforeAll(async () => {
       "utf8",
     ),
   );
+  await db.exec(await readFile(new URL(
+    "../supabase/migrations/20260926143000_group_session_join.sql", import.meta.url,
+  ), "utf8"));
   for (let i = 0; i < users.length; i++) {
     await db.query("insert into auth.users values($1)", [users[i]]);
     await db.query("select public.collaboration_identity($1,$2)", [
@@ -77,6 +80,59 @@ beforeAll(async () => {
 }, 60000);
 afterAll(() => db.close());
 describe("private shared groups and sessions in real PostgreSQL", () => {
+  it("shows a group session without its roster and joins it atomically", async () => {
+    const { group_id } = await command(a, { action: "group.create", name: "Repaso del curso" });
+    await join(a, b, "group", group_id);
+    const { session_id } = await command(a, sessionInput(group_id));
+    const listed = await db.query<{ result: any[] }>(
+      "select public.collaboration_group_sessions($1) result", [b],
+    );
+    expect(listed.rows[0].result.find((s) => s.id === session_id)).toMatchObject({
+      joinable: true, group_id, participant_count: 1,
+    });
+    await expect(overview(b, session_id)).rejects.toThrow("COLLAB_NOT_FOUND");
+    const input = { action: "session.join", session_id, revision: 0 };
+    const op = crypto.randomUUID();
+    const joinSession = () => db.query<{ result: { session_id: string } }>(
+      "select public.collaboration_join_group_session($1,$2,$3::jsonb) result",
+      [b, op, JSON.stringify(input)],
+    );
+    expect((await joinSession()).rows[0].result.session_id).toBe(session_id);
+    expect((await joinSession()).rows[0].result.session_id).toBe(session_id);
+    expect((await overview(b, session_id)).participants).toHaveLength(2);
+    expect((await db.query<{ result: any[] }>(
+      "select public.collaboration_group_sessions($1) result", [b],
+    )).rows[0].result.some((s) => s.id === session_id)).toBe(false);
+    await expect(db.query(
+      "select public.collaboration_join_group_session($1,$2,$3::jsonb)",
+      [c, crypto.randomUUID(), JSON.stringify(input)],
+    )).rejects.toThrow("COLLAB_NOT_FOUND");
+    const revision = (await overview(a)).groups.find((g: any) => g.id === group_id).revision;
+    await command(a, { action: "group.remove", group_id, user_id: b, revision });
+    await expect(joinSession()).rejects.toThrow("COLLAB_NOT_FOUND");
+  });
+  it("does not take a group place reserved by a pending session invitation", async () => {
+    const groupOwner = users[9], sessionHost = users[4];
+    const { group_id } = await command(groupOwner, { action: "group.create", name: "Cupo compartido" });
+    for (const peer of users.slice(3, 9)) await join(groupOwner, peer, "group", group_id);
+    const { session_id } = await command(sessionHost, sessionInput(group_id));
+    for (const peer of [users[3], ...users.slice(5, 9)])
+      await invite(sessionHost, peer, "session", session_id);
+    const listed = await db.query<{ result: any[] }>(
+      "select public.collaboration_group_sessions($1) result", [groupOwner],
+    );
+    expect(listed.rows[0].result.some((s) => s.id === session_id)).toBe(true);
+    await db.query(
+      "select public.collaboration_join_group_session($1,$2,$3::jsonb)",
+      [users[3], crypto.randomUUID(), JSON.stringify({ action: "session.join", session_id, revision: 5 })],
+    );
+    expect((await overview(sessionHost, session_id)).participants).toHaveLength(2);
+    await expect(db.query(
+      "select public.collaboration_join_group_session($1,$2,$3::jsonb)",
+      [groupOwner, crypto.randomUUID(), JSON.stringify({ action: "session.join", session_id, revision: 6 })],
+    )).rejects.toThrow("COLLAB_FULL");
+    expect((await overview(sessionHost, session_id)).participants).toHaveLength(2);
+  });
   it("requires two accepted participants to start and lets members leave archived groups", async () => {
     const { session_id } = await command(a, sessionInput());
     await expect(

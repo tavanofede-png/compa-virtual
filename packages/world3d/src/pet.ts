@@ -79,6 +79,32 @@ const variant = (roomId: string, dx: number, dz: number): RoomPetMap => ({
   props: Object.fromEntries(Object.entries(cozy.props).map(([key, [x, y, z]]) => [key, [x + dx, y, z + dz]])) as RoomPetMap["props"],
 });
 
+// The reference bedrooms have different footprints from Cozy. Keep pet anchors
+// inside the authored floor and away from the desk, seats and themed objects.
+const referencePetMap = (
+  roomId: string,
+  floor: number,
+  spawn: [number, number],
+  bed: [number, number],
+  bedApproach: [number, number],
+  play: [number, number],
+  near: [number, number],
+  roam: [number, number][],
+  props: { bowl: [number, number]; basket: [number, number]; ball: [number, number]; rope: [number, number] },
+): RoomPetMap => {
+  const point = ([x, z]: [number, number]): [number, number, number] => [x, floor, z];
+  return {
+    roomId,
+    version: 1,
+    spawn: point(spawn),
+    home: { position: point(bed), approach: point(bedApproach), yaw: -0.4 },
+    play: { position: point(play), approach: point(play), yaw: 0.3 },
+    companionNear: { position: point(near), approach: point(near), yaw: -0.2 },
+    roam: roam.map(point),
+    props: { bed: point(bed), bowl: point(props.bowl), basket: point(props.basket), ball: point(props.ball), rope: point(props.rope) },
+  };
+};
+
 export const roomPetMaps: Record<string, RoomPetMap> = {
   cozy,
   minimalista: variant("minimalista", 0, 0),
@@ -86,6 +112,12 @@ export const roomPetMaps: Record<string, RoomPetMap> = {
   naturaleza: variant("naturaleza", 0, 0),
   urbano: variant("urbano", 0, 0),
   "biblioteca-moderna": variant("biblioteca-moderna", 0, 0),
+  "atico-creativo": referencePetMap("atico-creativo", .13, [1.55, .58], [1.15, 2], [1.15, 1.45], [1.3, .62], [1.18, .12], [[1.55, .58], [1.3, .62], [1.15, 1.45]], { bowl: [2.34, .12], basket: [2.32, 2.25], ball: [1.18, .62], rope: [1.85, .67] }),
+  "rincon-urbano": referencePetMap("rincon-urbano", .12, [2.7, .12], [3.18, 1.82], [2.8, 1.25], [2.25, .72], [2.1, .12], [[2.7, .12], [2.25, .72], [2.8, 1.25]], { bowl: [3.9, .85], basket: [3.95, 2.24], ball: [2.25, .72], rope: [2.88, .67] }),
+  "sala-control-gamer": referencePetMap("sala-control-gamer", .12, [2.7, .12], [3.18, 1.82], [2.8, 1.25], [2.25, .72], [2.1, .12], [[2.7, .12], [2.25, .72], [2.8, 1.25]], { bowl: [3.88, .55], basket: [3.95, 2.24], ball: [2.25, .72], rope: [2.88, .67] }),
+  "habitacion-invernadero": referencePetMap("habitacion-invernadero", .12, [1.45, .55], [1.55, 1.84], [1.55, 1.32], [1.42, .75], [1.18, .12], [[1.45, .55], [1.42, .75], [1.55, 1.32]], { bowl: [2.8, 2.45], basket: [.55, 2.25], ball: [1.42, .75], rope: [1.72, .7] }),
+  "estudio-musical": referencePetMap("estudio-musical", .12, [2.7, .12], [3.18, 1.82], [2.8, 1.25], [2.25, .72], [2.1, .12], [[2.7, .12], [2.25, .72], [2.8, 1.25]], { bowl: [3.9, .75], basket: [3.95, 2.24], ball: [2.25, .72], rope: [2.88, .67] }),
+  "rincon-explorador": referencePetMap("rincon-explorador", .12, [2.7, .12], [3.18, 1.82], [2.8, 1.25], [2.25, .72], [2.1, .12], [[2.7, .12], [2.25, .72], [2.8, 1.25]], { bowl: [3.9, .85], basket: [3.95, 2.24], ball: [2.25, .72], rope: [2.88, .67] }),
 };
 
 export function createPetController(

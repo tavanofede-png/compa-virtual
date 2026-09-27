@@ -109,7 +109,7 @@ def refine(theme):
   # Clear the atlas; no shelf or dangling ivy across the map.
   remove(('Premium_LeftShelf','PRM_BOT_LeftShelf'))
   # Preserve reader circulation by moving chair away from the bedside cabinet.
-  shift(('EXP_Reading',),(.20,-.34,0))
+  shift(('EXP_Reading',),(.20,-.14,0))
   # A detailed armillary globe on the library, meridian and equatorial rings.
   k.sphere('EXP_Globe',(3.40,1.90,3.06),(.20,.20,.20),'dusk',C,24,12)
   for i in range(6):

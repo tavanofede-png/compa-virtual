@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Alert, Linking } from "react-native";
+import { View, Alert, Image, ScrollView, type ImageSourcePropType } from "react-native";
 import type { CollaborationRepository } from "@compa/client";
 import {
   sharedSpaces,
@@ -28,6 +28,14 @@ const inviteStatus: Record<string, string> = {
   revoked: "Revocada",
   expired: "Vencida",
 };
+const sharedPreviews: Record<string, ImageSourcePropType> = {
+  living: require("../assets/selection/shared-spaces/living.webp"),
+  study: require("../assets/selection/shared-spaces/study.webp"),
+  library: require("../assets/selection/shared-spaces/library.webp"),
+  projects: require("../assets/selection/shared-spaces/projects.webp"),
+  patio: require("../assets/selection/shared-spaces/patio.webp"),
+  terrace: require("../assets/selection/shared-spaces/terrace.webp"),
+};
 const confirm = (message: string, action: () => void) =>
   Alert.alert("Estudiar juntos", message, [
     { text: "Volver", style: "cancel" },
@@ -38,7 +46,7 @@ export function NativeTogether({
   back,
 }: {
   repo?: CollaborationRepository;
-  back: () => void;
+  back?: () => void;
 }) {
   const [data, setData] = useState<CollaborationOverview | null>(null),
     [detail, setDetail] = useState<GroupSessionDetail | null>(null),
@@ -227,19 +235,32 @@ export function NativeTogether({
       </Card>
     );
   }
+  const friends = data
+    ? Array.from(
+        new Map(
+          data.groups.flatMap((entry) =>
+            entry.members
+              .filter((member) => member.user_id !== data.user_id)
+              .map((member) => [member.user_id, member] as const),
+          ),
+        ).values(),
+      )
+    : [];
   return (
     <View style={{ gap: 16 }}>
-      <Button
-        secondary
-        onPress={() => {
-          if (detail) {
-            setDetail(null);
-            setEditor(null);
-          } else back();
-        }}
-      >
-        {detail ? "Todas las sesiones" : "Volver a Estudiar"}
-      </Button>
+      {(detail || back) && (
+        <Button
+          secondary
+          onPress={() => {
+            if (detail) {
+              setDetail(null);
+              setEditor(null);
+            } else back?.();
+          }}
+        >
+          {detail ? "Todas las sesiones" : "Volver a Estudiar"}
+        </Button>
+      )}
       <Text style={st.h1}>{detail?.session.title ?? "Estudiar juntos."}</Text>
       <Text style={st.p}>
         {detail?.session.objective ??
@@ -263,6 +284,23 @@ export function NativeTogether({
         </Text>
       )}
       {!!notice && <Text accessibilityLiveRegion="polite">{notice}</Text>}
+      {!detail && (
+        <View style={{ gap: 10 }}>
+          <Text style={st.tag}>SEIS LUGARES PARA ENCONTRARSE</Text>
+          <Text style={st.h2}>Salas compartidas.</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
+            {sharedSpaces.map((space) => (
+              <View key={space.id} style={{ width: 250, overflow: "hidden", borderRadius: 18, borderWidth: 1, borderColor: "#e8e1db", backgroundColor: "#fffdfa" }}>
+                <Image source={sharedPreviews[space.id]} style={{ width: "100%", aspectRatio: 1.45 }} resizeMode="cover" />
+                <View style={{ padding: 14, gap: 5, borderBottomWidth: 4, borderBottomColor: space.color }}>
+                  <Text style={st.h3}>{space.name}</Text>
+                  <Text style={st.p}>{space.description}</Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      )}
       {!repo ? (
         <Card>
           <Text style={st.h3}>Tu próximo encuentro empieza acá.</Text>
@@ -382,23 +420,6 @@ export function NativeTogether({
                   · {detail.session.planned_duration} min
                 </Text>
                 <Text style={st.label}>{detail.session.timezone}</Text>
-                {detail.meeting_url &&
-                  ["scheduled", "active"].includes(detail.session.status) && (
-                    <>
-                      <Button
-                        onPress={() =>
-                          void run(async () => {
-                            await Linking.openURL(detail.meeting_url!);
-                          })
-                        }
-                      >
-                        Abrir Google Meet
-                      </Button>
-                      <Text style={st.p}>
-                        Finalizar esta sesión no cierra la llamada de Meet.
-                      </Text>
-                    </>
-                  )}
                 {detail.session.host_id === data.user_id ? (
                   <>
                     {detail.session.status === "scheduled" && (
@@ -614,13 +635,14 @@ export function NativeTogether({
                       disabled={busy}
                       onPress={() =>
                         void run(async () => {
-                          setDetail(await repo.session(s.id));
+                          if (s.joinable) await send({ action: "session.join", session_id: s.id, revision: s.revision });
+                          else setDetail(await repo.session(s.id));
                           setEditor(null);
                           setInviteTarget(null);
                         })
                       }
                     >
-                      Ver sesión
+                      {s.joinable ? "Unirme a la sesión del grupo" : "Ver sesión"}
                     </Button>
                   </Card>
                 ))
@@ -635,7 +657,22 @@ export function NativeTogether({
               ) : (
                 <Text style={st.p}>
                   Un grupo guarda a tu equipo para próximos encuentros.
-                </Text>
+                  </Text>
+                )}
+              <Text style={st.h2}>Tus compañeros</Text>
+              {friends.length ? (
+                <Card>
+                  {friends.map((friend) => (
+                    <View key={friend.user_id} style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10 }}>
+                      <View style={{ width: 42, height: 42, borderRadius: 21, alignItems: "center", justifyContent: "center", backgroundColor: "#dfe9da" }}>
+                        <Text style={{ fontWeight: "700", color: "#385347" }}>{friend.nickname.slice(0, 1).toUpperCase()}</Text>
+                      </View>
+                      <Text style={{ flex: 1 }}>{friend.nickname}</Text>
+                    </View>
+                  ))}
+                </Card>
+              ) : (
+                <Text style={st.p}>Las personas de tus grupos van a aparecer acá.</Text>
               )}
             </>
           )}
@@ -735,7 +772,7 @@ function SessionForm({
     [duration, setDuration] = useState(String(session?.planned_duration ?? 45));
   const [mode, setMode] = useState<string>(session?.session_type ?? "silent"),
     [space, setSpace] = useState<string>(session?.space_template_id ?? "study"),
-    [meeting, setMeeting] = useState(detail?.meeting_url ?? "");
+    [startNow, setStartNow] = useState(false);
   const [groupId, setGroupId] = useState(group ?? ""),
     [error, setError] = useState("");
   function save() {
@@ -746,10 +783,12 @@ function SessionForm({
         objective,
         session_type: mode as "silent" | "review" | "project",
         space_template_id: space as (typeof sharedSpaces)[number]["id"],
-        scheduled_start_at: sessionLocalStart(date, time),
+        scheduled_start_at: !session && startNow
+          ? new Date().toISOString()
+          : sessionLocalStart(date, time),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         planned_duration: Number(duration),
-        meeting_url: meeting,
+        meeting_url: null,
       };
       submit(
         session
@@ -798,23 +837,41 @@ function SessionForm({
           ]}
         />
       )}
-      <Field
-        label="Día (AAAA-MM-DD)"
-        value={date}
-        onChangeText={setDate}
-        maxLength={10}
-        editable={!busy}
-      />
-      <Field
-        label="Hora (HH:mm)"
-        value={time}
-        onChangeText={setTime}
-        maxLength={5}
-        editable={!busy}
-      />
-      <Text style={st.label}>
-        Horario en {Intl.DateTimeFormat().resolvedOptions().timeZone}
-      </Text>
+      {!session && (
+        <Choices
+          label="Inicio"
+          value={startNow ? "now" : "later"}
+          onChange={(value) => setStartNow(value === "now")}
+          options={[
+            { value: "now", label: "Abrir ahora" },
+            { value: "later", label: "Programar" },
+          ]}
+        />
+      )}
+      {(!startNow || session) && (
+        <>
+          <Field
+            label="Día (AAAA-MM-DD)"
+            value={date}
+            onChangeText={setDate}
+            maxLength={10}
+            editable={!busy}
+          />
+          <Field
+            label="Hora (HH:mm)"
+            value={time}
+            onChangeText={setTime}
+            maxLength={5}
+            editable={!busy}
+          />
+          <Text style={st.label}>
+            Horario en {Intl.DateTimeFormat().resolvedOptions().timeZone}
+          </Text>
+        </>
+      )}
+      {startNow && !session && (
+        <Text style={st.p}>La sala se abre al crearla. Podés invitar a tus compañeros y empezar juntos cuando entren.</Text>
+      )}
       <Field
         label="Duración en minutos (15 a 180)"
         value={duration}
@@ -835,23 +892,9 @@ function SessionForm({
         onChange={setSpace}
         options={sharedSpaces.map((s) => ({ value: s.id, label: s.name }))}
       />
-      <Field
-        label="Enlace de Google Meet (opcional)"
-        value={meeting}
-        onChangeText={setMeeting}
-        maxLength={300}
-        autoCapitalize="none"
-        autoCorrect={false}
-        keyboardType="url"
-        editable={!busy}
-      />
-      <Text style={st.p}>
-        Creá la reunión en Google Meet y pegá su enlace. Solo lo ven quienes
-        aceptaron participar.
-      </Text>
       {!!error && <Text accessibilityRole="alert">{error}</Text>}
       <Button disabled={busy} onPress={save}>
-        {session ? "Guardar cambios" : "Crear sesión privada"}
+        {session ? "Guardar cambios" : startNow ? "Abrir sala ahora" : "Programar sesión privada"}
       </Button>
       <Button secondary disabled={busy} onPress={close}>
         Cerrar

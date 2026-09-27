@@ -1,15 +1,18 @@
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, Image, ScrollView } from "react-native";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
 import {
   homeSummary,
-  dateLabel,
+  nextStudyAction,
   localNow,
   isQuiet,
   activePet,
+  rooms,
+  roomById,
   type Snapshot,
 } from "@compa/domain";
 import { NativeRoom, NativeWorld } from "./Creature";
 import { Text, Button, styles as st, colors } from "./ui";
+import { selectionImages } from "./selection-images";
 export function TabIcon({
   id,
   active = false,
@@ -59,11 +62,12 @@ type Props = {
 };
 export function NativeHome({ s, busy, open, go, plan, visible = true }: Props) {
   const day = homeSummary(s),
+    action = nextStudyAction(s),
     now = localNow(s.profile?.timezone);
   const pet = activePet(s);
   return (
     <View style={{ gap: 12 }}>
-      <Text style={st.h1}>Hola, {s.profile?.nickname || "bienvenido"} 👋</Text>
+      <Text style={st.h1}>Hola, {s.profile?.nickname || "bienvenido"}</Text>
       <Text style={[st.p, { letterSpacing: 1.4, fontSize: 13 }]}>
         TU MUNDO. TU MANERA DE APRENDER.
       </Text>
@@ -81,15 +85,19 @@ export function NativeHome({ s, busy, open, go, plan, visible = true }: Props) {
               s.profile?.sleep_end ?? 420,
             ),
           }}
-          petState={pet ? {
-            definitionId: pet.petDefinitionId,
-            instanceId: pet.id,
-            name: pet.name,
-            preferences: s.petPreferences,
-            habitatId: s.equippedPetSetup.bedId,
-            toyIds: s.equippedPetSetup.toyIds,
-            accessoryId: s.equippedPetSetup.accessoryId ?? undefined,
-          } : undefined}
+          petState={
+            pet
+              ? {
+                  definitionId: pet.petDefinitionId,
+                  instanceId: pet.id,
+                  name: pet.name,
+                  preferences: s.petPreferences,
+                  habitatId: s.equippedPetSetup.bedId,
+                  toyIds: s.equippedPetSetup.toyIds,
+                  accessoryId: s.equippedPetSetup.accessoryId ?? undefined,
+                }
+              : undefined
+          }
         />
       </View>
       <View style={hs.today}>
@@ -107,73 +115,60 @@ export function NativeHome({ s, busy, open, go, plan, visible = true }: Props) {
             </Text>
           </View>
         </View>
-        {day.pending.slice(0, 2).map((item, i) => (
-          <Pressable
-            key={item.id}
-            accessibilityRole="button"
-            onPress={() => open("item", item)}
-            style={hs.activity}
-          >
-            <View
-              style={[hs.tile, { backgroundColor: i ? "#4ba46c" : "#8860c6" }]}
-            >
-              <TabIcon id={item.kind === "EXAM" ? "study" : "agenda"} />
-            </View>
-            <View style={{ flex: 1, gap: 2 }}>
-              <Text style={{ fontSize: 18, fontWeight: "600" }}>
-                {s.subjects.find((x) => x.id === item.subject_id)?.name ||
-                  item.title}
-              </Text>
-              <Text style={{ fontSize: 14, color: colors.muted }}>
-                {item.title}
-              </Text>
-              <Text style={{ fontSize: 14, color: colors.muted }}>
-                {dateLabel(item.due_date)}
-              </Text>
-            </View>
-            <Text style={{ fontSize: 28, color: colors.muted }}>›</Text>
-          </Pressable>
-        ))}
-        {!day.pending.length && (
-          <View style={{ gap: 8, paddingVertical: 16 }}>
-            <Text style={st.h2}>Hagamos lugar a tu primer paso.</Text>
-            <Text style={st.p}>
-              Sumá una materia y lo que tenés que hacer. Tu compa te ayuda a
-              organizarlo.
+        <View style={hs.daySnapshot} accessibilityLabel="Resumen académico de hoy">
+          <Text style={hs.daySnapshotText}>{day.progressSummary}</Text>
+          <Text style={hs.daySnapshotText}>{day.deadlineSummary}</Text>
+          {day.routineTime && (
+            <Text style={hs.daySnapshotText}>
+              Tu horario habitual de estudio: {day.routineTime}
             </Text>
-          </View>
-        )}
-        <Button
-          disabled={busy}
-          onPress={() =>
-            day.next
-              ? open("focus", day.next)
-              : !day.pending.length
-                ? open(s.subjects.length ? "item" : "subjects")
-                : day.plan
-                  ? go("agenda")
-                  : plan()
-          }
-        >
-          {day.next
-            ? "Empezar sesión →"
-            : !day.pending.length
-              ? "Agregar mi primera actividad →"
-              : day.plan
-                ? "Ver mi agenda →"
-                : "Preparar mi plan →"}
-        </Button>
-        <Pressable
-          onPress={() => go("today")}
-          accessibilityRole="button"
+          )}
+        </View>
+        <View
           style={{
-            minHeight: 48,
-            justifyContent: "center",
-            alignItems: "center",
+            gap: 7,
+            padding: 17,
+            borderRadius: 17,
+            borderWidth: 1,
+            borderColor: colors.line,
+            backgroundColor: "#fffdf8",
           }}
         >
-          <Text style={{ color: colors.muted }}>Ver mi día completo ›</Text>
-        </Pressable>
+          <Text style={st.tag}>PRÓXIMO PASO</Text>
+          <Text style={st.h3}>{action.cta}</Text>
+          <Text style={st.p}>{action.detail}</Text>
+        </View>
+        <Button
+          disabled={busy}
+          onPress={() => {
+            if (action.kind === "resume-session") open("focus");
+            else if (action.kind === "start-session" && action.slot)
+              open("focus", action.slot);
+            else if (action.kind === "free-study") open("focus");
+            else if (action.kind === "review-plan") open("plan");
+            else if (action.kind === "practice") {
+              const quiz = s.quizzes.find((item) => item.id === action.quizId);
+              if (quiz) open("quiz", quiz);
+              else open("generate");
+            } else if (action.kind === "see-agenda") go("agenda");
+            else plan();
+          }}
+        >
+          {action.cta} →
+        </Button>
+        {action.kind !== "see-agenda" && (
+          <Pressable
+            onPress={() => go("agenda")}
+            accessibilityRole="button"
+            style={{
+              minHeight: 48,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: colors.muted }}>Abrir calendario ›</Text>
+          </Pressable>
+        )}
       </View>
       <View style={{ gap: 10, paddingVertical: 22 }}>
         <Text style={st.h2}>¿Cómo viene tu día?</Text>
@@ -186,6 +181,7 @@ export function NativeHome({ s, busy, open, go, plan, visible = true }: Props) {
   );
 }
 export function NativeCompa({ s, open, go }: Pick<Props, "s" | "open" | "go">) {
+  const activeRoom = roomById(s.companion.room_style);
   return (
     <View style={{ gap: 14 }}>
       <Text style={st.h1}>Tu compa, {s.companion.name}.</Text>
@@ -207,7 +203,9 @@ export function NativeCompa({ s, open, go }: Pick<Props, "s" | "open" | "go">) {
         Personaje, vestuario y habitación
       </Button>
       <Button secondary onPress={() => open("pet")}>
-        {activePet(s) ? `Mi mascota: ${activePet(s)!.name}` : "Elegir mi mascota"}
+        {activePet(s)
+          ? `Mi mascota: ${activePet(s)!.name}`
+          : "Elegir mi mascota"}
       </Button>
       <Button secondary onPress={() => go("memory")}>
         Memoria académica
@@ -218,6 +216,43 @@ export function NativeCompa({ s, open, go }: Pick<Props, "s" | "open" | "go">) {
       <Button secondary onPress={() => open("settings")}>
         Mi cuenta y preferencias
       </Button>
+      <Text style={[st.h2, { marginTop: 16 }]}>Habitaciones personales</Text>
+      <Text style={st.p}>
+        {rooms.length} ambientes completos para tu compa y su mascota.
+      </Text>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ gap: 12 }}
+      >
+        {rooms.map((room) => (
+          <Pressable
+            key={room.id}
+            onPress={() => open("companion")}
+            style={{
+              width: 245,
+              overflow: "hidden",
+              borderRadius: 18,
+              borderWidth: activeRoom.id === room.id ? 2 : 1,
+              borderColor: activeRoom.id === room.id ? "#617a58" : colors.line,
+              backgroundColor: "#fffefa",
+            }}
+          >
+            <Image
+              source={selectionImages[`rooms/${room.id}`]}
+              style={{ width: "100%", aspectRatio: 1.42 }}
+              resizeMode="cover"
+            />
+            <View style={{ padding: 14, gap: 5 }}>
+              <Text style={st.h3}>
+                {room.name}
+                {activeRoom.id === room.id ? " · ACTIVA" : ""}
+              </Text>
+              <Text style={st.p}>{room.description}</Text>
+            </View>
+          </Pressable>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -246,6 +281,16 @@ const hs = StyleSheet.create({
     lineHeight: 20,
   },
   minutes: { padding: 12, borderRadius: 18, backgroundColor: "#dce9ff" },
+  daySnapshot: {
+    gap: 4,
+    paddingHorizontal: 4,
+    paddingBottom: 2,
+  },
+  daySnapshotText: {
+    color: colors.muted,
+    fontSize: 13,
+    lineHeight: 19,
+  },
   activity: {
     flexDirection: "row",
     alignItems: "center",

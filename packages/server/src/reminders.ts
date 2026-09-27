@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
-import { dueReminders, type Snapshot } from "@compa/domain";
+import { ageAt, dueReminders, type Snapshot } from "@compa/domain";
+import { hasFamilyCapability } from "./family-permissions";
 export function createReminderHandler(env: Record<string, string | undefined>) {
   const db = createClient(env.SUPABASE_URL!, env.SUPABASE_SERVICE_ROLE_KEY!, {
     auth: { persistSession: false },
@@ -64,15 +65,21 @@ export function createReminderHandler(env: Record<string, string | undefined>) {
       if (error) throw error;
       for (const row of users ?? []) {
         const s = row.state as Snapshot;
-        const { data: control } = await db
+        if (!s.profile?.birth_date) continue;
+        const { data: control, error: controlError } = await db
           .from("account_controls")
           .select("deleting")
           .eq("user_id", row.user_id)
           .maybeSingle();
+        if (controlError) throw controlError;
         if (control?.deleting) continue;
+        if (ageAt(s.profile.birth_date) < 18) {
+          if (env.MINOR_BETA_APPROVED !== "true") continue;
+          if (!await hasFamilyCapability(db, row.user_id, "service")) continue;
+        }
         for (const draft of dueReminders(s, new Date().toISOString())) {
           const date = draft.date;
-          await db.rpc("append_notification", {
+          const { error: notificationError } = await db.rpc("append_notification", {
             p_user: row.user_id,
             p_notification: {
               id: draft.id + ":" + date,
@@ -82,6 +89,7 @@ export function createReminderHandler(env: Record<string, string | undefined>) {
               created_at: new Date().toISOString(),
             },
           });
+          if (notificationError) throw notificationError;
           const { data: devices, error: deviceError } = await db
             .from("devices")
             .select("token")
@@ -119,7 +127,10 @@ export function createReminderHandler(env: Record<string, string | undefined>) {
                     to: device.token,
                     title: draft.title,
                     body: draft.body,
-                    data: { url: "compavirtual://?view=" + draft.route },
+                    data: {
+                      url: "compavirtual://?view=" + draft.route,
+                      notificationId: draft.id + ":" + date,
+                    },
                     sound: "default",
                     channelId: "study-reminders",
                   }),
@@ -156,6 +167,8 @@ export function createReminderHandler(env: Record<string, string | undefined>) {
         }
       }
       await db.rpc("purge_chat_history");
+      const voiceCleanup = await db.rpc("purge_voice_history");
+      if (voiceCleanup.error) throw voiceCleanup.error;
       return Response.json({ sent, disabled });
     } catch {
       return Response.json({ error: "REMINDER_RUN_FAILED" }, { status: 500 });

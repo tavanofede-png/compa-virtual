@@ -12,6 +12,7 @@ import {
   findRoomRoute,
   clearSegment,
   roomInteractions,
+  roomPetMaps,
 } from "../packages/world3d/src/index";
 const root = resolve("apps/web/public/selection/models");
 const read = async (url: string) => {
@@ -21,10 +22,13 @@ const read = async (url: string) => {
     bytes.byteOffset + bytes.byteLength,
   ) as ArrayBuffer;
 };
-it("routes all six rooms around authored furniture with shoulder clearance", () => {
+it("routes all twelve bedrooms around authored furniture with shoulder clearance", () => {
   for (const { id } of rooms) {
     const map = roomInteractions[id];
-    for (const to of [map.chair.approach, map.bed.approach, ...map.waypoints]) {
+    const destinations = [map.chair.approach, map.bed.approach, ...map.waypoints];
+    if (map.pouf) destinations.push(map.pouf.approach);
+    for (const object of map.objects ?? []) destinations.push(object.approach);
+    for (const to of destinations) {
       const route = findRoomRoute(map.spawn, to, map);
       expect(route, id + ": " + to).not.toBeNull();
       let from = map.spawn;
@@ -35,6 +39,37 @@ it("routes all six rooms around authored furniture with shoulder clearance", () 
     }
     expect(clearSegment([-2, 0.18, -2], [-2, 0.18, 2], map)).toBe(false);
   }
+});
+it("keeps pet actions reachable in the six additional bedrooms", () => {
+  for (const id of ["atico-creativo", "rincon-urbano", "sala-control-gamer", "habitacion-invernadero", "estudio-musical", "rincon-explorador"]) {
+    const room = roomInteractions[id], pet = roomPetMaps[id];
+    expect(pet, id).toBeDefined();
+    for (const to of [pet.home.approach, pet.play.approach, pet.companionNear.approach, ...pet.roam]) {
+      const route = findRoomRoute(pet.spawn, to, room);
+      expect(route, `${id}: mascota hacia ${to}`).not.toBeNull();
+      let from = pet.spawn;
+      for (const point of route!) {
+        expect(clearSegment(from, point, room), id).toBe(true);
+        from = point;
+      }
+    }
+  }
+});
+it("places pet habitat props clear of the actual furniture in additional bedrooms", async () => {
+  const collisions: string[] = [];
+  for (const id of ["atico-creativo", "rincon-urbano", "sala-control-gamer", "habitacion-invernadero", "estudio-musical", "rincon-explorador"]) {
+    const geometry = JSON.parse(await readFile(resolve(root, `${id}-geometry.json`), "utf8")) as {
+      obstacles: { id: string; min: number[]; max: number[] }[];
+    };
+    for (const [prop, halfX, halfZ] of [["bed", .48, .38], ["bowl", .2, .2], ["basket", .25, .25]] as const) {
+      const [x, , z] = roomPetMaps[id].props[prop];
+      const overlaps = geometry.obstacles.filter((item) =>
+        item.min[0] < x + halfX && item.max[0] > x - halfX &&
+        item.min[1] < z + halfZ && item.max[1] > z - halfZ);
+      if (overlaps.length) collisions.push(`${id}: ${prop}: ${overlaps.map((item) => item.id).join(", ")}`);
+    }
+  }
+  expect(collisions).toEqual([]);
 });
 it("loads real clips, honors pause, completes contacts, queues commands, and restores outfits for all eight rigs", async () => {
   for (const { id } of characters) {

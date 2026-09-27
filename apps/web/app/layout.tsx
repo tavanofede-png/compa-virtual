@@ -3,8 +3,12 @@ import "./globals.css";
 import "./selection.css";
 import "./redesign.css";
 export const metadata: Metadata = {
-  title: "Compa Virtual · Un paso a la vez",
+  title: "Kusiy · Un paso a la vez",
   description: "Tu espacio para organizarte, practicar y aprender.",
+  icons: {
+    icon: "/brand/kusiy-logo.png",
+    apple: "/brand/kusiy-logo.png",
+  },
 };
 export default function RootLayout({
   children,

@@ -1,0 +1,24 @@
+{
+  "id": "tech",
+  "source": "packages\\assets\\3d\\source\\personal-spaces\\v1\\tech-master.blend",
+  "colors": {
+    "MAT_OAK": [
+      0.08428843,
+      0.03875146,
+      0.01854155,
+      1.0
+    ],
+    "MAT_OAK_END": [
+      0.10895474,
+      0.05009726,
+      0.0196554,
+      1.0
+    ],
+    "MAT_WOODLIGHT": [
+      0.1416267,
+      0.07020582,
+      0.03140469,
+      1.0
+    ]
+  }
+}

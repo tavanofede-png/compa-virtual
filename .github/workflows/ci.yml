@@ -1,0 +1,59 @@
+name: Verificación
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  product:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Reject public OpenAI keys
+        shell: bash
+        run: |
+          if rg --hidden --glob '!node_modules/**' --glob '!.git/**' '^(NEXT_PUBLIC|EXPO_PUBLIC)_OPENAI_API_KEY='; then
+            echo 'OpenAI keys must remain server-only.'
+            exit 1
+          fi
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm assets:speech-check
+      - run: pnpm build
+      - run: pnpm release:preflight
+
+  native-export:
+    if: github.event_name == 'workflow_dispatch'
+    needs: product
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @compa/mobile export
