@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { verifyAndroidConfig } from "./verify-android-config.mjs";
 
 const mobileDir = fileURLToPath(new URL("../apps/mobile/", import.meta.url));
 const windows = process.platform === "win32";
@@ -20,10 +21,20 @@ function eas(...args) {
   }
 }
 
-console.log("Compa Virtual: APK de prueba conectado al backend.");
+const local = await verifyAndroidConfig();
+if (!local.ok) {
+  for (const error of local.errors) console.error(error);
+  process.exit(1);
+}
+console.log("Kusiy: APK de prueba conectado al backend.");
 console.log("Inicia sesion en Expo en el navegador. No compartas tu contrasena por chat.");
 eas("login", "--browser");
 eas("init");
+const linked = await verifyAndroidConfig({ requireProjectId: true });
+if (!linked.ok) {
+  for (const error of linked.errors) console.error(error);
+  process.exit(1);
+}
 console.log("Si EAS pide una clave de firma Android nueva, acepta que la genere y la guarde.");
 eas("build", "--platform", "android", "--profile", "preview", "--wait");
 console.log("Abri el enlace de instalacion de EAS en Android y descarga el APK.");

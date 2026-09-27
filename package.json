@@ -31,7 +31,8 @@
     "assets:bedroom-verify": "node scripts/verify-bedroom-runtime.mjs",
     "ai:check": "node scripts/check-ai-config.mjs",
     "release:preflight": "node scripts/release-preflight.mjs",
-    "release:preflight:remote": "node scripts/release-preflight.mjs --remote"
+    "release:preflight:remote": "node scripts/release-preflight.mjs --remote",
+    "android:preflight": "node scripts/verify-android-config.mjs"
   },
   "devDependencies": {
     "typescript": "5.9.3",

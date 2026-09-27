@@ -6,16 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   return {
     ...config,
     name: config.name ?? "Kusiy",
-    slug: config.slug ?? "compa-virtual",
-    ios: {
-      ...config.ios,
-      bundleIdentifier:
-        process.env.IOS_BUNDLE_IDENTIFIER || config.ios?.bundleIdentifier,
-    },
-    android: {
-      ...config.android,
-      package: process.env.ANDROID_PACKAGE || config.android?.package,
-    },
+    slug: config.slug ?? "kusiy",
     extra: {
       ...config.extra,
       ...(projectId ? { eas: { ...config.extra?.eas, projectId } } : {}),

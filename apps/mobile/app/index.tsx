@@ -230,7 +230,7 @@ export default function App() {
   useEffect(() => {
     if (!backend) return;
     const handle = async (url: string) => {
-      if (!url.startsWith("compavirtual://")) return;
+      if (!url.startsWith("compavirtual://") && !url.startsWith("kusiy://")) return;
       const parsed = new URL(url),
         code = parsed.searchParams.get("code");
       if (code) {
@@ -340,7 +340,7 @@ export default function App() {
       const notificationId = payload?.notificationId;
       if (
         typeof url !== "string" ||
-        !url.startsWith("compavirtual://?view=") ||
+        (!url.startsWith("compavirtual://?view=") && !url.startsWith("kusiy://?view=")) ||
         typeof notificationId !== "string"
       )
         return;

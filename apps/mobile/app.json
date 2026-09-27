@@ -1,20 +1,21 @@
 {
   "expo": {
     "name": "Kusiy",
-    "slug": "compa-virtual",
-    "scheme": "compavirtual",
+    "slug": "kusiy",
+    "scheme": ["kusiy", "compavirtual"],
     "version": "0.1.0",
+    "runtimeVersion": { "policy": "appVersion" },
     "icon": "./assets/kusiy-logo.png",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "ios": {
       "icon": "./assets/kusiy-logo.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.compavirtual.estudio",
+      "bundleIdentifier": "com.kusiy.estudio",
       "infoPlist": { "ITSAppUsesNonExemptEncryption": false }
     },
     "android": {
-      "package": "com.compavirtual.estudio",
+      "package": "com.kusiy.estudio",
       "adaptiveIcon": {
         "foregroundImage": "./assets/kusiy-logo.png",
         "backgroundColor": "#fffaf5"
