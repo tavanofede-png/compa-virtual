@@ -2,9 +2,14 @@
   "expo": {
     "name": "Kusiy",
     "slug": "kusiy",
-    "scheme": ["kusiy", "compavirtual"],
+    "scheme": [
+      "kusiy",
+      "compavirtual"
+    ],
     "version": "0.1.0",
-    "runtimeVersion": { "policy": "appVersion" },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "icon": "./assets/kusiy-logo.png",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -12,7 +17,9 @@
       "icon": "./assets/kusiy-logo.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.kusiy.estudio",
-      "infoPlist": { "ITSAppUsesNonExemptEncryption": false }
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.kusiy.estudio",
@@ -20,21 +27,46 @@
         "foregroundImage": "./assets/kusiy-logo.png",
         "backgroundColor": "#fffaf5"
       },
-      "permissions": ["POST_NOTIFICATIONS"]
+      "permissions": [
+        "POST_NOTIFICATIONS"
+      ],
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ]
     },
-    "web": { "bundler": "metro", "output": "static" },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
     "plugins": [
       "expo-router",
       "expo-secure-store",
       "expo-sqlite",
-      ["expo-audio", {
-        "microphonePermission": "Kusiy usa el micrófono solamente durante tu conversación con el compañero.",
-        "recordAudioAndroid": true,
-        "enableBackgroundRecording": false,
-        "enableBackgroundPlayback": false
-      }],
-      ["expo-notifications", { "defaultChannel": "study-reminders" }]
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Kusiy usa el micrófono solamente durante tu conversación con el compañero.",
+          "recordAudioAndroid": true,
+          "enableBackgroundRecording": false,
+          "enableBackgroundPlayback": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "defaultChannel": "study-reminders"
+        }
+      ]
     ],
-    "experiments": { "typedRoutes": true }
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "da66e377-a1a6-4d4f-845f-85fbc7cceba6"
+      }
+    },
+    "owner": "fedetavano"
   }
 }

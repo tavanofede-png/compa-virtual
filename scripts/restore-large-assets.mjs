@@ -38,11 +38,11 @@ for (const asset of manifest.files) {
     }
   }
   const packed = await readFile(archive).catch((error) => {
-    if (error.code === 'ENOENT' && process.env.VERCEL) return null;
+    if (error.code === 'ENOENT' && (process.env.VERCEL || process.env.EAS_BUILD)) return null;
     throw error;
   });
   if (!packed) {
-    // Vercel does not need editable personal-space masters to build the web app.
+    // Web and Android cloud builds do not need editable personal-space masters.
     console.log(`Skipped deployment-only master: ${asset.path}`);
     continue;
   }

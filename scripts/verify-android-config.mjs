@@ -26,6 +26,8 @@ export async function verifyAndroidConfig({ requireProjectId = false } = {}) {
       errors.push("El proyecto Expo debe usar el slug kusiy.");
     if (config.android?.package !== "com.kusiy.estudio")
       errors.push("Android debe usar com.kusiy.estudio antes del primer build.");
+    if (!config.android?.blockedPermissions?.includes("android.permission.SYSTEM_ALERT_WINDOW"))
+      errors.push("El APK no debe solicitar permiso de superposición de pantalla.");
     const schemes = Array.isArray(config.scheme) ? config.scheme : [config.scheme];
     if (!schemes.includes("kusiy") || !schemes.includes("compavirtual"))
       errors.push("Deben funcionar los enlaces kusiy y compavirtual.");

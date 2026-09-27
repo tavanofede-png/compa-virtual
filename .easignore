@@ -1,0 +1,55 @@
+# Keep the root .gitignore rules: EAS uses this file instead of .gitignore.
+.git/
+node_modules/
+.next/
+out/
+dist/
+dist-android/
+dist-ios/
+.expo/
+.env
+.env.*
+!.env.example
+!.env.test.example
+*.tsbuildinfo
+coverage/
+.supabase/
+supabase/.temp/
+*.log
+apps/mobile/android/
+apps/mobile/ios/
+.DS_Store
+__pycache__/
+*.py[cod]
+.vercel
+.vercel-npm-cache/
+work/collaboration-mobile-export/
+work/collaboration-ios-export/
+work/pw-daemon/
+work/study-runtime-candidates/
+work/npm-cache/
+work/restore-fixture-manual/
+*.blend1
+*.blend2
+
+# Mobile uses the shared source packages and bundled avatar/wardrobe models.
+# Large personal-space masters, renders and web-only scene bytes are fetched
+# by the mobile scene cache rather than included in the installable APK.
+/design/
+/work/
+/renders/
+/deliverables/
+/supabase/
+/packages/assets/3d/
+/apps/web/app/
+/apps/web/src/
+/apps/worker/src/
+/apps/web/public/selection/models/*-room.glb
+/apps/web/public/selection/study-spaces/*.glb
+/apps/web/public/selection/shared-spaces/*.glb
+/docs/
+/tests/
+/tools/
+/.github/
+/.openai/
+/.playwright-cli/

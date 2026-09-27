@@ -3,8 +3,16 @@ import { fileURLToPath } from "node:url";
 import { verifyAndroidConfig } from "./verify-android-config.mjs";
 
 const mobileDir = fileURLToPath(new URL("../apps/mobile/", import.meta.url));
+const repoDir = fileURLToPath(new URL("../", import.meta.url));
 const windows = process.platform === "win32";
-const env = { ...process.env, EXPO_NO_TELEMETRY: "1" };
+// EAS_NO_VCS avoids cloning the large Git history before applying .easignore.
+// The archived files are defined at the monorepo root and verified separately.
+const env = {
+  ...process.env,
+  EXPO_NO_TELEMETRY: "1",
+  EAS_NO_VCS: "1",
+  EAS_PROJECT_ROOT: repoDir,
+};
 if (windows && !env.SHELL) env.SHELL = "powershell.exe";
 
 function eas(...args) {
@@ -21,15 +29,26 @@ function eas(...args) {
   }
 }
 
+function isLoggedIn() {
+  const result = spawnSync(
+    windows ? "npx.cmd" : "npx",
+    ["--yes", "eas-cli@23.2.0", "whoami"],
+    { cwd: mobileDir, env, stdio: "ignore", shell: windows },
+  );
+  return !result.error && result.status === 0;
+}
+
 const local = await verifyAndroidConfig();
 if (!local.ok) {
   for (const error of local.errors) console.error(error);
   process.exit(1);
 }
 console.log("Kusiy: APK de prueba conectado al backend.");
-console.log("Inicia sesion en Expo en el navegador. No compartas tu contrasena por chat.");
-eas("login", "--browser");
-eas("init");
+if (!isLoggedIn()) {
+  console.log("Inicia sesion en Expo en el navegador. No compartas tu contrasena por chat.");
+  eas("login", "--browser");
+}
+if (!local.projectLinked) eas("init");
 const linked = await verifyAndroidConfig({ requireProjectId: true });
 if (!linked.ok) {
   for (const error of linked.errors) console.error(error);
