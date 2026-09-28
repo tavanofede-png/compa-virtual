@@ -1,6 +1,8 @@
 # Android: APK interno y preparación de Play
 
-Estado al 27/09/2026: la app resuelve `com.kusiy.estudio` para Android e iOS y acepta enlaces `kusiy://` y `compavirtual://`. El enlace antiguo sigue usándose para las redirecciones de Auth y avisos ya emitidos. El proyecto EAS está vinculado a `@fedetavano/kusiy`, ID `da66e377-a1a6-4d4f-845f-85fbc7cceba6`, y su clave Android fue generada y almacenada por EAS. El build interno [ac99f47a-935c-45dc-b62f-05e9dd5649a0](https://expo.dev/accounts/fedetavano/projects/kusiy/builds/ac99f47a-935c-45dc-b62f-05e9dd5649a0) está compilando. No hay Android SDK/JDK configurado en esta computadora para una compilación nativa local.
+Estado al 27/09/2026: el primer APK interno terminó en EAS como `FINISHED`: [instalar Kusiy 0.1.0, build 1](https://expo.dev/accounts/fedetavano/projects/kusiy/builds/ac99f47a-935c-45dc-b62f-05e9dd5649a0). El proyecto está vinculado a `@fedetavano/kusiy`, ID `da66e377-a1a6-4d4f-845f-85fbc7cceba6`, y su clave Android fue generada y almacenada por EAS. La copia local está en `C:/Users/tavan/Documents/Codex/KusiyBuilds/kusiy-0.1.0-preview-1.apk`. No se instaló en un teléfono ni se publicó en Play.
+
+La inspección del artefacto confirma `com.kusiy.estudio`, versión `0.1.0`, `versionCode` 1, mínimo API 24 y target API 36. Los enlaces `kusiy://` y `compavirtual://` siguen presentes; el enlace antiguo continúa en las redirecciones de Auth y avisos ya emitidos. El APK pesa 181.433.743 bytes (aproximadamente 173 MiB), contiene las cuatro arquitecturas Android, no es depurable y no declara `SYSTEM_ALERT_WINDOW`. Se detectó firma v2 y se extrajo su certificado; esto no sustituye una comprobación criptográfica con `apksigner` ni las pruebas físicas. El recibo [android-preview-0.1.0.json](./releases/android-preview-0.1.0.json) registra los hashes.
 
 ## Comprobaciones completadas
 
@@ -10,7 +12,7 @@ Estado al 27/09/2026: la app resuelve `com.kusiy.estudio` para Android e iOS y a
 - `expo prebuild --platform android --no-install --clean`: generó el proyecto nativo sin error. `build.gradle` contiene `applicationId com.kusiy.estudio` y el manifiesto registra ambos esquemas y los permisos de micrófono/notificaciones. El permiso de superposición `SYSTEM_ALERT_WINDOW` queda marcado para eliminarse del manifiesto final. El directorio generado está ignorado; EAS volverá a generarlo desde la configuración versionada.
 - El gate de configuración también corre en CI para impedir que una variable local antigua vuelva a cambiar el paquete de Android.
 - `.easignore` conserva fuentes, modelos de avatar/vestuario, metadatos de atlas y manifiestos móviles. Excluye renders, maestros y bytes de escenas descargadas por la caché. El asistente usa `EAS_NO_VCS` con raíz explícita del monorepo para evitar clonar el historial Git de más de 1 GB. El segundo paquete se comprimió a 69,9 MB.
-- El primer build remoto falló por excluir los metadatos de atlas compartidos; el paquete corregido superó el bundle JavaScript y llegó a Gradle. Expo Doctor señaló 19 dependencias desfasadas respecto de las versiones recomendadas; hay que reconciliarlas antes de la beta.
+- El primer build remoto falló por excluir los metadatos de atlas compartidos; el paquete corregido completó JavaScript, Prebuild, Gradle y el artefacto de release en EAS. Expo Doctor señaló 19 dependencias desfasadas respecto de las versiones recomendadas; hay que reconciliarlas antes de la beta.
 
 ## Primer APK interno
 
