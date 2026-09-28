@@ -32,7 +32,8 @@
     "ai:check": "node scripts/check-ai-config.mjs",
     "release:preflight": "node scripts/release-preflight.mjs",
     "release:preflight:remote": "node scripts/release-preflight.mjs --remote",
-    "android:preflight": "node scripts/verify-android-config.mjs"
+    "android:preflight": "node scripts/verify-android-config.mjs",
+    "android:verify-artifact": "node scripts/verify-android-apk.mjs"
   },
   "devDependencies": {
     "typescript": "5.9.3",

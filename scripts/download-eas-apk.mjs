@@ -53,4 +53,6 @@ try {
   await rm(partial, { force: true });
   throw error;
 }
-console.log(JSON.stringify({ file: output, bytes, sha256: hash.digest("hex") }, null, 2));
+console.log(
+  JSON.stringify({ file: output, bytes, sha256: hash.digest("hex") }, null, 2),
+);

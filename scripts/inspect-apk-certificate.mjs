@@ -45,7 +45,7 @@ try {
     throw Error("El bloque de firma tiene longitudes distintas.");
 
   let v2;
-  for (let cursor = 8; cursor < block.length - 24; ) {
+  for (let cursor = 8; cursor < block.length - 24;) {
     if (cursor + 12 > block.length - 24)
       throw Error("Par de firmas APK truncado.");
     const length = Number(block.readBigUInt64LE(cursor));
@@ -70,7 +70,9 @@ try {
         file: path,
         bytes: size,
         signatureV2Detected: true,
-        certificateSha256: createHash("sha256").update(certificate).digest("hex"),
+        certificateSha256: createHash("sha256")
+          .update(certificate)
+          .digest("hex"),
         certificateSubject: x509.subject,
         signatureCryptographicallyVerified: false,
       },
