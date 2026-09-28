@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, Alert, Image, ScrollView, type ImageSourcePropType } from "react-native";
+import {
+  View,
+  Alert,
+  ScrollView,
+  type ImageSourcePropType,
+} from "react-native";
+import { PreviewImage } from "./PreviewImage";
 import type { CollaborationRepository } from "@compa/client";
 import {
   sharedSpaces,
@@ -288,11 +294,36 @@ export function NativeTogether({
         <View style={{ gap: 10 }}>
           <Text style={st.tag}>SEIS LUGARES PARA ENCONTRARSE</Text>
           <Text style={st.h2}>Salas compartidas.</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: 12 }}
+          >
             {sharedSpaces.map((space) => (
-              <View key={space.id} style={{ width: 250, overflow: "hidden", borderRadius: 18, borderWidth: 1, borderColor: "#e8e1db", backgroundColor: "#fffdfa" }}>
-                <Image source={sharedPreviews[space.id]} style={{ width: "100%", aspectRatio: 1.45 }} resizeMode="cover" />
-                <View style={{ padding: 14, gap: 5, borderBottomWidth: 4, borderBottomColor: space.color }}>
+              <View
+                key={space.id}
+                style={{
+                  width: 250,
+                  overflow: "hidden",
+                  borderRadius: 18,
+                  borderWidth: 1,
+                  borderColor: "#e8e1db",
+                  backgroundColor: "#fffdfa",
+                }}
+              >
+                <PreviewImage
+                  source={sharedPreviews[space.id]}
+                  aspectRatio={1.45}
+                  accessibilityLabel={space.name}
+                />
+                <View
+                  style={{
+                    padding: 14,
+                    gap: 5,
+                    borderBottomWidth: 4,
+                    borderBottomColor: space.color,
+                  }}
+                >
                   <Text style={st.h3}>{space.name}</Text>
                   <Text style={st.p}>{space.description}</Text>
                 </View>
@@ -400,7 +431,14 @@ export function NativeTogether({
           )}
           {detail ? (
             <>
-              {repo && <NativeSharedRoom repo={repo} initial={detail} userId={data.user_id} onDetail={setDetail}/>}
+              {repo && (
+                <NativeSharedRoom
+                  repo={repo}
+                  initial={detail}
+                  userId={data.user_id}
+                  onDetail={setDetail}
+                />
+              )}
               <Card>
                 <Text style={st.tag}>
                   {sessionStateLabel(detail.session.status)}
@@ -635,14 +673,21 @@ export function NativeTogether({
                       disabled={busy}
                       onPress={() =>
                         void run(async () => {
-                          if (s.joinable) await send({ action: "session.join", session_id: s.id, revision: s.revision });
+                          if (s.joinable)
+                            await send({
+                              action: "session.join",
+                              session_id: s.id,
+                              revision: s.revision,
+                            });
                           else setDetail(await repo.session(s.id));
                           setEditor(null);
                           setInviteTarget(null);
                         })
                       }
                     >
-                      {s.joinable ? "Unirme a la sesión del grupo" : "Ver sesión"}
+                      {s.joinable
+                        ? "Unirme a la sesión del grupo"
+                        : "Ver sesión"}
                     </Button>
                   </Card>
                 ))
@@ -657,22 +702,43 @@ export function NativeTogether({
               ) : (
                 <Text style={st.p}>
                   Un grupo guarda a tu equipo para próximos encuentros.
-                  </Text>
-                )}
+                </Text>
+              )}
               <Text style={st.h2}>Tus compañeros</Text>
               {friends.length ? (
                 <Card>
                   {friends.map((friend) => (
-                    <View key={friend.user_id} style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 10 }}>
-                      <View style={{ width: 42, height: 42, borderRadius: 21, alignItems: "center", justifyContent: "center", backgroundColor: "#dfe9da" }}>
-                        <Text style={{ fontWeight: "700", color: "#385347" }}>{friend.nickname.slice(0, 1).toUpperCase()}</Text>
+                    <View
+                      key={friend.user_id}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 12,
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          width: 42,
+                          height: 42,
+                          borderRadius: 21,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          backgroundColor: "#dfe9da",
+                        }}
+                      >
+                        <Text style={{ fontWeight: "700", color: "#385347" }}>
+                          {friend.nickname.slice(0, 1).toUpperCase()}
+                        </Text>
                       </View>
                       <Text style={{ flex: 1 }}>{friend.nickname}</Text>
                     </View>
                   ))}
                 </Card>
               ) : (
-                <Text style={st.p}>Las personas de tus grupos van a aparecer acá.</Text>
+                <Text style={st.p}>
+                  Las personas de tus grupos van a aparecer acá.
+                </Text>
               )}
             </>
           )}
@@ -783,9 +849,10 @@ function SessionForm({
         objective,
         session_type: mode as "silent" | "review" | "project",
         space_template_id: space as (typeof sharedSpaces)[number]["id"],
-        scheduled_start_at: !session && startNow
-          ? new Date().toISOString()
-          : sessionLocalStart(date, time),
+        scheduled_start_at:
+          !session && startNow
+            ? new Date().toISOString()
+            : sessionLocalStart(date, time),
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         planned_duration: Number(duration),
         meeting_url: null,
@@ -870,7 +937,10 @@ function SessionForm({
         </>
       )}
       {startNow && !session && (
-        <Text style={st.p}>La sala se abre al crearla. Podés invitar a tus compañeros y empezar juntos cuando entren.</Text>
+        <Text style={st.p}>
+          La sala se abre al crearla. Podés invitar a tus compañeros y empezar
+          juntos cuando entren.
+        </Text>
       )}
       <Field
         label="Duración en minutos (15 a 180)"
@@ -894,7 +964,11 @@ function SessionForm({
       />
       {!!error && <Text accessibilityRole="alert">{error}</Text>}
       <Button disabled={busy} onPress={save}>
-        {session ? "Guardar cambios" : startNow ? "Abrir sala ahora" : "Programar sesión privada"}
+        {session
+          ? "Guardar cambios"
+          : startNow
+            ? "Abrir sala ahora"
+            : "Programar sesión privada"}
       </Button>
       <Button secondary disabled={busy} onPress={close}>
         Cerrar

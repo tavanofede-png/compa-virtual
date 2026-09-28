@@ -10,11 +10,7 @@ import {
 import { disposeModel } from "./primitives";
 import { createCompanionController, roomInteractions } from "./motion";
 import { createSpeechAnimator } from "./speech";
-import {
-  createPetController,
-  roomPetMaps,
-  type PetSceneSetup,
-} from "./pet";
+import { createPetController, roomPetMaps, type PetSceneSetup } from "./pet";
 
 export type ReadModel = (url: string) => Promise<ArrayBuffer>;
 const buffers = new Map<string, ArrayBuffer>();
@@ -59,7 +55,9 @@ const fetchModel: ReadModel = async (url) => {
 };
 async function load(name: string, base: string, read: ReadModel) {
   const revision = name.startsWith("pet-") ? "?v=20260918a" : "";
-  const data = await read(base.replace(/\/$/, "") + "/" + name + ".glb" + revision);
+  const data = await read(
+    base.replace(/\/$/, "") + "/" + name + ".glb" + revision,
+  );
   if (
     data.byteLength < 12 ||
     new DataView(data).getUint32(0, true) !== 0x46546c67
@@ -158,6 +156,19 @@ export async function createPremiumWorld(
   };
   try {
     active();
+    // Decode the largest asset before allocating the avatar, outfit and pet.
+    // This keeps their live memory out of the room parser's temporary peak.
+    const room =
+      kind === "room"
+        ? await load(roomById(companion.room_style).id + "-room", base, read)
+        : undefined;
+    if (room) {
+      scene.add(room);
+      active();
+      // Let native JS release the source GLB and parser temporaries before
+      // the remaining models are decoded; the scene geometry stays intact.
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    }
     const avatar = await load(character.id + "-body", base, read);
     scene.add(avatar);
     avatar.name = "teen-avatar";
@@ -166,8 +177,7 @@ export async function createPremiumWorld(
     active();
     // Load sequentially to bound decoded memory on phones. Cached bytes make swaps quick.
     for (const id of ids) {
-      if (!wardrobeItem(id))
-        throw Error("Prenda desconocida.");
+      if (!wardrobeItem(id)) throw Error("Prenda desconocida.");
       const garment = await load(id, base, read);
       try {
         active();
@@ -185,12 +195,7 @@ export async function createPremiumWorld(
     let pet: T.Group | undefined;
     let petController: ReturnType<typeof createPetController> | undefined;
     if (kind === "room") {
-      const room = await load(
-        roomById(companion.room_style).id + "-room",
-        base,
-        read,
-      );
-      scene.add(room);
+      if (!room) throw Error("No se pudo preparar la habitación.");
       const map = roomInteractions[roomById(companion.room_style).id];
       avatar.position.fromArray(map.spawn);
       avatar.rotation.y = -0.22;
@@ -205,7 +210,9 @@ export async function createPremiumWorld(
       );
       disposeModel(library);
       const petMap = roomPetMaps[roomById(companion.room_style).id];
-      const selectedPet = petSetup ? petDefinition(petSetup.definitionId) : undefined;
+      const selectedPet = petSetup
+        ? petDefinition(petSetup.definitionId)
+        : undefined;
       if (
         petSetup &&
         selectedPet?.id === petSetup.definitionId &&
@@ -251,7 +258,7 @@ export async function createPremiumWorld(
         );
         petHit.name = "interaction-pet";
         petHit.userData.roomAction = "pet";
-        petHit.position.set(0, .48, 0);
+        petHit.position.set(0, 0.48, 0);
         pet.add(petHit);
       }
       for (const [name, point, size] of [
@@ -266,11 +273,19 @@ export async function createPremiumWorld(
         ],
         [
           "bed",
-          [map.bed.position[0], map.bed.height - 0.16, map.bed.position[2] - 0.7],
+          [
+            map.bed.position[0],
+            map.bed.height - 0.16,
+            map.bed.position[2] - 0.7,
+          ],
           [1.48, 0.5, 2.3],
         ],
         ...(map.pouf ? [["pouf", map.pouf.position, [0.9, 0.6, 0.9]]] : []),
-        ...(map.objects ?? []).map(o => ["object:" + o.id, o.position, [0.5, 0.6, 0.5]]),
+        ...(map.objects ?? []).map((o) => [
+          "object:" + o.id,
+          o.position,
+          [0.5, 0.6, 0.5],
+        ]),
       ] as [string, number[], number[]][]) {
         const hit = new T.Mesh(
           new T.BoxGeometry(size[0], size[1], size[2]),
@@ -286,9 +301,24 @@ export async function createPremiumWorld(
         hit.userData.roomAction = name;
         room.add(hit);
       }
-      const floorHit = new T.Mesh(new T.PlaneGeometry(map.bounds[2] - map.bounds[0], map.bounds[3] - map.bounds[1]), new T.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false, colorWrite: false }));
+      const floorHit = new T.Mesh(
+        new T.PlaneGeometry(
+          map.bounds[2] - map.bounds[0],
+          map.bounds[3] - map.bounds[1],
+        ),
+        new T.MeshBasicMaterial({
+          transparent: true,
+          opacity: 0,
+          depthWrite: false,
+          colorWrite: false,
+        }),
+      );
       floorHit.rotation.x = -Math.PI / 2;
-      floorHit.position.set((map.bounds[0] + map.bounds[2]) / 2, map.floor + .025, (map.bounds[1] + map.bounds[3]) / 2);
+      floorHit.position.set(
+        (map.bounds[0] + map.bounds[2]) / 2,
+        map.floor + 0.025,
+        (map.bounds[1] + map.bounds[3]) / 2,
+      );
       floorHit.userData.roomAction = "floor";
       scene.add(floorHit);
     } else {
@@ -334,7 +364,16 @@ export async function createPremiumWorld(
     );
     camera.lookAt(target);
     scene.updateMatrixWorld(true);
-    return { scene, camera, target, avatar, controller, speech, pet, petController };
+    return {
+      scene,
+      camera,
+      target,
+      avatar,
+      controller,
+      speech,
+      pet,
+      petController,
+    };
   } catch (error) {
     disposeModel(scene);
     throw error;

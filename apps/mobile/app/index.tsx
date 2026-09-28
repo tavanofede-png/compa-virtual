@@ -158,6 +158,10 @@ export default function App() {
   const [loaded, setLoaded] = useState(false),
     [authReady, setAuthReady] = useState(!backend);
   const account = useRef<string | undefined>(undefined);
+  const pageScroll = useRef<ScrollView>(null);
+  useEffect(() => {
+    pageScroll.current?.scrollTo({ y: 0, animated: false });
+  }, [view]);
   const latestEnvelope = useRef(env);
   latestEnvelope.current = env;
   useEffect(() => {
@@ -230,7 +234,8 @@ export default function App() {
   useEffect(() => {
     if (!backend) return;
     const handle = async (url: string) => {
-      if (!url.startsWith("compavirtual://") && !url.startsWith("kusiy://")) return;
+      if (!url.startsWith("compavirtual://") && !url.startsWith("kusiy://"))
+        return;
       const parsed = new URL(url),
         code = parsed.searchParams.get("code");
       if (code) {
@@ -340,7 +345,8 @@ export default function App() {
       const notificationId = payload?.notificationId;
       if (
         typeof url !== "string" ||
-        (!url.startsWith("compavirtual://?view=") && !url.startsWith("kusiy://?view=")) ||
+        (!url.startsWith("compavirtual://?view=") &&
+          !url.startsWith("kusiy://?view=")) ||
         typeof notificationId !== "string"
       )
         return;
@@ -2473,6 +2479,7 @@ export default function App() {
         </Text>
       )}
       <ScrollView
+        ref={pageScroll}
         contentContainerStyle={{ padding: 20, paddingBottom: 35 }}
         keyboardShouldPersistTaps="handled"
       >
@@ -2795,17 +2802,39 @@ export default function App() {
                     secondary
                     onPress={() =>
                       run(async () => {
-                        if (!repo) throw Error("Ingresá para abrir este aviso.");
-                        const latest = repo.mode === "live" ? await repo.load() : env;
-                        if (latest.offline) throw Error("Conectate para comprobar si este aviso sigue vigente.");
-                        const launch = resolveNotificationLaunch(latest.state, n.id, n.route, new Date().toISOString());
-                        if (!launch) throw Error("Este aviso ya no está vigente. Revisá tu agenda.");
-                        if (launch.target === "together" && !(await repo.collaboration?.overview())?.enabled)
+                        if (!repo)
+                          throw Error("Ingresá para abrir este aviso.");
+                        const latest =
+                          repo.mode === "live" ? await repo.load() : env;
+                        if (latest.offline)
+                          throw Error(
+                            "Conectate para comprobar si este aviso sigue vigente.",
+                          );
+                        const launch = resolveNotificationLaunch(
+                          latest.state,
+                          n.id,
+                          n.route,
+                          new Date().toISOString(),
+                        );
+                        if (!launch)
+                          throw Error(
+                            "Este aviso ya no está vigente. Revisá tu agenda.",
+                          );
+                        if (
+                          launch.target === "together" &&
+                          !(await repo.collaboration?.overview())?.enabled
+                        )
                           throw Error("El encuentro ya no está disponible.");
-                        const updated = await repo.command({ type: "notification.read", payload: { id: n.id } }, latest.version);
+                        const updated = await repo.command(
+                          { type: "notification.read", payload: { id: n.id } },
+                          latest.version,
+                        );
                         setEnv(updated);
                         setView(launch.target);
-                        if (launch.focus) { setSelected(launch.slot); setModal("focus"); }
+                        if (launch.focus) {
+                          setSelected(launch.slot);
+                          setModal("focus");
+                        }
                       })
                     }
                   >

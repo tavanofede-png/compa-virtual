@@ -25,7 +25,11 @@ const read = async (url: string) => {
 it("routes all twelve bedrooms around authored furniture with shoulder clearance", () => {
   for (const { id } of rooms) {
     const map = roomInteractions[id];
-    const destinations = [map.chair.approach, map.bed.approach, ...map.waypoints];
+    const destinations = [
+      map.chair.approach,
+      map.bed.approach,
+      ...map.waypoints,
+    ];
     if (map.pouf) destinations.push(map.pouf.approach);
     for (const object of map.objects ?? []) destinations.push(object.approach);
     for (const to of destinations) {
@@ -41,10 +45,23 @@ it("routes all twelve bedrooms around authored furniture with shoulder clearance
   }
 });
 it("keeps pet actions reachable in the six additional bedrooms", () => {
-  for (const id of ["atico-creativo", "rincon-urbano", "sala-control-gamer", "habitacion-invernadero", "estudio-musical", "rincon-explorador"]) {
-    const room = roomInteractions[id], pet = roomPetMaps[id];
+  for (const id of [
+    "atico-creativo",
+    "rincon-urbano",
+    "sala-control-gamer",
+    "habitacion-invernadero",
+    "estudio-musical",
+    "rincon-explorador",
+  ]) {
+    const room = roomInteractions[id],
+      pet = roomPetMaps[id];
     expect(pet, id).toBeDefined();
-    for (const to of [pet.home.approach, pet.play.approach, pet.companionNear.approach, ...pet.roam]) {
+    for (const to of [
+      pet.home.approach,
+      pet.play.approach,
+      pet.companionNear.approach,
+      ...pet.roam,
+    ]) {
       const route = findRoomRoute(pet.spawn, to, room);
       expect(route, `${id}: mascota hacia ${to}`).not.toBeNull();
       let from = pet.spawn;
@@ -57,16 +74,36 @@ it("keeps pet actions reachable in the six additional bedrooms", () => {
 });
 it("places pet habitat props clear of the actual furniture in additional bedrooms", async () => {
   const collisions: string[] = [];
-  for (const id of ["atico-creativo", "rincon-urbano", "sala-control-gamer", "habitacion-invernadero", "estudio-musical", "rincon-explorador"]) {
-    const geometry = JSON.parse(await readFile(resolve(root, `${id}-geometry.json`), "utf8")) as {
+  for (const id of [
+    "atico-creativo",
+    "rincon-urbano",
+    "sala-control-gamer",
+    "habitacion-invernadero",
+    "estudio-musical",
+    "rincon-explorador",
+  ]) {
+    const geometry = JSON.parse(
+      await readFile(resolve(root, `${id}-geometry.json`), "utf8"),
+    ) as {
       obstacles: { id: string; min: number[]; max: number[] }[];
     };
-    for (const [prop, halfX, halfZ] of [["bed", .48, .38], ["bowl", .2, .2], ["basket", .25, .25]] as const) {
+    for (const [prop, halfX, halfZ] of [
+      ["bed", 0.48, 0.38],
+      ["bowl", 0.2, 0.2],
+      ["basket", 0.25, 0.25],
+    ] as const) {
       const [x, , z] = roomPetMaps[id].props[prop];
-      const overlaps = geometry.obstacles.filter((item) =>
-        item.min[0] < x + halfX && item.max[0] > x - halfX &&
-        item.min[1] < z + halfZ && item.max[1] > z - halfZ);
-      if (overlaps.length) collisions.push(`${id}: ${prop}: ${overlaps.map((item) => item.id).join(", ")}`);
+      const overlaps = geometry.obstacles.filter(
+        (item) =>
+          item.min[0] < x + halfX &&
+          item.max[0] > x - halfX &&
+          item.min[1] < z + halfZ &&
+          item.max[1] > z - halfZ,
+      );
+      if (overlaps.length)
+        collisions.push(
+          `${id}: ${prop}: ${overlaps.map((item) => item.id).join(", ")}`,
+        );
     }
   }
   expect(collisions).toEqual([]);
@@ -75,8 +112,18 @@ it("loads real clips, honors pause, completes contacts, queues commands, and res
   for (const { id } of characters) {
     const companion = selectCharacter(id),
       before = JSON.stringify(companion);
-    const world = await createPremiumWorld(companion, "room", root, read),
+    const assetOrder: string[] = [];
+    const world = await createPremiumWorld(
+        companion,
+        "room",
+        root,
+        async (url) => {
+          assetOrder.push(url);
+          return read(url);
+        },
+      ),
       c = world.controller!;
+    expect(assetOrder[0]).toContain(`${companion.room_style}-room.glb`);
     const advance = (seconds: number) => {
       for (let i = 0; i < seconds * 30; i++) c.update(1 / 30);
     };

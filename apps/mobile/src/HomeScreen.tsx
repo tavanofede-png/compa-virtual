@@ -1,4 +1,5 @@
-import { View, Pressable, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Pressable, StyleSheet, ScrollView } from "react-native";
+import { PreviewImage } from "./PreviewImage";
 import Svg, { Path, Circle, Rect } from "react-native-svg";
 import {
   homeSummary,
@@ -115,7 +116,10 @@ export function NativeHome({ s, busy, open, go, plan, visible = true }: Props) {
             </Text>
           </View>
         </View>
-        <View style={hs.daySnapshot} accessibilityLabel="Resumen académico de hoy">
+        <View
+          style={hs.daySnapshot}
+          accessibilityLabel="Resumen académico de hoy"
+        >
           <Text style={hs.daySnapshotText}>{day.progressSummary}</Text>
           <Text style={hs.daySnapshotText}>{day.deadlineSummary}</Text>
           {day.routineTime && (
@@ -238,10 +242,10 @@ export function NativeCompa({ s, open, go }: Pick<Props, "s" | "open" | "go">) {
               backgroundColor: "#fffefa",
             }}
           >
-            <Image
+            <PreviewImage
               source={selectionImages[`rooms/${room.id}`]}
-              style={{ width: "100%", aspectRatio: 1.42 }}
-              resizeMode="cover"
+              aspectRatio={1.42}
+              accessibilityLabel={room.name}
             />
             <View style={{ padding: 14, gap: 5 }}>
               <Text style={st.h3}>

@@ -19,6 +19,7 @@ import {
 } from "@compa/domain";
 import { Text, Button, Field, styles as st } from "./ui";
 import { selectionImages } from "./selection-images";
+import { PreviewImage } from "./PreviewImage";
 import { selectionModels } from "./selection-models";
 import sharedManifest from "../../web/public/selection/shared-spaces/runtime-manifest.json";
 import { readCachedScene } from "./scene-cache";
@@ -223,11 +224,16 @@ export function NativeSharedRoom({
     callback = useRef(onDetail);
   callback.current = onDetail;
   useEffect(() => {
-    const session = createSharedRoomSession(repo, initial, (next) => {
-      setState(next);
-      if (next.detail) callback.current(next.detail);
-      else if (next.accessRevoked) callback.current(null);
-    }, userId);
+    const session = createSharedRoomSession(
+      repo,
+      initial,
+      (next) => {
+        setState(next);
+        if (next.detail) callback.current(next.detail);
+        else if (next.accessRevoked) callback.current(null);
+      },
+      userId,
+    );
     runtime.current = session;
     const sub = AppState.addEventListener("change", (s) =>
       session.visible(s === "active"),
@@ -280,10 +286,11 @@ export function NativeSharedRoom({
       {three && state.connected ? (
         <NativeSpace id={space.id} people={people} />
       ) : (
-        <Image
+        <PreviewImage
           source={selectionImages["shared-spaces/" + space.id]}
           accessibilityLabel={space.name}
-          style={{ width: "100%", aspectRatio: 11 / 9, borderRadius: 22 }}
+          aspectRatio={11 / 9}
+          style={{ borderRadius: 22 }}
         />
       )}
       <Button secondary onPress={() => setThree(!three)}>

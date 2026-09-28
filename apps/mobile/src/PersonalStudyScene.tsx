@@ -170,7 +170,7 @@ export function NativePersonalStudyScene({
   return (
     <View
       style={{
-        minHeight: 310,
+        height: 340,
         borderRadius: 18,
         overflow: "hidden",
         backgroundColor: "#eee8de",

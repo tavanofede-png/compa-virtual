@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
-import { Image, Pressable, View, type ImageSourcePropType } from "react-native";
-import { studySpaces, studySpaceById, type Companion, type StudySpaceId } from "@compa/domain";
+import { Pressable, View, type ImageSourcePropType } from "react-native";
+import { PreviewImage } from "./PreviewImage";
+import {
+  studySpaces,
+  studySpaceById,
+  type Companion,
+  type StudySpaceId,
+} from "@compa/domain";
 import { Text, Button, colors, styles as st } from "./ui";
 import { NativePersonalStudyScene } from "./PersonalStudyScene";
 import { cache } from "./storage";
@@ -111,13 +117,23 @@ export function NativeStudySpaces({
           borderColor: colors.line,
         }}
       >
-        {entered ? <NativePersonalStudyScene id={current.id} companion={companion} onInteract={(action) => {
-          if (action === "session") open("focus");
-          else if (action === "materials") open("upload");
-          else if (action === "learning") go("study");
-          else open("chat");
-        }} /> : (
-          <Image source={previews[current.id]} style={{ width: "100%", aspectRatio: 1.24 }} resizeMode="cover" />
+        {entered ? (
+          <NativePersonalStudyScene
+            id={current.id}
+            companion={companion}
+            onInteract={(action) => {
+              if (action === "session") open("focus");
+              else if (action === "materials") open("upload");
+              else if (action === "learning") go("study");
+              else open("chat");
+            }}
+          />
+        ) : (
+          <PreviewImage
+            source={previews[current.id]}
+            aspectRatio={1.24}
+            accessibilityLabel={current.name}
+          />
         )}
         <View
           style={{
@@ -135,11 +151,17 @@ export function NativeStudySpaces({
           <Button secondary onPress={() => setEntered((value) => !value)}>
             {entered ? "Volver a la vista previa" : "Entrar al espacio 3D"}
           </Button>
-          {entered && <>
-            <Button onPress={() => open("focus")}>Empezar sesión</Button>
-            <Button secondary onPress={() => open("upload")}>Subir material</Button>
-            <Button secondary onPress={() => go("study")}>Ver aprendizaje</Button>
-          </>}
+          {entered && (
+            <>
+              <Button onPress={() => open("focus")}>Empezar sesión</Button>
+              <Button secondary onPress={() => open("upload")}>
+                Subir material
+              </Button>
+              <Button secondary onPress={() => go("study")}>
+                Ver aprendizaje
+              </Button>
+            </>
+          )}
           <Button
             disabled={busy || saved === selected}
             onPress={() => void selectSpace(selected)}
@@ -162,10 +184,10 @@ export function NativeStudySpaces({
             backgroundColor: "#fffefa",
           }}
         >
-          <Image
+          <PreviewImage
             source={previews[space.id]}
-            style={{ width: "100%", aspectRatio: 1.45 }}
-            resizeMode="cover"
+            aspectRatio={1.45}
+            accessibilityLabel={space.name}
           />
           <View style={{ padding: 15, gap: 5 }}>
             <Text style={st.h3}>
@@ -184,14 +206,22 @@ export function NativeStudySpaces({
   );
 }
 
-export function NativeStudyView({ id, companion }: { id: StudySpaceId; companion: Companion }) {
+export function NativeStudyView({
+  id,
+  companion,
+}: {
+  id: StudySpaceId;
+  companion: Companion;
+}) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     let active = true;
     void cache.getItem("kusiy:study-view").then((value) => {
       if (active) setVisible(value === "room");
     });
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, []);
   const choose = (room: boolean) => {
     setVisible(room);
@@ -199,9 +229,16 @@ export function NativeStudyView({ id, companion }: { id: StudySpaceId; companion
   };
   return (
     <View style={{ gap: 10 }}>
-      <View style={{ flexDirection: "row", gap: 8 }} accessibilityLabel="Vista durante el estudio">
-        <Button secondary={visible} onPress={() => choose(false)}>Modo foco</Button>
-        <Button secondary={!visible} onPress={() => choose(true)}>Ver habitación</Button>
+      <View
+        style={{ flexDirection: "row", gap: 8 }}
+        accessibilityLabel="Vista durante el estudio"
+      >
+        <Button secondary={visible} onPress={() => choose(false)}>
+          Modo foco
+        </Button>
+        <Button secondary={!visible} onPress={() => choose(true)}>
+          Ver habitación
+        </Button>
       </View>
       {visible && <NativePersonalStudyScene id={id} companion={companion} />}
     </View>

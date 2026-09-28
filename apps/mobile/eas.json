@@ -9,6 +9,7 @@
       "distribution": "internal"
     },
     "preview": {
+      "autoIncrement": true,
       "developmentClient": false,
       "distribution": "internal",
       "channel": "preview",

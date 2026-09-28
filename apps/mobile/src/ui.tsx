@@ -9,11 +9,21 @@ import {
 } from "react-native";
 import type { ReactNode } from "react";
 import { designTokens } from "@compa/domain";
+import { isLoaded } from "expo-font";
+import { outfitFace } from "./typography";
+function fontStyle(style: TextProps["style"]) {
+  const flattened = StyleSheet.flatten(style);
+  if (flattened?.fontFamily && flattened.fontFamily !== "Outfit") return {};
+  const family = outfitFace(flattened?.fontWeight);
+  return isLoaded(family)
+    ? { fontFamily: family, fontWeight: "normal" as const }
+    : {};
+}
 export function Text(props: TextProps) {
   return (
     <NativeText
       {...props}
-      style={[{ fontFamily: "Outfit", color: designTokens.ink }, props.style]}
+      style={[{ color: designTokens.ink }, props.style, fontStyle(props.style)]}
     />
   );
 }
@@ -63,9 +73,9 @@ export function Field({ label, ...props }: TextInputProps & { label: string }) {
         {...props}
         style={[
           styles.input,
-          { fontFamily: "Outfit" },
           props.multiline && { minHeight: 90, textAlignVertical: "top" },
           props.style,
+          fontStyle(props.style),
         ]}
       />
     </View>

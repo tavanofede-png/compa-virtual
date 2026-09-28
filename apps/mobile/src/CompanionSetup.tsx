@@ -35,6 +35,7 @@ import {
 import type { Envelope, Repository } from "@compa/client";
 import { NativeWorld } from "./Creature";
 import { selectionImages } from "./selection-images";
+import { PreviewImage } from "./PreviewImage";
 import { Button, Field, colors, styles as ui } from "./ui";
 
 type Props = {
@@ -202,7 +203,10 @@ export function CompanionSetup({
       const complete = step === 5;
       if (complete) {
         const need = consentRequirement(profile.birth_date);
-        if (need.required && (!env.consent?.recorded || !env.consent.capabilities?.service))
+        if (
+          need.required &&
+          (!env.consent?.recorded || !env.consent.capabilities?.service)
+        )
           throw Error(
             "Falta el consentimiento de un adulto responsable para continuar.",
           );
@@ -315,11 +319,13 @@ export function CompanionSetup({
                       c.id === character.id,
                       () => setCompanion(selectCharacter(c.id, companion)),
                       <>
-                        <Image
+                        <PreviewImage
                           source={
                             selectionImages[`characters/${c.id}-portrait`]
                           }
-                          style={css.portrait}
+                          aspectRatio={240 / 216}
+                          style={css.preview}
+                          accessibilityLabel={c.name}
                         />
                         <Text style={css.itemTitle}>{c.name}</Text>
                         <Text style={css.itemMeta}>{c.trait}</Text>
@@ -397,9 +403,11 @@ export function CompanionSetup({
                         selected.includes(item.id) && css.chosen,
                       ]}
                     >
-                      <Image
+                      <PreviewImage
                         source={selectionImages[`wardrobe/${item.id}`]}
-                        style={css.garment}
+                        aspectRatio={240 / 234}
+                        style={css.preview}
+                        accessibilityLabel={item.label}
                       />
                       <Text style={css.itemTitle}>{item.label}</Text>
                       {selected.includes(item.id) && (
@@ -456,9 +464,11 @@ export function CompanionSetup({
                       r.id === room.id,
                       () => change({ room_style: r.id, room_theme: r.theme }),
                       <>
-                        <Image
+                        <PreviewImage
                           source={selectionImages[`rooms/${r.id}`]}
-                          style={css.room}
+                          aspectRatio={4 / 3}
+                          style={css.preview}
+                          accessibilityLabel={r.name}
                         />
                         <Text style={css.itemTitle}>{r.name}</Text>
                       </>,
@@ -525,7 +535,9 @@ export function CompanionSetup({
                     </Text>
                     {env.consent?.recorded ? (
                       <Text style={css.body}>
-                        {env.consent.capabilities?.service ? "Servicio aceptado por el adulto verificado." : "Familia verificada. Falta que el adulto acepte el servicio desde su enlace privado."}
+                        {env.consent.capabilities?.service
+                          ? "Servicio aceptado por el adulto verificado."
+                          : "Familia verificada. Falta que el adulto acepte el servicio desde su enlace privado."}
                       </Text>
                     ) : env.consent?.pending ? (
                       <Text style={css.body}>
@@ -653,10 +665,28 @@ export function CompanionSetup({
             )}
             {step === 5 && (
               <>
-                <Image source={require("../../web/public/selection/pets/golden-retriever.webp")} style={{ width: "100%", height: 260, borderRadius: 24, resizeMode: "contain", backgroundColor: "#f2ebe4" }} />
-                <Text style={css.sectionTitle}>Tu primera mascota es gratuita</Text>
-                <Text style={css.body}>Un golden tranquilo durante el estudio y listo para jugar.</Text>
-                <Field label="¿Cómo se va a llamar?" value={petName} onChangeText={setPetName} maxLength={30} />
+                <Image
+                  source={require("../../web/public/selection/pets/golden-retriever.webp")}
+                  style={{
+                    width: "100%",
+                    height: 260,
+                    borderRadius: 24,
+                    resizeMode: "contain",
+                    backgroundColor: "#f2ebe4",
+                  }}
+                />
+                <Text style={css.sectionTitle}>
+                  Tu primera mascota es gratuita
+                </Text>
+                <Text style={css.body}>
+                  Un golden tranquilo durante el estudio y listo para jugar.
+                </Text>
+                <Field
+                  label="¿Cómo se va a llamar?"
+                  value={petName}
+                  onChangeText={setPetName}
+                  maxLength={30}
+                />
                 <Text style={css.body}>
                   Revisá las elecciones antes de entrar.
                 </Text>
@@ -805,22 +835,8 @@ const css = StyleSheet.create({
   },
   wide: { width: "100%", padding: 14 },
   chosen: { borderColor: colors.green, backgroundColor: "#edf0e5" },
-  portrait: {
-    width: "100%",
-    aspectRatio: 240 / 216,
-    resizeMode: "contain",
-    borderRadius: 6,
-  },
-  garment: {
-    width: "100%",
-    aspectRatio: 240 / 234,
-    resizeMode: "contain",
-    borderRadius: 6,
-  },
-  room: {
-    width: "100%",
-    aspectRatio: 4 / 3,
-    resizeMode: "cover",
+  preview: {
+    backgroundColor: "#e9e4dd",
     borderRadius: 7,
   },
   itemTitle: {

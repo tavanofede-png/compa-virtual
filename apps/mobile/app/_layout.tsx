@@ -15,7 +15,11 @@ else if (!globalThis.crypto.randomUUID)
   Object.assign(globalThis.crypto, { randomUUID: Crypto.randomUUID });
 export default function Layout() {
   const [fontsReady, fontError] = useFonts({
-    Outfit: require("../../web/public/fonts/Outfit.ttf"),
+    OutfitRegular: require("../assets/fonts/Outfit-Regular.ttf"),
+    OutfitMedium: require("../assets/fonts/Outfit-Medium.ttf"),
+    OutfitSemiBold: require("../assets/fonts/Outfit-SemiBold.ttf"),
+    OutfitBold: require("../assets/fonts/Outfit-Bold.ttf"),
+    OutfitExtraBold: require("../assets/fonts/Outfit-ExtraBold.ttf"),
   });
   if (!fontsReady && !fontError)
     return (

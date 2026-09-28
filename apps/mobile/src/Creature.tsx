@@ -23,6 +23,13 @@ import { selectionImages } from "./selection-images";
 import { selectionModels } from "./selection-models";
 import roomManifest from "../../web/public/selection/models/room-runtime-manifest.json";
 import { readCachedScene } from "./scene-cache";
+import { cache } from "./storage";
+import {
+  SCENE_ATTEMPT_KEY,
+  interruptedScenePhase,
+  sceneAttempt,
+  type ScenePhase,
+} from "./scene-recovery";
 import { Canvas, useThree, type ThreeEvent } from "@react-three/fiber/native";
 import * as T from "three";
 import {
@@ -190,19 +197,52 @@ export function NativeWorld({
 }) {
   const fingerprint =
     appearanceKey(companion, kind, item) + JSON.stringify(petState ?? null);
+  const protectedRoom = kind === "room" && !!companion.character_id;
   const [world, setWorld] = useState<World | null>(null),
-    [error, setError] = useState(false),
+    [error, setError] = useState(""),
     [progress, setProgress] = useState<number | null>(null),
-    [retry, setRetry] = useState(0);
+    [retry, setRetry] = useState(0),
+    [mountWorld, setMountWorld] = useState(false),
+    [attempt, setAttempt] = useState<{
+      fingerprint: string;
+      phase: ScenePhase | null;
+    } | null>(null);
   useEffect(() => {
+    if (!protectedRoom) return;
+    let alive = true;
+    void cache
+      .getItem(SCENE_ATTEMPT_KEY)
+      .then((raw) => {
+        if (alive)
+          setAttempt({
+            fingerprint,
+            phase: interruptedScenePhase(raw, fingerprint),
+          });
+      })
+      .catch(() => {
+        if (alive) setAttempt({ fingerprint, phase: null });
+      });
+    return () => {
+      alive = false;
+    };
+  }, [fingerprint, protectedRoom]);
+  const attemptReady = !protectedRoom || attempt?.fingerprint === fingerprint;
+  const interrupted = attemptReady ? attempt?.phase : null;
+  useEffect(() => {
+    if (!attemptReady || interrupted) return;
     let alive = true,
       loaded: World | null = null;
     const cancellation = new AbortController();
     setWorld(null);
-    setError(false);
+    setError("");
     setProgress(null);
     const load = async () => {
       try {
+        if (protectedRoom)
+          await cache.setItem(
+            SCENE_ATTEMPT_KEY,
+            sceneAttempt(fingerprint, "loading"),
+          );
         loaded =
           companion.character_id && (kind === "avatar" || kind === "room")
             ? await createPremiumWorld(
@@ -234,23 +274,48 @@ export function NativeWorld({
                 petState,
               )
             : createWorld(companion, kind, item);
-        if (alive) setWorld(loaded);
-        else disposeModel(loaded.scene);
-      } catch {
-        if (alive) setError(true);
+        if (alive) {
+          if (protectedRoom)
+            await cache.setItem(
+              SCENE_ATTEMPT_KEY,
+              sceneAttempt(fingerprint, "rendering"),
+            );
+          setWorld(loaded);
+        } else disposeModel(loaded.scene);
+      } catch (cause) {
+        if (protectedRoom) void cache.removeItem(SCENE_ATTEMPT_KEY);
+        if (alive)
+          setError(
+            cause instanceof Error
+              ? cause.message
+              : "No se pudo preparar la vista 3D.",
+          );
       }
     };
     void load();
     return () => {
       alive = false;
       cancellation.abort();
+      if (protectedRoom) void cache.removeItem(SCENE_ATTEMPT_KEY);
       loaded?.controller?.dispose();
       loaded?.speech?.dispose();
       loaded?.petController?.dispose();
       if (loaded) disposeModel(loaded.scene);
     };
-  }, [fingerprint, retry]);
-  if (!world)
+  }, [fingerprint, retry, attemptReady, interrupted, protectedRoom]);
+  useEffect(() => {
+    setMountWorld(false);
+    if (!world) return;
+    if (kind !== "room") {
+      setMountWorld(true);
+      return;
+    }
+    // Avoid uploading every room mesh to GL in the same turn that releases
+    // the parsed GLB bytes. No geometry or render quality is changed.
+    const timer = setTimeout(() => setMountWorld(true), 500);
+    return () => clearTimeout(timer);
+  }, [world, kind]);
+  if (!world || !mountWorld)
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         {companion.character_id && (
@@ -280,18 +345,31 @@ export function NativeWorld({
             gap: 10,
           }}
         >
-          {!error && <ActivityIndicator color="#435840" />}
+          {!error && !interrupted && <ActivityIndicator color="#435840" />}
           <Text style={{ color: "#435840", textAlign: "center" }}>
-            {error
-              ? "No pudimos cargar la vista 3D. Revisá la conexión."
-              : progress === null
-                ? "Preparando tu vista 3D…"
-                : `Descargando tu habitación: ${Math.round(progress * 100)} %`}
+            {interrupted
+              ? interrupted === "rendering"
+                ? "La vista 3D cerró la app al comenzar a dibujarse. Podés seguir usando Kusiy y reintentarla cuando quieras."
+                : "La vista 3D interrumpió la carga anterior. Podés seguir usando Kusiy y reintentarla."
+              : error
+                ? error
+                : world && !mountWorld
+                  ? "Preparando la escena 3D…"
+                  : progress === null
+                    ? "Preparando tu vista 3D…"
+                    : `Descargando tu habitación: ${Math.round(progress * 100)} %`}
           </Text>
-          {error && (
+          {(error || interrupted) && (
             <Pressable
               accessibilityRole="button"
-              onPress={() => setRetry((r) => r + 1)}
+              onPress={() => {
+                if (interrupted) {
+                  void cache.removeItem(SCENE_ATTEMPT_KEY).finally(() => {
+                    setAttempt({ fingerprint, phase: null });
+                    setRetry((r) => r + 1);
+                  });
+                } else setRetry((r) => r + 1);
+              }}
               style={{ padding: 12 }}
             >
               <Text
@@ -301,7 +379,7 @@ export function NativeWorld({
                   fontWeight: "600",
                 }}
               >
-                Reintentar
+                {interrupted ? "Reintentar vista 3D" : "Reintentar"}
               </Text>
             </Pressable>
           )}
@@ -320,6 +398,9 @@ export function NativeWorld({
       motionContext={motionContext}
       companion={companion}
       petState={petState}
+      onReady={() => {
+        if (protectedRoom) void cache.removeItem(SCENE_ATTEMPT_KEY);
+      }}
     />
   );
 }
@@ -333,6 +414,7 @@ function WorldView({
   motionContext,
   companion,
   petState,
+  onReady,
 }: {
   world: World;
   kind?: ViewKind;
@@ -343,13 +425,21 @@ function WorldView({
   motionContext: MotionContext;
   companion: Companion;
   petState?: PetSceneSetup;
+  onReady?: () => void;
 }) {
   const preference = useMotionPreference(),
     quality = useSceneQuality(),
     [furniture, setFurniture] = useState(false),
     [petMenu, setPetMenu] = useState(false);
   const invalidate = useRef(() => {}),
-    origin = useRef(0);
+    origin = useRef(0),
+    readyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (readyTimer.current) clearTimeout(readyTimer.current);
+    },
+    [],
+  );
   const original = useMemo(() => world.camera.position.clone(), [world]);
   const turn = (amount: number, absolute = false) => {
     const offset = world.camera.position.clone().sub(world.target),
@@ -405,6 +495,11 @@ function WorldView({
             gl.toneMappingExposure = 1.1;
             gl.shadowMap.autoUpdate = false;
             gl.shadowMap.needsUpdate = true;
+            if (onReady)
+              readyTimer.current = setTimeout(() => {
+                onReady();
+                readyTimer.current = null;
+              }, 3000);
           }}
         >
           <ScenePixelRatio ratio={quality.pixelRatio} />
